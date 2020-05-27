@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "918824185229",
+    "firebase_url": "https://snapsheet-e7f7b.firebaseio.com",
+    "project_id": "snapsheet-e7f7b",
+    "storage_bucket": "snapsheet-e7f7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918824185229:android:e7b7e42d66556a29e1e1c4",
+        "android_client_info": {
+          "package_name": "com.petrickjerico.snapsheetapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "918824185229-252m3herus8fogr370bgc2a36fib5of7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7b8Kmubg06aVKR5nVcTfXt3ZmX681voM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "918824185229-252m3herus8fogr370bgc2a36fib5of7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

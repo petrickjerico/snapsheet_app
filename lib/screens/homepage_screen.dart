@@ -1,6 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:snapsheetapp/screens/calculator_screen.dart';
+import 'package:snapsheetapp/screens/sidebar_menu.dart';
 import 'package:snapsheetapp/screens/welcome_screen.dart';
 
 // final _firestore = Firestore.instance;
@@ -46,15 +48,6 @@ class _HomepageScreenState extends State<HomepageScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.black,
-          leading: FlatButton(
-            child: Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              // show sidebar menu
-            },
-          ),
           title: Text('HOMEPAGE'),
           actions: <Widget>[
             IconButton(
@@ -71,6 +64,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
             Tab(text: 'HISTORY'),
           ]),
         ),
+        drawer: SidebarMenu(currentUser: loggedInUser),
         body: TabBarView(
           children: <Widget>[
             Container(
@@ -99,7 +93,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
           backgroundColor: Colors.black,
           child: Icon(Icons.add),
           onPressed: () {
-            // go to calculator
+            Navigator.pushNamed(context, CalculatorScreen.id);
           },
         ),
       ),

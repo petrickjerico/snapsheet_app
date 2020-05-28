@@ -18,7 +18,7 @@ class SidebarMenu extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             child: Text(
-              '${currentUser.email}',
+              'Hi, you!',
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             decoration: BoxDecoration(
@@ -34,6 +34,11 @@ class SidebarMenu extends StatelessWidget {
             leading: Icon(Icons.add_circle),
             title: Text('Add category'),
             onTap: () => {Navigator.pushNamed(context, AddCategoryScreen.id)},
+          ),
+          ListTile(
+            leading: Icon(Icons.filter),
+            title: Text('Bulk-input receipts'),
+            onTap: () => {Navigator.pushNamed(context, ExportSelectScreen.id)},
           ),
           ListTile(
             leading: Icon(Icons.mode_edit),

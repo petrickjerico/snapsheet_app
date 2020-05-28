@@ -1,7 +1,9 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/screens/calculator_screen.dart';
+import 'package:snapsheetapp/screens/accounts_tab.dart';
+import 'package:snapsheetapp/screens/addexpenses_screen.dart';
+import 'package:snapsheetapp/screens/history_tab.dart';
 import 'package:snapsheetapp/screens/sidebar_menu.dart';
 import 'package:snapsheetapp/screens/welcome_screen.dart';
 
@@ -16,11 +18,7 @@ class HomepageScreen extends StatefulWidget {
 }
 
 class _HomepageScreenState extends State<HomepageScreen> {
-  final messageTextController = TextEditingController();
-
   final _auth = FirebaseAuth.instance;
-
-  String messageText;
 
   @override
   void initState() {
@@ -33,7 +31,6 @@ class _HomepageScreenState extends State<HomepageScreen> {
       final user = await _auth.currentUser();
       if (user != null) {
         loggedInUser = user;
-        print(loggedInUser.email);
       }
     } catch (e) {
       print(e);
@@ -59,41 +56,27 @@ class _HomepageScreenState extends State<HomepageScreen> {
               },
             )
           ],
-          bottom: TabBar(tabs: [
-            Tab(text: 'ACCOUNTS'),
-            Tab(text: 'HISTORY'),
-          ]),
+          bottom: TabBar(
+            tabs: [
+              Tab(text: 'ACCOUNTS'),
+              Tab(text: 'HISTORY'),
+            ],
+            indicatorColor: Colors.white,
+            indicatorWeight: 5.0,
+          ),
         ),
         drawer: SidebarMenu(currentUser: loggedInUser),
         body: TabBarView(
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(20.0),
-              color: Colors.grey,
-              child: Center(
-                child: Text(
-                  'Accounts page goes here.',
-                  style: TextStyle(fontStyle: FontStyle.italic),
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(20.0),
-              color: Colors.grey,
-              child: Center(
-                child: Text(
-                  'History page goes here.',
-                  style: TextStyle(fontStyle: FontStyle.italic),
-                ),
-              ),
-            ),
+            AccountsTab(),
+            HistoryTab(),
           ],
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.black,
           child: Icon(Icons.add),
           onPressed: () {
-            Navigator.pushNamed(context, CalculatorScreen.id);
+            Navigator.pushNamed(context, AddExpensesScreen.id);
           },
         ),
       ),

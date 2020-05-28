@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/screens/homepage_screen.dart';
+import 'package:snapsheetapp/screens/addexpenses_screen.dart';
 
-class CalculatorScreen extends StatelessWidget {
-  static const String id = 'calculator_screen';
+class EditInfoScreen extends StatelessWidget {
+  static const String id = 'editinfo_screen';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,27 +17,19 @@ class CalculatorScreen extends StatelessWidget {
           ),
           onPressed: () {
             //TODO: more complex navigation
-            Navigator.pushNamed(context, HomepageScreen.id);
+            Navigator.pop(context);
           },
         ),
-        title: Text('CALCULATOR'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.camera_alt),
-            color: Colors.white,
-            onPressed: () {
-              // nothing yet
-            },
-          )
-        ],
+        title: Text('EDIT INFORMATION'),
       ),
-      body: Container(
-        child: Center(
-          child: Text(
-            'Calculator will go here.',
-            style: TextStyle(
-              fontStyle: FontStyle.italic,
-            ),
+      body: Center(
+        child: Text(
+          'User edits details of expenses here.\n\n'
+          'User is also brought here after Scan Receipt\n'
+          'to confirm scanned info.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
           ),
         ),
       ),
@@ -44,7 +37,11 @@ class CalculatorScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         child: Icon(Icons.check),
         onPressed: () {
-          // nothing yet
+          //TODO: more complex navigation
+          Navigator.popUntil(
+            context,
+            ModalRoute.withName(AddExpensesScreen.id),
+          );
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -52,12 +49,11 @@ class CalculatorScreen extends StatelessWidget {
         color: Colors.black,
         shape: CircularNotchedRectangle(),
         child: Container(
-            height: 50.0,
-            child: Container(
-              child: Row(
-                children: <Widget>[],
-              ),
-            )),
+          height: 30.0,
+          child: Container(
+            child: null,
+          ),
+        ),
       ),
     );
   }

@@ -1,7 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:snapsheetapp/components/homepage_card.dart';
 
-class AccountsTab extends StatelessWidget {
+class AccountsTab extends StatefulWidget {
+  @override
+  _AccountsTabState createState() => _AccountsTabState();
+}
+
+class _AccountsTabState extends State<AccountsTab> {
+  String currentSelection;
+
+  Widget buildButton(String str) {
+    return OutlineButton(
+      color: Colors.blueGrey,
+      focusColor: Colors.blueGrey,
+      child: Text(str),
+      onPressed: () {
+        setState(() {
+          currentSelection = str;
+        });
+      },
+    );
+  }
+
+  Widget makeAccountButtons() {
+    return GridView.count(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        primary: false,
+        padding: const EdgeInsets.all(20),
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        crossAxisCount: 3,
+        children:
+            List.generate(6, (index) => buildButton('Account ${index + 1}')));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -12,18 +45,13 @@ class AccountsTab extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 3,
-            child: HomepageCard(
-              cardChild: Text(
-                'List of accounts goes here.',
-                style: TextStyle(fontStyle: FontStyle.italic),
-              ),
-            ),
+            child: HomepageCard(cardChild: makeAccountButtons()),
           ),
           Expanded(
             flex: 8,
             child: HomepageCard(
               cardChild: Text(
-                'Visuals for accounts go here.',
+                '$currentSelection selected for viewing.',
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ),

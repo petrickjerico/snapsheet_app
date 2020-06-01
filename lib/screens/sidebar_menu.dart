@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:snapsheetapp/screens/addcategory_screen.dart';
+import 'package:snapsheetapp/screens/bulkinput_screen.dart';
 import 'package:snapsheetapp/screens/editprofile_screen.dart';
 import 'package:snapsheetapp/screens/exportselect_screen.dart';
 import 'package:snapsheetapp/screens/settings_screen.dart';
@@ -38,7 +39,7 @@ class SidebarMenu extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.filter),
             title: Text('Bulk-input receipts'),
-            onTap: () => {Navigator.pushNamed(context, ExportSelectScreen.id)},
+            onTap: () => {Navigator.pushNamed(context, BulkInputScreen.id)},
           ),
           ListTile(
             leading: Icon(Icons.mode_edit),

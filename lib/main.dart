@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:snapsheetapp/screens/addcategory_screen.dart';
 import 'package:snapsheetapp/screens/addexpenses_screen.dart';
+import 'package:snapsheetapp/screens/bulkinput_screen.dart';
 import 'package:snapsheetapp/screens/editinfo_screen.dart';
 import 'package:snapsheetapp/screens/editprofile_screen.dart';
 import 'package:snapsheetapp/screens/exportdone_screen.dart';
@@ -13,7 +15,12 @@ import 'package:snapsheetapp/screens/settings_screen.dart';
 import 'package:snapsheetapp/screens/welcome_screen.dart';
 
 void main() {
-  runApp(Snapsheet());
+  //To lock orientation of the app.
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(Snapsheet());
+  });
 }
 
 class Snapsheet extends StatelessWidget {
@@ -32,6 +39,7 @@ class Snapsheet extends StatelessWidget {
       SettingsScreen.id: (context) => SettingsScreen(),
       EditInfoScreen.id: (context) => EditInfoScreen(),
       ScannerScreen.id: (context) => ScannerScreen(),
+      BulkInputScreen.id: (context) => BulkInputScreen(),
     });
   }
 }

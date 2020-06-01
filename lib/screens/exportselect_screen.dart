@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snapsheetapp/screens/exportdone_screen.dart';
-import 'package:snapsheetapp/screens/homepage_screen.dart';
+// import 'package:snapsheetapp/screens/homepage_screen.dart';
 
 class ExportSelectScreen extends StatelessWidget {
   static const String id = 'exportselect_screen';
@@ -55,11 +55,11 @@ class ExportSelectScreen extends StatelessWidget {
                     'PROCEED TO EXPORT',
                     style: TextStyle(color: Colors.white),
                   ),
-                  onTap: () {
-                    // TODO: implement export functionality
-                    Navigator.pushNamed(context, ExportDoneScreen.id);
-                  },
                 ),
+                onPressed: () {
+                  // TODO: implement export functionality
+                  Navigator.pushNamed(context, ExportDoneScreen.id);
+                },
               ),
             ),
           ),

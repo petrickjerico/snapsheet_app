@@ -46,11 +46,11 @@ class ExportDoneScreen extends StatelessWidget {
                       'RETURN TO HOMEPAGE',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onTap: () {
-                      // TODO: implement export functionality
-                      Navigator.pushNamed(context, HomepageScreen.id);
-                    },
                   ),
+                  onPressed: () {
+                    // TODO: implement export functionality
+                    Navigator.pushNamed(context, HomepageScreen.id);
+                  },
                 ),
               ),
             ),
@@ -58,6 +58,5 @@ class ExportDoneScreen extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

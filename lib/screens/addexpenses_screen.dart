@@ -1,7 +1,10 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:snapsheetapp/components/calculator.dart';
 import 'package:snapsheetapp/screens/editinfo_screen.dart';
 import 'package:snapsheetapp/screens/scanner_screen.dart';
+
+import 'scanner_screen.dart';
 // import 'package:snapsheetapp/screens/homepage_screen.dart';
 
 class AddExpensesScreen extends StatelessWidget {
@@ -38,8 +41,16 @@ class AddExpensesScreen extends StatelessWidget {
               Icons.camera_alt,
               color: Colors.white,
             ),
-            onPressed: () {
-              Navigator.pushNamed(context, ScannerScreen.id);
+            onPressed: () async {
+              WidgetsFlutterBinding.ensureInitialized();
+              final cameras = await availableCameras();
+              final firstCamera = cameras.first;
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ScannerScreen(camera: firstCamera)));
+//              Navigator.pushNamed(context, ScannerScreen.id);
             },
           ),
         ],

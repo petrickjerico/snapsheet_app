@@ -10,15 +10,17 @@ class _AccountsTabState extends State<AccountsTab> {
   String currentSelection;
 
   Widget buildButton(String str) {
-    return OutlineButton(
-      color: Colors.blueGrey,
-      focusColor: Colors.blueGrey,
-      child: Text(str),
-      onPressed: () {
-        setState(() {
-          currentSelection = str;
-        });
-      },
+    return SizedBox(
+      height: 20.0,
+      width: 20.0,
+      child: OutlineButton(
+        child: Text(str),
+        onPressed: () {
+          setState(() {
+            currentSelection = str;
+          });
+        },
+      ),
     );
   }
 
@@ -31,8 +33,7 @@ class _AccountsTabState extends State<AccountsTab> {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         crossAxisCount: 3,
-        children:
-            List.generate(6, (index) => buildButton('Account ${index + 1}')));
+        children: List.generate(6, (index) => buildButton('${index + 1}')));
   }
 
   @override
@@ -44,11 +45,22 @@ class _AccountsTabState extends State<AccountsTab> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
-            flex: 3,
-            child: HomepageCard(cardChild: makeAccountButtons()),
+            child: HomepageCard(
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('List of accounts'),
+                  makeAccountButtons(),
+                  FlatButton(
+                    color: Colors.blueGrey,
+                    child: Text('Add account'),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
           ),
           Expanded(
-            flex: 8,
             child: HomepageCard(
               cardChild: Text(
                 '$currentSelection selected for viewing.',

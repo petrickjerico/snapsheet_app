@@ -1,6 +1,12 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'package:snapsheetapp/components/expenses_calculator.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:snapsheetapp/components/calculator.dart';
+import 'package:snapsheetapp/components/scanner_button.dart';
 import 'package:snapsheetapp/screens/editinfo_screen.dart';
 import 'package:snapsheetapp/screens/scanner_screen.dart';
 
@@ -36,23 +42,8 @@ class AddExpensesScreen extends StatelessWidget {
               Navigator.pushNamed(context, EditInfoScreen.id);
             },
           ),
-          IconButton(
-            icon: Icon(
-              Icons.camera_alt,
-              color: Colors.white,
-            ),
-            onPressed: () async {
-              WidgetsFlutterBinding.ensureInitialized();
-              final cameras = await availableCameras();
-              final firstCamera = cameras.first;
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          ScannerScreen(camera: firstCamera)));
-//              Navigator.pushNamed(context, ScannerScreen.id);
-            },
-          ),
+          ScannerButton(isCamera: true),
+          ScannerButton(isCamera: false),
         ],
       ),
       body: ExpensesCalculator(),

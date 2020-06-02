@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/components/calculator.dart';
+import 'package:snapsheetapp/components/expenses_calculator.dart';
 import 'package:snapsheetapp/screens/editinfo_screen.dart';
 import 'package:snapsheetapp/screens/scanner_screen.dart';
 
@@ -55,7 +55,7 @@ class AddExpensesScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Calculator(),
+      body: ExpensesCalculator(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
         child: Icon(Icons.check),

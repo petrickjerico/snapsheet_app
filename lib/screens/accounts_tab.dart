@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/homepage_card.dart';
+import 'package:snapsheetapp/models/account.dart';
+import 'package:snapsheetapp/models/accounts_data.dart';
 
 class AccountsTab extends StatefulWidget {
   @override
@@ -7,14 +10,14 @@ class AccountsTab extends StatefulWidget {
 }
 
 class _AccountsTabState extends State<AccountsTab> {
-  String currentSelection;
+  Account currentSelection;
 
-  Widget buildButton(String str) {
+  Widget buildButton(Account acc) {
     return OutlineButton(
-      child: Text(str),
+      child: Text(acc.title),
       onPressed: () {
         setState(() {
-          currentSelection = str;
+          currentSelection = acc;
         });
       },
     );
@@ -30,7 +33,10 @@ class _AccountsTabState extends State<AccountsTab> {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         crossAxisCount: 3,
-        children: List.generate(6, (index) => buildButton('${index + 1}')));
+        children: Provider.of<AccountsData>(context)
+            .accounts
+            .map((e) => buildButton(e))
+            .toList());
   }
 
   @override
@@ -39,10 +45,9 @@ class _AccountsTabState extends State<AccountsTab> {
       padding: EdgeInsets.all(20.0),
       color: Colors.grey,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
-            flex: 5,
+            flex: 1,
             child: HomepageCard(
               cardChild: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -59,10 +64,10 @@ class _AccountsTabState extends State<AccountsTab> {
             ),
           ),
           Expanded(
-            flex: 8,
+            flex: 2,
             child: HomepageCard(
               cardChild: Text(
-                '$currentSelection selected for viewing.',
+                currentSelection?.toString() ?? 'Select an account.',
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ),

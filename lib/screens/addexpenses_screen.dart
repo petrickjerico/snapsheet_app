@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
+import 'package:snapsheetapp/components/expenses_calculator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:snapsheetapp/components/calculator.dart';
 import 'package:snapsheetapp/components/scanner_button.dart';
@@ -45,7 +46,7 @@ class AddExpensesScreen extends StatelessWidget {
           ScannerButton(isCamera: false),
         ],
       ),
-      body: Calculator(),
+      body: ExpensesCalculator(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
         child: Icon(Icons.check),

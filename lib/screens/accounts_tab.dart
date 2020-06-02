@@ -10,22 +10,19 @@ class _AccountsTabState extends State<AccountsTab> {
   String currentSelection;
 
   Widget buildButton(String str) {
-    return SizedBox(
-      height: 20.0,
-      width: 20.0,
-      child: OutlineButton(
-        child: Text(str),
-        onPressed: () {
-          setState(() {
-            currentSelection = str;
-          });
-        },
-      ),
+    return OutlineButton(
+      child: Text(str),
+      onPressed: () {
+        setState(() {
+          currentSelection = str;
+        });
+      },
     );
   }
 
   Widget makeAccountButtons() {
     return GridView.count(
+        childAspectRatio: 3,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         primary: false,
@@ -45,6 +42,7 @@ class _AccountsTabState extends State<AccountsTab> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
+            flex: 5,
             child: HomepageCard(
               cardChild: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -61,6 +59,7 @@ class _AccountsTabState extends State<AccountsTab> {
             ),
           ),
           Expanded(
+            flex: 8,
             child: HomepageCard(
               cardChild: Text(
                 '$currentSelection selected for viewing.',

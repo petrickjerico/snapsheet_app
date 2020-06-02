@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:snapsheetapp/components/calculator.dart';
+import 'package:snapsheetapp/components/scanner_button.dart';
 import 'package:snapsheetapp/screens/editinfo_screen.dart';
 import 'package:snapsheetapp/screens/scanner_screen.dart';
 
@@ -38,28 +41,8 @@ class AddExpensesScreen extends StatelessWidget {
               Navigator.pushNamed(context, EditInfoScreen.id);
             },
           ),
-          IconButton(
-            icon: Icon(
-              Icons.camera_alt,
-              color: Colors.white,
-            ),
-            onPressed: () async {
-              final imageFile = await ImagePicker.pickImage(
-                source: ImageSource.camera,
-              );
-              final image = FirebaseVisionImage.fromFile(imageFile);
-              final textRecognizer = FirebaseVision.instance.textRecognizer();
-              final visionText = await textRecognizer.processImage(image);
-              for (TextBlock block in visionText.blocks) {
-                for (TextLine line in block.lines) {
-                  for (TextElement word in line.elements) {
-                    print(word.text);
-                  }
-                }
-                textRecognizer.close();
-              }
-            },
-          ),
+          ScannerButton(isCamera: true),
+          ScannerButton(isCamera: false),
         ],
       ),
       body: Calculator(),

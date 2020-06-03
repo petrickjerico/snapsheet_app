@@ -4,7 +4,7 @@ class Parser {
   var similarity = StringSimilarity.compareTwoStrings('french', 'quebec');
   var matches =
       StringSimilarity.findBestMatch('healed', ['edward', 'sealed', 'theatre']);
-
+//testing
   List<String> shops = [
     "4fingers",
     "cold storage",

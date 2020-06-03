@@ -37,7 +37,7 @@ class Snapsheet extends StatelessWidget {
         ChangeNotifierProvider<CategoriesData>(
             create: (context) => CategoriesData()),
       ],
-      child: MaterialApp(initialRoute: AddExpensesScreen.id, routes: {
+      child: MaterialApp(initialRoute: HomepageScreen.id, routes: {
       WelcomeScreen.id: (context) => WelcomeScreen(),
       HomepageScreen.id: (context) => HomepageScreen(),
       LoginScreen.id: (context) => LoginScreen(),

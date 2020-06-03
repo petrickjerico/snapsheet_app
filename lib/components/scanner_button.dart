@@ -36,10 +36,8 @@ class ScannerButton extends StatelessWidget {
             }
           }
         }
-        for (String t in txt) {
-          String match = parser.findBestMatch(t);
-          if (match != "") print(t + " : " + match);
-        }
+        print(txt.join(' '));
+        print(parser.findDate(txt.join(' ')).toString());
         textRecognizer.close();
       },
     );

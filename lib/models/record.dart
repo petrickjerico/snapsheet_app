@@ -43,4 +43,8 @@ class Record {
     // before _recordValue.
     _recordCurrency = newCurrency;
   }
+
+  String toString() {
+    return "${_recordCategory.categoryTitle}: $_recordCurrency${_recordValue.toStringAsFixed(2)}";
+  }
 }

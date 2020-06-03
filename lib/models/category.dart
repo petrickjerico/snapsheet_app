@@ -13,4 +13,11 @@ class Category {
   Icon get categoryIcon {
     return _categoryIcon;
   }
+
+  Widget makeWidget() {
+    return ListTile(
+      leading: _categoryIcon,
+      title: Text(_categoryTitle),
+    );
+  }
 }

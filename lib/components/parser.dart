@@ -46,10 +46,30 @@ class Parser {
     }
   }
 
-  List<Function> parsers = [ddmmyy, ddMonyy, yyyymmdd];
+  double findCost(String input) {
+    RegExp alertWords = RegExp(r"(discount|change)");
+    RegExp money = RegExp(r"\d+\.\d{2}");
+
+    Iterable<RegExpMatch> matches = money.allMatches(input);
+
+    if (matches.isEmpty) return 0;
+
+    List<double> costs = [];
+    for (RegExpMatch match in matches) {
+      String cost = input.substring(match.start, match.end);
+      costs.add(double.parse(cost));
+    }
+
+    costs.sort();
+    List<double> reversed = costs.reversed.toList();
+
+    return alertWords.hasMatch(input) ? reversed[1] : reversed[0];
+  }
+
+  List<Function> parsers = [ddmmyy, yyyymmdd];
 
   static DateTime ddmmyy(String input) {
-    RegExp date = RegExp(r"\d{2}/\d{2}/\d{2,4}");
+    RegExp date = RegExp(r"(\d{2}/\d{2}/\d{2,4}|\d{2} \w{3} \d{2,4})");
     String match = date.stringMatch(input);
     if (match == null) return null;
     String strDate;
@@ -59,21 +79,12 @@ class Parser {
           match.substring(6, 8) +
           match.substring(3, 5) +
           match.substring(0, 2);
-    } else {
+    } else if (match.length == 10) {
       // DDMMYYYY
       strDate = match.substring(6, 10) +
           match.substring(3, 5) +
           match.substring(0, 2);
-    }
-    return DateTime.parse(strDate);
-  }
-
-  static DateTime ddMonyy(String input) {
-    RegExp date = RegExp(r"\d{2} \w{3} \d{2,4}");
-    String match = date.stringMatch(input);
-    if (match == null) return null;
-    String strDate;
-    if (match.length == 9) {
+    } else if (match.length == 9) {
       // DDMMYY
       strDate = "20" +
           match.substring(7, 9) +

@@ -37,7 +37,7 @@ class ScannerButton extends StatelessWidget {
           }
         }
         print(txt.join(' '));
-        print(parser.findDate(txt.join(' ')).toString());
+        print(parser.findCost(txt.join(" ")));
         textRecognizer.close();
       },
     );

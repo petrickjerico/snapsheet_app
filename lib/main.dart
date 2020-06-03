@@ -26,7 +26,7 @@ void main() {
 class Snapsheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(initialRoute: AddExpensesScreen.id, routes: {
+    return MaterialApp(initialRoute: HomepageScreen.id, routes: {
       WelcomeScreen.id: (context) => WelcomeScreen(),
       HomepageScreen.id: (context) => HomepageScreen(),
       LoginScreen.id: (context) => LoginScreen(),

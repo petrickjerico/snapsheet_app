@@ -15,7 +15,8 @@ import 'package:snapsheetapp/models/record.dart';
 Category cat = CategoriesData().categories[0];
 Account acc = AccountsData().accounts[0];
 String _displayValue = "0";
-Record rec = Record("Some Title", double.parse(_displayValue), cat, "\$");
+Record rec = Record(
+    "Some Title", double.parse(_displayValue), DateTime.now(), cat, "\$");
 
 class ExpensesCalculator extends StatelessWidget {
   Account getAccount() {

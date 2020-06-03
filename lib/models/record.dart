@@ -5,9 +5,10 @@ class Record {
   double _recordValue;
   Category _recordCategory;
   String _recordCurrency;
+  DateTime _dateTime;
 
-  Record(this._recordTitle, this._recordValue, this._recordCategory,
-      this._recordCurrency);
+  Record(this._recordTitle, this._recordValue, this._dateTime,
+      this._recordCategory, this._recordCurrency);
 
   String get title {
     return _recordTitle;
@@ -15,6 +16,10 @@ class Record {
 
   double get value {
     return _recordValue;
+  }
+
+  DateTime get date {
+    return _dateTime;
   }
 
   Category get category {
@@ -31,6 +36,10 @@ class Record {
 
   void revalue(double newValue) {
     _recordValue = newValue;
+  }
+
+  void redate(DateTime newDate) {
+    _dateTime = newDate;
   }
 
   void recategorise(Category newCategory) {

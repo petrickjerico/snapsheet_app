@@ -1,31 +1,18 @@
-import 'dart:io';
-
-import 'package:camera/camera.dart';
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/components/expenses_calculator.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:snapsheetapp/components/scanner_button.dart';
 import 'package:snapsheetapp/models/account.dart';
 import 'package:snapsheetapp/models/record.dart';
 import 'package:snapsheetapp/screens/editinfo_screen.dart';
-import 'package:snapsheetapp/screens/scanner_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_grid_button/flutter_grid_button.dart';
 import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:provider/provider.dart';
-import 'package:snapsheetapp/models/account.dart';
 import 'package:snapsheetapp/models/accounts_data.dart';
 import 'package:snapsheetapp/models/categories_data.dart';
 import 'package:snapsheetapp/models/category.dart';
-import 'package:snapsheetapp/models/record.dart';
-import 'scanner_screen.dart';
-// import 'package:snapsheetapp/screens/homepage_screen.dart';
 
 class AddExpensesScreen extends StatefulWidget {
   static const String id = 'addexpenses_screen';
@@ -95,7 +82,8 @@ class _AddExpensesScreenState extends State<AddExpensesScreen> {
 Category cat = CategoriesData().categories[0];
 Account acc = AccountsData().accounts[0];
 String _displayValue = "0";
-Record rec = Record("Some Title", double.parse(_displayValue), cat, "\$");
+Record rec = Record(
+    "Some Title", double.parse(_displayValue), DateTime.now(), cat, "\$");
 
 class ExpensesCalculator extends StatefulWidget {
   @override

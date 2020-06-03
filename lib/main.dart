@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:snapsheetapp/screens/addcategory_screen.dart';
 import 'package:snapsheetapp/screens/addexpenses_screen.dart';
 import 'package:snapsheetapp/screens/bulkinput_screen.dart';
@@ -14,6 +15,9 @@ import 'package:snapsheetapp/screens/scanner_screen.dart';
 import 'package:snapsheetapp/screens/settings_screen.dart';
 import 'package:snapsheetapp/screens/welcome_screen.dart';
 
+import 'models/accounts_data.dart';
+import 'models/categories_data.dart';
+
 void main() {
   //To lock orientation of the app.
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +30,14 @@ void main() {
 class Snapsheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(initialRoute: HomepageScreen.id, routes: {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AccountsData>(
+            create: (context) => AccountsData()),
+        ChangeNotifierProvider<CategoriesData>(
+            create: (context) => CategoriesData()),
+      ],
+      child: MaterialApp(initialRoute: HomepageScreen.id, routes: {
       WelcomeScreen.id: (context) => WelcomeScreen(),
       HomepageScreen.id: (context) => HomepageScreen(),
       LoginScreen.id: (context) => LoginScreen(),
@@ -40,6 +51,8 @@ class Snapsheet extends StatelessWidget {
       EditInfoScreen.id: (context) => EditInfoScreen(),
       ScannerScreen.id: (context) => ScannerScreen(),
       BulkInputScreen.id: (context) => BulkInputScreen(),
-    });
+      }),
+    );
+
   }
 }

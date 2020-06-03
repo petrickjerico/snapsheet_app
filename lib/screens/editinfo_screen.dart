@@ -49,7 +49,7 @@ class EditInfoScreen extends StatelessWidget {
         color: Colors.black,
         shape: CircularNotchedRectangle(),
         child: Container(
-          height: 30.0,
+          height: 40.0,
           child: Container(
             child: null,
           ),

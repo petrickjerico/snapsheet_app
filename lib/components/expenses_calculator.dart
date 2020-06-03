@@ -1,11 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_grid_button/flutter_grid_button.dart';
 import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:provider/provider.dart';
+import 'package:snapsheetapp/models/account.dart';
+import 'package:snapsheetapp/models/accounts_data.dart';
+import 'package:snapsheetapp/models/categories_data.dart';
+import 'package:snapsheetapp/models/category.dart';
+import 'package:snapsheetapp/models/record.dart';
+
+Category cat = CategoriesData().categories[0];
+Account acc = AccountsData().accounts[0];
+String _displayValue = "0";
+Record rec = Record("Some Title", double.parse(_displayValue), cat, "\$");
 
 class ExpensesCalculator extends StatelessWidget {
+  Account getAccount() {
+    return acc;
+  }
+
+  Record getRecord() {
+    return rec;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SimpleCalculator(
@@ -14,10 +34,6 @@ class ExpensesCalculator extends StatelessWidget {
         borderWidth: 0.0,
         operatorColor: Colors.grey[500],
         displayColor: Colors.blueGrey,
-        displayStyle: TextStyle(
-          color: Colors.white,
-          fontSize: 80.0,
-        ),
       ),
     );
   }
@@ -473,7 +489,6 @@ class SimpleCalculator extends StatefulWidget {
 }
 
 class _SimpleCalculatorState extends State<SimpleCalculator> {
-  String _displayValue;
   String _expression = "";
   String _acLabel = "AC";
   BorderSide _borderSide;
@@ -589,28 +604,138 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
-            flex: 3,
+            flex: 4,
             child: Container(
               color: widget.theme?.displayColor,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 18, right: 18),
-                  child: AutoSizeText(
-                    _displayValue,
-                    style: widget.theme?.displayStyle ??
-                        const TextStyle(fontSize: 50),
-                    maxLines: 1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 18, right: 18),
+                      child: Text(
+                        "\$",
+                        style: widget.theme?.displayStyle ??
+                            const TextStyle(fontSize: 60, color: Colors.white),
+                      ),
+                    ),
                   ),
-                ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 18, right: 18),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 300.0),
+                        child: AutoSizeText(
+                          _displayValue,
+                          style: widget.theme?.displayStyle ??
+                              TextStyle(fontSize: 60, color: Colors.white),
+                          maxLines: 1,
+                          stepGranularity: 10,
+                          minFontSize: 30,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-          Row(
-            children: <Widget>[
-              MaterialButton(),
-              MaterialButton(),
-            ],
+          Expanded(
+            flex: 1,
+            child: Container(
+              color: Colors.blueGrey,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Expanded(
+                    child: PopupMenuButton(
+                      initialValue: cat,
+                      onSelected: (input) {
+                        setState(() {
+                          cat = input;
+                        });
+                        print(cat.categoryTitle);
+                      },
+                      itemBuilder: (context) {
+                        return Provider.of<CategoriesData>(context,
+                                listen: false)
+                            .categories
+                            .map((e) => PopupMenuItem(
+                                  value: e,
+                                  child: e.makeWidget(),
+                                ))
+                            .toList();
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Category',
+                            style: TextStyle(
+                              color: Colors.blueGrey[200],
+                              fontSize: 12.0,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                          Text(
+                            cat?.categoryTitle ??
+                                CategoriesData().categories[0].categoryTitle,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: PopupMenuButton(
+                      initialValue: acc,
+                      onSelected: (input) {
+                        setState(() {
+                          acc = input;
+                        });
+                        print(acc.title);
+                      },
+                      itemBuilder: (context) {
+                        return Provider.of<AccountsData>(context, listen: false)
+                            .accounts
+                            .map((e) => PopupMenuItem(
+                                  value: e,
+                                  child: Text(e.title),
+                                ))
+                            .toList();
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Accounts',
+                            style: TextStyle(
+                              color: Colors.blueGrey[200],
+                              fontSize: 12.0,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                          Text(
+                            acc?.title ?? AccountsData().accounts[0].title,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
           Visibility(
             visible: !widget.hideExpression,
@@ -645,7 +770,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
       [_nums[7], _nums[8], _nums[9], "×"],
       [_nums[4], _nums[5], _nums[6], "-"],
       [_nums[1], _nums[2], _nums[3], "+"],
-      [_calc.numberFormat.symbols.DECIMAL_SEP, _nums[0], "±", "="],
+      [_calc.numberFormat.symbols.DECIMAL_SEP, _nums[0], "", "="],
     ].map((items) {
       return items.map((title) {
         Color color =

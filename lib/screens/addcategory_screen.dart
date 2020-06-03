@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
+import 'package:snapsheetapp/models/categories_data.dart';
 
 import '../constants.dart';
 
-class AddCategoryScreen extends StatelessWidget {
+class AddCategoryScreen extends StatefulWidget {
   static const String id = 'addcategory_screen';
+
+  @override
+  _AddCategoryScreenState createState() => _AddCategoryScreenState();
+}
+
+class _AddCategoryScreenState extends State<AddCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,10 +32,15 @@ class AddCategoryScreen extends StatelessWidget {
         title: Text('CATEGORIES'),
       ),
       body: Center(
-          child: Text(
-        'Lists of category will appear here.',
-        style: TextStyle(fontStyle: FontStyle.italic),
-      )),
+        child: ListView.builder(
+          itemCount: Provider.of<CategoriesData>(context).categories.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Provider.of<CategoriesData>(context)
+                .categories[index]
+                .makeWidget();
+          },
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
         child: Icon(Icons.add),

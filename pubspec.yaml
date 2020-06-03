@@ -25,6 +25,7 @@ dependencies:
   provider: ^4.1.2
   firebase_ml_vision: ^0.9.4
   image_picker: ^0.6.7
+  string_similarity: ^1.0.1
 
 dev_dependencies:
   flutter_test:

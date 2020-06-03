@@ -37,21 +37,22 @@ class Snapsheet extends StatelessWidget {
         ChangeNotifierProvider<CategoriesData>(
             create: (context) => CategoriesData()),
       ],
-      child: MaterialApp(initialRoute: WelcomeScreen.id, routes: {
-        WelcomeScreen.id: (context) => WelcomeScreen(),
-        HomepageScreen.id: (context) => HomepageScreen(),
-        LoginScreen.id: (context) => LoginScreen(),
-        RegistrationScreen.id: (context) => RegistrationScreen(),
-        AddExpensesScreen.id: (context) => AddExpensesScreen(),
-        ExportSelectScreen.id: (context) => ExportSelectScreen(),
-        ExportDoneScreen.id: (context) => ExportDoneScreen(),
-        AddCategoryScreen.id: (context) => AddCategoryScreen(),
-        EditProfileScreen.id: (context) => EditProfileScreen(),
-        SettingsScreen.id: (context) => SettingsScreen(),
-        EditInfoScreen.id: (context) => EditInfoScreen(),
-        ScannerScreen.id: (context) => ScannerScreen(),
-        BulkInputScreen.id: (context) => BulkInputScreen(),
+      child: MaterialApp(initialRoute: AddExpensesScreen.id, routes: {
+      WelcomeScreen.id: (context) => WelcomeScreen(),
+      HomepageScreen.id: (context) => HomepageScreen(),
+      LoginScreen.id: (context) => LoginScreen(),
+      RegistrationScreen.id: (context) => RegistrationScreen(),
+      AddExpensesScreen.id: (context) => AddExpensesScreen(),
+      ExportSelectScreen.id: (context) => ExportSelectScreen(),
+      ExportDoneScreen.id: (context) => ExportDoneScreen(),
+      AddCategoryScreen.id: (context) => AddCategoryScreen(),
+      EditProfileScreen.id: (context) => EditProfileScreen(),
+      SettingsScreen.id: (context) => SettingsScreen(),
+      EditInfoScreen.id: (context) => EditInfoScreen(),
+      ScannerScreen.id: (context) => ScannerScreen(),
+      BulkInputScreen.id: (context) => BulkInputScreen(),
       }),
     );
+
   }
 }

@@ -27,6 +27,8 @@ dependencies:
   image_picker: ^0.6.7
   auto_size_text: ^2.1.0
   font_awesome_flutter: ^8.8.1
+  string_similarity: ^1.0.1
+
 
 dev_dependencies:
   flutter_test:

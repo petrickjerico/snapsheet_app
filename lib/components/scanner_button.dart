@@ -3,11 +3,14 @@ import 'dart:io';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'parser.dart';
 
 class ScannerButton extends StatelessWidget {
   final bool isCamera;
 
   ScannerButton({@required this.isCamera});
+
+  Parser parser = Parser();
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +28,19 @@ class ScannerButton extends StatelessWidget {
         final image = FirebaseVisionImage.fromFile(imageFile);
         final textRecognizer = FirebaseVision.instance.textRecognizer();
         final visionText = await textRecognizer.processImage(image);
+        List<String> txt = [];
         for (TextBlock block in visionText.blocks) {
           for (TextLine line in block.lines) {
-            String output = "";
             for (TextElement word in line.elements) {
-              output = output + word.text;
+              txt.add(word.text.toLowerCase());
             }
-            print(output);
           }
-          textRecognizer.close();
         }
+        for (String t in txt) {
+          String match = parser.findBestMatch(t);
+          if (match != "") print(t + " : " + match);
+        }
+        textRecognizer.close();
       },
     );
   }

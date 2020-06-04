@@ -1,4 +1,5 @@
 import 'package:snapsheetapp/models/category.dart';
+import 'package:snapsheetapp/models/user_data.dart';
 
 class Record {
   static int _counter = 1;
@@ -9,8 +10,9 @@ class Record {
   String _recordCurrency;
 
   Record.init() {
-    this._recordTitle = "Untitled Record $_counter";
+    this._recordTitle = "Untitled Record";
     this._recordCurrency = "\$";
+    this._dateTime = DateTime.now();
     _counter++;
   }
 

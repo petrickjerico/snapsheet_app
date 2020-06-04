@@ -55,6 +55,8 @@ class UserData extends ChangeNotifier {
     ),
   ];
 
+  List<Record> _records = [];
+
   List<Account> get accounts {
     return _accounts;
   }
@@ -63,12 +65,31 @@ class UserData extends ChangeNotifier {
     return _categories;
   }
 
+  List<Record> get records {
+    return _records;
+  }
+
+  int get recordsCount {
+    return _records.length;
+  }
+
+  void updateRecords() {
+    List<Record> records = [];
+    accounts.forEach((account) => records.addAll(account.records));
+    records.sort((a, b) => a.date.compareTo(b.date));
+    _records = records;
+  }
+
   void addExpenseToAccount(Record rec, Account acc) {
+    if (rec.title == "Untitled Record") {
+      rec.rename(rec.category.categoryTitle);
+    }
     int index = _accounts.indexWhere((element) => element.equals(acc));
 
     print(_accounts[index]);
     _accounts[index].add(rec);
     print(_accounts[index]);
+    updateRecords();
 
     notifyListeners();
     print('User Data updated!');

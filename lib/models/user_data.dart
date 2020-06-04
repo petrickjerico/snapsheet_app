@@ -12,47 +12,30 @@ class UserData extends ChangeNotifier {
     Account('Account 3'),
   ];
 
-  List<Category> _categories = [
-    Category(
-      'Food & Beverage',
-      Icon(FontAwesomeIcons.utensils),
-    ),
-    Category(
-      'Transportation',
-      Icon(FontAwesomeIcons.shuttleVan),
-    ),
-    Category(
-      'Fashion',
-      Icon(FontAwesomeIcons.shoppingBag),
-    ),
-    Category(
-      'Movies',
-      Icon(FontAwesomeIcons.film),
-    ),
-    Category(
-      'Medicine',
-      Icon(FontAwesomeIcons.pills),
-    ),
-    Category(
-      'Groceries',
-      Icon(FontAwesomeIcons.shoppingCart),
-    ),
-    Category(
-      'Games',
-      Icon(FontAwesomeIcons.gamepad),
-    ),
-    Category(
-      'Movies',
-      Icon(FontAwesomeIcons.film),
-    ),
-    Category(
-      'Recreation',
-      Icon(FontAwesomeIcons.umbrellaBeach),
-    ),
-    Category(
-      'Lodging',
-      Icon(FontAwesomeIcons.hotel),
-    ),
+  List<String> _categoryNames = [
+    'Food & Beverage',
+    'Transportation',
+    'Fashion',
+    'Movies',
+    'Medicine',
+    'Groceries',
+    'Games',
+    'Movies',
+    'Recreation',
+    'Lodging'
+  ];
+
+  List<Icon> _categoryIcons = [
+    Icon(FontAwesomeIcons.utensils),
+    Icon(FontAwesomeIcons.shuttleVan),
+    Icon(FontAwesomeIcons.shoppingBag),
+    Icon(FontAwesomeIcons.film),
+    Icon(FontAwesomeIcons.pills),
+    Icon(FontAwesomeIcons.shoppingCart),
+    Icon(FontAwesomeIcons.gamepad),
+    Icon(FontAwesomeIcons.film),
+    Icon(FontAwesomeIcons.umbrellaBeach),
+    Icon(FontAwesomeIcons.hotel),
   ];
 
   List<Record> _records = [];

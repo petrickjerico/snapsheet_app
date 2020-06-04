@@ -28,7 +28,9 @@ class ScannerButton extends StatelessWidget {
         final image = FirebaseVisionImage.fromFile(imageFile);
         final textRecognizer = FirebaseVision.instance.textRecognizer();
         final visionText = await textRecognizer.processImage(image);
+
         List<String> txt = [];
+
         for (TextBlock block in visionText.blocks) {
           for (TextLine line in block.lines) {
             for (TextElement word in line.elements) {

@@ -1,12 +1,17 @@
-import 'dart:collection';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:snapsheetapp/models/record.dart';
 
+import 'account.dart';
 import 'category.dart';
 
-class CategoriesData extends ChangeNotifier {
+class UserData extends ChangeNotifier {
+  List<Account> _accounts = [
+    Account('Account 1'),
+    Account('Account 2'),
+    Account('Account 3'),
+  ];
+
   List<Category> _categories = [
     Category(
       'Food & Beverage',
@@ -50,8 +55,23 @@ class CategoriesData extends ChangeNotifier {
     ),
   ];
 
+  List<Account> get accounts {
+    return _accounts;
+  }
+
   List<Category> get categories {
     return _categories;
+  }
+
+  void addExpenseToAccount(Record rec, Account acc) {
+    int index = _accounts.indexWhere((element) => element.equals(acc));
+
+    print(_accounts[index]);
+    _accounts[index].add(rec);
+    print(_accounts[index]);
+
+    notifyListeners();
+    print('User Data updated!');
   }
 
   void addCategory(String categoryTitle) {

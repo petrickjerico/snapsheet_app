@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/scanner_button.dart';
 import 'package:snapsheetapp/models/account.dart';
 import 'package:snapsheetapp/models/record.dart';
+import 'package:snapsheetapp/models/temp_data.dart';
+import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/editinfo_screen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/rendering.dart';
@@ -10,68 +12,63 @@ import 'package:flutter_grid_button/flutter_grid_button.dart';
 import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:snapsheetapp/models/accounts_data.dart';
-import 'package:snapsheetapp/models/categories_data.dart';
 import 'package:snapsheetapp/models/category.dart';
 
-class AddExpensesScreen extends StatefulWidget {
+class AddExpensesScreen extends StatelessWidget {
   static const String id = 'addexpenses_screen';
-
-  @override
-  _AddExpensesScreenState createState() => _AddExpensesScreenState();
-}
-
-class _AddExpensesScreenState extends State<AddExpensesScreen> {
-  ExpensesCalculator exCal = ExpensesCalculator();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        leading: FlatButton(
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            //TODO: more complex navigation
-            Navigator.pop(context);
-          },
-        ),
-        title: Text('ADD EXPENSES'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.edit,
+    final UserData _userData = Provider.of<UserData>(context);
+    final TempData _tempData = TempData();
+    return ChangeNotifierProvider(
+      create: (context) => _tempData,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          leading: FlatButton(
+            child: Icon(
+              Icons.arrow_back_ios,
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.pushNamed(context, EditInfoScreen.id);
+              //TODO: more complex navigation
+              Navigator.pop(context);
             },
           ),
-          ScannerButton(isCamera: true),
-          ScannerButton(isCamera: false),
-        ],
-      ),
-      body: exCal,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
-        child: Icon(Icons.check),
-        onPressed: () {
-          Provider.of<AccountsData>(context, listen: false)
-              .addExpenseToAccount(rec, acc);
-          Navigator.pop(context);
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
-        shape: CircularNotchedRectangle(),
-        child: Container(
-          height: 40.0,
+          title: Text('ADD EXPENSES'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.edit,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, EditInfoScreen.id);
+              },
+            ),
+            ScannerButton(isCamera: true),
+            ScannerButton(isCamera: false),
+          ],
+        ),
+        body: ExpensesCalculator(),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.black,
+          child: Icon(Icons.check),
+          onPressed: () {
+            _userData.addExpenseToAccount(_tempData.record, _tempData.account);
+            Navigator.pop(context);
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.black,
+          shape: CircularNotchedRectangle(),
           child: Container(
-            child: null,
+            height: 40.0,
+            child: Container(
+              child: null,
+            ),
           ),
         ),
       ),
@@ -79,18 +76,7 @@ class _AddExpensesScreenState extends State<AddExpensesScreen> {
   }
 }
 
-Category cat = CategoriesData().categories[0];
-Account acc = AccountsData().accounts[0];
-String _displayValue = "0";
-Record rec = Record(
-    "Some Title", double.parse(_displayValue), DateTime.now(), cat, "\$");
-
-class ExpensesCalculator extends StatefulWidget {
-  @override
-  _ExpensesCalculatorState createState() => _ExpensesCalculatorState();
-}
-
-class _ExpensesCalculatorState extends State<ExpensesCalculator> {
+class ExpensesCalculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleCalculator(
@@ -554,6 +540,9 @@ class SimpleCalculator extends StatefulWidget {
 }
 
 class _SimpleCalculatorState extends State<SimpleCalculator> {
+  Account acc = UserData().accounts[0];
+  Category cat = UserData().categories[0];
+  String _displayValue;
   String _expression = "";
   String _acLabel = "AC";
   BorderSide _borderSide;
@@ -566,6 +555,11 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<TempData>(context, listen: false).updateTargetAccount(acc);
+    Provider.of<TempData>(context, listen: false)
+        .revalueCurrentRecord(double.parse(_displayValue));
+    Provider.of<TempData>(context, listen: false)
+        .recategoriseCurrentRecord(cat);
     _borderSide = Divider.createBorderSide(
       context,
       color: widget.theme?.borderColor ?? Theme.of(context).dividerColor,
@@ -717,15 +711,18 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                   Expanded(
                     child: PopupMenuButton(
                       initialValue: cat,
-                      onSelected: (input) {
+                      onSelected: (Category input) {
+                        TempData curr =
+                            Provider.of<TempData>(context, listen: false);
                         setState(() {
                           cat = input;
+                          curr.recategoriseCurrentRecord(input);
                         });
                         print(cat.categoryTitle);
+                        print(curr.record.category.categoryTitle);
                       },
                       itemBuilder: (context) {
-                        return Provider.of<CategoriesData>(context,
-                                listen: false)
+                        return Provider.of<UserData>(context, listen: false)
                             .categories
                             .map((e) => PopupMenuItem(
                                   value: e,
@@ -745,8 +742,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                             ),
                           ),
                           Text(
-                            cat?.categoryTitle ??
-                                CategoriesData().categories[0].categoryTitle,
+                            cat.categoryTitle,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18.0,
@@ -761,13 +757,17 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                     child: PopupMenuButton(
                       initialValue: acc,
                       onSelected: (input) {
+                        TempData curr =
+                            Provider.of<TempData>(context, listen: false);
                         setState(() {
                           acc = input;
+                          curr.updateTargetAccount(acc);
                         });
                         print(acc.title);
+                        print(curr.account.title);
                       },
                       itemBuilder: (context) {
-                        return Provider.of<AccountsData>(context, listen: false)
+                        return Provider.of<UserData>(context, listen: false)
                             .accounts
                             .map((e) => PopupMenuItem(
                                   value: e,
@@ -787,7 +787,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                             ),
                           ),
                           Text(
-                            acc?.title ?? AccountsData().accounts[0].title,
+                            acc.title,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18.0,

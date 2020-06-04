@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/homepage_card.dart';
 import 'package:snapsheetapp/models/account.dart';
-import 'package:snapsheetapp/models/accounts_data.dart';
+import 'package:snapsheetapp/models/user_data.dart';
 
 class AccountsTab extends StatefulWidget {
   @override
@@ -33,7 +33,7 @@ class _AccountsTabState extends State<AccountsTab> {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         crossAxisCount: 3,
-        children: Provider.of<AccountsData>(context)
+        children: Provider.of<UserData>(context)
             .accounts
             .map((e) => buildButton(e))
             .toList());

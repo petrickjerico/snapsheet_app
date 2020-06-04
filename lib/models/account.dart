@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:snapsheetapp/models/record.dart';
 
-class Account {
+class Account extends ChangeNotifier {
+  static int _counter = 1;
   String _accountTitle;
   List<Record> _accountRecords;
+
+  Account.init() {
+    this._accountTitle = "Untitled Account $_counter";
+    _counter++;
+    this._accountRecords = [];
+  }
 
   Account(String accountTitle) {
     this._accountTitle = accountTitle;
@@ -20,10 +27,12 @@ class Account {
 
   void add(Record newRecord) {
     _accountRecords.add(newRecord);
+    notifyListeners();
   }
 
   void rename(String newTitle) {
     _accountTitle = newTitle;
+    notifyListeners();
   }
 
   String toString() {

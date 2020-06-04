@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/models/categories_data.dart';
+import 'package:snapsheetapp/models/user_data.dart';
 
 import '../constants.dart';
 
@@ -33,9 +33,9 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
       ),
       body: Center(
         child: ListView.builder(
-          itemCount: Provider.of<CategoriesData>(context).categories.length,
+          itemCount: Provider.of<UserData>(context).categories.length,
           itemBuilder: (BuildContext context, int index) {
-            return Provider.of<CategoriesData>(context)
+            return Provider.of<UserData>(context)
                 .categories[index]
                 .makeWidget();
           },

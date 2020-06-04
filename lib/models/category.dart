@@ -4,6 +4,8 @@ class Category {
   String _categoryTitle;
   Icon _categoryIcon;
 
+  Category.init();
+
   Category(this._categoryTitle, this._categoryIcon);
 
   String get categoryTitle {

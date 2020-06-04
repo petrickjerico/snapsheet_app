@@ -1,11 +1,18 @@
 import 'package:snapsheetapp/models/category.dart';
 
 class Record {
+  static int _counter = 1;
   String _recordTitle;
   double _recordValue;
+  DateTime _dateTime;
   Category _recordCategory;
   String _recordCurrency;
-  DateTime _dateTime;
+
+  Record.init() {
+    this._recordTitle = "Untitled Record $_counter";
+    this._recordCurrency = "\$";
+    _counter++;
+  }
 
   Record(this._recordTitle, this._recordValue, this._dateTime,
       this._recordCategory, this._recordCurrency);
@@ -54,6 +61,6 @@ class Record {
   }
 
   String toString() {
-    return "${_recordCategory.categoryTitle}: $_recordCurrency${_recordValue.toStringAsFixed(2)}";
+    return "${_recordCategory.categoryTitle}: $_recordCurrency$_recordValue";
   }
 }

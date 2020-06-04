@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/models/account.dart';
-import 'package:snapsheetapp/models/accounts_data.dart';
-import 'package:snapsheetapp/models/categories_data.dart';
 import 'package:snapsheetapp/screens/accounts_tab.dart';
 import 'package:snapsheetapp/screens/addexpenses_screen.dart';
 import 'package:snapsheetapp/screens/history_tab.dart';

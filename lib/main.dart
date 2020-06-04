@@ -14,9 +14,7 @@ import 'package:snapsheetapp/screens/registration_screen.dart';
 import 'package:snapsheetapp/screens/scanner_screen.dart';
 import 'package:snapsheetapp/screens/settings_screen.dart';
 import 'package:snapsheetapp/screens/welcome_screen.dart';
-
-import 'models/accounts_data.dart';
-import 'models/categories_data.dart';
+import 'models/user_data.dart';
 
 void main() {
   //To lock orientation of the app.
@@ -32,27 +30,23 @@ class Snapsheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AccountsData>(
-            create: (context) => AccountsData()),
-        ChangeNotifierProvider<CategoriesData>(
-            create: (context) => CategoriesData()),
+        ChangeNotifierProvider<UserData>(create: (context) => UserData()),
       ],
       child: MaterialApp(initialRoute: HomepageScreen.id, routes: {
-      WelcomeScreen.id: (context) => WelcomeScreen(),
-      HomepageScreen.id: (context) => HomepageScreen(),
-      LoginScreen.id: (context) => LoginScreen(),
-      RegistrationScreen.id: (context) => RegistrationScreen(),
-      AddExpensesScreen.id: (context) => AddExpensesScreen(),
-      ExportSelectScreen.id: (context) => ExportSelectScreen(),
-      ExportDoneScreen.id: (context) => ExportDoneScreen(),
-      AddCategoryScreen.id: (context) => AddCategoryScreen(),
-      EditProfileScreen.id: (context) => EditProfileScreen(),
-      SettingsScreen.id: (context) => SettingsScreen(),
-      EditInfoScreen.id: (context) => EditInfoScreen(),
-      ScannerScreen.id: (context) => ScannerScreen(),
-      BulkInputScreen.id: (context) => BulkInputScreen(),
+        WelcomeScreen.id: (context) => WelcomeScreen(),
+        HomepageScreen.id: (context) => HomepageScreen(),
+        LoginScreen.id: (context) => LoginScreen(),
+        RegistrationScreen.id: (context) => RegistrationScreen(),
+        AddExpensesScreen.id: (context) => AddExpensesScreen(),
+        ExportSelectScreen.id: (context) => ExportSelectScreen(),
+        ExportDoneScreen.id: (context) => ExportDoneScreen(),
+        AddCategoryScreen.id: (context) => AddCategoryScreen(),
+        EditProfileScreen.id: (context) => EditProfileScreen(),
+        SettingsScreen.id: (context) => SettingsScreen(),
+        EditInfoScreen.id: (context) => EditInfoScreen(),
+        ScannerScreen.id: (context) => ScannerScreen(),
+        BulkInputScreen.id: (context) => BulkInputScreen(),
       }),
     );
-
   }
 }

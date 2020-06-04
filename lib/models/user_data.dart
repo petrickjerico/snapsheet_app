@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:snapsheetapp/models/record.dart';
 
-import 'account.dart';
-import 'category.dart';
+import '../archive/account.dart';
+import '../archive/category.dart';
 
 class UserData extends ChangeNotifier {
-  List<Account> _accounts = [
-    Account('Account 1'),
-    Account('Account 2'),
-    Account('Account 3'),
+  int _selectedAccount = -1;
+  Record _tempRecord;
+
+  List<String> _accountTitles = [
+    "Account 1",
   ];
 
-  List<String> _categoryNames = [
+  List<String> _categoryTitles = [
     'Food & Beverage',
     'Transportation',
     'Fashion',
@@ -40,14 +41,6 @@ class UserData extends ChangeNotifier {
 
   List<Record> _records = [];
 
-  List<Account> get accounts {
-    return _accounts;
-  }
-
-  List<Category> get categories {
-    return _categories;
-  }
-
   List<Record> get records {
     return _records;
   }
@@ -56,30 +49,82 @@ class UserData extends ChangeNotifier {
     return _records.length;
   }
 
-  void updateRecords() {
-    List<Record> records = [];
-    accounts.forEach((account) => records.addAll(account.records));
-    records.sort((a, b) => a.date.compareTo(b.date));
-    _records = records;
+  int get selectedAccount {
+    return _selectedAccount;
   }
 
-  void addExpenseToAccount(Record rec, Account acc) {
-    if (rec.title == "Untitled Record") {
-      rec.rename(rec.category.categoryTitle);
+  int get categoriesCount {
+    return _categoryTitles.length;
+  }
+
+  List<String> get accounts {
+    return _accountTitles;
+  }
+
+  List<String> get categoryTitles {
+    return _categoryTitles;
+  }
+
+  List<Icon> get categoryIcons {
+    return _categoryIcons;
+  }
+
+  Record get tempRecord {
+    return _tempRecord;
+  }
+
+  void addRecord() {
+    if (_tempRecord.title == "untitled") {
+      _tempRecord.rename(_categoryTitles[_tempRecord.categoryId]);
     }
-    int index = _accounts.indexWhere((element) => element.equals(acc));
-
-    print(_accounts[index]);
-    _accounts[index].add(rec);
-    print(_accounts[index]);
-    updateRecords();
-
+    records.add(_tempRecord);
     notifyListeners();
-    print('User Data updated!');
   }
 
-  void addCategory(String categoryTitle) {
-    _categories.add(Category(categoryTitle, Icon(Icons.category)));
+  void addAccount(String accTitle) {
+    _accountTitles.add(accTitle);
     notifyListeners();
+  }
+
+  void addCategory(String categoryTitle, Icon icon) {
+    _categoryTitles.add(categoryTitle);
+    _categoryIcons.add(icon);
+    notifyListeners();
+  }
+
+  void selectAccount(int accId) {
+    _selectedAccount = accId;
+    notifyListeners();
+  }
+
+  void newRecord() {
+    _tempRecord = new Record(
+        "untitled", 0, DateTime.now(), Record.catId, Record.accId, "SGD");
+    notifyListeners();
+  }
+
+  void changeCategory(int catId) {
+    _tempRecord.recategorise(catId);
+    notifyListeners();
+  }
+
+  void changeAccount(int accId) {
+    _tempRecord.reaccount(accId);
+    notifyListeners();
+  }
+
+  void changeValue(double newValue) {
+    _tempRecord.revalue(newValue);
+    notifyListeners();
+  }
+
+  String get statistics {
+//    String res;
+//
+//    if (_selectedAccount == -1) {
+//      res += "Records from all accounts:";
+//      for ()
+//    }
+    return selectedAccount.toString();
   }
 }

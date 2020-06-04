@@ -11,19 +11,20 @@ class HistoryTab extends StatelessWidget {
     return Consumer<UserData>(builder: (context, userData, child) {
       return ListView.builder(
         itemBuilder: (context, index) {
+          print(userData.recordsCount);
           final record = userData.records[index];
           return ListTile(
             leading: CircleAvatar(
               backgroundColor: Colors.black,
               child: IconTheme(
-                  data: new IconThemeData(color: Colors.white, size: 19),
-                  child: record.category.categoryIcon),
+                  data: IconThemeData(color: Colors.white, size: 19),
+                  child: userData.categoryIcons[record.categoryId]),
             ),
             title: Text(
               record.title,
               style: kHistoryRecordTitle,
             ),
-            subtitle: Text("subtitle"),
+            subtitle: Text(userData.accounts[record.accountId]),
             trailing: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,

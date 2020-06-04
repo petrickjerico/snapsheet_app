@@ -2,7 +2,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/models/account.dart';
+import 'package:snapsheetapp/models/user_data.dart';
+import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/account.dart';
 import 'package:snapsheetapp/screens/accounts_tab.dart';
 import 'package:snapsheetapp/screens/addexpenses_screen.dart';
 import 'package:snapsheetapp/screens/history_tab.dart';
@@ -41,47 +42,50 @@ class _HomepageScreenState extends State<HomepageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: Text('HOMEPAGE'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.close),
-              color: Colors.white,
-              onPressed: () {
-                _auth.signOut();
-                Navigator.pushNamed(context, WelcomeScreen.id);
-              },
-            )
-          ],
-          bottom: TabBar(
-            tabs: [
-              Tab(text: 'ACCOUNTS'),
-              Tab(text: 'HISTORY'),
+    return Consumer<UserData>(builder: (context, userData, child) {
+      return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            title: Text('HOMEPAGE'),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.close),
+                color: Colors.white,
+                onPressed: () {
+                  _auth.signOut();
+                  Navigator.pushNamed(context, WelcomeScreen.id);
+                },
+              )
             ],
-            indicatorColor: Colors.white,
-            indicatorWeight: 5.0,
+            bottom: TabBar(
+              tabs: [
+                Tab(text: 'ACCOUNTS'),
+                Tab(text: 'HISTORY'),
+              ],
+              indicatorColor: Colors.white,
+              indicatorWeight: 5.0,
+            ),
+          ),
+          drawer: SidebarMenu(currentUser: loggedInUser),
+          body: TabBarView(
+            children: <Widget>[
+              AccountsTab(),
+              HistoryTab(),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.black,
+            child: Icon(Icons.add),
+            onPressed: () {
+              userData.newRecord();
+              Navigator.pushNamed(context, AddExpensesScreen.id);
+            },
           ),
         ),
-        drawer: SidebarMenu(currentUser: loggedInUser),
-        body: TabBarView(
-          children: <Widget>[
-            AccountsTab(),
-            HistoryTab(),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.black,
-          child: Icon(Icons.add),
-          onPressed: () {
-            Navigator.pushNamed(context, AddExpensesScreen.id);
-          },
-        ),
-      ),
-    );
+      );
+    });
   }
 }

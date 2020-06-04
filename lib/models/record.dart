@@ -1,68 +1,85 @@
-import 'package:snapsheetapp/models/category.dart';
+import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/category.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
 class Record {
-  static int _counter = 1;
-  String _recordTitle;
-  double _recordValue;
+  static int catId = 0;
+  static int accId = 0;
+  String _title;
+  double _value;
   DateTime _dateTime;
-  Category _recordCategory;
-  String _recordCurrency;
+  int _categoryId;
+  int _accountId;
+  String _currency;
 
   Record.init() {
-    this._recordTitle = "Untitled Record";
-    this._recordCurrency = "\$";
-    this._dateTime = DateTime.now();
-    _counter++;
+    _title = "untitled";
+    _value = 0;
+    _dateTime = DateTime.now();
+    _categoryId = catId;
+    _accountId = accId;
+    _currency = "SGD";
+
+//    Record("untitled", 0, DateTime.now(), catId, accId, "SGD");
   }
 
-  Record(this._recordTitle, this._recordValue, this._dateTime,
-      this._recordCategory, this._recordCurrency);
+  Record(this._title, this._value, this._dateTime, this._categoryId,
+      this._accountId, this._currency);
 
   String get title {
-    return _recordTitle;
+    return _title;
   }
 
   double get value {
-    return _recordValue;
+    return _value;
   }
 
   DateTime get date {
     return _dateTime;
   }
 
-  Category get category {
-    return _recordCategory;
+  int get categoryId {
+    return _categoryId;
+  }
+
+  int get accountId {
+    return _accountId;
   }
 
   String get currency {
-    return _recordCurrency;
+    return _currency;
   }
 
   void rename(String newTitle) {
-    _recordTitle = newTitle;
+    _title = newTitle;
   }
 
   void revalue(double newValue) {
-    _recordValue = newValue;
+    _value = newValue;
   }
 
   void redate(DateTime newDate) {
     _dateTime = newDate;
   }
 
-  void recategorise(Category newCategory) {
-    _recordCategory = newCategory;
+  void recategorise(int newCategoryId) {
+    _categoryId = newCategoryId;
+  }
+
+  void reaccount(int newAccountId) {
+    _accountId = newAccountId;
   }
 
   void changeCurrency(String newCurrency) {
     // TODO: change _recordValue to correspond to the given newCurrency.
     // For now, changeCurrency() only changes the appended currency String
     // before _recordValue.
-    _recordCurrency = newCurrency;
+    _currency = newCurrency;
   }
 
   String toString() {
-    return "${_recordCategory.categoryTitle}: $_recordCurrency$_recordValue";
+    return "catId:$_categoryId\n"
+        "title:$_title\n"
+        "accId:$_accountId\n"
+        "value:$_value";
   }
 }

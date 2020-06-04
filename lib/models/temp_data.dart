@@ -23,6 +23,7 @@ class TempData extends ChangeNotifier {
 
   void updateTargetAccount(Account acc) {
     _account = acc;
+
     notifyListeners();
     print("Target account changed!");
   }

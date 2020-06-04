@@ -1,5 +1,21 @@
 import 'package:flutter/material.dart';
 
+const kHistoryRecordTitle = TextStyle(
+  fontWeight: FontWeight.w700,
+  fontSize: 16,
+);
+
+const kHistoryRecordValue = TextStyle(
+  color: Colors.red,
+  fontWeight: FontWeight.w700,
+  fontSize: 16,
+);
+
+const kHistoryRecordDate = TextStyle(
+  color: Colors.grey,
+  fontSize: 12,
+);
+
 const kSendButtonTextStyle = TextStyle(
   color: Colors.lightBlueAccent,
   fontWeight: FontWeight.bold,

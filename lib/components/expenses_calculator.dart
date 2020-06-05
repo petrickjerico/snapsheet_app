@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/models/record.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/temp_data.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/rendering.dart';
@@ -9,7 +8,6 @@ import 'package:flutter_grid_button/flutter_grid_button.dart';
 import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart' as intl;
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/category.dart';
 
 class ExpensesCalculator extends StatelessWidget {
   @override
@@ -497,7 +495,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
     );
     return Consumer<UserData>(
       builder: (context, userData, child) {
-        userData.changeValue(double.parse(_displayValue));
+        userData.changeValue(double.parse(_displayValue.replaceAll(",", "")));
         return Column(children: <Widget>[
           Expanded(child: _getDisplay(userData), flex: 3),
           Expanded(child: _getButtons(), flex: 4),

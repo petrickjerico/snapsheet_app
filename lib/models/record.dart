@@ -1,4 +1,3 @@
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/category.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
 class Record {
@@ -18,8 +17,6 @@ class Record {
     _categoryId = catId;
     _accountId = accId;
     _currency = "SGD";
-
-//    Record("untitled", 0, DateTime.now(), catId, accId, "SGD");
   }
 
   Record(this._title, this._value, this._dateTime, this._categoryId,
@@ -74,12 +71,5 @@ class Record {
     // For now, changeCurrency() only changes the appended currency String
     // before _recordValue.
     _currency = newCurrency;
-  }
-
-  String toString() {
-    return "catId:$_categoryId\n"
-        "title:$_title\n"
-        "accId:$_accountId\n"
-        "value:$_value";
   }
 }

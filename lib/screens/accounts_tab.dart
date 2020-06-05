@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/homepage_card.dart';
 import '../constants.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/account.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
 class AccountsTab extends StatelessWidget {
@@ -77,8 +76,7 @@ class AccountsTab extends StatelessWidget {
                 flex: 2,
                 child: HomepageCard(
                   cardChild: Text(
-                    userData.selectedAccount?.toString() ??
-                        'Select an account.',
+                    userData.statistics,
                     style: TextStyle(fontStyle: FontStyle.italic),
                   ),
                 ),

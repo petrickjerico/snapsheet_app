@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/constants.dart';
-import 'package:snapsheetapp/models/record.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:intl/intl.dart';
 
@@ -9,7 +8,8 @@ class HistoryTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, userData, child) {
-      return ListView.builder(
+      return ListView.separated(
+        separatorBuilder: (context, index) => Divider(),
         itemBuilder: (context, index) {
           print(userData.recordsCount);
           final record = userData.records[index];
@@ -39,6 +39,9 @@ class HistoryTab extends StatelessWidget {
                 ),
               ],
             ),
+            onTap: () {
+              // TODO: EDIT EXPENSE
+            },
           );
         },
         itemCount: userData.recordsCount,

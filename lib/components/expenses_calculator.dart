@@ -501,6 +501,8 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
     return Consumer<UserData>(
       builder: (context, userData, child) {
         userData.changeValue(double.parse(_displayValue.replaceAll(",", "")));
+        _catId = userData.isEditing ? userData.tempRecord.categoryId : _catId;
+        _accId = userData.isEditing ? userData.tempRecord.accountId : _accId;
         return Column(children: <Widget>[
           Expanded(child: _getDisplay(userData), flex: 3),
           Expanded(child: _getButtons(), flex: 4),

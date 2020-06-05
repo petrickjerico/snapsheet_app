@@ -34,7 +34,7 @@ class HistoryTab extends StatelessWidget {
                   style: kHistoryRecordValue,
                 ),
                 Text(
-                  DateFormat('yMd').format(record.date),
+                  DateFormat('d/M/y').format(record.date),
                   style: kHistoryRecordDate,
                 ),
               ],

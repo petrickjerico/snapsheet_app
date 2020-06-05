@@ -82,7 +82,7 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                                         ),
                                       ),
                                       Text(
-                                        DateFormat('yMd').format(date),
+                                        DateFormat('d/M/y').format(date),
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 18.0,

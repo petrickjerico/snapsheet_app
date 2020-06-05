@@ -1,32 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/homepage_card.dart';
+import 'package:snapsheetapp/components/statistics.dart';
 import '../constants.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
 class AccountsTab extends StatelessWidget {
-  Widget buildButton(String accTitle, UserData userData) {
-    int accountId = userData.accounts.indexOf(accTitle);
-    return OutlineButton(
-      child: Text(accTitle),
-      onPressed: () {
-        userData.selectAccount(accountId);
-      },
-    );
-  }
+  Widget makeAccountButtons(UserData userData, BuildContext context) {
+    List<Widget> children = userData.accounts.map((e) {
+      int accountId = userData.accounts.indexOf(e);
+      return MaterialButton(
+        color: Colors.black,
+        elevation: 0,
+        child: Text(
+          e,
+          style: TextStyle(color: Colors.white),
+        ),
+        onPressed: () {
+          userData.selectAccount(accountId);
+        },
+      );
+    }).toList();
 
-  Widget makeAccountButtons(UserData userData) {
+    children.add(OutlineButton(
+        padding: EdgeInsets.all(0),
+        borderSide: BorderSide(color: Colors.black),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.add, size: 15.0),
+            SizedBox(
+              width: 2.0,
+            ),
+            Text(
+              'ADD ACCOUNT',
+              style: TextStyle(fontSize: 15.0),
+            ),
+            SizedBox(
+              width: 2.0,
+            ),
+          ],
+        ),
+        textColor: Colors.black,
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (context) => SingleChildScrollView(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: AddAccountPopup(),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0),
+              ),
+            ),
+          );
+        }));
+
     return GridView.count(
-        childAspectRatio: 3,
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        primary: false,
-        padding: const EdgeInsets.all(20),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        crossAxisCount: 3,
-        children:
-            userData.accounts.map((e) => buildButton(e, userData)).toList());
+      childAspectRatio: 3,
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      primary: false,
+      padding: const EdgeInsets.all(10),
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+      crossAxisCount: 3,
+      children: children,
+    );
   }
 
   @override
@@ -34,53 +78,30 @@ class AccountsTab extends StatelessWidget {
     return Consumer<UserData>(
       builder: (context, userData, child) {
         return Container(
-          padding: EdgeInsets.all(20.0),
           color: Colors.grey,
           child: Column(
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: HomepageCard(
-                  cardChild: Column(
+                child: Container(
+                  color: Colors.white,
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text('List of accounts'),
-                      makeAccountButtons(userData),
-                      FlatButton(
-                        color: Colors.blueGrey,
-                        child: Text('Add account'),
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => SingleChildScrollView(
-                              padding: EdgeInsets.only(
-                                  bottom:
-                                      MediaQuery.of(context).viewInsets.bottom),
-                              child: AddAccountPopup(),
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30.0),
-                                topRight: Radius.circular(30.0),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                      makeAccountButtons(userData, context),
                     ],
                   ),
                 ),
               ),
               Expanded(
-                flex: 2,
-                child: HomepageCard(
-                  cardChild: Text(
-                    userData.statistics,
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                ),
-              ),
+                  flex: 2,
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: HomepageCard(
+                      cardChild: Statistics(),
+                    ),
+                  )),
             ],
           ),
         );
@@ -93,48 +114,130 @@ class AddAccountPopup extends StatelessWidget {
   String accountTitle;
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
     return Consumer<UserData>(builder: (context, userData, child) {
-      return Container(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                SizedBox(height: 10.0),
-                TextField(
-                  autofocus: true,
-                  onChanged: (value) {
-                    accountTitle = value;
-                  },
-                  decoration: kTextFieldDecorationLogin.copyWith(
-                      hintText: 'Name your new account'),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-              ],
-            ),
-            Container(
-              height: 50.0,
-              width: 150.0,
-              child: FlatButton(
-                color: Colors.black,
-                child: Text(
-                  'CREATE',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20.0, color: Colors.white),
-                ),
-                onPressed: () {
-                  userData.addAccount(accountTitle);
-                  Navigator.pop(context);
-                },
+      return Form(
+        key: _formKey,
+        child: Container(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  SizedBox(height: 10.0),
+                  TextFormField(
+                    autofocus: true,
+                    onChanged: (value) {
+                      accountTitle = value;
+                    },
+                    decoration: kTextFieldDecorationLogin.copyWith(
+                        hintText: 'Name your new account'),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter some text.';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                ],
               ),
-            ),
-            SizedBox(
-              height: 15.0,
-            )
-          ],
+              Container(
+                height: 50.0,
+                width: 150.0,
+                child: FlatButton(
+                  color: Colors.black,
+                  child: Text(
+                    'CREATE',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  ),
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      userData.addAccount(accountTitle);
+                      Navigator.pop(context);
+                    }
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 15.0,
+              )
+            ],
+          ),
+        ),
+      );
+    });
+  }
+}
+
+class RenameAccountPopup extends StatelessWidget {
+  RenameAccountPopup(this.id);
+
+  int id;
+  String accountTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    return Consumer<UserData>(builder: (context, userData, child) {
+      return Form(
+        key: _formKey,
+        child: Container(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  SizedBox(height: 10.0),
+                  TextFormField(
+                    initialValue: accountTitle,
+                    autofocus: true,
+                    onChanged: (value) {
+                      accountTitle = value;
+                    },
+                    decoration: kTextFieldDecorationLogin.copyWith(
+                      hintText: 'Rename your account',
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter some text.';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                ],
+              ),
+              Container(
+                height: 50.0,
+                width: 150.0,
+                child: FlatButton(
+                  color: Colors.black,
+                  child: Text(
+                    'RENAME',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  ),
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      userData.renameAccount(id, accountTitle);
+                      Navigator.pop(context);
+                    }
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 15.0,
+              )
+            ],
+          ),
         ),
       );
     });

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:snapsheetapp/models/record.dart';
-import 'package:sorted_list/sorted_list.dart';
+
+import '../archive/account.dart';
+import '../archive/category.dart';
 
 class UserData extends ChangeNotifier {
   int _selectedAccount = -1;
@@ -37,11 +39,16 @@ class UserData extends ChangeNotifier {
     Icon(FontAwesomeIcons.hotel),
   ];
 
-  SortedList<Record> _records =
-      SortedList<Record>((r1, r2) => r2.date.compareTo(r1.date));
+  List<Record> _records = [];
 
-  List<Record> get records {
+  List<Record> get allRecords {
     return _records;
+  }
+
+  List<Record> get specifiedRecords {
+    return _selectedAccount == -1
+        ? allRecords
+        : _records.where((rec) => rec.accountId == _selectedAccount).toList();
   }
 
   int get recordsCount {
@@ -76,7 +83,7 @@ class UserData extends ChangeNotifier {
     if (_tempRecord.title == "untitled") {
       _tempRecord.rename(_categoryTitles[_tempRecord.categoryId]);
     }
-    records.add(_tempRecord);
+    allRecords.add(_tempRecord);
     notifyListeners();
   }
 
@@ -117,13 +124,50 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  String get statistics {
-//    String res;
-//
-//    if (_selectedAccount == -1) {
-//      res += "Records from all accounts:";
-//      for ()
-//    }
-    return selectedAccount.toString();
+  void renameAccount(int accId, String newTitle) {
+    accounts.removeAt(accId);
+    accounts.insert(accId, newTitle);
+    notifyListeners();
+  }
+
+  String _recordsToString(Record rec) {
+    String cat = _categoryTitles[rec.categoryId];
+    String cur = rec.currency;
+    double val = rec.value;
+    return "$cat: $cur$val";
+  }
+
+  double get statsTotal {
+    double total = 0;
+    for (Record rec in allRecords) {
+      if (_selectedAccount == -1 || rec.accountId == _selectedAccount) {
+        total += rec.value;
+      }
+    }
+    return total;
+  }
+
+  String get selectedStatistics {
+    String res = "";
+    double total = 0;
+
+    if (_selectedAccount == -1) {
+      res += "Records from all accounts combined:\n";
+      for (Record rec in allRecords) {
+        res += "- ${_recordsToString(rec)}";
+        total += rec.value;
+      }
+      res += "\nTotal value: $total";
+    } else {
+      res += "Records from ${_accountTitles[_selectedAccount]}:\n";
+      for (Record rec in allRecords) {
+        if (rec.accountId == _selectedAccount) {
+          res += "\n- ${_recordsToString(rec)}";
+          total += rec.value;
+        }
+      }
+      res += "\nTotal value: $total";
+    }
+    return res;
   }
 }

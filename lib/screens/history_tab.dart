@@ -12,7 +12,7 @@ class HistoryTab extends StatelessWidget {
         separatorBuilder: (context, index) => Divider(),
         itemBuilder: (context, index) {
           print(userData.recordsCount);
-          final record = userData.records[index];
+          final record = userData.allRecords[index];
           return ListTile(
             leading: CircleAvatar(
               backgroundColor: Colors.black,

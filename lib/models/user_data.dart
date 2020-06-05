@@ -169,5 +169,23 @@ class UserData extends ChangeNotifier {
       res += "\nTotal value: $total";
     }
     return res;
+  void changeTitle(String newTitle) {
+    _tempRecord.rename(newTitle);
+    notifyListeners();
+  }
+
+  void changeDate(DateTime newDate) {
+    _tempRecord.redate(newDate);
+    notifyListeners();
+  }
+
+  String get statistics {
+//    String res;
+//
+//    if (_selectedAccount == -1) {
+//      res += "Records from all accounts:";
+//      for ()
+//    }
+    return selectedAccount.toString();
   }
 }

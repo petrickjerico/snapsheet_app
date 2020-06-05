@@ -32,8 +32,9 @@ class Parser {
     "monster curry",
   ];
 
-  String findBestMatch(String input) {
+  String findTitle(String input) {
     BestMatch match = StringSimilarity.findBestMatch(input, shops);
+    return match.bestMatch.rating > 0.7 ? match.bestMatch.target : "untitled";
   }
 
   DateTime findDate(String input) {

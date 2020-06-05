@@ -8,6 +8,7 @@ import '../archive/category.dart';
 class UserData extends ChangeNotifier {
   int _selectedAccount = -1;
   Record _tempRecord;
+  bool _isEditing = false;
 
   List<String> _accountTitles = [
     "Account 1",
@@ -79,11 +80,23 @@ class UserData extends ChangeNotifier {
     return _tempRecord;
   }
 
+  bool get isEditing {
+    return _isEditing;
+  }
+
   void addRecord() {
     if (_tempRecord.title == "untitled") {
       _tempRecord.rename(_categoryTitles[_tempRecord.categoryId]);
     }
-    allRecords.add(_tempRecord);
+
+    if (!_isEditing) {
+      allRecords.add(_tempRecord);
+    }
+
+    if (_isEditing) {
+      _isEditing = false;
+    }
+
     notifyListeners();
   }
 
@@ -121,6 +134,12 @@ class UserData extends ChangeNotifier {
 
   void changeValue(double newValue) {
     _tempRecord.revalue(newValue);
+    notifyListeners();
+  }
+
+  void changeTempRecord(int recordIndex) {
+    _tempRecord = _records[recordIndex];
+    _isEditing = true;
     notifyListeners();
   }
 

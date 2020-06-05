@@ -31,7 +31,7 @@ class AddExpensesScreen extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-          title: Text('ADD EXPENSES'),
+          title: Text('EXPENSES EDITOR'),
           actions: <Widget>[
             IconButton(
               icon: Icon(

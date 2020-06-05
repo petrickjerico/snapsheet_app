@@ -169,6 +169,8 @@ class UserData extends ChangeNotifier {
       res += "\nTotal value: $total";
     }
     return res;
+  }
+
   void changeTitle(String newTitle) {
     _tempRecord.rename(newTitle);
     notifyListeners();

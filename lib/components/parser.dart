@@ -34,7 +34,6 @@ class Parser {
 
   String findTitle(String input) {
     BestMatch match = StringSimilarity.findBestMatch(input, shops);
-    if (match.bestMatch.rating > 0.7) print(match.bestMatch.target);
     return match.bestMatch.rating > 0.7 ? match.bestMatch.target : "untitled";
   }
 

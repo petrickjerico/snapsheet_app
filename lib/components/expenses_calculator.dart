@@ -12,13 +12,18 @@ import 'package:intl/intl.dart' as intl;
 class ExpensesCalculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SimpleCalculator(
-      hideExpression: true,
-      theme: CalculatorThemeData(
-        borderWidth: 0.0,
-        operatorColor: Colors.grey[500],
-        displayColor: Colors.blueGrey,
-      ),
+    return Consumer<UserData>(
+      builder: (context, userData, child) {
+        return SimpleCalculator(
+          value: userData.tempRecord.value,
+          hideExpression: true,
+          theme: CalculatorThemeData(
+            borderWidth: 0.0,
+            operatorColor: Colors.grey[500],
+            displayColor: Colors.blueGrey,
+          ),
+        );
+      },
     );
   }
 }
@@ -461,7 +466,7 @@ class SimpleCalculator extends StatefulWidget {
     Key key,
     this.theme,
     this.hideExpression = false,
-    this.value = 0,
+    this.value,
     this.onChanged,
     this.numberFormat,
     this.maximumDigits = 10,

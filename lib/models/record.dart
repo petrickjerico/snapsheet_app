@@ -1,5 +1,3 @@
-import 'package:snapsheetapp/models/user_data.dart';
-
 class Record {
   static int catId = 0;
   static int accId = 0;

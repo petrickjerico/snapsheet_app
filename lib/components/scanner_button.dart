@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:snapsheetapp/models/user_data.dart';
 import 'parser.dart';
 
 class ScannerButton extends StatelessWidget {
@@ -14,33 +16,55 @@ class ScannerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(
-        isCamera ? Icons.camera_alt : Icons.photo_library,
-        color: Colors.white,
-      ),
-      onPressed: () async {
-        final _picker = ImagePicker();
-        final pickedFile = await _picker.getImage(
-          source: isCamera ? ImageSource.camera : ImageSource.gallery,
-        );
-        final File imageFile = File(pickedFile.path);
-        final image = FirebaseVisionImage.fromFile(imageFile);
-        final textRecognizer = FirebaseVision.instance.textRecognizer();
-        final visionText = await textRecognizer.processImage(image);
+    return Consumer<UserData>(
+      builder: (context, userData, child) {
+        return IconButton(
+          icon: Icon(
+            isCamera ? Icons.camera_alt : Icons.photo_library,
+            color: Colors.white,
+          ),
+          onPressed: () async {
+            // Setup
+            final _picker = ImagePicker();
+            final pickedFile = await _picker.getImage(
+              source: isCamera ? ImageSource.camera : ImageSource.gallery,
+            );
+            final File imageFile = File(pickedFile.path);
+            final image = FirebaseVisionImage.fromFile(imageFile);
+            final textRecognizer = FirebaseVision.instance.textRecognizer();
+            final visionText = await textRecognizer.processImage(image);
 
-        List<String> txt = [];
+            List<String> txt = [];
 
-        for (TextBlock block in visionText.blocks) {
-          for (TextLine line in block.lines) {
-            for (TextElement word in line.elements) {
-              txt.add(word.text.toLowerCase());
+            // Initialize title, value, date
+            String title = "untitled";
+            double value;
+            DateTime date;
+
+            // Process the Strings from scanner
+            for (TextBlock block in visionText.blocks) {
+              for (TextLine line in block.lines) {
+                for (TextElement word in line.elements) {
+                  txt.add(word.text.toLowerCase());
+                  if (title != "untitled") continue;
+                  title = parser.findTitle(word.text.toLowerCase());
+                }
+              }
             }
-          }
-        }
-        print(txt.join(' '));
-        print(parser.findCost(txt.join(" ")));
-        textRecognizer.close();
+
+            // Update values
+            value = parser.findCost(txt.join(" "));
+            date = parser.findDate(txt.join(" "));
+            title = '${title[0].toUpperCase()}${title.substring(1)}';
+
+            // Change userdata TempRecord
+            userData.changeTitle(title);
+            userData.changeValue(value);
+            userData.changeDate(date);
+
+            textRecognizer.close();
+          },
+        );
       },
     );
   }

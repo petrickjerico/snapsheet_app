@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:snapsheetapp/models/record.dart';
-
-import '../archive/account.dart';
-import '../archive/category.dart';
+import 'package:sorted_list/sorted_list.dart';
 
 class UserData extends ChangeNotifier {
   int _selectedAccount = -1;
@@ -39,7 +37,8 @@ class UserData extends ChangeNotifier {
     Icon(FontAwesomeIcons.hotel),
   ];
 
-  List<Record> _records = [];
+  SortedList<Record> _records =
+      SortedList<Record>((r1, r2) => r2.date.compareTo(r1.date));
 
   List<Record> get records {
     return _records;

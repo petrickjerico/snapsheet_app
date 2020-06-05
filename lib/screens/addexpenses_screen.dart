@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/expenses_calculator.dart';
 import 'package:snapsheetapp/components/scanner_button.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/account.dart';
 import 'package:snapsheetapp/models/record.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/temp_data.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/editinfo_screen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -13,7 +11,6 @@ import 'package:flutter_grid_button/flutter_grid_button.dart';
 import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart' as intl;
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/category.dart';
 
 class AddExpensesScreen extends StatelessWidget {
   static const String id = 'addexpenses_screen';

@@ -41,10 +41,11 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
               padding: EdgeInsets.all(20.0),
               child: Column(
                 children: <Widget>[
-                  TextField(
+                  TextFormField(
+                    initialValue: title,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: title,
+                      labelText: "Title",
                     ),
                     onChanged: (value) {
                       setState(() {

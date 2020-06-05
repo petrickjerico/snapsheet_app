@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/models/user_data.dart';
+import 'package:snapsheetapp/screens/addexpenses_screen.dart';
 import 'parser.dart';
 
 class ScannerButton extends StatelessWidget {
@@ -63,6 +64,8 @@ class ScannerButton extends StatelessWidget {
             userData.changeDate(date);
 
             textRecognizer.close();
+            Navigator.pop(context);
+            Navigator.pushNamed((context), AddExpensesScreen.id);
           },
         );
       },

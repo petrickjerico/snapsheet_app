@@ -11,7 +11,7 @@ class AddCategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, userData, child) {
       return Scaffold(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.black,
           leading: FlatButton(

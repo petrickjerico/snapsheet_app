@@ -58,6 +58,7 @@ class ScannerButton extends StatelessWidget {
             date = parser.findDate(txt.join(" "));
             title = '${title[0].toUpperCase()}${title.substring(1)}';
 
+            print('$value ${date.toString()} $title');
             // Change userdata TempRecord
             userData.changeTitle(title);
             userData.changeValue(value);

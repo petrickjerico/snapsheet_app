@@ -34,7 +34,7 @@ class AccountsTab extends StatelessWidget {
             ),
             Text(
               'ADD ACCOUNT',
-              style: TextStyle(fontSize: 15.0),
+              style: TextStyle(fontSize: 13.0),
             ),
             SizedBox(
               width: 2.0,

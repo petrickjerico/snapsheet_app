@@ -14,9 +14,7 @@ class UserData extends ChangeNotifier {
   Record _tempRecord;
   bool _isEditing = false;
 
-  List<String> _accountTitles = [
-    "Cash",
-  ];
+  List<String> _accountTitles = ["DBS", "Cash"];
 
   List<String> _categoryTitles = [
     'Food & Beverage',
@@ -43,8 +41,16 @@ class UserData extends ChangeNotifier {
     Icon(FontAwesomeIcons.umbrellaBeach),
     Icon(FontAwesomeIcons.hotel),
   ];
-
-  List<Record> _records = [];
+//  Record(this._title, this._value, this._dateTime, this._categoryId,
+//      this._accountId, this._currency);
+  List<Record> _records = [
+    Record("Steam Dota", 12, DateTime(2020, 4, 12), 6, 0, "SGD"),
+    Record("UNIQLO", 30, DateTime(2020, 5, 12), 2, 0, "SGD"),
+    Record("Mother's Day", 20, DateTime(2020, 5, 10), 2, 0, "SGD"),
+    Record("Sentosa Outing", 14.50, DateTime(2020, 2, 12), 8, 1, "SGD"),
+    Record("Netflix Subscription", 12, DateTime(2020, 6, 1), 7, 0, "SGD"),
+    Record("Food & Beverage", 5.8, DateTime(2020, 5, 29), 0, 1, "SGD")
+  ];
 
   List<Record> get allRecords {
     return _records;
@@ -216,7 +222,7 @@ class UserData extends ChangeNotifier {
   }
 
   // EXPORT SECTION
-  List<bool> _isExport = [true];
+  List<bool> _isExport = [true, true];
 
   int get accountCount {
     return _isExport.length;
@@ -231,30 +237,29 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-//  void getCSV() async {
-//    List<List<dynamic>> rows = List<List<dynamic>>();
-//
-//    List<Record> filtered = _records.where((e) =>
-//        exportSelection.contains(e.accountId) &&
-//        (e.date.isAfter(exportStart) && e.date.isBefore(exportEnd)));
-//
-//    for (Record r in filtered) {
-//      List<dynamic> row = List();
-//      row.add(r.date);
-//      row.add(r.title);
-//      row.add(r.value);
-//      row.add(accounts[r.accountId]);
-//      row.add(categoryTitles[r.categoryId]);
-//      row.add(r.currency);
-//      rows.add(row);
-//    }
-//
-//    String csv = const ListToCsvConverter().convert(rows);
-//
-//    final String dir = (await getApplicationDocumentsDirectory()).path;
-//    final String path = '$dir/snapsheet.csv';
-//    final File file = File(path);
-//
-//    await file.writeAsString(csv);
-//  }
+  Future<void> getCSV() async {
+    List<List<dynamic>> rows = List<List<dynamic>>();
+
+    List<Record> filtered =
+        _records.where((e) => _isExport[e.accountId]).toList();
+
+    for (Record r in filtered) {
+      List<dynamic> row = List();
+      row.add(r.date);
+      row.add(r.title);
+      row.add(r.value);
+      row.add(accounts[r.accountId]);
+      row.add(categoryTitles[r.categoryId]);
+      row.add(r.currency);
+      rows.add(row);
+    }
+
+    String csv = const ListToCsvConverter().convert(rows);
+
+    final String dir = (await getApplicationDocumentsDirectory()).path;
+    final String path = '$dir/snapsheet.csv';
+    final File file = await File(path);
+
+    file.writeAsString(csv);
+  }
 }

@@ -52,8 +52,8 @@ class ExportSelectScreen extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-                    onPressed: () {
-//                    userData.getCSV();
+                    onPressed: () async {
+                      await userData.getCSV();
                       Navigator.pushNamed(context, ExportDoneScreen.id);
                     },
                   ),

@@ -257,6 +257,7 @@ class UserData extends ChangeNotifier {
     String csv = const ListToCsvConverter().convert(rows);
 
     final String dir = (await getApplicationDocumentsDirectory()).path;
+    print(dir);
     final String path = '$dir/snapsheet.csv';
     final File file = await File(path);
 

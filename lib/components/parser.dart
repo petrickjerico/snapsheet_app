@@ -29,6 +29,7 @@ class Parser {
     "paynow",
     "popular",
     "starbucks",
+    "uniqlo",
     "monster curry",
   ];
 
@@ -44,6 +45,7 @@ class Parser {
         return parsed;
       }
     }
+    return DateTime.now();
   }
 
   double findCost(String input) {

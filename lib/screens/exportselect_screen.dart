@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:snapsheetapp/components/export_list.dart';
+import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/exportdone_screen.dart';
 // import 'package:snapsheetapp/screens/homepage_screen.dart';
 
@@ -7,64 +10,59 @@ class ExportSelectScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        leading: FlatButton(
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
+    DateTime start;
+    DateTime end;
+    return Consumer<UserData>(builder: (context, userData, child) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          leading: FlatButton(
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
-          onPressed: () {
-            //TODO: more complex navigation
-            Navigator.pop(context);
-          },
+          title: Text('EXPORT SELECTIONS'),
         ),
-        title: Text('EXPORT SELECTIONS'),
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 7,
-            child: Container(
-              child: Center(
-                child: Text(
-                  'Export parameter selections will go here.',
-                  style: TextStyle(
-                    fontStyle: FontStyle.italic,
+        body: Container(
+          padding: EdgeInsets.only(left: 20.0, right: 20, top: 20),
+          child: Column(
+            children: <Widget>[
+              Expanded(flex: 7, child: ExportList()),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40.0),
+                    color: Colors.black,
+                  ),
+                  margin:
+                      EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
+                  child: FlatButton(
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.file_upload,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        'EXPORT',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    onPressed: () {
+//                    userData.getCSV();
+                      Navigator.pushNamed(context, ExportDoneScreen.id);
+                    },
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40.0),
-                color: Colors.black,
-              ),
-              margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
-              child: FlatButton(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.file_upload,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    'PROCEED TO EXPORT',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                onPressed: () {
-                  // TODO: implement export functionality
-                  Navigator.pushNamed(context, ExportDoneScreen.id);
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+        ),
+      );
+    });
   }
 }

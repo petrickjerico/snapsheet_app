@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:snapsheetapp/models/record.dart';
 
 import '../archive/account.dart';
@@ -11,7 +15,7 @@ class UserData extends ChangeNotifier {
   bool _isEditing = false;
 
   List<String> _accountTitles = [
-    "Account 1",
+    "Cash",
   ];
 
   List<String> _categoryTitles = [
@@ -102,6 +106,7 @@ class UserData extends ChangeNotifier {
 
   void addAccount(String accTitle) {
     _accountTitles.add(accTitle);
+    _isExport.add(true);
     notifyListeners();
   }
 
@@ -209,4 +214,47 @@ class UserData extends ChangeNotifier {
 //    }
     return selectedAccount.toString();
   }
+
+  // EXPORT SECTION
+  List<bool> _isExport = [true];
+
+  int get accountCount {
+    return _isExport.length;
+  }
+
+  List<bool> get isExport {
+    return _isExport;
+  }
+
+  void toggleExport(int accId) {
+    _isExport[accId] = !_isExport[accId];
+    notifyListeners();
+  }
+
+//  void getCSV() async {
+//    List<List<dynamic>> rows = List<List<dynamic>>();
+//
+//    List<Record> filtered = _records.where((e) =>
+//        exportSelection.contains(e.accountId) &&
+//        (e.date.isAfter(exportStart) && e.date.isBefore(exportEnd)));
+//
+//    for (Record r in filtered) {
+//      List<dynamic> row = List();
+//      row.add(r.date);
+//      row.add(r.title);
+//      row.add(r.value);
+//      row.add(accounts[r.accountId]);
+//      row.add(categoryTitles[r.categoryId]);
+//      row.add(r.currency);
+//      rows.add(row);
+//    }
+//
+//    String csv = const ListToCsvConverter().convert(rows);
+//
+//    final String dir = (await getApplicationDocumentsDirectory()).path;
+//    final String path = '$dir/snapsheet.csv';
+//    final File file = File(path);
+//
+//    await file.writeAsString(csv);
+//  }
 }

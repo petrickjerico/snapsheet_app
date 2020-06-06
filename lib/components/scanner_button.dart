@@ -38,7 +38,7 @@ class ScannerButton extends StatelessWidget {
             List<String> txt = [];
 
             // Initialize title, value, date
-            String title = "untitled";
+            String title;
             double value;
             DateTime date;
 
@@ -47,16 +47,14 @@ class ScannerButton extends StatelessWidget {
               for (TextLine line in block.lines) {
                 for (TextElement word in line.elements) {
                   txt.add(word.text.toLowerCase());
-                  if (title != "untitled") continue;
-                  title = parser.findTitle(word.text.toLowerCase());
                 }
               }
             }
 
             // Update values
+            title = parser.findTitle(txt);
             value = parser.findCost(txt.join(" "));
             date = parser.findDate(txt.join(" "));
-            title = '${title[0].toUpperCase()}${title.substring(1)}';
 
             print('$value ${date.toString()} $title');
             // Change userdata TempRecord

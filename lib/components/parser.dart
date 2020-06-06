@@ -18,6 +18,7 @@ class Parser {
 
   List<String> shops = [
     "4fingers",
+    "cheers",
     "cold storage",
     "fairprice",
     "grab",
@@ -27,15 +28,42 @@ class Parser {
     "mcdonald's",
     "paylah",
     "paynow",
+    "pepper lunch",
     "popular",
     "starbucks",
     "uniqlo",
     "monster curry",
   ];
 
-  String findTitle(String input) {
-    BestMatch match = StringSimilarity.findBestMatch(input, shops);
-    return match.bestMatch.rating > 0.7 ? match.bestMatch.target : "untitled";
+  String findTitle(List<String> input) {
+    // Remove Strings that are non alphabetical
+    RegExp alphabetical = RegExp(r"^.*[a-zA-Z].*$");
+    List<String> filtered =
+        input.where((e) => alphabetical.hasMatch(e)).toList();
+
+    // Find the best match
+    for (String word in filtered) {
+      BestMatch match = StringSimilarity.findBestMatch(word, shops);
+      Rating best = match.bestMatch;
+      if (best.rating > 0.7) return TitleCase(best.target);
+    }
+
+    for (int i = 0; i < filtered.length - 1; i++) {
+      String twoWords = filtered[i] + " " + filtered[i + 1];
+      BestMatch match = StringSimilarity.findBestMatch(twoWords, shops);
+      Rating best = match.bestMatch;
+      if (best.rating > 0.7) return TitleCase(best.target);
+    }
+
+    for (int i = 0; i < filtered.length - 2; i++) {
+      String threeWords =
+          filtered[i] + " " + filtered[i + 1] + " " + filtered[i + 2];
+      BestMatch match = StringSimilarity.findBestMatch(threeWords, shops);
+      Rating best = match.bestMatch;
+      if (best.rating > 0.7) return TitleCase(best.target);
+    }
+
+    return "untitled";
   }
 
   DateTime findDate(String input) {
@@ -106,5 +134,14 @@ class Parser {
     String match = date.stringMatch(input);
     if (match == null) return null;
     return DateTime.parse(match.replaceAll(RegExp(r"/"), ""));
+  }
+
+  String TitleCase(String title) {
+    List<String> singles = title.split(" ").map((e) => capitalize(e)).toList();
+    return singles.join(" ");
+  }
+
+  String capitalize(String title) {
+    return '${title[0].toUpperCase()}${title.substring(1)}';
   }
 }

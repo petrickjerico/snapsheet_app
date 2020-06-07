@@ -17,7 +17,7 @@ class HistoryTab extends StatelessWidget {
           reverse: true,
           itemBuilder: (context, index) {
             // print(userData.recordsCount);
-            final record = userData.allRecords[index];
+            final record = userData.records[index];
             return Visibility(
               visible: record.accountId == userData.selectedAccount,
               child: ListTile(

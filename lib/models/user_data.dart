@@ -4,10 +4,9 @@ import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:snapsheetapp/models/export.dart';
 import 'package:snapsheetapp/models/record.dart';
-
-import '../archive/account.dart';
-import '../archive/category.dart';
+import 'package:downloads_path_provider/downloads_path_provider.dart';
 
 class UserData extends ChangeNotifier {
   int _selectedAccount = -1;
@@ -52,13 +51,13 @@ class UserData extends ChangeNotifier {
     Record("Food & Beverage", 5.8, DateTime(2020, 5, 29), 0, 1, "SGD")
   ];
 
-  List<Record> get allRecords {
+  List<Record> get records {
     return _records;
   }
 
   List<Record> get specifiedRecords {
     return _selectedAccount == -1
-        ? allRecords
+        ? records
         : _records.where((rec) => rec.accountId == _selectedAccount).toList();
   }
 
@@ -100,7 +99,7 @@ class UserData extends ChangeNotifier {
     }
 
     if (!_isEditing) {
-      allRecords.add(_tempRecord);
+      records.add(_tempRecord);
     }
 
     if (_isEditing) {
@@ -169,7 +168,7 @@ class UserData extends ChangeNotifier {
 
   double get statsTotal {
     double total = 0;
-    for (Record rec in allRecords) {
+    for (Record rec in records) {
       if (_selectedAccount == -1 || rec.accountId == _selectedAccount) {
         total += rec.value;
       }
@@ -183,14 +182,14 @@ class UserData extends ChangeNotifier {
 
     if (_selectedAccount == -1) {
       res += "Records from all accounts combined:\n";
-      for (Record rec in allRecords) {
+      for (Record rec in records) {
         res += "- ${_recordsToString(rec)}";
         total += rec.value;
       }
       res += "\nTotal value: $total";
     } else {
       res += "Records from ${_accountTitles[_selectedAccount]}:\n";
-      for (Record rec in allRecords) {
+      for (Record rec in records) {
         if (rec.accountId == _selectedAccount) {
           res += "\n- ${_recordsToString(rec)}";
           total += rec.value;
@@ -237,30 +236,12 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getCSV() async {
-    List<List<dynamic>> rows = List<List<dynamic>>();
-
-    List<Record> filtered =
-        _records.where((e) => _isExport[e.accountId]).toList();
-
-    for (Record r in filtered) {
-      List<dynamic> row = List();
-      row.add(r.date);
-      row.add(r.title);
-      row.add(r.value);
-      row.add(accounts[r.accountId]);
-      row.add(categoryTitles[r.categoryId]);
-      row.add(r.currency);
-      rows.add(row);
-    }
-
-    String csv = const ListToCsvConverter().convert(rows);
-
-    final String dir = (await getApplicationDocumentsDirectory()).path;
-    print(dir);
-    final String path = '$dir/snapsheet.csv';
-    final File file = await File(path);
-
-    file.writeAsString(csv);
+  void exportCSV() {
+    Exporter(
+            records: records,
+            accounts: accounts,
+            categoryTitles: categoryTitles,
+            isExport: isExport)
+        .exportCSV();
   }
 }

@@ -28,39 +28,35 @@ class ExportSelectScreen extends StatelessWidget {
           ),
           title: Text('EXPORT SELECTIONS'),
         ),
-        body: Container(
-          padding: EdgeInsets.only(left: 20.0, right: 20, top: 20),
-          child: Column(
-            children: <Widget>[
-              Expanded(flex: 7, child: ExportList()),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40.0),
-                    color: Colors.black,
-                  ),
-                  margin:
-                      EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
-                  child: FlatButton(
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.file_upload,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        'EXPORT',
-                        style: TextStyle(color: Colors.white),
-                      ),
+        body: Column(
+          children: <Widget>[
+            Expanded(flex: 7, child: ExportList()),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40.0),
+                  color: Colors.black,
+                ),
+                margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
+                child: FlatButton(
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.file_upload,
+                      color: Colors.white,
                     ),
-                    onPressed: () async {
-                      await userData.getCSV();
-                      Navigator.pushNamed(context, ExportDoneScreen.id);
-                    },
+                    title: Text(
+                      'EXPORT',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
+                  onPressed: () async {
+                    await userData.exportCSV();
+                    Navigator.pushNamed(context, ExportDoneScreen.id);
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     });

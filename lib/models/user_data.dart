@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:snapsheetapp/models/export.dart';
+import 'package:snapsheetapp/models/receipt_image_uploader.dart';
 import 'package:snapsheetapp/models/record.dart';
 import 'package:downloads_path_provider/downloads_path_provider.dart';
 
@@ -150,6 +151,11 @@ class UserData extends ChangeNotifier {
   void changeTempRecord(int recordIndex) {
     _tempRecord = _records[recordIndex];
     _isEditing = true;
+    notifyListeners();
+  }
+
+  void changeImage(File imageFile) {
+    _tempRecord.reimage(imageFile);
     notifyListeners();
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -184,6 +185,23 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                             }),
                       ),
                     ],
+                  ),
+                  SizedBox(height: 10.0),
+                  Material(
+                    child: InkWell(
+                      onTap: () {
+                        print("hello");
+                      },
+                      child: Container(
+                        color: Colors.blueGrey,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: userData.tempRecord.image == null
+                              ? Image.asset('assets/images/default_receipt.png')
+                              : Image.file(userData.tempRecord.image),
+                        ),
+                      ),
+                    ),
                   )
                 ],
               ),

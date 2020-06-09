@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class Record {
   static int catId = 0;
   static int accId = 0;
@@ -7,6 +9,8 @@ class Record {
   int _categoryId;
   int _accountId;
   String _currency;
+  File _receiptImage;
+  String _receiptURL;
 
   Record.init() {
     _title = "untitled";
@@ -44,6 +48,10 @@ class Record {
     return _currency;
   }
 
+  File get image {
+    return _receiptImage;
+  }
+
   void rename(String newTitle) {
     _title = newTitle;
   }
@@ -62,6 +70,10 @@ class Record {
 
   void reaccount(int newAccountId) {
     _accountId = newAccountId;
+  }
+
+  void reimage(File newImage) {
+    _receiptImage = newImage;
   }
 
   void changeCurrency(String newCurrency) {

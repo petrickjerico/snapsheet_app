@@ -23,7 +23,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
-              child: Image.asset('images/snapsheet_logo.png'),
+              child: Image.asset('assets/images/snapsheet_logo.png'),
               height: 150.0,
             ),
             Text(

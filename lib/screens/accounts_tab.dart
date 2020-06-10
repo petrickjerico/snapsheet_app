@@ -90,6 +90,17 @@ class AccountsTab extends StatelessWidget {
                     children: <Widget>[
                       Text('List of accounts'),
                       makeAccountButtons(userData, context),
+                      MaterialButton(
+                        color: Colors.black,
+                        elevation: 0,
+                        child: Text(
+                          'Select All',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          userData.selectAccount(-1);
+                        },
+                      )
                     ],
                   ),
                 ),

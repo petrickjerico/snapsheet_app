@@ -95,10 +95,6 @@ class UserData extends ChangeNotifier {
   }
 
   void addRecord() {
-    if (_tempRecord.title == "untitled") {
-      _tempRecord.rename(_categoryTitles[_tempRecord.categoryId]);
-    }
-
     if (!_isEditing) {
       records.add(_tempRecord);
     }
@@ -128,8 +124,8 @@ class UserData extends ChangeNotifier {
   }
 
   void newRecord() {
-    _tempRecord = new Record(
-        "untitled", 0, DateTime.now(), Record.catId, Record.accId, "SGD");
+    _tempRecord =
+        new Record("", 0, DateTime.now(), Record.catId, Record.accId, "SGD");
     notifyListeners();
   }
 

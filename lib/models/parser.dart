@@ -1,3 +1,4 @@
+import 'package:snapsheetapp/models/shop.dart';
 import 'package:string_similarity/string_similarity.dart';
 
 class Parser {
@@ -16,24 +17,25 @@ class Parser {
     'dec': '12'
   };
 
-  List<String> shops = [
-    "4fingers",
-    "cheers",
-    "cold storage",
-    "fairprice",
-    "grab",
-    "hachi tech",
-    "kfc",
-    "koi",
-    "mcdonald's",
-    "paylah",
-    "paynow",
-    "pepper lunch",
-    "popular",
-    "starbucks",
-    "uniqlo",
-    "monster curry",
-  ];
+  var shops = {
+    "4fingers": Shop(shopTitle: '4Fingers', catId: 0),
+    "cheers": Shop(shopTitle: 'Cheers', catId: 0),
+    "cold storage": Shop(shopTitle: 'Cold Storage', catId: 0),
+    "fairprice": Shop(shopTitle: 'Fairprice', catId: 0),
+    "golden village": Shop(shopTitle: 'Golden Village', catId: 3),
+    "hachi tech": Shop(shopTitle: 'Hachi Tech', catId: 6),
+    "kfc": Shop(shopTitle: 'KFC', catId: 0),
+    "koi": Shop(shopTitle: 'Koi', catId: 0),
+    "mcdonald's": Shop(shopTitle: "McDonald's", catId: 0),
+    "paylah": Shop(shopTitle: 'Paylah', catId: 8),
+    "paynow": Shop(shopTitle: 'Paynow', catId: 8),
+    "pepper lunch": Shop(shopTitle: 'Pepper Lunch', catId: 0),
+    "starbucks": Shop(shopTitle: 'Starbucks', catId: 0),
+    "uniqlo": Shop(shopTitle: 'UNIQLO', catId: 2),
+    "monster curry": Shop(shopTitle: 'Monster Curry', catId: 0)
+  };
+
+  String matchedName;
 
   String findTitle(List<String> input) {
     // Remove Strings that are non alphabetical
@@ -41,29 +43,45 @@ class Parser {
     List<String> filtered =
         input.where((e) => alphabetical.hasMatch(e)).toList();
 
+    // Prepare the list of shop lowercased name
+    List<String> shopNames = shops.keys.toList();
+
     // Find the best match
     for (String word in filtered) {
-      BestMatch match = StringSimilarity.findBestMatch(word, shops);
+      BestMatch match = StringSimilarity.findBestMatch(word, shopNames);
       Rating best = match.bestMatch;
-      if (best.rating > 0.7) return TitleCase(best.target);
+      if (best.rating > 0.7) {
+        matchedName = best.target;
+        return shops[matchedName].shopTitle;
+      }
     }
 
     for (int i = 0; i < filtered.length - 1; i++) {
       String twoWords = filtered[i] + " " + filtered[i + 1];
-      BestMatch match = StringSimilarity.findBestMatch(twoWords, shops);
+      BestMatch match = StringSimilarity.findBestMatch(twoWords, shopNames);
       Rating best = match.bestMatch;
-      if (best.rating > 0.7) return TitleCase(best.target);
+      if (best.rating > 0.7) {
+        matchedName = best.target;
+        return shops[matchedName].shopTitle;
+      }
     }
 
     for (int i = 0; i < filtered.length - 2; i++) {
       String threeWords =
           filtered[i] + " " + filtered[i + 1] + " " + filtered[i + 2];
-      BestMatch match = StringSimilarity.findBestMatch(threeWords, shops);
+      BestMatch match = StringSimilarity.findBestMatch(threeWords, shopNames);
       Rating best = match.bestMatch;
-      if (best.rating > 0.7) return TitleCase(best.target);
+      if (best.rating > 0.7) {
+        matchedName = best.target;
+        return shops[matchedName].shopTitle;
+      }
     }
 
-    return "untitled";
+    return "";
+  }
+
+  int findCategoryId() {
+    return matchedName != null ? shops[matchedName].catId : 0;
   }
 
   DateTime findDate(String input) {
@@ -134,14 +152,5 @@ class Parser {
     String match = date.stringMatch(input);
     if (match == null) return null;
     return DateTime.parse(match.replaceAll(RegExp(r"/"), ""));
-  }
-
-  String TitleCase(String title) {
-    List<String> singles = title.split(" ").map((e) => capitalize(e)).toList();
-    return singles.join(" ");
-  }
-
-  String capitalize(String title) {
-    return '${title[0].toUpperCase()}${title.substring(1)}';
   }
 }

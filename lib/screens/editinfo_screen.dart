@@ -3,6 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/constants.dart';
+import 'package:snapsheetapp/models/scanner.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/addexpenses_screen.dart';
 import 'package:path/path.dart' as p;
@@ -42,6 +44,7 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
             child: Padding(
               padding: EdgeInsets.all(20.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   TextFormField(
                     initialValue: title,
@@ -60,41 +63,38 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                     children: <Widget>[
                       Expanded(
                         child: OutlineButton(
-                            child: Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Icon(
-                                    FontAwesomeIcons.calendarAlt,
-                                  ),
-                                  SizedBox(
-                                    width: 10.0,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        'Date',
-                                        style: TextStyle(
-                                          color: Colors.blueGrey[200],
-                                          fontSize: 12.0,
-                                          fontStyle: FontStyle.italic,
-                                        ),
+                            padding: EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Icon(
+                                  FontAwesomeIcons.calendarAlt,
+                                ),
+                                SizedBox(
+                                  width: 10.0,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      'Date',
+                                      style: TextStyle(
+                                        color: Colors.blueGrey[200],
+                                        fontSize: 12.0,
+                                        fontStyle: FontStyle.italic,
                                       ),
-                                      Text(
-                                        DateFormat('d/M/y').format(date),
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 17.0,
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                                    ),
+                                    Text(
+                                      DateFormat('d/M/y').format(date),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.w400,
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                             onPressed: () {
                               showDatePicker(
@@ -126,38 +126,35 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                       ),
                       Expanded(
                         child: OutlineButton(
-                            child: Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Icon(FontAwesomeIcons.clock),
-                                  SizedBox(
-                                    width: 10.0,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        'Time',
-                                        style: TextStyle(
-                                            color: Colors.blueGrey[200],
-                                            fontSize: 12.0,
-                                            fontStyle: FontStyle.italic),
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Icon(FontAwesomeIcons.clock),
+                                SizedBox(
+                                  width: 10.0,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      'Time',
+                                      style: TextStyle(
+                                          color: Colors.blueGrey[200],
+                                          fontSize: 12.0,
+                                          fontStyle: FontStyle.italic),
+                                    ),
+                                    Text(
+                                      DateFormat('Hm').format(date),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w400,
                                       ),
-                                      Text(
-                                        DateFormat('Hm').format(date),
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                             onPressed: () {
                               showTimePicker(
@@ -190,17 +187,29 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                   SizedBox(height: 10.0),
                   userData.tempRecord.image == null
                       ? SizedBox.shrink()
-                      : Expanded(
-                          child: OutlineButton(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                                p.basename(userData.tempRecord.image.path)),
-                            onPressed: () {
-                              // View the receipt?
-                            },
+                      : OutlineButton(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            p.basename(userData.tempRecord.image.path),
+                            style: kStandardStyle,
                           ),
+                          onPressed: () {
+                            // View the receipt?
+                          },
                         ),
                   SizedBox(height: 10),
+                  RaisedButton(
+                    padding: EdgeInsets.all(10),
+                    color: Colors.black,
+                    child: Text(
+                      "Add Receipt",
+                      style: kStandardStyle,
+                    ),
+                    onPressed: () {
+                      Scanner scanner = Scanner(userData: userData);
+                      scanner.process(context);
+                    },
+                  ),
                 ],
               ),
             ),

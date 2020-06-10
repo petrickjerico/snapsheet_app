@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const kStandardStyle = TextStyle(fontSize: 16);
+
 const kHistoryRecordTitle = TextStyle(
   fontWeight: FontWeight.w700,
   fontSize: 16,

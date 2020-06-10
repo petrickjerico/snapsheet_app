@@ -12,8 +12,9 @@ class Scanner {
   Parser parser = Parser();
 
   final UserData userData;
+  final String screenId;
 
-  Scanner({this.userData});
+  Scanner({this.userData, this.screenId});
 
   File imageFile;
   ImagePicker _picker = ImagePicker();
@@ -69,6 +70,7 @@ class Scanner {
 
     // Initialize title, value, date
     String title;
+    int catId;
     double value;
     DateTime date;
 
@@ -83,18 +85,20 @@ class Scanner {
 
     // Update values
     title = parser.findTitle(txt);
+    catId = parser.findCategoryId();
     value = parser.findCost(txt.join(" "));
     date = parser.findDate(txt.join(" "));
 
     print('$value ${date.toString()} $title');
     // Change userdata TempRecord
     userData.changeTitle(title);
+    userData.changeCategory(catId);
     userData.changeValue(value);
     userData.changeDate(date);
     userData.changeImage(imageFile);
 
     textRecognizer.close();
     Navigator.of(context).pop();
-    Navigator.pushNamed(context, AddExpensesScreen.id);
+    Navigator.pushNamed(context, screenId);
   }
 }

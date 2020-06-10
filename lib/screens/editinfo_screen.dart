@@ -206,7 +206,8 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                       style: kStandardStyle,
                     ),
                     onPressed: () {
-                      Scanner scanner = Scanner(userData: userData);
+                      Scanner scanner = Scanner(
+                          userData: userData, screenId: EditInfoScreen.id);
                       scanner.process(context);
                     },
                   ),

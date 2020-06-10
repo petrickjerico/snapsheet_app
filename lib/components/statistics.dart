@@ -15,10 +15,11 @@ class Statistics extends StatelessWidget {
       List<Record> currRecs = userData.specifiedRecords;
 
       List<Stats> getStatsList() {
-        List<String> categs = userData.categoryTitles;
+        List<String> categoryTitles =
+            userData.categories.map((e) => e.title).toList();
         List<Stats> res = [];
-        for (int catId = 0; catId < categs.length; catId++) {
-          String statTitle = categs[catId];
+        for (int catId = 0; catId < categoryTitles.length; catId++) {
+          String statTitle = categoryTitles[catId];
           double statValue = 0;
           for (Record rec in currRecs) {
             if (rec.categoryId == catId) {

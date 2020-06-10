@@ -20,15 +20,15 @@ class HistoryTile extends StatelessWidget {
           backgroundColor: Colors.black,
           child: IconTheme(
               data: IconThemeData(color: Colors.white, size: 19),
-              child: userData.categoryIcons[record.categoryId]),
+              child: userData.categories[record.categoryId].icon),
         ),
         title: Text(
           record.title == ""
-              ? userData.categoryTitles[record.categoryId]
+              ? userData.categories[record.categoryId].title
               : record.title,
           style: kHistoryRecordTitle,
         ),
-        subtitle: Text(userData.accounts[record.accountId]),
+        subtitle: Text(userData.accounts[record.accountId].title),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,

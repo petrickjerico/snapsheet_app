@@ -13,7 +13,7 @@ class AccountsTab extends StatelessWidget {
         color: Colors.black,
         elevation: 0,
         child: Text(
-          e,
+          e.title,
           style: TextStyle(color: Colors.white),
         ),
         onPressed: () {
@@ -157,7 +157,7 @@ class AddAccountPopup extends StatelessWidget {
                   ),
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
-                      userData.addAccount(accountTitle);
+                      userData.addAccount(accountTitle, Colors.black);
                       Navigator.pop(context);
                     }
                   },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/models/account.dart';
 import 'package:snapsheetapp/models/record.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -658,14 +659,16 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                         });
                       },
                       itemBuilder: (context) {
-                        List<String> cats = userData.categoryTitles;
-                        return cats
+                        List<String> categoryTitles =
+                            userData.categories.map((e) => e.title).toList();
+                        return categoryTitles
                             .map(
                               (e) => PopupMenuItem(
-                                value: cats.indexOf(e),
+                                value: categoryTitles.indexOf(e),
                                 child: ListTile(
-                                  leading:
-                                      userData.categoryIcons[cats.indexOf(e)],
+                                  leading: userData
+                                      .categories[categoryTitles.indexOf(e)]
+                                      .icon,
                                   title: Text(e),
                                 ),
                               ),
@@ -684,7 +687,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                             ),
                           ),
                           Text(
-                            userData.categoryTitles[_catId],
+                            userData.categories[_catId].title,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18.0,
@@ -705,13 +708,13 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                         });
                       },
                       itemBuilder: (context) {
-                        List<String> accs = userData.accounts;
+                        List<Account> accs = userData.accounts;
                         return accs
                             .map(
                               (e) => PopupMenuItem(
                                 value: accs.indexOf(e),
                                 child: ListTile(
-                                  title: Text(e),
+                                  title: Text(e.title),
                                 ),
                               ),
                             )
@@ -729,7 +732,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                             ),
                           ),
                           Text(
-                            userData.accounts[_accId],
+                            userData.accounts[_accId].title,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18.0,

@@ -7,7 +7,10 @@ class ExportDoneScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        Navigator.pushNamed(context, HomepageScreen.id);
+        return false;
+      },
       child: Scaffold(
         backgroundColor: Colors.grey,
         appBar: AppBar(

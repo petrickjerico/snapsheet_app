@@ -31,8 +31,8 @@ class AddCategoryScreen extends StatelessWidget {
             itemCount: userData.categoriesCount,
             itemBuilder: (context, index) {
               return ListTile(
-                leading: userData.categoryIcons[index],
-                title: Text(userData.categoryTitles[index]),
+                leading: userData.categories[index].icon,
+                title: Text(userData.categories[index].title),
               );
             },
           ),

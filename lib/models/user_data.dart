@@ -1,46 +1,36 @@
 import 'dart:io';
 
-import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:snapsheetapp/models/account.dart';
+import 'package:snapsheetapp/models/category.dart';
 import 'package:snapsheetapp/models/export.dart';
-import 'package:snapsheetapp/models/receipt_image_uploader.dart';
 import 'package:snapsheetapp/models/record.dart';
-import 'package:downloads_path_provider/downloads_path_provider.dart';
 
 class UserData extends ChangeNotifier {
   int _selectedAccount = -1;
   Record _tempRecord;
   bool _isEditing = false;
 
-  List<String> _accountTitles = ["DBS", "Cash"];
-
-  List<String> _categoryTitles = [
-    'Food & Beverage',
-    'Transportation',
-    'Fashion',
-    'Movies',
-    'Medicine',
-    'Groceries',
-    'Games',
-    'Movies',
-    'Recreation',
-    'Lodging'
+  List<Account> _accounts = [
+    Account(accTitle: 'DBS', accColor: Colors.red),
+    Account(accTitle: 'Cash', accColor: Colors.amber),
   ];
 
-  List<Icon> _categoryIcons = [
-    Icon(FontAwesomeIcons.utensils),
-    Icon(FontAwesomeIcons.shuttleVan),
-    Icon(FontAwesomeIcons.shoppingBag),
-    Icon(FontAwesomeIcons.film),
-    Icon(FontAwesomeIcons.pills),
-    Icon(FontAwesomeIcons.shoppingCart),
-    Icon(FontAwesomeIcons.gamepad),
-    Icon(FontAwesomeIcons.film),
-    Icon(FontAwesomeIcons.umbrellaBeach),
-    Icon(FontAwesomeIcons.hotel),
+  List<Category> _categories = [
+    Category('Food & Drinks', Icon(FontAwesomeIcons.utensils), Colors.red),
+    Category(
+        'Transportation', Icon(FontAwesomeIcons.shuttleVan), Colors.blueGrey),
+    Category('Shopping', Icon(FontAwesomeIcons.shoppingBag), Colors.tealAccent),
+    Category(
+        'Entertainment', Icon(FontAwesomeIcons.film), Colors.deepPurpleAccent),
+    Category('Health', Icon(FontAwesomeIcons.pills), Colors.indigoAccent),
+    Category('Education', Icon(FontAwesomeIcons.graduationCap), Colors.orange),
+    Category('Electronics', Icon(FontAwesomeIcons.phone), Colors.teal),
+    Category('Income', Icon(FontAwesomeIcons.moneyBill), Colors.amberAccent),
+    Category('Others', Icon(Icons.category), Colors.black)
   ];
+
 //  Record(this._title, this._value, this._dateTime, this._categoryId,
 //      this._accountId, this._currency);
   List<Record> _records = [
@@ -71,19 +61,15 @@ class UserData extends ChangeNotifier {
   }
 
   int get categoriesCount {
-    return _categoryTitles.length;
+    return _categories.length;
   }
 
-  List<String> get accounts {
-    return _accountTitles;
+  List<Account> get accounts {
+    return _accounts;
   }
 
-  List<String> get categoryTitles {
-    return _categoryTitles;
-  }
-
-  List<Icon> get categoryIcons {
-    return _categoryIcons;
+  List<Category> get categories {
+    return _categories;
   }
 
   Record get tempRecord {
@@ -106,15 +92,14 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addAccount(String accTitle) {
-    _accountTitles.add(accTitle);
+  void addAccount(String title, Color color) {
+    _accounts.add(Account(accTitle: title, accColor: color));
     _isExport.add(true);
     notifyListeners();
   }
 
   void addCategory(String categoryTitle, Icon icon) {
-    _categoryTitles.add(categoryTitle);
-    _categoryIcons.add(icon);
+    _categories.add(Category(categoryTitle, icon, Colors.black));
     notifyListeners();
   }
 
@@ -156,13 +141,12 @@ class UserData extends ChangeNotifier {
   }
 
   void renameAccount(int accId, String newTitle) {
-    accounts.removeAt(accId);
-    accounts.insert(accId, newTitle);
+    accounts[accId].rename(newTitle);
     notifyListeners();
   }
 
   String _recordsToString(Record rec) {
-    String cat = _categoryTitles[rec.categoryId];
+    String cat = _categories[rec.categoryId].title;
     String cur = rec.currency;
     double val = rec.value;
     return "$cat: $cur$val";
@@ -190,7 +174,7 @@ class UserData extends ChangeNotifier {
       }
       res += "\nTotal value: $total";
     } else {
-      res += "Records from ${_accountTitles[_selectedAccount]}:\n";
+      res += "Records from ${_accounts[_selectedAccount].title}:\n";
       for (Record rec in records) {
         if (rec.accountId == _selectedAccount) {
           res += "\n- ${_recordsToString(rec)}";
@@ -241,8 +225,8 @@ class UserData extends ChangeNotifier {
   void exportCSV() {
     Exporter(
             records: records,
-            accounts: accounts,
-            categoryTitles: categoryTitles,
+            accounts: accounts.map((acc) => acc.title).toList(),
+            categoryTitles: categories.map((cat) => cat.title).toList(),
             isExport: isExport)
         .exportCSV();
   }

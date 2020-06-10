@@ -11,7 +11,7 @@ class ExportList extends StatelessWidget {
         return ListView.separated(
           separatorBuilder: (context, index) => Divider(),
           itemBuilder: (context, index) {
-            final accountTitle = userData.accounts[index];
+            final accountTitle = userData.accounts[index].title;
             final isExport = userData.isExport[index];
             return ExportTile(
               accountTitle: accountTitle,

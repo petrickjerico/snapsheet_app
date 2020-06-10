@@ -3,6 +3,7 @@ import 'dart:io';
 class Record {
   static int catId = 0;
   static int accId = 0;
+
   String _title;
   double _value;
   DateTime _dateTime;
@@ -12,17 +13,9 @@ class Record {
   File _receiptImage;
   String _receiptURL;
 
-  Record.init() {
-    _title = "untitled";
-    _value = 0;
-    _dateTime = DateTime.now();
-    _categoryId = catId;
-    _accountId = accId;
-    _currency = "SGD";
-  }
-
   Record(this._title, this._value, this._dateTime, this._categoryId,
-      this._accountId, this._currency);
+      this._accountId,
+      [this._currency = 'SGD']);
 
   String get title {
     return _title;

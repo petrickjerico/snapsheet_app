@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/addexpenses_screen.dart';
+import 'package:path/path.dart' as p;
 
 class EditInfoScreen extends StatefulWidget {
   static const String id = 'editinfo_screen';
@@ -187,22 +188,19 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                     ],
                   ),
                   SizedBox(height: 10.0),
-                  Material(
-                    child: InkWell(
-                      onTap: () {
-                        print("hello");
-                      },
-                      child: Container(
-                        color: Colors.blueGrey,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
-                          child: userData.tempRecord.image == null
-                              ? Image.asset('assets/images/default_receipt.png')
-                              : Image.file(userData.tempRecord.image),
+                  userData.tempRecord.image == null
+                      ? SizedBox.shrink()
+                      : Expanded(
+                          child: OutlineButton(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                                p.basename(userData.tempRecord.image.path)),
+                            onPressed: () {
+                              // View the receipt?
+                            },
+                          ),
                         ),
-                      ),
-                    ),
-                  )
+                  SizedBox(height: 10),
                 ],
               ),
             ),

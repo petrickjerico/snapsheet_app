@@ -32,7 +32,7 @@ class Snapsheet extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<UserData>(create: (context) => UserData()),
       ],
-      child: MaterialApp(initialRoute: WelcomeScreen.id, routes: {
+      child: MaterialApp(initialRoute: HomepageScreen.id, routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         HomepageScreen.id: (context) => HomepageScreen(),
         LoginScreen.id: (context) => LoginScreen(),

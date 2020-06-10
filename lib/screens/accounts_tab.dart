@@ -111,10 +111,11 @@ class AccountsTab extends StatelessWidget {
 }
 
 class AddAccountPopup extends StatelessWidget {
+  static final _formKey = GlobalKey<FormState>();
   String accountTitle;
+
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
     return Consumer<UserData>(builder: (context, userData, child) {
       return Form(
         key: _formKey,

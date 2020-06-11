@@ -61,6 +61,7 @@ class Scanner {
   }
 
   Future<void> process(BuildContext context) async {
+    userData.toggleScanned();
     await showChoiceDialog(context);
     final textRecognizer = FirebaseVision.instance.textRecognizer();
     final image = FirebaseVisionImage.fromFile(imageFile);

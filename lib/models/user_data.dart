@@ -12,6 +12,7 @@ class UserData extends ChangeNotifier {
   Record _tempRecord;
   bool _isEditing = false;
   Exporter _exporter;
+  bool _isScanned = false;
 
   List<Account> _accounts = [
     Account(accTitle: 'DBS', accColor: Colors.red),
@@ -80,6 +81,14 @@ class UserData extends ChangeNotifier {
 
   bool get isEditing {
     return _isEditing;
+  }
+
+  bool get isScanned {
+    return _isScanned;
+  }
+
+  void toggleScanned() {
+    _isScanned = !_isScanned;
   }
 
   void addRecord() {

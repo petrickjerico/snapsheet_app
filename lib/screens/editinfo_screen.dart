@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/date_time.dart';
+import 'package:snapsheetapp/components/receipt_image_dialog.dart';
 import 'package:snapsheetapp/constants.dart';
 import 'package:snapsheetapp/models/scanner.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/addexpenses_screen.dart';
-import 'package:path/path.dart' as p;
 
 class EditInfoScreen extends StatefulWidget {
   static const String id = 'editinfo_screen';
@@ -61,15 +61,18 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                   SizedBox(height: 10.0),
                   userData.tempRecord.image == null
                       ? SizedBox.shrink()
-                      : OutlineButton(
-                          padding: EdgeInsets.all(10),
-                          child: Text(
-                            p.basename(userData.tempRecord.image.path),
-                            style: kStandardStyle,
-                          ),
-                          onPressed: () {
-                            // View the receipt?
+                      : GestureDetector(
+                          onTap: () async {
+                            await showDialog(
+                                context: context,
+                                builder: (_) => ReceiptImageDialog(
+                                    userData.tempRecord.image));
                           },
+                          child: Image.file(
+                            userData.tempRecord.image,
+                            fit: BoxFit.cover,
+                            height: 200,
+                          ),
                         ),
                   SizedBox(height: 10),
                   RaisedButton(

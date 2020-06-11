@@ -1,18 +1,28 @@
 import 'dart:io';
 
 import 'package:csv/csv.dart';
+import 'package:snapsheetapp/models/account.dart';
+import 'package:snapsheetapp/models/category.dart';
 import 'package:snapsheetapp/models/record.dart';
 import 'package:downloads_path_provider/downloads_path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Exporter {
   final List<Record> records;
-  final List<String> accounts;
-  final List<String> categoryTitles;
-  final List<bool> isExport;
+  final List<Account> accounts;
+  final List<Category> categories;
+  List<bool> isExport;
   File target;
 
-  Exporter({this.records, this.accounts, this.categoryTitles, this.isExport});
+  Exporter(this.records, this.accounts, this.categories) {
+    isExport = List<bool>.filled(accounts.length, true, growable: false);
+  }
+
+  int get accountCount => accounts.length;
+
+  void toggleExport(index) {
+    isExport[index] = !isExport[index];
+  }
 
   Future<void> exportCSV() async {
     Future<String> data = processCSV();
@@ -32,8 +42,8 @@ class Exporter {
       row.add(r.date);
       row.add(r.title);
       row.add(r.value);
-      row.add(accounts[r.accountId]);
-      row.add(categoryTitles[r.categoryId]);
+      row.add(accounts[r.accountId].title);
+      row.add(categories[r.categoryId].title);
       row.add(r.currency);
       rows.add(row);
     }

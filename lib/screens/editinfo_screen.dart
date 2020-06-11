@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/date_time.dart';
+import 'package:snapsheetapp/components/receipt_image_dialog.dart';
 import 'package:snapsheetapp/constants.dart';
 import 'package:snapsheetapp/models/scanner.dart';
 import 'package:snapsheetapp/models/user_data.dart';
@@ -58,39 +59,42 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
         title: Text('EDIT INFORMATION'),
       ),
       body: Theme(
-        data: ThemeData.dark(),
-        child: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              TextFormField(
-                initialValue: title,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Title",
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    userData.changeTitle(value);
-                  });
-                },
-              ),
-              SizedBox(height: 10.0),
-              RecordDateTime(),
-              SizedBox(height: 10.0),
-              userData.tempRecord.image == null
-                  ? SizedBox.shrink()
-                  : OutlineButton(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        p.basename(userData.tempRecord.image.path),
-                        style: kStandardStyle,
-                      ),
-                      onPressed: () {
-                        // View the receipt?
-                      },
+            data: ThemeData.dark(),
+            child: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  TextFormField(
+                    initialValue: title,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Title",
                     ),
+                    onChanged: (value) {
+                      setState(() {
+                        userData.changeTitle(value);
+                      });
+                    },
+                  ),
+                  SizedBox(height: 10.0),
+                  RecordDateTime(),
+                  SizedBox(height: 10.0),
+                  userData.tempRecord.image == null
+                      ? SizedBox.shrink()
+                      : GestureDetector(
+                          onTap: () async {
+                            await showDialog(
+                                context: context,
+                                builder: (_) => ReceiptImageDialog(
+                                    userData.tempRecord.image));
+                          },
+                          child: Image.file(
+                            userData.tempRecord.image,
+                            fit: BoxFit.cover,
+                            height: 200,
+                          ),
+                        ),
               SizedBox(height: 10),
               RaisedButton(
                 padding: EdgeInsets.all(10),

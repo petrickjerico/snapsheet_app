@@ -98,7 +98,5 @@ class Scanner {
     userData.changeImage(imageFile);
 
     textRecognizer.close();
-    Navigator.of(context).pop();
-    Navigator.pushNamed(context, screenId);
   }
 }

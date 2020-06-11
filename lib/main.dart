@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/archive/temp_data.dart';
+import 'package:snapsheetapp/components/calculator_new.dart';
 import 'package:snapsheetapp/screens/addcategory_screen.dart';
 import 'package:snapsheetapp/screens/addexpenses_screen.dart';
 import 'package:snapsheetapp/screens/bulkinput_screen.dart';
@@ -31,6 +33,7 @@ class Snapsheet extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<UserData>(create: (context) => UserData()),
+        ChangeNotifierProvider<TempData>(create: (context) => TempData()),
       ],
       child: MaterialApp(initialRoute: HomepageScreen.id, routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
@@ -46,6 +49,7 @@ class Snapsheet extends StatelessWidget {
         EditInfoScreen.id: (context) => EditInfoScreen(),
         ScannerScreen.id: (context) => ScannerScreen(),
         BulkInputScreen.id: (context) => BulkInputScreen(),
+        'debugScreen': (context) => NewCalculator(),
       }),
     );
   }

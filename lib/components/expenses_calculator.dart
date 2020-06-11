@@ -10,22 +10,43 @@ import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart' as intl;
 
-class ExpensesCalculator extends StatelessWidget {
+class ExpensesCalculator extends StatefulWidget {
+  const ExpensesCalculator({
+    Key key,
+  }) : super(key: key);
+  @override
+  _ExpensesCalculatorState createState() => _ExpensesCalculatorState();
+}
+
+class _ExpensesCalculatorState extends State<ExpensesCalculator> {
+  double value;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    var temp = value;
+    value = Provider.of<UserData>(context).tempRecord.value;
+    print("value: $temp -> value = userData: $value;");
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserData>(
-      builder: (context, userData, child) {
-        return SimpleCalculator(
-          value: userData.tempRecord.value,
-          hideExpression: true,
-          theme: CalculatorThemeData(
-            borderWidth: 0.0,
-            operatorColor: Colors.grey[500],
-            displayColor: Colors.blueGrey,
-          ),
-        );
-      },
-    );
+    print('ExpensesCalculator build() was called.');
+    return SimpleCalculator(
+        value: value,
+        hideExpression: true,
+        theme: CalculatorThemeData(
+          borderWidth: 0.0,
+          operatorColor: Colors.grey[500],
+          displayColor: Colors.blueGrey,
+        ),
+        onChanged: (key, value, expression) {
+          var userData = Provider.of<UserData>(context, listen: false);
+          double temp = userData.tempRecord.value;
+          userData.changeValue(value);
+          print(
+              "Temp Record value changed: $temp -> ${userData.tempRecord.value} ");
+        });
   }
 }
 
@@ -34,7 +55,7 @@ class ExpensesCalculator extends StatelessWidget {
 /// Display value for the [Calculator].
 class CalcDisplay {
   String string;
-  double value = 0;
+  double value;
 
   /// The [NumberFormat] used for display
   final NumberFormat numberFormat;
@@ -90,7 +111,9 @@ class CalcDisplay {
   /// Set the value.
   void setValue(double val) {
     value = val;
+    print('INSIDE CalcDisplay - setValue value: $value');
     string = numberFormat.format(val);
+    print('INSIDE CalcDisplay - setValue string: $string');
   }
 
   /// Toggle between a plus sign and a minus sign.
@@ -257,6 +280,7 @@ class Calculator {
     _operated = false;
     _display.setValue(val);
     _expression.setVal(_display);
+    print('INSIDE CALCULATOR: ${_display.value}');
   }
 
   /// Add a digit to the display.
@@ -494,6 +518,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
 
   @override
   Widget build(BuildContext context) {
+    print("SimpleCalculator build() was called.");
     _borderSide = Divider.createBorderSide(
       context,
       color: widget.theme?.borderColor ?? Theme.of(context).dividerColor,
@@ -501,7 +526,8 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
     );
     return Consumer<UserData>(
       builder: (context, userData, child) {
-        userData.changeValue(double.parse(_displayValue.replaceAll(",", "")));
+        _calc.setValue(userData.tempRecord.value);
+        _displayValue = _calc.displayString;
         _catId = userData.tempRecord.categoryId;
         _accId = userData.isEditing ? userData.tempRecord.accountId : _accId;
         return Column(children: <Widget>[
@@ -528,8 +554,6 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
     for (var i = 0; i < 10; i++) {
       _nums[i] = _calc.numberFormat.format(i);
     }
-    _calc.setValue(widget.value);
-    _displayValue = _calc.displayString;
   }
 
   Widget _getButtons() {
@@ -794,7 +818,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           color = widget.theme?.operatorColor ?? Theme.of(context).primaryColor;
           style = widget.theme?.operatorStyle ??
               _baseStyle.copyWith(
-                  color: Theme.of(context).primaryTextTheme.title.color);
+                  color: Theme.of(context).primaryTextTheme.headline6.color);
         }
         if (title == _calc.numberFormat.symbols.PERCENT ||
             title == "→" ||

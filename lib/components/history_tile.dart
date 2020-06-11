@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/constants.dart';
+import 'package:snapsheetapp/models/category.dart';
 import 'package:snapsheetapp/models/record.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/addexpenses_screen.dart';
@@ -15,17 +16,16 @@ class HistoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, userData, child) {
+      Category category = userData.categories[record.categoryId];
       return ListTile(
         leading: CircleAvatar(
-          backgroundColor: Colors.black,
+          backgroundColor: category.color,
           child: IconTheme(
-              data: IconThemeData(color: Colors.white, size: 19),
-              child: userData.categories[record.categoryId].icon),
+              data: IconThemeData(color: Colors.white, size: 17),
+              child: category.icon),
         ),
         title: Text(
-          record.title == ""
-              ? userData.categories[record.categoryId].title
-              : record.title,
+          record.title == "" ? category.title : record.title,
           style: kHistoryRecordTitle,
         ),
         subtitle: Text(userData.accounts[record.accountId].title),

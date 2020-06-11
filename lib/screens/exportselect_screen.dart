@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/export_list.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/exportdone_screen.dart';
-// import 'package:snapsheetapp/screens/homepage_screen.dart';
 
 class ExportSelectScreen extends StatelessWidget {
   static const String id = 'exportselect_screen';
@@ -50,7 +49,7 @@ class ExportSelectScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () async {
-                    await userData.exportCSV();
+                    await userData.exporter.exportCSV();
                     Navigator.pushNamed(context, ExportDoneScreen.id);
                   },
                 ),

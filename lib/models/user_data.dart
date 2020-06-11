@@ -11,6 +11,7 @@ class UserData extends ChangeNotifier {
   int _selectedAccount = -1;
   Record _tempRecord;
   bool _isEditing = false;
+  Exporter _exporter;
 
   List<Account> _accounts = [
     Account(accTitle: 'DBS', accColor: Colors.red),
@@ -95,7 +96,6 @@ class UserData extends ChangeNotifier {
 
   void addAccount(String title, Color color) {
     _accounts.add(Account(accTitle: title, accColor: color));
-    _isExport.add(true);
     notifyListeners();
   }
 
@@ -208,27 +208,15 @@ class UserData extends ChangeNotifier {
   }
 
   // EXPORT SECTION
-  List<bool> _isExport = [true, true];
 
-  int get accountCount {
-    return _isExport.length;
+  Exporter get exporter => _exporter;
+
+  void Export() {
+    _exporter = Exporter(records, accounts, categories);
   }
 
-  List<bool> get isExport {
-    return _isExport;
-  }
-
-  void toggleExport(int accId) {
-    _isExport[accId] = !_isExport[accId];
+  void toggleExport(index) {
+    _exporter.toggleExport(index);
     notifyListeners();
-  }
-
-  void exportCSV() {
-    Exporter(
-            records: records,
-            accounts: accounts.map((acc) => acc.title).toList(),
-            categoryTitles: categories.map((cat) => cat.title).toList(),
-            isExport: isExport)
-        .exportCSV();
   }
 }

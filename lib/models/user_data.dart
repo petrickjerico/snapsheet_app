@@ -21,9 +21,9 @@ class UserData extends ChangeNotifier {
     Category('Food & Drinks', Icon(FontAwesomeIcons.utensils), Colors.red),
     Category(
         'Transportation', Icon(FontAwesomeIcons.shuttleVan), Colors.blueGrey),
-    Category('Shopping', Icon(FontAwesomeIcons.shoppingBag), Colors.tealAccent),
-    Category(
-        'Entertainment', Icon(FontAwesomeIcons.film), Colors.deepPurpleAccent),
+    Category('Shopping', Icon(FontAwesomeIcons.shoppingBag), Colors.pinkAccent),
+    Category('Entertainment', Icon(FontAwesomeIcons.glassCheers),
+        Colors.deepPurpleAccent),
     Category('Health', Icon(FontAwesomeIcons.pills), Colors.indigoAccent),
     Category('Education', Icon(FontAwesomeIcons.graduationCap), Colors.orange),
     Category('Electronics', Icon(FontAwesomeIcons.phone), Colors.teal),
@@ -34,12 +34,13 @@ class UserData extends ChangeNotifier {
 //  Record(this._title, this._value, this._dateTime, this._categoryId,
 //      this._accountId, this._currency);
   List<Record> _records = [
-    Record("Steam Dota", 12, DateTime(2020, 4, 12), 6, 0, "SGD"),
+    Record("Steam Dota", 12, DateTime(2020, 4, 12), 3, 0, "SGD"),
     Record("UNIQLO", 30, DateTime(2020, 5, 12), 2, 0, "SGD"),
     Record("Mother's Day", 20, DateTime(2020, 5, 10), 2, 0, "SGD"),
-    Record("Sentosa Outing", 14.50, DateTime(2020, 2, 12), 8, 1, "SGD"),
-    Record("Netflix Subscription", 12, DateTime(2020, 6, 1), 7, 0, "SGD"),
-    Record("Food & Beverage", 5.8, DateTime(2020, 5, 29), 0, 1, "SGD")
+    Record("Sentosa Outing", 14.50, DateTime(2020, 2, 12), 3, 1, "SGD"),
+    Record("Netflix Subscription", 12, DateTime(2020, 6, 1), 3, 0, "SGD"),
+    Record("Food & Beverage", 5.8, DateTime(2020, 5, 29), 0, 1, "SGD"),
+    Record("Dental check up", 30, DateTime(2020, 6, 3), 4, 1, "SGD"),
   ];
 
   List<Record> get records {

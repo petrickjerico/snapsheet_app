@@ -95,6 +95,7 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                             _openDialog(
                               "Color your account",
                               MaterialColorPicker(
+                                shrinkWrap: true,
                                 allowShades: false,
                                 onMainColorChange: (newColor) {
                                   setState(() {

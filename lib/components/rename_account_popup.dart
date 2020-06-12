@@ -107,6 +107,7 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
                             _openDialog(
                               "Color your account",
                               MaterialColorPicker(
+                                shrinkWrap: true,
                                 allowShades: false,
                                 onMainColorChange: (newColor) {
                                   setState(() {

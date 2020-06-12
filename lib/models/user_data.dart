@@ -234,4 +234,11 @@ class UserData extends ChangeNotifier {
     _exporter.toggleExport(index);
     notifyListeners();
   }
+
+  void deleteAccount(int accId) {
+    accounts.removeAt(accId);
+    records.removeWhere((element) => element.accountId == accId);
+    _selectedAccount--;
+    notifyListeners();
+  }
 }

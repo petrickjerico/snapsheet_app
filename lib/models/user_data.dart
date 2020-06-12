@@ -15,15 +15,16 @@ class UserData extends ChangeNotifier {
   bool _isScanned = false;
 
   List<Account> _accounts = [
-    Account(accTitle: 'DBS', accColor: Colors.red),
-    Account(accTitle: 'Cash', accColor: Colors.amber),
+    Account(accTitle: 'DBS', accColor: Colors.red[900]),
+    Account(accTitle: 'Cash', accColor: Colors.deepPurple[700]),
   ];
 
   List<Category> _categories = [
     Category('Food & Drinks', Icon(FontAwesomeIcons.utensils), Colors.red),
     Category(
         'Transportation', Icon(FontAwesomeIcons.shuttleVan), Colors.blueGrey),
-    Category('Shopping', Icon(FontAwesomeIcons.shoppingBag), Colors.pinkAccent),
+    Category(
+        'Shopping', Icon(FontAwesomeIcons.shoppingBag), Colors.lightBlueAccent),
     Category('Entertainment', Icon(FontAwesomeIcons.glassCheers),
         Colors.deepPurpleAccent),
     Category('Health', Icon(FontAwesomeIcons.pills), Colors.indigoAccent),

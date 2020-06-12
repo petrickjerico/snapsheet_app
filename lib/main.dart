@@ -46,8 +46,6 @@ class Snapsheet extends StatelessWidget {
         SettingsScreen.id: (context) => SettingsScreen(),
         EditInfoScreen.id: (context) => EditInfoScreen(),
         BulkScanScreen.id: (context) => BulkScanScreen(),
-        'debugScreen': (context) => NewCalculator(),
-
       }),
     );
   }

@@ -46,16 +46,7 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
       backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        leading: FlatButton(
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            //TODO: more complex navigation
-            Navigator.pop(context);
-          },
-        ),
+        leading: BackButton(),
         title: Text('EDIT INFORMATION'),
       ),
       body: Theme(

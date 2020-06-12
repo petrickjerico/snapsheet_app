@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/export_list.dart';
+import 'package:snapsheetapp/components/fading_export_dialog.dart';
 import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/screens/exportdone_screen.dart';
+import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/exportdone_screen.dart';
 
 class ExportSelectScreen extends StatelessWidget {
   static const String id = 'exportselect_screen';
@@ -16,15 +17,7 @@ class ExportSelectScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.black,
-          leading: FlatButton(
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+          leading: BackButton(),
           title: Text('EXPORT SELECTIONS'),
         ),
         body: Column(
@@ -50,7 +43,6 @@ class ExportSelectScreen extends StatelessWidget {
                   ),
                   onPressed: () async {
                     await userData.exporter.exportCSV();
-                    Navigator.pushNamed(context, ExportDoneScreen.id);
                   },
                 ),
               ),

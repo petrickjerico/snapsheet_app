@@ -4,15 +4,15 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/archive/temp_data.dart';
 import 'package:snapsheetapp/screens/addcategory_screen.dart';
 import 'package:snapsheetapp/screens/addexpenses_screen.dart';
-import 'package:snapsheetapp/screens/bulkinput_screen.dart';
+import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/bulkinput_screen.dart';
 import 'package:snapsheetapp/screens/editinfo_screen.dart';
 import 'package:snapsheetapp/screens/editprofile_screen.dart';
-import 'package:snapsheetapp/screens/exportdone_screen.dart';
+import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/exportdone_screen.dart';
 import 'package:snapsheetapp/screens/exportselect_screen.dart';
 import 'package:snapsheetapp/screens/homepage_screen.dart';
 import 'package:snapsheetapp/screens/login_screen.dart';
 import 'package:snapsheetapp/screens/registration_screen.dart';
-import 'package:snapsheetapp/screens/scanner_screen.dart';
+import 'package:snapsheetapp/screens/bulk_scan_screen.dart';
 import 'package:snapsheetapp/screens/settings_screen.dart';
 import 'package:snapsheetapp/screens/welcome_screen.dart';
 import 'models/user_data.dart';
@@ -41,13 +41,13 @@ class Snapsheet extends StatelessWidget {
         RegistrationScreen.id: (context) => RegistrationScreen(),
         AddExpensesScreen.id: (context) => AddExpensesScreen(),
         ExportSelectScreen.id: (context) => ExportSelectScreen(),
-        ExportDoneScreen.id: (context) => ExportDoneScreen(),
         AddCategoryScreen.id: (context) => AddCategoryScreen(),
         EditProfileScreen.id: (context) => EditProfileScreen(),
         SettingsScreen.id: (context) => SettingsScreen(),
         EditInfoScreen.id: (context) => EditInfoScreen(),
-        ScannerScreen.id: (context) => ScannerScreen(),
-        BulkInputScreen.id: (context) => BulkInputScreen(),
+        BulkScanScreen.id: (context) => BulkScanScreen(),
+        'debugScreen': (context) => NewCalculator(),
+
       }),
     );
   }

@@ -26,7 +26,6 @@ class _ExpensesCalculatorState extends State<ExpensesCalculator> {
     super.didChangeDependencies();
     var temp = value;
     value = Provider.of<UserData>(context).tempRecord.value;
-    print("value: $temp -> value = userData: $value;");
   }
 
   @override
@@ -41,6 +40,9 @@ class _ExpensesCalculatorState extends State<ExpensesCalculator> {
           displayColor: Colors.blueGrey,
         ),
         onChanged: (key, value, expression) {
+          print(key);
+          print(value);
+          print(expression);
           var userData = Provider.of<UserData>(context, listen: false);
           double temp = userData.tempRecord.value;
           userData.changeValue(value);
@@ -526,8 +528,10 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
     );
     return Consumer<UserData>(
       builder: (context, userData, child) {
-        _calc.setValue(userData.tempRecord.value);
-        _displayValue = _calc.displayString;
+        if (userData.isScanned) {
+          _displayValue = userData.tempRecord.value.toString();
+          userData.toggleScanned();
+        }
         _catId = userData.tempRecord.categoryId;
         _accId = userData.isEditing ? userData.tempRecord.accountId : _accId;
         return Column(children: <Widget>[
@@ -554,6 +558,8 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
     for (var i = 0; i < 10; i++) {
       _nums[i] = _calc.numberFormat.format(i);
     }
+    _calc.setValue(Provider.of<UserData>(context).tempRecord.value);
+    _displayValue = _calc.displayString;
   }
 
   Widget _getButtons() {

@@ -1,17 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/constants.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
-class AddAccountPopup extends StatelessWidget {
+class AddAccountPopup extends StatefulWidget {
   static final _formKey = GlobalKey<FormState>();
+
+  @override
+  _AddAccountPopupState createState() => _AddAccountPopupState();
+}
+
+class _AddAccountPopupState extends State<AddAccountPopup> {
   String accountTitle;
+
+  Color _color = Colors.blueGrey;
+  Color _tempColor;
+
+  void _openDialog(String title, Widget content) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          contentPadding: const EdgeInsets.all(6.0),
+          title: Text(title),
+          content: content,
+          actions: [
+            FlatButton(
+              child: Text('CANCEL'),
+              onPressed: Navigator.of(context).pop,
+            ),
+            FlatButton(
+              child: Text('SUBMIT'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() => _color = _tempColor);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, userData, child) {
       return Form(
-        key: _formKey,
+        key: AddAccountPopup._formKey,
         child: Container(
           padding: EdgeInsets.all(20.0),
           child: Column(
@@ -35,9 +71,48 @@ class AddAccountPopup extends StatelessWidget {
                     },
                   ),
                   SizedBox(
-                    height: 20.0,
+                    height: 5.0,
                   ),
+                  Row(
+                    children: <Widget>[
+                      Text('Color:'),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      Expanded(
+                        child: FlatButton(
+                          child: Text(
+                            'Tap to change',
+                            style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                color: Colors.black54,
+                                fontSize: 10.0),
+                          ),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          color: _color,
+                          onPressed: () async {
+                            _openDialog(
+                              "Color your account",
+                              MaterialColorPicker(
+                                allowShades: false,
+                                onMainColorChange: (newColor) {
+                                  setState(() {
+                                    _tempColor = newColor;
+                                  });
+                                },
+                                selectedColor: _color,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  )
                 ],
+              ),
+              SizedBox(
+                height: 20.0,
               ),
               Container(
                 height: 50.0,
@@ -50,8 +125,8 @@ class AddAccountPopup extends StatelessWidget {
                     style: TextStyle(fontSize: 20.0, color: Colors.white),
                   ),
                   onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      userData.addAccount(accountTitle, Colors.black);
+                    if (AddAccountPopup._formKey.currentState.validate()) {
+                      userData.addAccount(accountTitle, _color);
                       Navigator.pop(context);
                     }
                   },
@@ -59,7 +134,7 @@ class AddAccountPopup extends StatelessWidget {
               ),
               SizedBox(
                 height: 15.0,
-              )
+              ),
             ],
           ),
         ),

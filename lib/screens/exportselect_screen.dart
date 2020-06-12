@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/export_list.dart';
 import 'package:snapsheetapp/components/fading_export_dialog.dart';
 import 'package:snapsheetapp/models/user_data.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/exportdone_screen.dart';
 
 class ExportSelectScreen extends StatelessWidget {
   static const String id = 'exportselect_screen';

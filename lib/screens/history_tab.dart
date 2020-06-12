@@ -13,7 +13,6 @@ class HistoryTab extends StatelessWidget {
           reverse: true,
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            // print(userData.recordsCount);
             final record = userData.records[index];
             return HistoryTile(record: record, index: index);
           },

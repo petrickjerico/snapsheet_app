@@ -42,7 +42,7 @@ class _AccountsListState extends State<AccountsList> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Expenses have been added to $accTitle'),
+                Text('${images.length} expenses added to $accTitle'),
               ],
             ),
           ),

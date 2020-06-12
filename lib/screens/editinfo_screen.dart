@@ -38,9 +38,6 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
   @override
   Widget build(BuildContext context) {
     print('EditInfoScreen build() called.');
-    print(title);
-//    return Consumer<UserData>(
-//      builder: (context, userData, child) {
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       appBar: AppBar(
@@ -96,7 +93,7 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                 onPressed: () async {
                   Scanner scanner = Scanner(userData);
                   await scanner.showChoiceDialog(context);
-                  scanner.process();
+                  await scanner.process();
                   setState(() {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, EditInfoScreen.id);

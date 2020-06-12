@@ -106,7 +106,7 @@ class Scanner {
     // Update values
     title = parser.findTitle(txt);
     catId = parser.findCategoryId();
-    value = parser.findCost(txt.join(" "));
+    value = num.parse(parser.findCost(txt.join(" ")).toStringAsFixed(2));
     date = parser.findDate(txt.join(" "));
 
     print('$value ${date.toString()} $title');

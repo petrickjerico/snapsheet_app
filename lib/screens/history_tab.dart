@@ -10,7 +10,6 @@ class HistoryTab extends StatelessWidget {
       return Align(
         alignment: Alignment.topCenter,
         child: ListView.builder(
-          reverse: true,
           shrinkWrap: true,
           itemBuilder: (context, index) {
             final record = userData.records[index];

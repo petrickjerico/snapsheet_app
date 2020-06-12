@@ -53,14 +53,7 @@ class Exporter {
 
   Future<File> targetFile() async {
     String dir = (await DownloadsPathProvider.downloadsDirectory).path;
-    int count = 0;
-    String path = "$dir/snapsheet${count == 0 ? "" : "($count)"}.csv";
-    bool duplicateExist = await File(path).exists();
-    while (duplicateExist) {
-      count++;
-      path = "$dir/snapsheet${count == 0 ? "" : "($count)"}.csv";
-      duplicateExist = await File(path).exists();
-    }
+    String path = "$dir/snapsheet${DateTime.now()}.csv";
     return File(path);
   }
 

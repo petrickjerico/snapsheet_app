@@ -32,6 +32,33 @@ class _AccountsListState extends State<AccountsList> {
     // setState to update our non-existent appearance.
   }
 
+  Future<void> _showMyDialog(context, String accTitle) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Bulk Scan is done'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Expenses have been added to $accTitle'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<UserData>(
@@ -53,6 +80,7 @@ class _AccountsListState extends State<AccountsList> {
                   Scanner scanner = Scanner(userData);
                   await scanner.bulkProcess(images, index);
                   scanner.clearResource();
+                  _showMyDialog(context, account.title);
                 },
               ),
             );

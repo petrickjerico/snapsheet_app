@@ -14,12 +14,12 @@ class ExportList extends StatelessWidget {
           padding: EdgeInsets.all(12),
           separatorBuilder: (context, index) => Divider(),
           itemBuilder: (context, index) {
-            final accountTitle = exporter.accounts[index].title;
+            final account = exporter.accounts[index];
             final isExport = exporter.isExport[index];
             return ExportTile(
-              accountTitle: accountTitle,
+              account: account,
               isExport: isExport,
-              checkboxCallback: (checkboxState) {
+              voidCallback: () {
                 userData.toggleExport(index);
                 print(exporter.isExport.toString());
               },

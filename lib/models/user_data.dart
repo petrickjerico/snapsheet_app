@@ -155,8 +155,9 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void renameAccount(int accId, String newTitle) {
-    _accounts[accId].rename(newTitle);
+  void editAccount(int accId, String newTitle, Color newColor) {
+    accounts[accId].rename(newTitle);
+    accounts[accId].recolor(newColor);
     notifyListeners();
   }
 

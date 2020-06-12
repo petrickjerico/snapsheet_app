@@ -46,6 +46,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
       return DefaultTabController(
         length: 2,
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.black,

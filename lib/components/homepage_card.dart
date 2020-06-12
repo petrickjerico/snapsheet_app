@@ -8,7 +8,7 @@ class HomepageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 5,
+      elevation: 0,
       color: Colors.white,
       child: Center(
         child: cardChild,

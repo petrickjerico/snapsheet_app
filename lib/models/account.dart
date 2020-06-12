@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class Account {
   String accTitle;
   Color accColor;
+  bool isSelected = true;
 
   Account({this.accTitle, this.accColor});
 
@@ -16,5 +17,9 @@ class Account {
 
   void rename(String newTitle) {
     accTitle = newTitle;
+  }
+
+  void recolor(Color newColor) {
+    accColor = newColor;
   }
 }

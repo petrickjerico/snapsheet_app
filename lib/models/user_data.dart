@@ -6,6 +6,7 @@ import 'package:snapsheetapp/models/account.dart';
 import 'package:snapsheetapp/models/category.dart';
 import 'package:snapsheetapp/models/export.dart';
 import 'package:snapsheetapp/models/record.dart';
+import 'package:sorted_list/sorted_list.dart';
 
 class UserData extends ChangeNotifier {
   int _selectedAccount = -1;
@@ -13,6 +14,21 @@ class UserData extends ChangeNotifier {
   bool _isEditing = false;
   Exporter _exporter;
   bool _isScanned = false;
+  static int imageCounter = 0;
+  List<Record> _records =
+      SortedList<Record>((r1, r2) => r2.date.compareTo(r1.date));
+
+  UserData() {
+    _records.addAll([
+      Record("Steam Dota", 12, DateTime(2020, 4, 12), 3, 0, "SGD"),
+      Record("UNIQLO", 30, DateTime(2020, 5, 12), 2, 0, "SGD"),
+      Record("Mother's Day", 20, DateTime(2020, 5, 10), 2, 0, "SGD"),
+      Record("Sentosa Outing", 14.50, DateTime(2020, 2, 12), 3, 1, "SGD"),
+      Record("Netflix Subscription", 12, DateTime(2020, 6, 1), 3, 0, "SGD"),
+      Record("Food & Beverage", 5.8, DateTime(2020, 5, 29), 0, 1, "SGD"),
+      Record("Dental check up", 30, DateTime(2020, 6, 3), 4, 1, "SGD"),
+    ]);
+  }
 
   List<Account> _accounts = [
     Account(accTitle: 'DBS', accColor: Colors.red[900]),
@@ -29,21 +45,9 @@ class UserData extends ChangeNotifier {
         Colors.deepPurpleAccent),
     Category('Health', Icon(FontAwesomeIcons.pills), Colors.indigoAccent),
     Category('Education', Icon(FontAwesomeIcons.graduationCap), Colors.orange),
-    Category('Electronics', Icon(FontAwesomeIcons.phone), Colors.teal),
+    Category('Electronics', Icon(FontAwesomeIcons.tv), Colors.teal),
     Category('Income', Icon(FontAwesomeIcons.moneyBill), Colors.amberAccent),
     Category('Others', Icon(Icons.category), Colors.black)
-  ];
-
-//  Record(this._title, this._value, this._dateTime, this._categoryId,
-//      this._accountId, this._currency);
-  List<Record> _records = [
-    Record("Steam Dota", 12, DateTime(2020, 4, 12), 3, 0, "SGD"),
-    Record("UNIQLO", 30, DateTime(2020, 5, 12), 2, 0, "SGD"),
-    Record("Mother's Day", 20, DateTime(2020, 5, 10), 2, 0, "SGD"),
-    Record("Sentosa Outing", 14.50, DateTime(2020, 2, 12), 3, 1, "SGD"),
-    Record("Netflix Subscription", 12, DateTime(2020, 6, 1), 3, 0, "SGD"),
-    Record("Food & Beverage", 5.8, DateTime(2020, 5, 29), 0, 1, "SGD"),
-    Record("Dental check up", 30, DateTime(2020, 6, 3), 4, 1, "SGD"),
   ];
 
   List<Record> get records {
@@ -52,7 +56,7 @@ class UserData extends ChangeNotifier {
 
   List<Record> get specifiedRecords {
     return _selectedAccount == -1
-        ? records
+        ? _records
         : _records.where((rec) => rec.accountId == _selectedAccount).toList();
   }
 
@@ -94,7 +98,7 @@ class UserData extends ChangeNotifier {
 
   void addRecord() {
     if (!_isEditing) {
-      records.add(_tempRecord);
+      _records.add(_tempRecord);
     }
 
     if (_isEditing) {
@@ -152,7 +156,7 @@ class UserData extends ChangeNotifier {
   }
 
   void renameAccount(int accId, String newTitle) {
-    accounts[accId].rename(newTitle);
+    _accounts[accId].rename(newTitle);
     notifyListeners();
   }
 

@@ -11,7 +11,6 @@ class HistoryTab extends StatelessWidget {
         alignment: Alignment.topCenter,
         child: ListView.builder(
           shrinkWrap: true,
-          reverse: true,
           itemBuilder: (context, index) {
             // print(userData.recordsCount);
             final record = userData.records[index];

@@ -94,11 +94,11 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                   "Add Receipt",
                   style: kStandardStyle,
                 ),
-                onPressed: () {
-                  Scanner scanner =
-                      Scanner(userData: userData, screenId: EditInfoScreen.id);
-                  setState(() async {
-                    await scanner.process(context);
+                onPressed: () async {
+                  Scanner scanner = Scanner(userData);
+                  await scanner.showChoiceDialog(context);
+                  scanner.process();
+                  setState(() {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, EditInfoScreen.id);
                   });

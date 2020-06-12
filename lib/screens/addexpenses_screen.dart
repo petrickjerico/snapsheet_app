@@ -29,10 +29,10 @@ class AddExpensesScreen extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.receipt),
-              onPressed: () {
-                Scanner scanner =
-                    Scanner(userData: userData, screenId: AddExpensesScreen.id);
-                scanner.process(context);
+              onPressed: () async {
+                Scanner scanner = Scanner(userData);
+                await scanner.showChoiceDialog(context);
+                scanner.process();
               },
             )
           ],

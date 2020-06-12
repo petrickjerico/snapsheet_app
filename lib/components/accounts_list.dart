@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/models/scanner.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
 class AccountsList extends StatefulWidget {
@@ -11,36 +12,20 @@ class AccountsList extends StatefulWidget {
 class _AccountsListState extends State<AccountsList> {
   List<Asset> images = List<Asset>();
 
-  Widget buildGridView() {
-    if (images != null)
-      return GridView.count(
-        crossAxisCount: 3,
-        children: List.generate(images.length, (index) {
-          Asset asset = images[index];
-          return AssetThumb(
-            asset: asset,
-            width: 300,
-            height: 300,
-          );
-        }),
-      );
-    else
-      return Container(color: Colors.white);
-  }
-
   Future<void> loadAssets() async {
     images = List<Asset>();
 
     List<Asset> resultList;
-    String error;
 
     try {
       resultList = await MultiImagePicker.pickImages(
         maxImages: 300,
       );
     } on Exception catch (e) {
-      error = e.toString();
+      print(e.toString());
     }
+
+    images = resultList;
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -55,22 +40,26 @@ class _AccountsListState extends State<AccountsList> {
           padding: EdgeInsets.all(12),
           separatorBuilder: (context, index) => Divider(),
           itemBuilder: (context, index) {
-//            final account = exporter.accounts[index];
-//            final isExport = exporter.isExport[index];
-//            return ExportTile(
-//              account: account,
-//              isExport: isExport,
-//              voidCallback: () {
-//                userData.toggleExport(index);
-//                print(exporter.isExport.toString());
-//              },
-//            );
+            final account = userData.accounts[index];
+            return Container(
+              color: account.color,
+              child: ListTile(
+                title: Text(
+                  account.title,
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () async {
+                  await loadAssets();
+                  Scanner scanner = Scanner(userData);
+                  await scanner.bulkProcess(images, index);
+                  scanner.clearResource();
+                },
+              ),
+            );
           },
-          itemCount: 10,
+          itemCount: userData.accounts.length,
         );
       },
     );
   }
-
-  Widget _getListItemTile(BuildContext context, int index) {}
 }

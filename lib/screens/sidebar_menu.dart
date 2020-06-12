@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/addcategory_screen.dart';
 import 'package:snapsheetapp/screens/bulk_scan_screen.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/bulkinput_screen.dart';
 import 'package:snapsheetapp/screens/editprofile_screen.dart';
 import 'package:snapsheetapp/screens/exportselect_screen.dart';
 import 'package:snapsheetapp/screens/settings_screen.dart';

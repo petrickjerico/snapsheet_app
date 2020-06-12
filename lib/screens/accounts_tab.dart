@@ -1,17 +1,63 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/add_account_popup.dart';
 import 'package:snapsheetapp/components/homepage_card.dart';
+import 'package:snapsheetapp/components/rename_account_popup.dart';
 import 'package:snapsheetapp/components/statistics.dart';
+import 'package:snapsheetapp/models/account.dart';
 import '../constants.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
 class AccountsTab extends StatelessWidget {
+  Future<void> showChoiceDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Select"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  child: Text("Edit"),
+                  onTap: () {
+                    Navigator.pop(context);
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => SingleChildScrollView(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: RenameAccountPopup(
+                            Provider.of<UserData>(context).selectedAccount),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30.0),
+                          topRight: Radius.circular(30.0),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(height: 20),
+                GestureDetector(
+                  child: Text("Delete"),
+                  onTap: () {},
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget makeAccountButtons(UserData userData, BuildContext context) {
     List<Widget> children = userData.accounts.map((e) {
       int accId = userData.accounts.indexOf(e);
       return MaterialButton(
-        color: e.color,
+        color: e.isSelected ? e.color : Colors.grey,
         elevation: 0,
         child: Text(
           e.title,
@@ -19,11 +65,23 @@ class AccountsTab extends StatelessWidget {
         ),
         onPressed: () {
           userData.selectAccount(accId);
+          for (Account acc in userData.accounts) {
+            if (userData.accounts.indexOf(acc) != accId) {
+              acc.isSelected = false;
+            } else {
+              acc.isSelected = true;
+            }
+          }
+        },
+        onLongPress: () {
+          userData.selectAccount(accId);
+          showChoiceDialog(context);
         },
       );
     }).toList();
 
-    children.add(OutlineButton(
+    children.add(
+      OutlineButton(
         padding: EdgeInsets.all(0),
         borderSide: BorderSide(color: Colors.black),
         child: Row(
@@ -59,18 +117,23 @@ class AccountsTab extends StatelessWidget {
               ),
             ),
           );
-        }));
+        },
+      ),
+    );
 
-    return GridView.count(
-      childAspectRatio: 3,
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      primary: false,
-      padding: const EdgeInsets.all(10),
-      crossAxisSpacing: 10,
-      mainAxisSpacing: 10,
-      crossAxisCount: 3,
-      children: children,
+    return Padding(
+      padding: EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+      child: GridView.count(
+        childAspectRatio: 3,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        primary: false,
+        padding: EdgeInsets.all(10),
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        crossAxisCount: 3,
+        children: children,
+      ),
     );
   }
 
@@ -82,115 +145,65 @@ class AccountsTab extends StatelessWidget {
           color: Colors.grey,
           child: Column(
             children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Container(
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text('List of accounts'),
-                      makeAccountButtons(userData, context),
-                      Visibility(
-                        visible: userData.selectedAccount != -1,
-                        child: MaterialButton(
-                          color: Colors.black,
-                          elevation: 0,
-                          child: Text(
-                            'Select All',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () {
-                            userData.selectAccount(-1);
-                          },
+              Container(
+                color: Colors.white,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20.0,
+                        top: 15.0,
+                      ),
+                      child: Text(
+                        'List of accounts',
+                        style: TextStyle(
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.w500,
                         ),
-                      )
+                      ),
+                    ),
+                    makeAccountButtons(userData, context),
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 8.0),
+                        child: Visibility(
+                          visible: userData.selectedAccount != -1,
+                          child: MaterialButton(
+                              color: Colors.black,
+                              elevation: 0,
+                              child: Text(
+                                'Select All',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () {
+                                userData.selectAccount(-1);
+                                for (Account acc in userData.accounts) {
+                                  acc.isSelected = true;
+                                }
+                              }),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: ListView(
+                    children: <Widget>[
+                      Statistics(),
                     ],
                   ),
                 ),
               ),
-              Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: HomepageCard(
-                      cardChild: Statistics(),
-                    ),
-                  )),
             ],
           ),
         );
       },
     );
-  }
-}
-
-class RenameAccountPopup extends StatelessWidget {
-  RenameAccountPopup(this.id);
-
-  int id;
-  String accountTitle;
-
-  @override
-  Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    return Consumer<UserData>(builder: (context, userData, child) {
-      return Form(
-        key: _formKey,
-        child: Container(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  SizedBox(height: 10.0),
-                  TextFormField(
-                    initialValue: accountTitle,
-                    autofocus: true,
-                    onChanged: (value) {
-                      accountTitle = value;
-                    },
-                    decoration: kTextFieldDecorationLogin.copyWith(
-                      hintText: 'Rename your account',
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text.';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                ],
-              ),
-              Container(
-                height: 50.0,
-                width: 150.0,
-                child: FlatButton(
-                  color: Colors.black,
-                  child: Text(
-                    'RENAME',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 20.0, color: Colors.white),
-                  ),
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      userData.renameAccount(id, accountTitle);
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 15.0,
-              )
-            ],
-          ),
-        ),
-      );
-    });
   }
 }

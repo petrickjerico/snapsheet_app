@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/provider.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
 import '../constants.dart';

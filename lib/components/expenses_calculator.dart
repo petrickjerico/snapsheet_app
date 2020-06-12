@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/models/account.dart';
@@ -24,7 +26,6 @@ class _ExpensesCalculatorState extends State<ExpensesCalculator> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    var temp = value;
     value = Provider.of<UserData>(context).tempRecord.value;
   }
 
@@ -534,16 +535,19 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         }
         _catId = userData.tempRecord.categoryId;
         _accId = userData.isEditing ? userData.tempRecord.accountId : _accId;
-        return Column(children: <Widget>[
-          Expanded(child: _getDisplay(userData), flex: 3),
-          Expanded(child: _getButtons(), flex: 4),
-        ]);
+        return Consumer<ValueNotifier<bool>>(
+          builder: (context, buttonTrigger, child) => Column(children: <Widget>[
+            Expanded(child: _getDisplay(userData), flex: 3),
+            Expanded(child: _getButtons(buttonTrigger), flex: 4),
+          ]),
+        );
       },
     );
   }
 
   @override
   void didChangeDependencies() {
+    print("SimpleCalculator didChangeDependencies() was called.");
     super.didChangeDependencies();
     if (_calc != null) return;
     if (widget.numberFormat == null) {
@@ -558,11 +562,16 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
     for (var i = 0; i < 10; i++) {
       _nums[i] = _calc.numberFormat.format(i);
     }
+    try {
+      final ValueNotifier<bool> buttonTrigger =
+          Provider.of<ValueNotifier<bool>>(context);
+      buttonTrigger.addListener(_handleButtonPress);
+    } catch (e) {}
     _calc.setValue(Provider.of<UserData>(context).tempRecord.value);
     _displayValue = _calc.displayString;
   }
 
-  Widget _getButtons() {
+  Widget _getButtons(ValueNotifier<bool> buttonTrigger) {
     return GridButton(
       textStyle: _baseStyle,
       borderColor: _borderSide.color,
@@ -582,9 +591,14 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           case "×":
           case "÷":
             _calc.setOperator(val);
+            buttonTrigger.value = false;
+            print('buttonTrigger current value: ${buttonTrigger.value}');
             break;
           case "=":
             _calc.operate();
+            print('_calc.operate was done from original.');
+            var temp = buttonTrigger.value;
+            print('buttonTrigger current value: ${buttonTrigger.value}');
             acLabel = "AC";
             break;
           case "AC":
@@ -597,13 +611,19 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           default:
             if (val == _calc.numberFormat.symbols.DECIMAL_SEP) {
               _calc.addPoint();
+              buttonTrigger.value = false;
+              print('buttonTrigger current value: ${buttonTrigger.value}');
               acLabel = "C";
             }
             if (val == _calc.numberFormat.symbols.PERCENT) {
               _calc.setPercent();
+              buttonTrigger.value = false;
+              print('buttonTrigger current value: ${buttonTrigger.value}');
             }
             if (_nums.contains(val)) {
               _calc.addDigit(_nums.indexOf(val));
+              buttonTrigger.value = false;
+              print('buttonTrigger current value: ${buttonTrigger.value}');
             }
             acLabel = "C";
         }
@@ -618,6 +638,29 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
       },
       items: _getItems(),
     );
+  }
+
+  void _handleButtonPress() async {
+    print("SimpleCalculator _handleButtonPress() was called.");
+    try {
+      final ValueNotifier<bool> buttonTrigger =
+          Provider.of<ValueNotifier<bool>>(context, listen: false);
+      if (buttonTrigger != null) {
+        if (buttonTrigger.value) {
+          setState(() {
+            _calc.operate();
+            print('another call of _calc.operate()');
+            _displayValue = _calc.displayString;
+            buttonTrigger.value = true;
+            Provider.of<UserData>(context, listen: false)
+                .tempRecord
+                .revalue(double.parse(_calc.displayString));
+          });
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   Widget _getDisplay(UserData userData) {

@@ -10,6 +10,49 @@ import '../constants.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
 class AccountsTab extends StatelessWidget {
+  Future<void> showChoiceDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Select"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  child: Text("Edit"),
+                  onTap: () {
+                    Navigator.pop(context);
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => SingleChildScrollView(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: RenameAccountPopup(
+                            Provider.of<UserData>(context).selectedAccount),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30.0),
+                          topRight: Radius.circular(30.0),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(height: 20),
+                GestureDetector(
+                  child: Text("Delete"),
+                  onTap: () {},
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget makeAccountButtons(UserData userData, BuildContext context) {
     List<Widget> children = userData.accounts.map((e) {
       int accId = userData.accounts.indexOf(e);
@@ -37,7 +80,8 @@ class AccountsTab extends StatelessWidget {
       );
     }).toList();
 
-    children.add(OutlineButton(
+    children.add(
+      OutlineButton(
         padding: EdgeInsets.all(0),
         borderSide: BorderSide(color: Colors.black),
         child: Row(
@@ -73,7 +117,9 @@ class AccountsTab extends StatelessWidget {
               ),
             ),
           );
-        }));
+        },
+      ),
+    );
 
     return Padding(
       padding: EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
@@ -160,46 +206,4 @@ class AccountsTab extends StatelessWidget {
       },
     );
   }
-}
-
-Future<void> showChoiceDialog(BuildContext context) {
-  return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Select"),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                GestureDetector(
-                  child: Text("Edit"),
-                  onTap: () {
-                    Navigator.pop(context);
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) => SingleChildScrollView(
-                        padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: RenameAccountPopup(
-                            Provider.of<UserData>(context).selectedAccount),
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.0),
-                          topRight: Radius.circular(30.0),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                SizedBox(height: 20),
-                GestureDetector(
-                  child: Text("Delete"),
-                  onTap: () {},
-                )
-              ],
-            ),
-          ),
-        );
-      });
 }

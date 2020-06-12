@@ -13,42 +13,6 @@ class Statistics extends StatelessWidget {
   Widget build(BuildContext context) {
     return HomepageCard(
       cardChild: Consumer<UserData>(builder: (context, userData, child) {
-        List<charts.Series<Stats, String>> _dataSeries = [];
-        List<Record> currRecs = userData.specifiedRecords;
-
-        List<Stats> getStatsList() {
-          List<String> categoryTitles =
-              userData.categories.map((e) => e.title).toList();
-          List<Stats> res = [];
-          for (int catId = 0; catId < categoryTitles.length; catId++) {
-            String statTitle = categoryTitles[catId];
-            double statValue = 0;
-            for (Record rec in currRecs) {
-              if (rec.categoryId == catId) {
-                statValue += rec.value;
-              }
-            }
-            if (statValue != 0) {
-              res.add(Stats(statTitle, statValue));
-            }
-          }
-          return res;
-        }
-
-        var statsList = getStatsList();
-
-        _dataSeries.add(
-          charts.Series(
-            data: statsList,
-            domainFn: (Stats st, _) => st.title,
-            measureFn: (Stats st, _) => st.value,
-            colorFn: (Stats st, _) => st.color,
-            id: userData.selectedAccount == -1
-                ? "All Accounts statistics"
-                : "Account ${userData.selectedAccount} statistics",
-            labelAccessorFn: (Stats st, _) => "${st.value}",
-          ),
-        );
         return Container(
           height: 700,
           child: Padding(

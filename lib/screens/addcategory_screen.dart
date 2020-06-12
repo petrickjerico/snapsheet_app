@@ -14,16 +14,7 @@ class AddCategoryScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.black,
-          leading: FlatButton(
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              //TODO: more complex navigation
-              Navigator.pop(context);
-            },
-          ),
+          leading: BackButton(),
           title: Text('CATEGORIES'),
         ),
         body: Center(

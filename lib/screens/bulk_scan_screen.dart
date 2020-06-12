@@ -6,7 +6,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'editinfo_screen.dart';
 
-class ScannerScreen extends StatelessWidget {
+class BulkScanScreen extends StatelessWidget {
   static const String id = 'scanner_screen';
 
   @override

@@ -11,6 +11,7 @@ import 'package:snapsheetapp/models/user_data.dart';
 
 class AccountsTab extends StatelessWidget {
   Future<void> showChoiceDialog(BuildContext context) {
+    UserData userData = Provider.of<UserData>(context, listen: false);
     return showDialog(
       context: context,
       builder: (context) {
@@ -25,11 +26,11 @@ class AccountsTab extends StatelessWidget {
                     Navigator.pop(context);
                     showModalBottomSheet(
                       context: context,
+                      isScrollControlled: true,
                       builder: (context) => SingleChildScrollView(
                         padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: RenameAccountPopup(
-                            Provider.of<UserData>(context).selectedAccount),
+                        child: RenameAccountPopup(userData.selectedAccount),
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
@@ -43,7 +44,58 @@ class AccountsTab extends StatelessWidget {
                 SizedBox(height: 20),
                 GestureDetector(
                   child: Text("Delete"),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context);
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        titlePadding:
+                            EdgeInsets.only(left: 20, right: 20, top: 20),
+                        contentPadding: EdgeInsets.only(
+                            left: 20, right: 20, top: 20, bottom: 10),
+                        title: Text("Delete account?"),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Are you sure you want to delete ${userData.accounts[userData.selectedAccount].title}?',
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                FlatButton(
+                                  child: Text(
+                                    'DELETE',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  color: Colors.black,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  onPressed: () {
+                                    userData.deleteAccount(
+                                        userData.selectedAccount);
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                OutlineButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  child: Text('NO'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 )
               ],
             ),
@@ -83,17 +135,21 @@ class AccountsTab extends StatelessWidget {
     children.add(
       OutlineButton(
         padding: EdgeInsets.all(0),
-        borderSide: BorderSide(color: Colors.black),
+        borderSide: BorderSide(color: Colors.white),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(Icons.add, size: 15.0),
+            Icon(
+              Icons.add,
+              size: 15.0,
+              color: Colors.white,
+            ),
             SizedBox(
               width: 2.0,
             ),
             Text(
               'ADD ACCOUNT',
-              style: TextStyle(fontSize: 13.0),
+              style: TextStyle(fontSize: 13.0, color: Colors.white),
             ),
             SizedBox(
               width: 2.0,
@@ -146,7 +202,7 @@ class AccountsTab extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                color: Colors.white,
+                color: Colors.black87,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -160,7 +216,8 @@ class AccountsTab extends StatelessWidget {
                       child: Text(
                         'List of accounts',
                         style: TextStyle(
-                          fontSize: 25.0,
+                          color: Colors.white,
+                          fontSize: 20.0,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -171,12 +228,12 @@ class AccountsTab extends StatelessWidget {
                         padding: EdgeInsets.only(bottom: 8.0),
                         child: Visibility(
                           visible: userData.selectedAccount != -1,
-                          child: MaterialButton(
-                              color: Colors.black,
-                              elevation: 0,
+                          child: FlatButton(
                               child: Text(
-                                'Select All',
-                                style: TextStyle(color: Colors.white),
+                                'SELECT ALL',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    decoration: TextDecoration.underline),
                               ),
                               onPressed: () {
                                 userData.selectAccount(-1);
@@ -191,13 +248,13 @@ class AccountsTab extends StatelessWidget {
                 ),
               ),
               Flexible(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: ListView(
-                    children: <Widget>[
-                      Statistics(),
-                    ],
-                  ),
+                child: ListView(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Statistics(),
+                    ),
+                  ],
                 ),
               ),
             ],

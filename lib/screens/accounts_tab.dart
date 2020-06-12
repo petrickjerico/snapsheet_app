@@ -8,16 +8,16 @@ import 'package:snapsheetapp/models/user_data.dart';
 class AccountsTab extends StatelessWidget {
   Widget makeAccountButtons(UserData userData, BuildContext context) {
     List<Widget> children = userData.accounts.map((e) {
-      int accountId = userData.accounts.indexOf(e);
+      int accId = userData.accounts.indexOf(e);
       return MaterialButton(
-        color: Colors.black,
+        color: e.color,
         elevation: 0,
         child: Text(
           e.title,
           style: TextStyle(color: Colors.white),
         ),
         onPressed: () {
-          userData.selectAccount(accountId);
+          userData.selectAccount(accId);
         },
       );
     }).toList();

@@ -71,11 +71,13 @@ class Scanner {
     for (Asset asset in images) {
       userData.newRecord();
       userData.changeAccount(accId);
+
       ByteData byteData = await asset.getByteData();
       path = '${directory.path}/${UserData.imageCounter++}';
       final buffer = byteData.buffer;
       imageFile = await File(path).writeAsBytes(
           buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
       await process();
       userData.addRecord();
     }

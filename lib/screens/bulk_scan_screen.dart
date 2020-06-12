@@ -12,7 +12,7 @@ class BulkScanScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         leading: BackButton(),
-        title: Text('BULK INPUT'),
+        title: Text('BULK SCAN'),
       ),
       body: AccountsList(),
       floatingActionButton: FloatingActionButton(

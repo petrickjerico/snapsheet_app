@@ -1,12 +1,39 @@
+import 'package:downloads_path_provider/downloads_path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/export_list.dart';
-import 'package:snapsheetapp/components/fading_export_dialog.dart';
 import 'package:snapsheetapp/models/user_data.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/exportdone_screen.dart';
 
 class ExportSelectScreen extends StatelessWidget {
   static const String id = 'exportselect_screen';
+
+  Future<void> _showMyDialog(context) async {
+    String dir = (await DownloadsPathProvider.downloadsDirectory).path;
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Export Done'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('File is in $dir'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +64,13 @@ class ExportSelectScreen extends StatelessWidget {
                       color: Colors.white,
                     ),
                     title: Text(
-                      'EXPORT',
+                      'EXPORT CSV',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
                   onPressed: () async {
                     await userData.exporter.exportCSV();
+                    _showMyDialog(context);
                   },
                 ),
               ),

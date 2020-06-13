@@ -10,7 +10,7 @@ import 'package:flutter/rendering.dart';
 
 class AddExpensesScreen extends StatelessWidget {
   static const String id = 'addexpenses_screen';
-  ValueNotifier<bool> buttonTrigger = ValueNotifier(false);
+  ValueNotifier<bool> buttonTrigger = ValueNotifier(true);
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +70,14 @@ class CheckEqualsFab extends StatelessWidget {
       builder: (context, buttonTrigger, child) => FloatingActionButton(
         backgroundColor: Colors.black,
         child: Icon(Icons.check),
-        onPressed: () async {
-          if (buttonTrigger.value == true) {
+        onPressed: () {
+          if (buttonTrigger.value) {
+            print('if true');
             Provider.of<UserData>(context, listen: false).addRecord();
             Navigator.pop(context);
           } else {
-            buttonTrigger.value = true;
+            print('if false');
             Provider.of<UserData>(context, listen: false).addRecord();
-            await Future.delayed(Duration(milliseconds: 700));
             Navigator.pop(context);
           }
         },

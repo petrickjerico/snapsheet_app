@@ -535,12 +535,10 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         }
         _catId = userData.tempRecord.categoryId;
         _accId = userData.isEditing ? userData.tempRecord.accountId : _accId;
-        return Consumer<ValueNotifier<bool>>(
-          builder: (context, buttonTrigger, child) => Column(children: <Widget>[
-            Expanded(child: _getDisplay(userData), flex: 3),
-            Expanded(child: _getButtons(buttonTrigger), flex: 4),
-          ]),
-        );
+        return Column(children: <Widget>[
+          Expanded(child: _getDisplay(userData), flex: 3),
+          Expanded(child: _getButtons(), flex: 4),
+        ]);
       },
     );
   }
@@ -565,19 +563,25 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
     try {
       final ValueNotifier<bool> buttonTrigger =
           Provider.of<ValueNotifier<bool>>(context);
+      if (buttonTrigger.hasListeners) {
+        buttonTrigger.removeListener(_handleButtonPress);
+      }
       buttonTrigger.addListener(_handleButtonPress);
     } catch (e) {}
     _calc.setValue(Provider.of<UserData>(context).tempRecord.value);
     _displayValue = _calc.displayString;
   }
 
-  Widget _getButtons(ValueNotifier<bool> buttonTrigger) {
+  Widget _getButtons() {
+    ValueNotifier<bool> buttonTrigger =
+        Provider.of<ValueNotifier<bool>>(context);
     return GridButton(
       textStyle: _baseStyle,
       borderColor: _borderSide.color,
       hideSurroundingBorder: widget.hideSurroundingBorder,
       borderWidth: widget.theme?.borderWidth,
       onPressed: (dynamic val) {
+        print(buttonTrigger.value.toString() + ": from _calc._operated");
         var acLabel;
         switch (val) {
           case "→":
@@ -591,14 +595,9 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           case "×":
           case "÷":
             _calc.setOperator(val);
-            buttonTrigger.value = false;
-            print('buttonTrigger current value: ${buttonTrigger.value}');
             break;
           case "=":
             _calc.operate();
-            print('_calc.operate was done from original.');
-            var temp = buttonTrigger.value;
-            print('buttonTrigger current value: ${buttonTrigger.value}');
             acLabel = "AC";
             break;
           case "AC":
@@ -611,19 +610,13 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           default:
             if (val == _calc.numberFormat.symbols.DECIMAL_SEP) {
               _calc.addPoint();
-              buttonTrigger.value = false;
-              print('buttonTrigger current value: ${buttonTrigger.value}');
               acLabel = "C";
             }
             if (val == _calc.numberFormat.symbols.PERCENT) {
               _calc.setPercent();
-              buttonTrigger.value = false;
-              print('buttonTrigger current value: ${buttonTrigger.value}');
             }
             if (_nums.contains(val)) {
               _calc.addDigit(_nums.indexOf(val));
-              buttonTrigger.value = false;
-              print('buttonTrigger current value: ${buttonTrigger.value}');
             }
             acLabel = "C";
         }
@@ -640,23 +633,20 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
     );
   }
 
-  void _handleButtonPress() async {
-    print("SimpleCalculator _handleButtonPress() was called.");
+  void _handleButtonPress() {
     try {
       final ValueNotifier<bool> buttonTrigger =
           Provider.of<ValueNotifier<bool>>(context, listen: false);
       if (buttonTrigger != null) {
-        if (buttonTrigger.value) {
+        if (!buttonTrigger.value) {
           setState(() {
             _calc.operate();
-            print('another call of _calc.operate()');
             _displayValue = _calc.displayString;
-            buttonTrigger.value = true;
-            Provider.of<UserData>(context, listen: false)
-                .tempRecord
-                .revalue(double.parse(_calc.displayString));
           });
         }
+        Provider.of<UserData>(context, listen: false)
+            .tempRecord
+            .revalue(double.parse(_displayValue));
       }
     } catch (e) {
       print(e);

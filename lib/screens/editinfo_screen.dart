@@ -30,9 +30,7 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     var temp = title;
-    setState(() {
-      title = Provider.of<UserData>(context).tempRecord.title;
-    });
+    title = Provider.of<UserData>(context).tempRecord.title;
     userData = Provider.of<UserData>(context);
     print('Title changed: $temp -> $title');
   }
@@ -40,6 +38,7 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
   @override
   Widget build(BuildContext context) {
     print('EditInfoScreen build() called.');
+    print(title);
 //    return Consumer<UserData>(
 //      builder: (context, userData, child) {
     return Scaffold(

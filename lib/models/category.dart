@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:random_color/random_color.dart';
 
 class Category {
-  final String _title;
-  final Icon _icon;
-  final Color _color;
+  static final _randomColor = RandomColor();
+  String _title;
+  Icon _icon;
+  Color _color;
 
-  Category(this._title, this._icon, this._color);
+  Category(String title, Icon icon, [Color color]) {
+    this._title = title;
+    this._icon = icon;
+    if (color != null) {
+      this._color = color;
+    } else {
+      this._color = _randomColor.randomColor();
+    }
+  }
 
   String get title {
     return _title;

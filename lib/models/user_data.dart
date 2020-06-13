@@ -27,12 +27,19 @@ class UserData extends ChangeNotifier {
       Record("Netflix Subscription", 12, DateTime(2020, 6, 1), 3, 0, "SGD"),
       Record("Food & Beverage", 5.8, DateTime(2020, 5, 29), 0, 1, "SGD"),
       Record("Dental check up", 30, DateTime(2020, 6, 3), 4, 1, "SGD"),
+      Record("First Aid kit", 20, DateTime(2020, 3, 12), 4, 2, "SGD"),
+      Record("Group outing", 15, DateTime(2020, 4, 5), 0, 2, "SGD"),
+      Record("Bus transport", 25, DateTime(2020, 5, 6), 1, 2, "SGD"),
+      Record("CCA book", 16.75, DateTime(2020, 5, 3), 5, 2, "SGD"),
+      Record("Online course", 5.75, DateTime(2020, 5, 20), 6, 2, "SGD"),
+      Record("Teacher's Birthday Gift", 4, DateTime(2020, 4, 3), 3, 2, "SGD"),
     ]);
   }
 
   List<Account> _accounts = [
     Account(accTitle: 'DBS', accColor: Colors.red[900]),
     Account(accTitle: 'Cash', accColor: Colors.deepPurple[700]),
+    Account(accTitle: 'CCA', accColor: Colors.blue[600])
   ];
 
   List<Category> _categories = [
@@ -47,7 +54,11 @@ class UserData extends ChangeNotifier {
     Category('Education', Icon(FontAwesomeIcons.graduationCap), Colors.orange),
     Category('Electronics', Icon(FontAwesomeIcons.tv), Colors.teal),
     Category('Income', Icon(FontAwesomeIcons.moneyBill), Colors.amberAccent),
-    Category('Others', Icon(Icons.category), Colors.black)
+    Category('Others', Icon(Icons.category), Colors.black),
+    Category(
+      'Travel',
+      Icon(Icons.place),
+    ),
   ];
 
   List<Record> get records {
@@ -240,5 +251,16 @@ class UserData extends ChangeNotifier {
     records.removeWhere((element) => element.accountId == accId);
     _selectedAccount--;
     notifyListeners();
+  }
+
+  double getCategTotalFromCurrent(int catId) {
+    double res = 0;
+    for (Record rec in records) {
+      if ((selectedAccount == -1 || rec.accountId == selectedAccount) &&
+          rec.categoryId == catId) {
+        res += rec.value;
+      }
+    }
+    return res;
   }
 }

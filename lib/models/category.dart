@@ -17,15 +17,9 @@ class Category {
     }
   }
 
-  String get title {
-    return _title;
-  }
+  String get title => _title;
 
-  Icon get icon {
-    return _icon;
-  }
+  Icon get icon => _icon;
 
-  Color get color {
-    return _color;
-  }
+  Color get color => _color;
 }

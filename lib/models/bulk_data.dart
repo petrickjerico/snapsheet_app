@@ -31,33 +31,19 @@ class BulkData extends ChangeNotifier {
 //      this._accountId, this._currency);
   List<Record> _records = [];
 
-  List<Record> get records {
-    return _records;
-  }
+  List<Record> get records => _records;
 
-  int get recordsCount {
-    return _records.length;
-  }
+  int get recordsCount => _records.length;
 
-  int get categoriesCount {
-    return _categories.length;
-  }
+  int get categoriesCount => _categories.length;
 
-  List<Category> get categories {
-    return _categories;
-  }
+  List<Category> get categories => _categories;
 
-  Record get tempRecord {
-    return _tempRecord;
-  }
+  Record get tempRecord => _tempRecord;
 
-  bool get isEditing {
-    return _isEditing;
-  }
+  bool get isEditing => _isEditing;
 
-  bool get isScanned {
-    return _isScanned;
-  }
+  bool get isScanned => _isScanned;
 
   void toggleScanned() {
     _isScanned = !_isScanned;
@@ -87,12 +73,12 @@ class BulkData extends ChangeNotifier {
   }
 
   void changeCategory(int catId) {
-    _tempRecord.recategorise(catId);
+    _tempRecord.category = catId;
     notifyListeners();
   }
 
   void changeValue(double newValue) {
-    _tempRecord.revalue(newValue);
+    _tempRecord.value = newValue;
     notifyListeners();
   }
 
@@ -103,17 +89,17 @@ class BulkData extends ChangeNotifier {
   }
 
   void changeImage(File imageFile) {
-    _tempRecord.reimage(imageFile);
+    _tempRecord.image = imageFile;
     notifyListeners();
   }
 
   void changeTitle(String newTitle) {
-    _tempRecord.rename(newTitle);
+    _tempRecord.name = newTitle;
     notifyListeners();
   }
 
   void changeDate(DateTime newDate) {
-    _tempRecord.redate(newDate);
+    _tempRecord.date = newDate;
     notifyListeners();
   }
 }

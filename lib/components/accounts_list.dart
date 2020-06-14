@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/models/scanner.dart';
@@ -11,6 +12,7 @@ class AccountsList extends StatefulWidget {
 
 class _AccountsListState extends State<AccountsList> {
   List<Asset> images = List<Asset>();
+  bool showSpinner = false;
 
   Future<void> loadAssets() async {
     images = List<Asset>();
@@ -26,10 +28,6 @@ class _AccountsListState extends State<AccountsList> {
     }
 
     images = resultList;
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
   }
 
   Future<void> _showMyDialog(context, String accTitle) async {
@@ -63,29 +61,40 @@ class _AccountsListState extends State<AccountsList> {
   Widget build(BuildContext context) {
     return Consumer<UserData>(
       builder: (context, userData, child) {
-        return ListView.separated(
-          padding: EdgeInsets.all(12),
-          separatorBuilder: (context, index) => Divider(),
-          itemBuilder: (context, index) {
-            final account = userData.accounts[index];
-            return Container(
-              color: account.color,
-              child: ListTile(
-                title: Text(
-                  account.title,
-                  style: TextStyle(color: Colors.white),
+        return ModalProgressHUD(
+          inAsyncCall: showSpinner,
+          child: ListView.separated(
+            padding: EdgeInsets.all(12),
+            separatorBuilder: (context, index) => Divider(),
+            itemBuilder: (context, index) {
+              final account = userData.accounts[index];
+              return Container(
+                color: account.color,
+                child: ListTile(
+                  title: Text(
+                    account.title,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () async {
+                    await loadAssets();
+                    if (images != null) {
+                      setState(() {
+                        showSpinner = true;
+                      });
+                      Scanner scanner = Scanner(userData);
+                      await scanner.bulkProcess(images, index);
+                      scanner.clearResource();
+                      setState(() {
+                        showSpinner = false;
+                      });
+                      _showMyDialog(context, account.title);
+                    }
+                  },
                 ),
-                onTap: () async {
-                  await loadAssets();
-                  Scanner scanner = Scanner(userData);
-                  await scanner.bulkProcess(images, index);
-                  scanner.clearResource();
-                  _showMyDialog(context, account.title);
-                },
-              ),
-            );
-          },
-          itemCount: userData.accounts.length,
+              );
+            },
+            itemCount: userData.accounts.length,
+          ),
         );
       },
     );

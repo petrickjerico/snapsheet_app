@@ -186,7 +186,7 @@ class UserData extends ChangeNotifier {
         total += rec.value;
       }
     }
-    return total;
+    return num.parse(total.toStringAsFixed(2));
   }
 
   String get selectedStatistics {
@@ -261,6 +261,6 @@ class UserData extends ChangeNotifier {
         res += rec.value;
       }
     }
-    return res;
+    return num.parse(res.toStringAsFixed(2));
   }
 }

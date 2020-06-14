@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 class ReceiptImageDialog extends StatelessWidget {
   final File imageFile;
 
-  //testing
-
   ReceiptImageDialog(this.imageFile);
 
   @override

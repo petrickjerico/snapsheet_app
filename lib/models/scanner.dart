@@ -103,10 +103,12 @@ class Scanner {
       }
     }
 
+    print(txt);
+
     // Update values
     title = parser.findTitle(txt);
     catId = parser.findCategoryId();
-    value = num.parse(parser.findCost(txt.join(" ")).toStringAsFixed(2));
+    value = parser.findCost(txt.join(" "));
     date = parser.findDate(txt.join(" "));
 
     print('$value ${date.toString()} $title');

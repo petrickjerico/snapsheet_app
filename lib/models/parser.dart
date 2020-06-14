@@ -30,6 +30,8 @@ class Parser {
     "paylah": Shop(shopTitle: 'Paylah', catId: 8),
     "paynow": Shop(shopTitle: 'Paynow', catId: 8),
     "pepper lunch": Shop(shopTitle: 'Pepper Lunch', catId: 0),
+    "popular": Shop(shopTitle: 'Popular', catId: 5),
+    "ride": Shop(shopTitle: 'Grab ride', catId: 1),
     "starbucks": Shop(shopTitle: 'Starbucks', catId: 0),
     "uniqlo": Shop(shopTitle: 'UNIQLO', catId: 2),
     "monster curry": Shop(shopTitle: 'Monster Curry', catId: 0)
@@ -95,7 +97,7 @@ class Parser {
   }
 
   double findCost(String input) {
-    RegExp alertWords = RegExp(r"(discount|change)");
+    RegExp alertWords = RegExp(r"(discount|change|coupon)");
     RegExp money = RegExp(r"\d+\.\d{2}");
 
     Iterable<RegExpMatch> matches = money.allMatches(input);
@@ -109,7 +111,7 @@ class Parser {
     }
 
     costs.sort();
-    List<double> reversed = costs.reversed.toList();
+    List<double> reversed = costs.reversed.toSet().toList();
 
     return alertWords.hasMatch(input) ? reversed[1] : reversed[0];
   }

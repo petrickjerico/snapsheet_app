@@ -85,42 +85,32 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
                   SizedBox(
                     height: 5.0,
                   ),
-                  Row(
-                    children: <Widget>[
-                      Text('Color:'),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Expanded(
-                        child: FlatButton(
-                          child: Text(
-                            'Tap to change',
-                            style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                color: Colors.black54,
-                                fontSize: 10.0),
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0)),
-                          color: color,
-                          onPressed: () async {
-                            _openDialog(
-                              "Color your account",
-                              MaterialColorPicker(
-                                shrinkWrap: true,
-                                allowShades: false,
-                                onMainColorChange: (newColor) {
-                                  setState(() {
-                                    tempColor = newColor;
-                                  });
-                                },
-                                selectedColor: color,
-                              ),
-                            );
+                  FlatButton(
+                    child: Text(
+                      'Tap to change colour',
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          color: Colors.black87,
+                          fontSize: 15.0),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    color: color,
+                    onPressed: () async {
+                      _openDialog(
+                        "Color your account",
+                        MaterialColorPicker(
+                          shrinkWrap: true,
+                          allowShades: false,
+                          onMainColorChange: (newColor) {
+                            setState(() {
+                              tempColor = newColor;
+                            });
                           },
+                          selectedColor: color,
                         ),
-                      ),
-                    ],
+                      );
+                    },
                   )
                 ],
               ),

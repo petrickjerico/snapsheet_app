@@ -53,7 +53,7 @@ class Exporter {
 
   Future<File> targetFile() async {
     String dir = (await DownloadsPathProvider.downloadsDirectory).path;
-    String path = "$dir/snapsheet${DateTime.now()}.csv";
+    String path = "$dir/snapsheet-${DateTime.now()}.csv";
     return File(path);
   }
 

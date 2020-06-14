@@ -27,8 +27,6 @@ class BulkData extends ChangeNotifier {
     Category('Others', Icon(Icons.category), Colors.black)
   ];
 
-//  Record(this._title, this._value, this._dateTime, this._categoryId,
-//      this._accountId, this._currency);
   List<Record> _records = [];
 
   List<Record> get records => _records;

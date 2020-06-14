@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:provider/provider.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/util/scanner.dart';
 import 'package:snapsheetapp/models/user_data.dart';
+import 'package:snapsheetapp/services/scanner.dart';
 
 class AccountsList extends StatefulWidget {
   @override

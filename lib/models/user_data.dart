@@ -58,7 +58,7 @@ class UserData extends ChangeNotifier {
     Category(
       'Travel',
       Icon(Icons.place),
-    ),
+    )
   ];
 
   List<Record> get specifiedRecords => _selectedAccount == -1
@@ -152,13 +152,6 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  String _recordsToString(Record rec) {
-    String cat = _categories[rec.categoryId].title;
-    String cur = rec.currency;
-    double val = rec.value;
-    return "$cat: $cur$val";
-  }
-
   double get statsTotal {
     double total = 0;
     for (Record rec in records) {
@@ -167,30 +160,6 @@ class UserData extends ChangeNotifier {
       }
     }
     return num.parse(total.toStringAsFixed(2));
-  }
-
-  String get selectedStatistics {
-    String res = "";
-    double total = 0;
-
-    if (_selectedAccount == -1) {
-      res += "Records from all accounts combined:\n";
-      for (Record rec in records) {
-        res += "- ${_recordsToString(rec)}";
-        total += rec.value;
-      }
-      res += "\nTotal value: $total";
-    } else {
-      res += "Records from ${_accounts[_selectedAccount].title}:\n";
-      for (Record rec in records) {
-        if (rec.accountId == _selectedAccount) {
-          res += "\n- ${_recordsToString(rec)}";
-          total += rec.value;
-        }
-      }
-      res += "\nTotal value: $total";
-    }
-    return res;
   }
 
   void changeTitle(String newTitle) {
@@ -202,18 +171,6 @@ class UserData extends ChangeNotifier {
     _tempRecord.date = newDate;
     notifyListeners();
   }
-
-  String get statistics {
-//    String res;
-//
-//    if (_selectedAccount == -1) {
-//      res += "Records from all accounts:";
-//      for ()
-//    }
-    return selectedAccount.toString();
-  }
-
-  // EXPORT SECTION
 
   Exporter get exporter => _exporter;
 

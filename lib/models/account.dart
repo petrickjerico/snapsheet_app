@@ -7,19 +7,15 @@ class Account {
 
   Account({this.accTitle, this.accColor});
 
-  String get title {
-    return accTitle;
+  String get title => accTitle;
+
+  Color get color => accColor;
+
+  set title(String value) {
+    accTitle = value;
   }
 
-  Color get color {
-    return accColor;
-  }
-
-  void rename(String newTitle) {
-    accTitle = newTitle;
-  }
-
-  void recolor(Color newColor) {
-    accColor = newColor;
+  set color(Color value) {
+    accColor = value;
   }
 }

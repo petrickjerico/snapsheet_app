@@ -17,59 +17,45 @@ class Record {
       this._accountId,
       [this._currency = 'SGD']);
 
-  String get title {
-    return _title;
-  }
+  String get title => _title;
 
-  double get value {
-    return _value;
-  }
+  double get value => _value;
 
-  DateTime get date {
-    return _dateTime;
-  }
+  DateTime get date => _dateTime;
 
-  int get categoryId {
-    return _categoryId;
-  }
+  int get categoryId => _categoryId;
 
-  int get accountId {
-    return _accountId;
-  }
+  int get accountId => _accountId;
 
-  String get currency {
-    return _currency;
-  }
+  String get currency => _currency;
 
-  File get image {
-    return _receiptImage;
-  }
+  File get image => _receiptImage;
 
-  void rename(String newTitle) {
+  set name(String newTitle) {
     _title = newTitle;
   }
 
-  void revalue(double newValue) {
+  set value(double newValue) {
     _value = newValue;
   }
 
-  void redate(DateTime newDate) {
+  set date(DateTime newDate) {
     _dateTime = newDate;
   }
 
-  void recategorise(int newCategoryId) {
+  set category(int newCategoryId) {
     _categoryId = newCategoryId;
   }
 
-  void reaccount(int newAccountId) {
+  set account(int newAccountId) {
     _accountId = newAccountId;
   }
 
-  void reimage(File newImage) {
+  set image(File newImage) {
     _receiptImage = newImage;
   }
 
-  void changeCurrency(String newCurrency) {
+  set currency(String newCurrency) {
     // TODO: change _recordValue to correspond to the given newCurrency.
     // For now, changeCurrency() only changes the appended currency String
     // before _recordValue.

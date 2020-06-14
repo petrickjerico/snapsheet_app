@@ -7,15 +7,9 @@ class Shop {
 
   Shop({this.lowercased, this.shopTitle, this.catId});
 
-  String get lowercase {
-    return lowercased;
-  }
+  String get lowercase => lowercased;
 
-  String get title {
-    return shopTitle;
-  }
+  String get title => shopTitle;
 
-  int get categoryId {
-    return catId;
-  }
+  int get categoryId => catId;
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:snapsheetapp/models/account.dart';
 import 'package:snapsheetapp/models/category.dart';
-import 'package:snapsheetapp/models/export.dart';
+import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/util/export.dart';
 import 'package:snapsheetapp/models/record.dart';
 import 'package:sorted_list/sorted_list.dart';
 
@@ -61,47 +61,27 @@ class UserData extends ChangeNotifier {
     ),
   ];
 
-  List<Record> get records {
-    return _records;
-  }
+  List<Record> get specifiedRecords => _selectedAccount == -1
+      ? _records
+      : _records.where((rec) => rec.accountId == _selectedAccount).toList();
 
-  List<Record> get specifiedRecords {
-    return _selectedAccount == -1
-        ? _records
-        : _records.where((rec) => rec.accountId == _selectedAccount).toList();
-  }
+  List<Record> get records => _records;
 
-  int get recordsCount {
-    return _records.length;
-  }
+  int get recordsCount => _records.length;
 
-  int get selectedAccount {
-    return _selectedAccount;
-  }
+  int get selectedAccount => _selectedAccount;
 
-  int get categoriesCount {
-    return _categories.length;
-  }
+  int get categoriesCount => _categories.length;
 
-  List<Account> get accounts {
-    return _accounts;
-  }
+  List<Account> get accounts => _accounts;
 
-  List<Category> get categories {
-    return _categories;
-  }
+  List<Category> get categories => _categories;
 
-  Record get tempRecord {
-    return _tempRecord;
-  }
+  Record get tempRecord => _tempRecord;
 
-  bool get isEditing {
-    return _isEditing;
-  }
+  bool get isEditing => _isEditing;
 
-  bool get isScanned {
-    return _isScanned;
-  }
+  bool get isScanned => _isScanned;
 
   void toggleScanned() {
     _isScanned = !_isScanned;
@@ -141,17 +121,17 @@ class UserData extends ChangeNotifier {
   }
 
   void changeCategory(int catId) {
-    _tempRecord.recategorise(catId);
+    _tempRecord.category = catId;
     notifyListeners();
   }
 
   void changeAccount(int accId) {
-    _tempRecord.reaccount(accId);
+    _tempRecord.account = accId;
     notifyListeners();
   }
 
   void changeValue(double newValue) {
-    _tempRecord.revalue(newValue);
+    _tempRecord.value = newValue;
     notifyListeners();
   }
 
@@ -162,13 +142,13 @@ class UserData extends ChangeNotifier {
   }
 
   void changeImage(File imageFile) {
-    _tempRecord.reimage(imageFile);
+    _tempRecord.image = imageFile;
     notifyListeners();
   }
 
   void editAccount(int accId, String newTitle, Color newColor) {
-    accounts[accId].rename(newTitle);
-    accounts[accId].recolor(newColor);
+    accounts[accId].title = newTitle;
+    accounts[accId].color = newColor;
     notifyListeners();
   }
 
@@ -214,12 +194,12 @@ class UserData extends ChangeNotifier {
   }
 
   void changeTitle(String newTitle) {
-    _tempRecord.rename(newTitle);
+    _tempRecord.name = newTitle;
     notifyListeners();
   }
 
   void changeDate(DateTime newDate) {
-    _tempRecord.redate(newDate);
+    _tempRecord.date = newDate;
     notifyListeners();
   }
 

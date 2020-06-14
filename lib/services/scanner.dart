@@ -8,8 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/util/parser.dart';
 import 'package:snapsheetapp/models/user_data.dart';
+import 'package:snapsheetapp/services/parser.dart';
 
 class Scanner {
   Parser parser = Parser();

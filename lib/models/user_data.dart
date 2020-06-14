@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:snapsheetapp/models/account.dart';
 import 'package:snapsheetapp/models/category.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/util/export.dart';
 import 'package:snapsheetapp/models/record.dart';
+import 'package:snapsheetapp/services/export.dart';
 import 'package:sorted_list/sorted_list.dart';
 
 class UserData extends ChangeNotifier {

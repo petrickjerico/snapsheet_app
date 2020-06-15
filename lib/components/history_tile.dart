@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/constants.dart';
+import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/shared/constants.dart';
 import 'package:snapsheetapp/models/category.dart';
 import 'package:snapsheetapp/models/record.dart';
 import 'package:snapsheetapp/models/user_data.dart';

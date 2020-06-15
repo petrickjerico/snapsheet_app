@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/date_time.dart';
 import 'package:snapsheetapp/components/receipt_image_dialog.dart';
-import 'package:snapsheetapp/constants.dart';
+import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/shared/constants.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/homepage_screen.dart';
 import 'package:snapsheetapp/services/scanner.dart';

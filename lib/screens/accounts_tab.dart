@@ -6,7 +6,7 @@ import 'package:snapsheetapp/components/homepage_card.dart';
 import 'package:snapsheetapp/components/rename_account_popup.dart';
 import 'package:snapsheetapp/components/statistics.dart';
 import 'package:snapsheetapp/models/account.dart';
-import '../constants.dart';
+import '../shared/constants.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
 class AccountsTab extends StatelessWidget {

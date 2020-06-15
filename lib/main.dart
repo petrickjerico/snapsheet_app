@@ -8,7 +8,7 @@ import 'package:snapsheetapp/screens/editinfo_screen.dart';
 import 'package:snapsheetapp/screens/editprofile_screen.dart';
 import 'package:snapsheetapp/screens/exportselect_screen.dart';
 import 'package:snapsheetapp/screens/homepage_screen.dart';
-import 'package:snapsheetapp/screens/loading_screen.dart';
+import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/shared/loading_screen.dart';
 import 'package:snapsheetapp/screens/login_screen.dart';
 import 'package:snapsheetapp/screens/registration_screen.dart';
 import 'package:snapsheetapp/screens/bulk_scan_screen.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/register.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/sign_in.dart';
+import 'package:snapsheetapp/archive/register.dart';
+import 'package:snapsheetapp/archive/sign_in.dart';
 
 class SignInRegisterController extends StatefulWidget {
   static final String id = 'sign_in_register_controller';

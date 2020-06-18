@@ -8,7 +8,8 @@ import 'package:snapsheetapp/screens/accounts_tab.dart';
 import 'package:snapsheetapp/screens/addexpenses_screen.dart';
 import 'package:snapsheetapp/screens/history_tab.dart';
 import 'package:snapsheetapp/screens/sidebar_menu.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/screens/authentication/welcome_screen.dart';
+
+import 'authentication/welcome_screen.dart';
 
 //final _firestore = Firestore.instance;
 FirebaseUser loggedInUser;

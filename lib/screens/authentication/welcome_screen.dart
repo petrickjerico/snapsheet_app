@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:snapsheetapp/components/rounded_button.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/sign_in_register_controller.dart';
 import 'package:snapsheetapp/services/auth.dart';
 import 'package:snapsheetapp/shared/constants.dart';
 import 'package:snapsheetapp/shared/loading.dart';

@@ -62,14 +62,6 @@ class _HomepageScreenState extends State<HomepageScreen> {
                 },
               )
             ],
-            bottom: TabBar(
-              tabs: [
-                Tab(text: 'ACCOUNTS'),
-                Tab(text: 'HISTORY'),
-              ],
-              indicatorColor: Colors.white,
-              indicatorWeight: 5.0,
-            ),
           ),
           drawer: SidebarMenu(currentUser: loggedInUser),
           body: TabBarView(

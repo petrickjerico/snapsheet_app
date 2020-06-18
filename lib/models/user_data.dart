@@ -195,7 +195,7 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  double getCategTotalFromCurrent(int catId) {
+  double statsGetCategTotalFromCurrent(int catId) {
     if (categories[catId].isIncome) {
       return 0;
     } else {
@@ -209,7 +209,7 @@ class UserData extends ChangeNotifier {
     }
   }
 
-  List<Record> getRecordsForStats(int limit) {
+  List<Record> statsGetRecords(int limit) {
     List<Record> res = [];
 
     for (Record rec in records) {
@@ -222,5 +222,25 @@ class UserData extends ChangeNotifier {
     }
 
     return res;
+  }
+
+  int statsCountRecords(int accId) {
+    int count = 0;
+    for (Record rec in records) {
+      if (rec.accountId == accId) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  double statsGetAccountTotal(int accId) {
+    double total = 0;
+    for (Record rec in records) {
+      if (rec.accountId == accId) {
+        total += rec.value;
+      }
+    }
+    return total;
   }
 }

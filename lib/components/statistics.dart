@@ -36,14 +36,14 @@ class _StatisticsState extends State<Statistics> {
               final bool isTouched = i == touchedIndex;
               final bool isIncome = cat.isIncome;
               final double opacity = isTouched ? 1 : 0.6;
-              final value = userData.getCategTotalFromCurrent(i);
+              final value = userData.statsGetCategTotalFromCurrent(i);
               switch (i) {
                 default:
                   return PieChartSectionData(
                     color: cat.color.withOpacity(opacity),
                     value: isIncome ? 0 : value,
                     showTitle: isTouched && value > 0 && !isIncome,
-                    title: '${value.toString()}',
+                    title: '${value.toStringAsFixed(2)}',
                     radius: isTouched ? 50 : 40,
                     titleStyle: TextStyle(
                         fontSize: 18, color: Colors.black.withOpacity(0.8)),
@@ -104,7 +104,8 @@ class _StatisticsState extends State<Statistics> {
                       ),
                       Align(
                         alignment: Alignment.topLeft,
-                        child: Text('Total: \$${userData.statsExpensesTotal}',
+                        child: Text(
+                            'Total: \$${userData.statsExpensesTotal.toStringAsFixed(2)}',
                             style: TextStyle(
                                 fontSize: 25,
                                 color: Colors.black87,
@@ -133,30 +134,25 @@ class _StatisticsState extends State<Statistics> {
                       ),
                       GridView.count(
                         physics: NeverScrollableScrollPhysics(),
-                        childAspectRatio: 3,
-                        crossAxisCount: 3,
+                        childAspectRatio: 5,
+                        crossAxisCount: 4,
                         shrinkWrap: true,
                         children: cats
                             .where((e) =>
-                                userData
-                                    .getCategTotalFromCurrent(cats.indexOf(e)) >
+                                userData.statsGetCategTotalFromCurrent(
+                                    cats.indexOf(e)) >
                                 0)
                             .toList()
                             .map(
                           (e) {
                             double value = userData
-                                .getCategTotalFromCurrent(cats.indexOf(e));
+                                .statsGetCategTotalFromCurrent(cats.indexOf(e));
                             return Indicator(
                               color: e.color,
                               text: e.title,
                               isSquare: false,
-                              size: touchedIndex == cats.indexOf(e) && value > 0
-                                  ? 10
-                                  : 8,
-                              textColor:
-                                  touchedIndex == cats.indexOf(e) && value > 0
-                                      ? Colors.black
-                                      : Colors.grey,
+                              size: 6,
+                              textColor: Colors.black87,
                             );
                           },
                         ).toList(),
@@ -200,7 +196,7 @@ class _StatisticsState extends State<Statistics> {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           // print(userData.recordsCount);
-                          final record = userData.getRecordsForStats(4)[index];
+                          final record = userData.statsGetRecords(4)[index];
                           return Visibility(
                             visible:
                                 record.accountId == userData.selectedAccount ||
@@ -208,7 +204,7 @@ class _StatisticsState extends State<Statistics> {
                             child: HistoryTile(record: record, index: index),
                           );
                         },
-                        itemCount: userData.getRecordsForStats(4).length,
+                        itemCount: userData.statsGetRecords(4).length,
                       ),
                     ),
                   ),

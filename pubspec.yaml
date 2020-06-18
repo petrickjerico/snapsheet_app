@@ -40,7 +40,8 @@ dependencies:
   multi_image_picker: ^4.6.7
   flutter_material_color_picker: ^1.0.3
   flutter_spinkit: ^3.1.0
-  toggle_switch: ^0.1.4
+  google_sign_in: ^4.5.1
+
 
 dev_dependencies:
   flutter_test:

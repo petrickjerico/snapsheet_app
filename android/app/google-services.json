@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "918824185229-qihgfeejnkgvaplen2ca5smd9nbkp86i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petrickjerico.snapsheetapp",
+            "certificate_hash": "257447fc75abcf58321f22ea23cef72c3ea8ec3f"
+          }
+        },
+        {
           "client_id": "918824185229-252m3herus8fogr370bgc2a36fib5of7.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -30,6 +38,13 @@
             {
               "client_id": "918824185229-252m3herus8fogr370bgc2a36fib5of7.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "918824185229-ivqta7h4qf3rf0uk0vqpeuq5aoksu00k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.petrickjerico.snapsheetapp"
+              }
             }
           ]
         }

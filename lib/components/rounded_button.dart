@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RoundedButton extends StatelessWidget {
   RoundedButton({
@@ -6,8 +8,10 @@ class RoundedButton extends StatelessWidget {
     @required this.color,
     @required this.title,
     @required this.onPressed,
+    this.icon,
   });
 
+  final Icon icon;
   final Color textColor;
   final Color color;
   final String title;
@@ -20,16 +24,23 @@ class RoundedButton extends StatelessWidget {
       child: Material(
         elevation: 5.0,
         color: color,
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(15.0),
         child: MaterialButton(
           onPressed: onPressed,
           minWidth: 200.0,
           height: 42.0,
-          child: Text(
-            title,
-            style: TextStyle(
-              color: textColor,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              icon ?? SizedBox.shrink(),
+              SizedBox(width: 10),
+              Text(
+                title,
+                style: TextStyle(
+                  color: textColor,
+                ),
+              ),
+            ],
           ),
         ),
       ),

@@ -177,7 +177,7 @@ class _StatisticsState extends State<Statistics> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Records History',
+                            'Recent Records',
                             style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.black54,
@@ -200,7 +200,7 @@ class _StatisticsState extends State<Statistics> {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           // print(userData.recordsCount);
-                          final record = userData.records[index];
+                          final record = userData.getRecordsForStats(4)[index];
                           return Visibility(
                             visible:
                                 record.accountId == userData.selectedAccount ||
@@ -208,7 +208,7 @@ class _StatisticsState extends State<Statistics> {
                             child: HistoryTile(record: record, index: index),
                           );
                         },
-                        itemCount: userData.recordsCount,
+                        itemCount: userData.getRecordsForStats(4).length,
                       ),
                     ),
                   ),

@@ -158,6 +158,7 @@ class AccountsTab extends StatelessWidget {
         ),
         textColor: Colors.black,
         onPressed: () {
+          userData.selectAccount(userData.records.length);
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,

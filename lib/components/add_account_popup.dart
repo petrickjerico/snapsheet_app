@@ -118,6 +118,7 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                   onPressed: () {
                     if (AddAccountPopup._formKey.currentState.validate()) {
                       userData.addAccount(accountTitle, _color);
+                      userData.selectAccount(userData.records.length);
                       Navigator.pop(context);
                     }
                   },

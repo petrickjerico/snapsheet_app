@@ -153,11 +153,14 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool recordMatchesStats(Record rec) {
+    return (_selectedAccount == -1 || rec.accountId == _selectedAccount);
+  }
+
   double get statsExpensesTotal {
     double total = 0;
     for (Record rec in records) {
-      if (!rec.isIncome &&
-          (_selectedAccount == -1 || rec.accountId == _selectedAccount)) {
+      if (!rec.isIncome && recordMatchesStats(rec)) {
         total += rec.value;
       }
     }
@@ -198,12 +201,26 @@ class UserData extends ChangeNotifier {
     } else {
       double total = 0;
       for (Record rec in records) {
-        if ((selectedAccount == -1 || rec.accountId == selectedAccount) &&
-            rec.categoryId == catId) {
+        if (recordMatchesStats(rec) && rec.categoryId == catId) {
           total += rec.value;
         }
       }
       return num.parse(total.toStringAsFixed(2));
     }
+  }
+
+  List<Record> getRecordsForStats(int limit) {
+    List<Record> res = [];
+
+    for (Record rec in records) {
+      if (res.length == limit) {
+        break;
+      }
+      if (recordMatchesStats(rec)) {
+        res.add(rec);
+      }
+    }
+
+    return res;
   }
 }

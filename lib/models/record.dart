@@ -10,12 +10,19 @@ class Record {
   int _categoryId;
   int _accountId;
   String _currency;
+  bool _isIncome;
   File _receiptImage;
   String _receiptURL;
 
-  Record(this._title, this._value, this._dateTime, this._categoryId,
-      this._accountId,
-      [this._currency = 'SGD']);
+  Record(
+    this._title,
+    this._value,
+    this._dateTime,
+    this._categoryId,
+    this._accountId, [
+    this._currency = 'SGD',
+    this._isIncome = false,
+  ]);
 
   String get title => _title;
 
@@ -28,6 +35,8 @@ class Record {
   int get accountId => _accountId;
 
   String get currency => _currency;
+
+  bool get isIncome => _isIncome;
 
   File get image => _receiptImage;
 
@@ -49,6 +58,10 @@ class Record {
 
   set account(int newAccountId) {
     _accountId = newAccountId;
+  }
+
+  set isIncome(bool newIsIncome) {
+    _isIncome = newIsIncome;
   }
 
   set image(File newImage) {

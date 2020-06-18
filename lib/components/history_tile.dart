@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/shared/constants.dart';
 import 'package:snapsheetapp/models/category.dart';
 import 'package:snapsheetapp/models/record.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/addexpenses_screen.dart';
+import 'package:snapsheetapp/shared/constants.dart';
 
 class HistoryTile extends StatelessWidget {
   final Record record;
@@ -19,10 +20,11 @@ class HistoryTile extends StatelessWidget {
       Category category = userData.categories[record.categoryId];
       return ListTile(
         leading: CircleAvatar(
-          backgroundColor: category.color,
+          backgroundColor: category.color.withOpacity(0.2),
           child: IconTheme(
-              data: IconThemeData(color: Colors.white, size: 17),
-              child: category.icon),
+            data: IconThemeData(color: category.color, size: 17),
+            child: FaIcon(category.icon.icon),
+          ),
         ),
         title: Text(
           record.title == "" ? category.title : record.title,
@@ -35,7 +37,8 @@ class HistoryTile extends StatelessWidget {
           children: <Widget>[
             Text(
               record.value.toStringAsFixed(2),
-              style: kHistoryRecordValue,
+              style:
+                  record.isIncome ? kHistoryIncomeValue : kHistoryExpenseValue,
             ),
             Text(
               DateFormat('d/M/y').format(record.date),

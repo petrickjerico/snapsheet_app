@@ -23,7 +23,8 @@ class BulkData extends ChangeNotifier {
     Category('Health', Icon(FontAwesomeIcons.pills), Colors.indigoAccent),
     Category('Education', Icon(FontAwesomeIcons.graduationCap), Colors.orange),
     Category('Electronics', Icon(FontAwesomeIcons.phone), Colors.teal),
-    Category('Income', Icon(FontAwesomeIcons.moneyBill), Colors.amberAccent),
+    Category(
+        'Income', Icon(FontAwesomeIcons.moneyBill), Colors.amberAccent, true),
     Category('Others', Icon(Icons.category), Colors.black)
   ];
 

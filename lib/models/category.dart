@@ -6,15 +6,13 @@ class Category {
   String _title;
   Icon _icon;
   Color _color;
+  bool _isIncome;
 
-  Category(String title, Icon icon, [Color color]) {
+  Category(String title, Icon icon, [Color color, bool isIncome]) {
     this._title = title;
     this._icon = icon;
-    if (color != null) {
-      this._color = color;
-    } else {
-      this._color = _randomColor.randomColor();
-    }
+    this._color = color ?? _randomColor.randomColor();
+    this._isIncome = isIncome ?? false;
   }
 
   String get title => _title;
@@ -22,4 +20,11 @@ class Category {
   Icon get icon => _icon;
 
   Color get color => _color;
+
+  bool get isIncome => _isIncome;
+
+  @override
+  String toString() {
+    return "Category($title, ${icon.icon.toString()}, [${color.toString()}, $isIncome])";
+  }
 }

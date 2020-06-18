@@ -34,14 +34,15 @@ class _StatisticsState extends State<Statistics> {
             (i) {
               final Category cat = cats[i];
               final bool isTouched = i == touchedIndex;
+              final bool isIncome = cat.isIncome;
               final double opacity = isTouched ? 1 : 0.6;
               final value = userData.getCategTotalFromCurrent(i);
               switch (i) {
                 default:
                   return PieChartSectionData(
                     color: cat.color.withOpacity(opacity),
-                    value: value,
-                    showTitle: isTouched && value > 0,
+                    value: isIncome ? 0 : value,
+                    showTitle: isTouched && value > 0 && !isIncome,
                     title: '${value.toString()}',
                     radius: isTouched ? 50 : 40,
                     titleStyle: TextStyle(
@@ -103,7 +104,7 @@ class _StatisticsState extends State<Statistics> {
                       ),
                       Align(
                         alignment: Alignment.topLeft,
-                        child: Text('Total: \$${userData.statsTotal}',
+                        child: Text('Total: \$${userData.statsExpensesTotal}',
                             style: TextStyle(
                                 fontSize: 25,
                                 color: Colors.black87,

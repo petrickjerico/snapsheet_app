@@ -24,8 +24,14 @@ const kHistoryRecordTitle = TextStyle(
   fontSize: 16,
 );
 
-const kHistoryRecordValue = TextStyle(
+const kHistoryExpenseValue = TextStyle(
   color: Colors.red,
+  fontWeight: FontWeight.w700,
+  fontSize: 16,
+);
+
+const kHistoryIncomeValue = TextStyle(
+  color: Colors.green,
   fontWeight: FontWeight.w700,
   fontSize: 16,
 );

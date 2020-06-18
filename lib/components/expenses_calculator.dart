@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/models/account.dart';
 import 'package:snapsheetapp/models/record.dart';
@@ -30,6 +31,7 @@ class _ExpensesCalculatorState extends State<ExpensesCalculator> {
 
   @override
   Widget build(BuildContext context) {
+    UserData userData = Provider.of<UserData>(context);
     print('ExpensesCalculator build() was called.');
     return SimpleCalculator(
         value: value,
@@ -37,7 +39,8 @@ class _ExpensesCalculatorState extends State<ExpensesCalculator> {
         theme: CalculatorThemeData(
           borderWidth: 0.0,
           operatorColor: Colors.grey[500],
-          displayColor: Colors.blueGrey,
+          displayColor: userData.accounts[userData.tempRecord.accountId].color
+              .withOpacity(0.7),
         ),
         onChanged: (key, value, expression) {
           print(key);
@@ -621,13 +624,17 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
   }
 
   Widget _getDisplay(UserData userData) {
+    List<bool> isSelected() {
+      return userData.tempRecord.isIncome ? [false, true] : [true, false];
+    }
+
     return Container(
       decoration: BoxDecoration(
         border: Border(
           top: widget.hideSurroundingBorder ? BorderSide.none : _borderSide,
           left: widget.hideSurroundingBorder ? BorderSide.none : _borderSide,
           right: widget.hideSurroundingBorder ? BorderSide.none : _borderSide,
-          bottom: widget.hideSurroundingBorder ? _borderSide : BorderSide.none,
+          bottom: widget.hideSurroundingBorder ? BorderSide.none : _borderSide,
         ),
       ),
       child: Column(
@@ -675,17 +682,55 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           Expanded(
             flex: 1,
             child: Container(
-              color: Colors.blueGrey,
+              color: widget.theme?.displayColor,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black38,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: ToggleButtons(
+                        constraints:
+                            BoxConstraints.expand(width: 70, height: 50),
+                        borderRadius: BorderRadius.circular(10.0),
+                        fillColor: isSelected()[0]
+                            ? Colors.red[600]
+                            : Colors.green[600],
+                        selectedColor: Colors.white,
+                        children: <Widget>[
+                          Text('EXPENSE'),
+                          Text('INCOME'),
+                        ],
+                        isSelected: isSelected(),
+                        onPressed: (value) {
+                          setState(() {
+                            if (value == 1) {
+                              userData.changeCategory(7);
+                              userData.tempRecord.isIncome = true;
+                            } else {
+                              if (userData.tempRecord.categoryId == 7) {
+                                userData.changeCategory(0);
+                              }
+                              userData.tempRecord.isIncome = false;
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ),
                   Expanded(
                     child: PopupMenuButton(
-                      initialValue: Record.catId,
+                      initialValue: userData.tempRecord.categoryId,
                       onSelected: (input) {
                         setState(() {
                           _catId = input;
                           userData.changeCategory(_catId);
+                          userData.tempRecord.isIncome =
+                              _catId == 7 ? true : false;
                         });
                       },
                       itemBuilder: (context) {
@@ -730,7 +775,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                   ),
                   Expanded(
                     child: PopupMenuButton(
-                      initialValue: Record.accId,
+                      initialValue: userData.tempRecord.accountId,
                       onSelected: (input) {
                         setState(() {
                           _accId = input;

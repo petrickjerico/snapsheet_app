@@ -53,7 +53,8 @@ class UserData extends ChangeNotifier {
     Category('Health', Icon(FontAwesomeIcons.pills), Colors.indigoAccent),
     Category('Education', Icon(FontAwesomeIcons.graduationCap), Colors.orange),
     Category('Electronics', Icon(FontAwesomeIcons.tv), Colors.teal),
-    Category('Income', Icon(FontAwesomeIcons.moneyBill), Colors.amberAccent),
+    Category(
+        'Income', Icon(FontAwesomeIcons.moneyBill), Colors.amberAccent, true),
     Category('Others', Icon(Icons.category), Colors.black),
     Category(
       'Travel',
@@ -152,10 +153,11 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  double get statsTotal {
+  double get statsExpensesTotal {
     double total = 0;
     for (Record rec in records) {
-      if (_selectedAccount == -1 || rec.accountId == _selectedAccount) {
+      if (!rec.isIncome &&
+          (_selectedAccount == -1 || rec.accountId == _selectedAccount)) {
         total += rec.value;
       }
     }
@@ -191,13 +193,17 @@ class UserData extends ChangeNotifier {
   }
 
   double getCategTotalFromCurrent(int catId) {
-    double res = 0;
-    for (Record rec in records) {
-      if ((selectedAccount == -1 || rec.accountId == selectedAccount) &&
-          rec.categoryId == catId) {
-        res += rec.value;
+    if (categories[catId].isIncome) {
+      return 0;
+    } else {
+      double total = 0;
+      for (Record rec in records) {
+        if ((selectedAccount == -1 || rec.accountId == selectedAccount) &&
+            rec.categoryId == catId) {
+          total += rec.value;
+        }
       }
+      return num.parse(total.toStringAsFixed(2));
     }
-    return num.parse(res.toStringAsFixed(2));
   }
 }

@@ -4,9 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/models/user_data.dart';
+import 'package:snapsheetapp/screens/calculator/addexpenses_screen.dart';
 import 'package:snapsheetapp/screens/home/accounts_tab.dart';
-import 'package:snapsheetapp/screens/editor/addexpenses_screen.dart';
 import 'package:snapsheetapp/screens/sidebar/sidebar_menu.dart';
+import 'package:snapsheetapp/shared/constants.dart';
 
 import '../authentication/welcome_screen.dart';
 import 'history_tab.dart';
@@ -44,40 +45,37 @@ class _HomepageScreenState extends State<HomepageScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, userData, child) {
-      return DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.black,
-            title: Text('HOMEPAGE'),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.close),
-                color: Colors.white,
-                onPressed: () {
-                  _auth.signOut();
-                  Navigator.pushNamed(context, WelcomeScreen.id);
-                },
-              )
-            ],
-          ),
-          drawer: SidebarMenu(currentUser: loggedInUser),
-          body: TabBarView(
-            children: <Widget>[
-              AccountsTab(),
-              HistoryTab(),
-            ],
-          ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.black,
-            child: Icon(Icons.add),
-            onPressed: () {
-              userData.newRecord();
-              Navigator.pushNamed(context, AddExpensesScreen.id);
-            },
-          ),
+      return Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Text('HOMEPAGE'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.close),
+              color: Colors.white,
+              onPressed: () {
+                _auth.signOut();
+                Navigator.pushNamed(context, WelcomeScreen.id);
+              },
+            )
+          ],
+        ),
+        drawer: SidebarMenu(currentUser: loggedInUser),
+        body: PageView(
+          children: <Widget>[
+            AccountsTab(),
+            HistoryTab(),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: kDarkCyan,
+          child: Icon(Icons.add),
+          onPressed: () {
+            userData.newRecord();
+            Navigator.pushNamed(context, AddExpensesScreen.id);
+          },
         ),
       );
     });

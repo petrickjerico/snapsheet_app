@@ -37,16 +37,16 @@ class UserData extends ChangeNotifier {
   }
 
   List<Account> _accounts = [
-    Account(accTitle: 'DBS', accColor: Colors.red[900]),
-    Account(accTitle: 'Cash', accColor: Colors.deepPurple[700]),
-    Account(accTitle: 'CCA', accColor: Colors.blue[600])
+    Account(
+        accTitle: 'DBS', accColor: Colors.red[900], accIndex: 0, accOrder: 0),
+    Account(
+        accTitle: 'Cash',
+        accColor: Colors.deepPurple[700],
+        accIndex: 1,
+        accOrder: 1),
+    Account(
+        accTitle: 'CCA', accColor: Colors.blue[600], accIndex: 2, accOrder: 2),
   ];
-
-  Map<int, int> _accountsOrderMap = {
-    0: 0,
-    1: 1,
-    2: 2,
-  };
 
   List<Category> _categories = [
     Category('Food & Drinks', Icon(FontAwesomeIcons.utensils), Colors.red),
@@ -80,8 +80,6 @@ class UserData extends ChangeNotifier {
 
   List<Account> get accounts => _accounts;
 
-  List<int> get accountsOrder => _accountsOrderMap.values.toList();
-
   List<Category> get categories => _categories;
 
   Record get tempRecord => _tempRecord;
@@ -108,7 +106,6 @@ class UserData extends ChangeNotifier {
 
   void addAccount(String title, Color color) {
     _accounts.add(Account(accTitle: title, accColor: color));
-    _accountsOrderMap.addAll({accounts.length: accounts.length});
     notifyListeners();
   }
 
@@ -155,8 +152,8 @@ class UserData extends ChangeNotifier {
   }
 
   void editAccount(int accId, String newTitle, Color newColor) {
-    accounts[accId].title = newTitle;
-    accounts[accId].color = newColor;
+    accounts.firstWhere((acc) => acc.accIndex == accId).title = newTitle;
+    accounts.firstWhere((acc) => acc.accIndex == accId).color = newColor;
     notifyListeners();
   }
 
@@ -196,8 +193,8 @@ class UserData extends ChangeNotifier {
   }
 
   void deleteAccount(int accId) {
-    accounts.removeAt(accId);
-    records.removeWhere((element) => element.accountId == accId);
+    accounts.removeWhere((acc) => acc.accIndex == accId);
+    records.removeWhere((rec) => rec.accountId == accId);
     _selectedAccount--;
     notifyListeners();
   }
@@ -251,11 +248,16 @@ class UserData extends ChangeNotifier {
     return total;
   }
 
-  List<Account> orderedGetAccounts() {
-    return accountsOrder.map((index) => accounts[index]).toList();
+  List<Account> orderGetAccounts() {
+    List<Account> res = [];
+    for (Account acc in accounts) {
+      res.insert(acc.accOrder, acc);
+    }
+    return res;
   }
 
-  void orderedUpdate(int oldValue, int newValue) {
-    _accountsOrderMap.update(oldValue, (value) => newValue);
+  void orderUpdateAccount(int pos, int newIndex) {
+    _accounts[pos].order = newIndex;
+    notifyListeners();
   }
 }

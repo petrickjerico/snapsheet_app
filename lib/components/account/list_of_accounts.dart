@@ -17,6 +17,98 @@ class ListOfAccounts extends StatefulWidget {
 
 class _ListOfAccountsState extends State<ListOfAccounts> {
   static final CarouselController controller = CarouselController();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    var userData = Provider.of<UserData>(context);
+    var index = userData.selectedAccount;
+    var orderedList = userData.accountsOrder;
+    if (index != -1) controller.animateToPage(orderedList[index]);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<UserData>(builder: (context, userData, child) {
+      return Container(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Your accounts',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      SelectAllButton(),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      AddAccountButton(),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black38,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    height: 70.0,
+                    width: 142.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.chevron_left,
+                          color: Colors.white54,
+                        ),
+                        Icon(
+                          Icons.chevron_right,
+                          color: Colors.white54,
+                        ),
+                      ],
+                    )),
+                CarouselSlider(
+                  carouselController: controller,
+                  items: makeAccountTiles(userData),
+                  options: CarouselOptions(
+                      initialPage: userData.selectedAccount != -1
+                          ? userData.selectedAccount
+                          : 0,
+                      height: 55.0,
+                      viewportFraction: 0.3,
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll: false,
+                      autoPlayAnimationDuration: Duration(milliseconds: 100),
+                      onPageChanged: (index, manual) {
+                        userData.selectAccount(index);
+                      }),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
   Future<void> showChoiceDialog(BuildContext context) {
     UserData userData = Provider.of<UserData>(context, listen: false);
     return showDialog(
@@ -112,8 +204,8 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
     );
   }
 
-  List<Widget> makeAccountButtons(UserData userData) {
-    return userData.accounts.map((e) {
+  List<Widget> makeAccountTiles(UserData userData) {
+    return userData.orderedGetAccounts().map((e) {
       int accId = userData.accounts.indexOf(e);
       return Opacity(
         opacity: accId == userData.selectedAccount ? 1.0 : 0.5,
@@ -127,106 +219,38 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
       );
     }).toList();
   }
+}
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    var userData = Provider.of<UserData>(context);
-    if (userData.selectedAccount != -1)
-      controller.animateToPage(userData.selectedAccount);
-  }
+class SelectAllButton extends StatelessWidget {
+  const SelectAllButton({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserData>(builder: (context, userData, child) {
-      return Container(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Your accounts',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  AddAccountButton(),
-                ],
-              ),
+    return Consumer<UserData>(
+      builder: (context, userData, child) => Visibility(
+        visible: userData.selectedAccount != -1,
+        child: OutlineButton(
+          visualDensity: VisualDensity.comfortable,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          borderSide: BorderSide(color: Colors.blueAccent),
+          child: Text(
+            'SELECT ALL',
+            style: TextStyle(
+              color: Colors.blueAccent,
             ),
-            Center(
-              child: Visibility(
-                visible: userData.selectedAccount != -1,
-                child: Center(
-                  child: GestureDetector(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.0),
-                        child: Text(
-                          'SELECT ALL',
-                          style: TextStyle(
-                              color: Colors.white,
-                              decoration: TextDecoration.underline),
-                        ),
-                      ),
-                      onTap: () {
-                        userData.selectAccount(-1);
-                        for (Account acc in userData.accounts) {
-                          acc.isSelected = true;
-                        }
-                      }),
-                ),
-              ),
-            ),
-            Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black38,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    height: 70.0,
-                    width: 142.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.chevron_left,
-                          color: Colors.white54,
-                        ),
-                        Icon(
-                          Icons.chevron_right,
-                          color: Colors.white54,
-                        ),
-                      ],
-                    )),
-                CarouselSlider(
-                  carouselController: controller,
-                  items: makeAccountButtons(userData),
-                  options: CarouselOptions(
-                      initialPage: userData.selectedAccount != -1
-                          ? userData.selectedAccount
-                          : 0,
-                      height: 55.0,
-                      viewportFraction: 0.3,
-                      enlargeCenterPage: true,
-                      enableInfiniteScroll: false,
-                      autoPlayAnimationDuration: Duration(milliseconds: 100),
-                      onPageChanged: (index, manual) {
-                        userData.selectAccount(index);
-                      }),
-                ),
-              ],
-            ),
-          ],
+          ),
+          onPressed: () {
+            userData.selectAccount(-1);
+            for (Account acc in userData.accounts) {
+              acc.isSelected = true;
+            }
+          },
         ),
-      );
-    });
+      ),
+    );
   }
 }

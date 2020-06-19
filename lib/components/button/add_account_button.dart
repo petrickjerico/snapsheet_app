@@ -8,7 +8,10 @@ class AddAccountButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<UserData>(
       builder: (context, userData, child) => OutlineButton(
-        padding: EdgeInsets.all(8.0),
+        visualDensity: VisualDensity.comfortable,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
         borderSide: BorderSide(color: Colors.white),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -22,7 +25,7 @@ class AddAccountButton extends StatelessWidget {
               width: 2.0,
             ),
             Text(
-              'ADD ACCOUNT',
+              'ADD',
               style: TextStyle(fontSize: 13.0, color: Colors.white),
             ),
             SizedBox(
@@ -30,7 +33,6 @@ class AddAccountButton extends StatelessWidget {
             ),
           ],
         ),
-        textColor: Colors.black,
         onPressed: () {
           showModalBottomSheet(
             context: context,

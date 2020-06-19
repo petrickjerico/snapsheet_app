@@ -15,11 +15,31 @@ class Statistics extends StatefulWidget {
 
 class _StatisticsState extends State<Statistics> {
   final RandomColor _randomColor = RandomColor();
+  int selectedAccount;
   int touchedIndex;
+  bool isTouched = false;
   void updateTouchedIndex(int i) {
     print("input is: $i");
-    if (i != null) {
+    if (touchedIndex == i) {
+      touchedIndex = null;
+    } else {
       touchedIndex = i;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    selectedAccount = -1;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    var userData = Provider.of<UserData>(context);
+    if (selectedAccount != userData.selectedAccount) {
+      selectedAccount = userData.selectedAccount;
+      touchedIndex = null;
     }
   }
 
@@ -35,7 +55,7 @@ class _StatisticsState extends State<Statistics> {
               final Category cat = cats[i];
               final bool isTouched = i == touchedIndex;
               final bool isIncome = cat.isIncome;
-              final double opacity = isTouched ? 1 : 0.6;
+              final double opacity = isTouched ? 1 : 0.4;
               final value = userData.statsGetCategTotalFromCurrent(i);
               switch (i) {
                 default:
@@ -43,11 +63,11 @@ class _StatisticsState extends State<Statistics> {
                     color: cat.color.withOpacity(opacity),
                     value: isIncome ? 0 : value,
                     showTitle: isTouched && value > 0 && !isIncome,
-                    title: '${value.toStringAsFixed(2)}',
-                    radius: isTouched ? 50 : 40,
+                    title: '${cat.title} \n ${value.toStringAsFixed(2)}',
+                    radius: isTouched ? 40 : 30,
                     titleStyle: TextStyle(
-                        fontSize: 18, color: Colors.black.withOpacity(0.8)),
-                    titlePositionPercentageOffset: 0.5,
+                        fontSize: 15, color: Colors.black.withOpacity(0.8)),
+                    titlePositionPercentageOffset: -1.5,
                   );
               }
             },
@@ -82,9 +102,9 @@ class _StatisticsState extends State<Statistics> {
 //                ),
 //              ),
 //            ),
-            Card(
-              child: AspectRatio(
-                aspectRatio: 1,
+            AspectRatio(
+              aspectRatio: 1.05,
+              child: Card(
                 child: Padding(
                   padding: EdgeInsets.all(20.0),
                   child: Column(
@@ -116,27 +136,31 @@ class _StatisticsState extends State<Statistics> {
                           PieChartData(
                               pieTouchData: PieTouchData(
                                   touchCallback: (pieTouchResponse) {
-                                setState(() {
-                                  updateTouchedIndex(
-                                      pieTouchResponse.touchedSectionIndex);
-                                  userData.changeTempRecord(touchedIndex);
+                                if (pieTouchResponse.touchedSectionIndex !=
+                                    null) {
+                                  setState(() {
+                                    updateTouchedIndex(
+                                        pieTouchResponse.touchedSectionIndex);
+                                  });
                                   print(touchedIndex);
-                                });
+                                }
                               }),
-                              startDegreeOffset: 180,
+                              startDegreeOffset: -90,
                               borderData: FlBorderData(
                                 show: false,
                               ),
-                              sectionsSpace: 0,
-                              centerSpaceRadius: 40,
+                              sectionsSpace: 2,
+                              centerSpaceRadius: 60,
                               sections: showingCategorySections()),
+                          swapAnimationDuration: Duration(seconds: 0),
                         ),
                       ),
-                      GridView.count(
-                        physics: NeverScrollableScrollPhysics(),
-                        childAspectRatio: 5,
-                        crossAxisCount: 4,
-                        shrinkWrap: true,
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Wrap(
+                        direction: Axis.horizontal,
+                        alignment: WrapAlignment.center,
                         children: cats
                             .where((e) =>
                                 userData.statsGetCategTotalFromCurrent(
@@ -201,7 +225,9 @@ class _StatisticsState extends State<Statistics> {
                             visible:
                                 record.accountId == userData.selectedAccount ||
                                     userData.selectedAccount == -1,
-                            child: HistoryTile(record: record, index: index),
+                            child: HistoryTile(
+                                record: record,
+                                index: userData.records.indexOf(record)),
                           );
                         },
                         itemCount: userData.statsGetRecords(4).length,

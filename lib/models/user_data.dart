@@ -42,6 +42,12 @@ class UserData extends ChangeNotifier {
     Account(accTitle: 'CCA', accColor: Colors.blue[600])
   ];
 
+  Map<int, int> _accountsOrderMap = {
+    0: 0,
+    1: 1,
+    2: 2,
+  };
+
   List<Category> _categories = [
     Category('Food & Drinks', Icon(FontAwesomeIcons.utensils), Colors.red),
     Category(
@@ -74,6 +80,8 @@ class UserData extends ChangeNotifier {
 
   List<Account> get accounts => _accounts;
 
+  List<int> get accountsOrder => _accountsOrderMap.values.toList();
+
   List<Category> get categories => _categories;
 
   Record get tempRecord => _tempRecord;
@@ -100,6 +108,7 @@ class UserData extends ChangeNotifier {
 
   void addAccount(String title, Color color) {
     _accounts.add(Account(accTitle: title, accColor: color));
+    _accountsOrderMap.addAll({accounts.length: accounts.length});
     notifyListeners();
   }
 
@@ -240,5 +249,13 @@ class UserData extends ChangeNotifier {
       }
     }
     return total;
+  }
+
+  List<Account> orderedGetAccounts() {
+    return accountsOrder.map((index) => accounts[index]).toList();
+  }
+
+  void orderedUpdate(int oldValue, int newValue) {
+    _accountsOrderMap.update(oldValue, (value) => newValue);
   }
 }

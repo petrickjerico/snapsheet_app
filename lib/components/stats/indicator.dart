@@ -19,6 +19,7 @@ class Indicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
           width: size,
@@ -28,13 +29,13 @@ class Indicator extends StatelessWidget {
             color: color,
           ),
         ),
-        const SizedBox(
-          width: 4,
+        Padding(
+          padding: EdgeInsets.only(left: 3.0, right: 6.0),
+          child: Text(
+            text,
+            style: TextStyle(fontSize: 11, color: textColor),
+          ),
         ),
-        Text(
-          text,
-          style: TextStyle(fontSize: 12, color: textColor),
-        )
       ],
     );
   }

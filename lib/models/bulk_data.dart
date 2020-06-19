@@ -72,7 +72,7 @@ class BulkData extends ChangeNotifier {
   }
 
   void changeCategory(int catId) {
-    _tempRecord.category = catId;
+    _tempRecord.categoryId = catId;
     notifyListeners();
   }
 
@@ -93,7 +93,7 @@ class BulkData extends ChangeNotifier {
   }
 
   void changeTitle(String newTitle) {
-    _tempRecord.name = newTitle;
+    _tempRecord.title = newTitle;
     notifyListeners();
   }
 

@@ -36,7 +36,7 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
   Widget build(BuildContext context) {
     print('EditInfoScreen build() called.');
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: kBlack,
       appBar: AppBar(
         backgroundColor: Colors.black,
         leading: BackButton(),
@@ -88,7 +88,7 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                   style: kStandardStyle,
                 ),
                 onPressed: () async {
-                  Scanner scanner = Scanner(userData);
+                  Scanner scanner = Scanner.withUserData(userData);
                   await scanner.showChoiceDialog(context);
                   await scanner.process();
                   setState(() {

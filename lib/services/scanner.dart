@@ -14,9 +14,10 @@ import 'package:snapsheetapp/services/parser.dart';
 class Scanner {
   Parser parser = Parser();
 
-  final UserData userData;
+  UserData userData;
 
-  Scanner(this.userData);
+  Scanner.withUserData(this.userData);
+  Scanner();
 
   final textRecognizer = FirebaseVision.instance.textRecognizer();
   File imageFile;
@@ -81,18 +82,19 @@ class Scanner {
     }
   }
 
-  Future<void> process() async {
-    userData.toggleScanned();
+  Future<Map<String, dynamic>> getData(File image) async {
+    imageFile = image;
+    List<String> txt = await txtListFromImage();
+    Map<String, dynamic> map = extractDataFromTxt(txt);
+    map['file'] = imageFile;
+    return map;
+  }
+
+  Future<List<String>> txtListFromImage() async {
     image = FirebaseVisionImage.fromFile(imageFile);
     visionText = await textRecognizer.processImage(image);
 
     List<String> txt = [];
-
-    // Initialize title, value, date
-    String title;
-    int catId;
-    double value;
-    DateTime date;
 
     // Process the Strings from scanner
     for (TextBlock block in visionText.blocks) {
@@ -102,21 +104,46 @@ class Scanner {
         }
       }
     }
+    return txt;
+  }
 
+  Map<String, dynamic> extractDataFromTxt(List<String> txt) {
+    Map<String, dynamic> map = {
+      'title': "",
+      'catId': 0,
+      'value': 0,
+      'date': DateTime.now()
+    };
+
+    String title = parser.findTitle(txt);
+    int catId = parser.findCategoryId();
+    double value = parser.findCost(txt.join(" "));
+    DateTime date = parser.findDate(txt.join(" "));
+
+    print('${value} ${date.toString()} ${title}');
+
+    map['title'] = title;
+    map['catId'] = catId;
+    map['value'] = value;
+    map['date'] = date;
+
+    return map;
+  }
+
+  Future<void> process() async {
+    userData.toggleScanned();
+    List<String> txt = await txtListFromImage();
     print(txt);
-
     // Update values
-    title = parser.findTitle(txt);
-    catId = parser.findCategoryId();
-    value = parser.findCost(txt.join(" "));
-    date = parser.findDate(txt.join(" "));
+    Map<String, dynamic> map = extractDataFromTxt(txt);
 
-    print('$value ${date.toString()} $title');
+    print('${map['value']} ${map['date'].toString()} ${map['title']}');
+
     // Change userdata TempRecord
-    userData.changeTitle(title);
-    userData.changeCategory(catId);
-    userData.changeValue(value);
-    userData.changeDate(date);
+    userData.changeTitle(map['title']);
+    userData.changeCategory(map['catId']);
+    userData.changeValue(map['value']);
+    userData.changeDate(map['date']);
     userData.changeImage(imageFile);
   }
 

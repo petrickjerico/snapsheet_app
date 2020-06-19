@@ -15,11 +15,11 @@ class UserData extends ChangeNotifier {
   Exporter _exporter;
   bool _isScanned = false;
   static int imageCounter = 0;
-  List<Record> _records =
+  List<Record> records =
       SortedList<Record>((r1, r2) => r2.date.compareTo(r1.date));
 
   UserData() {
-    _records.addAll([
+    records.addAll([
       Record("Steam Dota", 12, DateTime(2020, 4, 12), 3, 0, "SGD"),
       Record("UNIQLO", 30, DateTime(2020, 5, 12), 2, 0, "SGD"),
       Record("Mother's Day", 20, DateTime(2020, 5, 10), 2, 0, "SGD"),
@@ -63,12 +63,10 @@ class UserData extends ChangeNotifier {
   ];
 
   List<Record> get specifiedRecords => _selectedAccount == -1
-      ? _records
-      : _records.where((rec) => rec.accountId == _selectedAccount).toList();
+      ? records
+      : records.where((rec) => rec.accountId == _selectedAccount).toList();
 
-  List<Record> get records => _records;
-
-  int get recordsCount => _records.length;
+  int get recordsCount => records.length;
 
   int get selectedAccount => _selectedAccount;
 
@@ -90,7 +88,7 @@ class UserData extends ChangeNotifier {
 
   void addRecord() {
     if (!_isEditing) {
-      _records.add(_tempRecord);
+      records.add(_tempRecord);
     }
 
     if (_isEditing) {
@@ -122,12 +120,12 @@ class UserData extends ChangeNotifier {
   }
 
   void changeCategory(int catId) {
-    _tempRecord.category = catId;
+    _tempRecord.categoryId = catId;
     notifyListeners();
   }
 
   void changeAccount(int accId) {
-    _tempRecord.account = accId;
+    _tempRecord.accountId = accId;
     notifyListeners();
   }
 
@@ -137,7 +135,7 @@ class UserData extends ChangeNotifier {
   }
 
   void changeTempRecord(int recordIndex) {
-    _tempRecord = _records[recordIndex];
+    _tempRecord = records[recordIndex];
     _isEditing = true;
     notifyListeners();
   }
@@ -168,7 +166,7 @@ class UserData extends ChangeNotifier {
   }
 
   void changeTitle(String newTitle) {
-    _tempRecord.name = newTitle;
+    _tempRecord.title = newTitle;
     notifyListeners();
   }
 

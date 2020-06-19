@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/models/recordView.dart';
+import 'package:snapsheetapp/models/user.dart';
 import 'package:snapsheetapp/models/user_data.dart';
+import 'package:snapsheetapp/screens/sidebar/receipt_preview.dart';
 import 'package:snapsheetapp/services/scanner.dart';
 
 class AccountsList extends StatefulWidget {
@@ -11,11 +14,11 @@ class AccountsList extends StatefulWidget {
 }
 
 class _AccountsListState extends State<AccountsList> {
-  List<Asset> images = List<Asset>();
+  List<Asset> assets = List<Asset>();
   bool showSpinner = false;
 
   Future<void> loadAssets() async {
-    images = List<Asset>();
+    assets = List<Asset>();
 
     List<Asset> resultList;
 
@@ -27,7 +30,7 @@ class _AccountsListState extends State<AccountsList> {
       print(e.toString());
     }
 
-    images = resultList;
+    assets = resultList;
   }
 
   Future<void> _showMyDialog(context, String accTitle) async {
@@ -40,7 +43,7 @@ class _AccountsListState extends State<AccountsList> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('${images.length} expenses added to $accTitle'),
+                Text('${assets.length} expenses added to $accTitle'),
               ],
             ),
           ),
@@ -77,17 +80,24 @@ class _AccountsListState extends State<AccountsList> {
                   ),
                   onTap: () async {
                     await loadAssets();
-                    if (images != null) {
+                    if (assets != null) {
                       setState(() {
                         showSpinner = true;
                       });
-                      Scanner scanner = Scanner(userData);
-                      await scanner.bulkProcess(images, index);
-                      scanner.clearResource();
+                      RecordView recordView = RecordView(
+                          accountId: index, assets: assets, userData: userData);
+                      print('recordView');
+                      await recordView.initialize();
+                      print('INITIALIZED');
                       setState(() {
                         showSpinner = false;
                       });
-                      _showMyDialog(context, account.title);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ReceiptPreview(
+                                    recordView: recordView,
+                                  )));
                     }
                   },
                 ),

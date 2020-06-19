@@ -4,12 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/screens/accounts_tab.dart';
-import 'package:snapsheetapp/screens/addexpenses_screen.dart';
-import 'package:snapsheetapp/screens/history_tab.dart';
-import 'package:snapsheetapp/screens/sidebar_menu.dart';
+import 'package:snapsheetapp/screens/home/accounts_tab.dart';
+import 'package:snapsheetapp/screens/editor/addexpenses_screen.dart';
+import 'package:snapsheetapp/screens/sidebar/sidebar_menu.dart';
 
-import 'authentication/welcome_screen.dart';
+import '../authentication/welcome_screen.dart';
+import 'history_tab.dart';
 
 //final _firestore = Firestore.instance;
 FirebaseUser loggedInUser;

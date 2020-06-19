@@ -1,13 +1,13 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/components/add_account_popup.dart';
+import 'package:snapsheetapp/components/account/add_account_popup.dart';
+import 'package:snapsheetapp/components/account/list_of_accounts.dart';
 import 'package:snapsheetapp/components/homepage_card.dart';
-import 'package:snapsheetapp/components/list_of_accounts.dart';
-import 'package:snapsheetapp/components/rename_account_popup.dart';
-import 'package:snapsheetapp/components/statistics.dart';
+import 'package:snapsheetapp/components/account/rename_account_popup.dart';
+import 'package:snapsheetapp/components/stats/statistics.dart';
 import 'package:snapsheetapp/models/account.dart';
-import '../shared/constants.dart';
+import '../../shared/constants.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
 class AccountsTab extends StatelessWidget {

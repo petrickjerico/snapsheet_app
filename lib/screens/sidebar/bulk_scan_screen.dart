@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/components/accounts_list.dart';
-import 'package:snapsheetapp/components/add_account_popup.dart';
+import 'package:snapsheetapp/components/account/accounts_list.dart';
+import 'package:snapsheetapp/components/account/add_account_popup.dart';
 
 class BulkScanScreen extends StatelessWidget {
   static const String id = 'bulkscan_screen';

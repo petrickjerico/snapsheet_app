@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/screens/addcategory_screen.dart';
-import 'package:snapsheetapp/screens/bulk_scan_screen.dart';
-import 'package:snapsheetapp/screens/editprofile_screen.dart';
-import 'package:snapsheetapp/screens/exportselect_screen.dart';
-import 'package:snapsheetapp/screens/settings_screen.dart';
+import 'package:snapsheetapp/screens/sidebar/addcategory_screen.dart';
+import 'package:snapsheetapp/screens/sidebar/bulk_scan_screen.dart';
+import 'package:snapsheetapp/screens/sidebar/editprofile_screen.dart';
+import 'package:snapsheetapp/screens/sidebar/exportselect_screen.dart';
+import 'package:snapsheetapp/screens/sidebar/settings_screen.dart';
 
 class SidebarMenu extends StatelessWidget {
   SidebarMenu({@required this.currentUser});

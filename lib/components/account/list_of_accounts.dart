@@ -1,14 +1,22 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/components/account/rename_account_popup.dart';
+import 'package:snapsheetapp/components/button/add_account_button.dart';
+import 'package:snapsheetapp/screens/home/rename_account_popup.dart';
 import 'package:snapsheetapp/models/account.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
 import 'account_tile.dart';
-import 'add_account_popup.dart';
+import '../../screens/home/add_account_popup.dart';
 
-class ListOfAccounts extends StatelessWidget {
+class ListOfAccounts extends StatefulWidget {
+  @override
+  _ListOfAccountsState createState() => _ListOfAccountsState();
+}
+
+class _ListOfAccountsState extends State<ListOfAccounts> {
+  static final CarouselController controller = CarouselController();
   Future<void> showChoiceDialog(BuildContext context) {
     UserData userData = Provider.of<UserData>(context, listen: false);
     return showDialog(
@@ -104,63 +112,43 @@ class ListOfAccounts extends StatelessWidget {
     );
   }
 
-  Widget makeAccountButtons(UserData userData, BuildContext context) {
-    List<Widget> children = userData.accounts.map((e) {
+  List<Widget> makeAccountButtons(UserData userData) {
+    return userData.accounts.map((e) {
       int accId = userData.accounts.indexOf(e);
-      return AccountTile(
-        color: e.color,
-        title: e.title,
-        count: userData.statsCountRecords(accId),
-        total: userData.statsGetAccountTotal(accId),
+      return Opacity(
+        opacity: accId == userData.selectedAccount ? 1.0 : 0.5,
+        child: AccountTile(
+          index: accId,
+          color: e.color,
+          title: e.title,
+          count: userData.statsCountRecords(accId),
+          total: userData.statsGetAccountTotal(accId),
+        ),
       );
     }).toList();
+  }
 
-    return SizedBox(
-      height: 150.0,
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Swiper(
-              onIndexChanged: (index) {
-                userData.selectAccount(index);
-              },
-              viewportFraction: 0.8,
-              scale: 0.9,
-              duration: 50,
-              loop: false,
-              itemCount: children.length,
-              itemBuilder: (context, index) => children[index],
-              pagination: SwiperPagination(
-                alignment: Alignment.bottomCenter,
-                margin: EdgeInsets.all(0),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    var userData = Provider.of<UserData>(context);
+    if (userData.selectedAccount != -1)
+      controller.animateToPage(userData.selectedAccount);
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, userData, child) {
       return Container(
-        color: Colors.black87,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(
-                left: 20.0,
-                right: 20.0,
-                top: 15.0,
-              ),
+              padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'List of accounts',
+                    'Your accounts',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
@@ -171,20 +159,21 @@ class ListOfAccounts extends StatelessWidget {
                 ],
               ),
             ),
-            makeAccountButtons(userData, context),
             Center(
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 8.0),
-                child: Visibility(
-                  visible: userData.selectedAccount != -1,
-                  child: FlatButton(
-                      child: Text(
-                        'SELECT ALL',
-                        style: TextStyle(
-                            color: Colors.white,
-                            decoration: TextDecoration.underline),
+              child: Visibility(
+                visible: userData.selectedAccount != -1,
+                child: Center(
+                  child: GestureDetector(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                        child: Text(
+                          'SELECT ALL',
+                          style: TextStyle(
+                              color: Colors.white,
+                              decoration: TextDecoration.underline),
+                        ),
                       ),
-                      onPressed: () {
+                      onTap: () {
                         userData.selectAccount(-1);
                         for (Account acc in userData.accounts) {
                           acc.isSelected = true;
@@ -192,61 +181,52 @@ class ListOfAccounts extends StatelessWidget {
                       }),
                 ),
               ),
-            )
+            ),
+            Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black38,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    height: 70.0,
+                    width: 142.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.chevron_left,
+                          color: Colors.white54,
+                        ),
+                        Icon(
+                          Icons.chevron_right,
+                          color: Colors.white54,
+                        ),
+                      ],
+                    )),
+                CarouselSlider(
+                  carouselController: controller,
+                  items: makeAccountButtons(userData),
+                  options: CarouselOptions(
+                      initialPage: userData.selectedAccount != -1
+                          ? userData.selectedAccount
+                          : 0,
+                      height: 55.0,
+                      viewportFraction: 0.3,
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll: false,
+                      autoPlayAnimationDuration: Duration(milliseconds: 100),
+                      onPageChanged: (index, manual) {
+                        userData.selectAccount(index);
+                      }),
+                ),
+              ],
+            ),
           ],
         ),
       );
     });
-  }
-}
-
-class AddAccountButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<UserData>(
-      builder: (context, userData, child) => OutlineButton(
-        padding: EdgeInsets.all(8.0),
-        borderSide: BorderSide(color: Colors.white),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(
-              Icons.add,
-              size: 15.0,
-              color: Colors.white,
-            ),
-            SizedBox(
-              width: 2.0,
-            ),
-            Text(
-              'ADD ACCOUNT',
-              style: TextStyle(fontSize: 13.0, color: Colors.white),
-            ),
-            SizedBox(
-              width: 2.0,
-            ),
-          ],
-        ),
-        textColor: Colors.black,
-        onPressed: () {
-          userData.selectAccount(userData.records.length);
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (context) => SingleChildScrollView(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: AddAccountPopup(),
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0),
-              ),
-            ),
-          );
-        },
-      ),
-    );
   }
 }

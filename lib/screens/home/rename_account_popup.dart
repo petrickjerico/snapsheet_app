@@ -57,88 +57,98 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, userData, child) {
-      return Form(
-        key: RenameAccountPopup._formKey,
-        child: Container(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  SizedBox(height: 10.0),
-                  TextFormField(
-                    initialValue: accountTitle,
-                    autofocus: true,
-                    onChanged: (value) {
-                      accountTitle = value;
-                    },
-                    decoration: kTextFieldDecorationLogin.copyWith(
-                        hintText: 'Rename your account'),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text.';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: 5.0,
-                  ),
-                  FlatButton(
-                    child: Text(
-                      'Tap to change colour',
-                      style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          color: Colors.black87,
-                          fontSize: 15.0),
+      return Theme(
+        data: ThemeData.light(),
+        child: Form(
+          key: RenameAccountPopup._formKey,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0),
+              ),
+            ),
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    SizedBox(height: 10.0),
+                    TextFormField(
+                      initialValue: accountTitle,
+                      autofocus: true,
+                      onChanged: (value) {
+                        accountTitle = value;
+                      },
+                      decoration: kTextFieldDecorationLogin.copyWith(
+                          hintText: 'Rename your account'),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text.';
+                        }
+                        return null;
+                      },
                     ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    color: color,
-                    onPressed: () async {
-                      _openDialog(
-                        "Color your account",
-                        MaterialColorPicker(
-                          shrinkWrap: true,
-                          allowShades: false,
-                          onMainColorChange: (newColor) {
-                            setState(() {
-                              tempColor = newColor;
-                            });
-                          },
-                          selectedColor: color,
-                        ),
-                      );
-                    },
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Container(
-                height: 50.0,
-                width: 150.0,
-                child: FlatButton(
-                  color: Colors.black,
-                  child: Text(
-                    'SAVE',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 20.0, color: Colors.white),
-                  ),
-                  onPressed: () {
-                    if (RenameAccountPopup._formKey.currentState.validate()) {
-                      userData.editAccount(widget.id, accountTitle, color);
-                      Navigator.pop(context);
-                    }
-                  },
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    FlatButton(
+                      child: Text(
+                        'Tap to change colour',
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            color: Colors.black87,
+                            fontSize: 15.0),
+                      ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
+                      color: color,
+                      onPressed: () async {
+                        _openDialog(
+                          "Color your account",
+                          MaterialColorPicker(
+                            shrinkWrap: true,
+                            allowShades: false,
+                            onMainColorChange: (newColor) {
+                              setState(() {
+                                tempColor = newColor;
+                              });
+                            },
+                            selectedColor: color,
+                          ),
+                        );
+                      },
+                    )
+                  ],
                 ),
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-            ],
+                SizedBox(
+                  height: 20.0,
+                ),
+                Container(
+                  height: 50.0,
+                  width: 150.0,
+                  child: FlatButton(
+                    color: Colors.black,
+                    child: Text(
+                      'SAVE',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 20.0, color: Colors.white),
+                    ),
+                    onPressed: () {
+                      if (RenameAccountPopup._formKey.currentState.validate()) {
+                        userData.editAccount(widget.id, accountTitle, color);
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 15.0,
+                ),
+              ],
+            ),
           ),
         ),
       );

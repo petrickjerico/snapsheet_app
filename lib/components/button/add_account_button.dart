@@ -7,12 +7,13 @@ class AddAccountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserData>(
-      builder: (context, userData, child) => OutlineButton(
+      builder: (context, userData, child) => MaterialButton(
         visualDensity: VisualDensity.comfortable,
+        minWidth: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
+          side: BorderSide(color: Colors.white),
         ),
-        borderSide: BorderSide(color: Colors.white),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

@@ -3,11 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/archive/temp_data.dart';
 import 'package:snapsheetapp/models/user.dart';
+import 'package:snapsheetapp/screens/calculator/addexpenses_screen.dart';
+import 'package:snapsheetapp/screens/calculator/editinfo_screen.dart';
+import 'package:snapsheetapp/screens/home/edit_order_accounts.dart';
 import 'package:snapsheetapp/screens/sidebar/addcategory_screen.dart';
-import 'package:snapsheetapp/screens/editor/addexpenses_screen.dart';
 import 'package:snapsheetapp/screens/authentication/email.dart';
 import 'package:snapsheetapp/screens/authentication/welcome_screen.dart';
-import 'package:snapsheetapp/screens/editor/editinfo_screen.dart';
 import 'package:snapsheetapp/screens/sidebar/editprofile_screen.dart';
 import 'package:snapsheetapp/screens/sidebar/exportselect_screen.dart';
 import 'package:snapsheetapp/screens/home/homepage_screen.dart';
@@ -50,6 +51,7 @@ class Snapsheet extends StatelessWidget {
           SettingsScreen.id: (context) => SettingsScreen(),
           EditInfoScreen.id: (context) => EditInfoScreen(),
           BulkScanScreen.id: (context) => BulkScanScreen(),
+          EditAccountsOrder.id: (context) => EditAccountsOrder(),
         },
         theme: ThemeData.light().copyWith(primaryColor: Colors.black),
       ),

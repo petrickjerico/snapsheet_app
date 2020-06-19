@@ -4,7 +4,9 @@ import 'package:snapsheetapp/models/account.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
 class AccountTile extends StatelessWidget {
-  AccountTile({this.index, this.color, this.title, this.count, this.total});
+  AccountTile(
+      {Key key, this.index, this.color, this.title, this.count, this.total})
+      : super(key: key);
 
   int index;
   Color color;

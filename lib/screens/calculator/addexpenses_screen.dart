@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/expenses_calculator.dart';
 import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/screens/editor/editinfo_screen.dart';
 import 'package:flutter/rendering.dart';
 import 'package:snapsheetapp/services/scanner.dart';
+
+import 'editinfo_screen.dart';
 
 class AddExpensesScreen extends StatelessWidget {
   static const String id = 'addexpenses_screen';

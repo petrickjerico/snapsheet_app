@@ -10,6 +10,7 @@ import 'package:flutter_grid_button/flutter_grid_button.dart';
 import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:snapsheetapp/shared/constants.dart';
 
 class ExpensesCalculator extends StatefulWidget {
   const ExpensesCalculator({
@@ -37,11 +38,9 @@ class _ExpensesCalculatorState extends State<ExpensesCalculator> {
         value: value,
         hideExpression: true,
         theme: CalculatorThemeData(
-          borderWidth: 0.0,
-          operatorColor: Colors.grey[500],
-          displayColor: userData.accounts[userData.tempRecord.accountId].color
-              .withOpacity(0.7),
-        ),
+            borderWidth: 0.0,
+            operatorColor: Colors.grey[500],
+            displayColor: kBlack),
         onChanged: (key, value, expression) {
           print(key);
           print(value);

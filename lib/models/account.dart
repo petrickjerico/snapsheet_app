@@ -3,13 +3,19 @@ import 'package:flutter/material.dart';
 class Account {
   String accTitle;
   Color accColor;
+  int accIndex;
+  int accOrder;
   bool isSelected = true;
 
-  Account({this.accTitle, this.accColor});
+  Account({this.accTitle, this.accColor, this.accIndex, this.accOrder});
 
   String get title => accTitle;
 
   Color get color => accColor;
+
+  int get index => accIndex;
+
+  int get order => accOrder;
 
   set title(String value) {
     accTitle = value;
@@ -17,5 +23,9 @@ class Account {
 
   set color(Color value) {
     accColor = value;
+  }
+
+  set order(int value) {
+    accOrder = value;
   }
 }

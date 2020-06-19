@@ -82,9 +82,9 @@ class _StatisticsState extends State<Statistics> {
 //                ),
 //              ),
 //            ),
-            Card(
-              child: AspectRatio(
-                aspectRatio: 1,
+            AspectRatio(
+              aspectRatio: 1.1,
+              child: Card(
                 child: Padding(
                   padding: EdgeInsets.all(20.0),
                   child: Column(
@@ -123,20 +123,18 @@ class _StatisticsState extends State<Statistics> {
                                   print(touchedIndex);
                                 });
                               }),
-                              startDegreeOffset: 180,
+                              startDegreeOffset: -90,
                               borderData: FlBorderData(
                                 show: false,
                               ),
-                              sectionsSpace: 0,
+                              sectionsSpace: 2,
                               centerSpaceRadius: 40,
                               sections: showingCategorySections()),
                         ),
                       ),
-                      GridView.count(
-                        physics: NeverScrollableScrollPhysics(),
-                        childAspectRatio: 5,
-                        crossAxisCount: 4,
-                        shrinkWrap: true,
+                      Wrap(
+                        direction: Axis.horizontal,
+                        alignment: WrapAlignment.center,
                         children: cats
                             .where((e) =>
                                 userData.statsGetCategTotalFromCurrent(
@@ -201,7 +199,9 @@ class _StatisticsState extends State<Statistics> {
                             visible:
                                 record.accountId == userData.selectedAccount ||
                                     userData.selectedAccount == -1,
-                            child: HistoryTile(record: record, index: index),
+                            child: HistoryTile(
+                                record: record,
+                                index: userData.records.indexOf(record)),
                           );
                         },
                         itemCount: userData.statsGetRecords(4).length,

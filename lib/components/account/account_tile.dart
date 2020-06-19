@@ -4,8 +4,9 @@ import 'package:snapsheetapp/models/account.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
 class AccountTile extends StatelessWidget {
-  AccountTile({this.color, this.title, this.count, this.total});
+  AccountTile({this.index, this.color, this.title, this.count, this.total});
 
+  int index;
   Color color;
   String title;
   int count;
@@ -13,66 +14,37 @@ class AccountTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(
-            width: 0.5,
+    return Consumer<UserData>(
+      builder: (context, userData, child) => GestureDetector(
+        onTap: () {
+          if (userData.selectedAccount != index) {
+            userData.selectAccount(index);
+          }
+        },
+        child: Container(
+          decoration: BoxDecoration(
             color: color,
+            borderRadius: BorderRadius.circular(10.0),
           ),
-        ),
-        height: 100.0,
-        width: 200.0,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10.0),
-                    topRight: Radius.circular(10.0),
-                  ),
-                  border: Border.all(
-                    width: 0.5,
-                    color: color,
-                  ),
+          height: 50.0,
+          width: 100.0,
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  title,
+                  style: TextStyle(color: Colors.white),
                 ),
-                child: Center(
-                  child: Text(
-                    title,
-                    style: TextStyle(color: Colors.white),
-                  ),
+                Text(
+                  total.toStringAsFixed(2),
+                  style: TextStyle(color: Colors.white, fontSize: 20.0),
                 ),
-              ),
+              ],
             ),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: EdgeInsets.all(6.0),
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          '$count records',
-                          style: TextStyle(color: Colors.white, fontSize: 10.0),
-                        ),
-                        Text(
-                          total.toStringAsFixed(2),
-                          style: TextStyle(color: Colors.white, fontSize: 20.0),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

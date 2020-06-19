@@ -31,7 +31,7 @@ class AddExpensesScreen extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.receipt),
               onPressed: () async {
-                Scanner scanner = Scanner(userData);
+                Scanner scanner = Scanner.withUserData(userData);
                 await scanner.showChoiceDialog(context);
                 scanner.process();
               },

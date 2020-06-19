@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:snapsheetapp/components/button/rounded_button.dart';
 import '../shared/constants.dart';
-import 'home/homepage_screen.dart';
+import '../screens/home/homepage_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static final String id = 'registration';

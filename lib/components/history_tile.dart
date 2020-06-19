@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/models/category.dart';
 import 'package:snapsheetapp/models/record.dart';
 import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/screens/addexpenses_screen.dart';
+import 'package:snapsheetapp/screens/editor/addexpenses_screen.dart';
 import 'package:snapsheetapp/shared/constants.dart';
 
 class HistoryTile extends StatelessWidget {

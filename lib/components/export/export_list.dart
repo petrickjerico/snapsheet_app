@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/components/export_tile.dart';
+import 'package:snapsheetapp/components/export/export_tile.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/services/export.dart';
 

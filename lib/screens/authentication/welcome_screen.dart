@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:snapsheetapp/components/rounded_button.dart';
+import 'package:snapsheetapp/components/button/rounded_button.dart';
 import 'package:snapsheetapp/services/auth.dart';
 import 'package:snapsheetapp/shared/constants.dart';
 import 'package:snapsheetapp/shared/loading.dart';

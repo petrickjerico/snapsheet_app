@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/components/rounded_button.dart';
+import 'package:snapsheetapp/components/button/rounded_button.dart';
 import 'package:snapsheetapp/models/user.dart';
 import 'package:snapsheetapp/services/auth.dart';
 import 'package:snapsheetapp/shared/constants.dart';

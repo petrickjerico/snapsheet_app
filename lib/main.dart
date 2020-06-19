@@ -12,8 +12,6 @@ import 'package:snapsheetapp/screens/authentication/welcome_screen.dart';
 import 'package:snapsheetapp/screens/sidebar/editprofile_screen.dart';
 import 'package:snapsheetapp/screens/sidebar/exportselect_screen.dart';
 import 'package:snapsheetapp/screens/home/homepage_screen.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/login_screen.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/archive/registration_screen.dart';
 import 'package:snapsheetapp/screens/sidebar/bulk_scan_screen.dart';
 import 'package:snapsheetapp/screens/sidebar/receipt_preview.dart';
 import 'package:snapsheetapp/screens/sidebar/settings_screen.dart';

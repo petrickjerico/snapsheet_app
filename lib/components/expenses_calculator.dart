@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/config/config.dart';
 import 'package:snapsheetapp/models/account.dart';
-import 'package:snapsheetapp/models/record.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/rendering.dart';
@@ -10,7 +9,6 @@ import 'package:flutter_grid_button/flutter_grid_button.dart';
 import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:snapsheetapp/shared/constants.dart';
 
 class ExpensesCalculator extends StatefulWidget {
   const ExpensesCalculator({

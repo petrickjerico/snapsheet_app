@@ -3,10 +3,10 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/date_time.dart';
 import 'package:snapsheetapp/components/receipt_image_dialog.dart';
+import 'package:snapsheetapp/config/config.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/home/homepage_screen.dart';
 import 'package:snapsheetapp/services/scanner.dart';
-import 'package:snapsheetapp/shared/constants.dart';
 
 class EditInfoScreen extends StatefulWidget {
   static const String id = 'editinfo_screen';

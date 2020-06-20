@@ -7,6 +7,8 @@ import 'package:snapsheetapp/screens/sidebar/bulk_scan_screen.dart';
 import 'package:snapsheetapp/screens/sidebar/editprofile_screen.dart';
 import 'package:snapsheetapp/screens/sidebar/exportselect_screen.dart';
 import 'package:snapsheetapp/screens/sidebar/settings_screen.dart';
+import 'package:snapsheetapp/screens/wrapper.dart';
+import 'package:snapsheetapp/services/auth.dart';
 
 class SidebarMenu extends StatelessWidget {
   SidebarMenu({@required this.currentUser});
@@ -60,10 +62,26 @@ class SidebarMenu extends StatelessWidget {
                 title: Text('Settings'),
                 onTap: () => {Navigator.pushNamed(context, SettingsScreen.id)},
               ),
+              ListTile(
+                leading: Icon(Icons.exit_to_app),
+                title: Text('Log out'),
+                onTap: () => logout(context),
+              )
             ],
           ),
         );
       },
+    );
+  }
+
+  logout(BuildContext context) {
+    AuthService authService = AuthService();
+    Navigator.pop(context);
+    authService.signOut();
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Wrapper.id,
+      (route) => false,
     );
   }
 }

@@ -53,13 +53,6 @@ class _HomepageScreenState extends State<HomepageScreen> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           title: Text('HOMEPAGE'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.close),
-              color: Colors.white,
-              onPressed: () => logout(context),
-            )
-          ],
         ),
         drawer: SidebarMenu(currentUser: loggedInUser),
         body: PageView(
@@ -78,16 +71,5 @@ class _HomepageScreenState extends State<HomepageScreen> {
         ),
       );
     });
-  }
-
-  logout(BuildContext context) {
-    AuthService authService = AuthService();
-    Navigator.pop(context);
-    authService.signOut();
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      Wrapper.id,
-      (route) => false,
-    );
   }
 }

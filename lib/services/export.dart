@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:csv/csv.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:flutter/services.dart';
 import 'package:snapsheetapp/models/account.dart';
 import 'package:snapsheetapp/models/category.dart';
 import 'package:snapsheetapp/models/record.dart';
@@ -29,6 +32,13 @@ class Exporter {
     await Permission.storage.request();
     target = await targetFile();
     File file = await writeData(await data);
+    final ByteData bytes = ByteData.view(file.readAsBytesSync().buffer);
+    await Share.file(
+      'snapsheet',
+      'snapsheet.csv',
+      bytes.buffer.asUint8List(),
+      'text/csv',
+    );
   }
 
   Future<String> processCSV() async {

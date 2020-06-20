@@ -6,35 +6,6 @@ import 'package:snapsheetapp/models/user_data.dart';
 
 class ExportSelectScreen extends StatelessWidget {
   static const String id = 'exportselect_screen';
-
-  Future<void> _showMyDialog(context) async {
-    String dir = (await DownloadsPathProvider.downloadsDirectory).path;
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Export Done'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('File is in $dir'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Ok'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     DateTime start;
@@ -70,7 +41,6 @@ class ExportSelectScreen extends StatelessWidget {
                   ),
                   onPressed: () async {
                     await userData.exporter.exportCSV();
-                    _showMyDialog(context);
                   },
                 ),
               ),

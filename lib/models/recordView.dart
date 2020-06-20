@@ -48,12 +48,16 @@ class RecordView extends ChangeNotifier {
           date: map['date'],
           categoryId: map['catId'],
           accountId: accountId,
-          image: image);
+          image: image,
+          toDelete: false);
       records.add(record);
     }
   }
 
   void addAll() {
-    userData.records.addAll(records);
+    for (Record record in records) {
+      if (record.toDelete) continue;
+      userData.records.add(record);
+    }
   }
 }

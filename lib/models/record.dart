@@ -13,6 +13,7 @@ class Record {
   bool isIncome;
   File image;
   String url;
+  bool toDelete;
 
   Record.fromReceipt({
     this.title,
@@ -23,6 +24,7 @@ class Record {
     this.currency = 'SGD',
     this.isIncome = false,
     this.image,
+    this.toDelete,
   });
 
   Record(

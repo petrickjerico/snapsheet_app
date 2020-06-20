@@ -8,6 +8,7 @@ import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/calculator/addexpenses_screen.dart';
 import 'package:snapsheetapp/screens/home/accounts_tab.dart';
 import 'package:snapsheetapp/screens/sidebar/sidebar_menu.dart';
+import 'package:snapsheetapp/services/auth.dart';
 
 import '../authentication/welcome_screen.dart';
 import 'history_tab.dart';
@@ -55,10 +56,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
             IconButton(
               icon: Icon(Icons.close),
               color: Colors.white,
-              onPressed: () {
-                _auth.signOut();
-                Navigator.pushNamed(context, WelcomeScreen.id);
-              },
+              onPressed: () => logout(context),
             )
           ],
         ),
@@ -79,5 +77,16 @@ class _HomepageScreenState extends State<HomepageScreen> {
         ),
       );
     });
+  }
+
+  logout(BuildContext context) {
+    AuthService authService = AuthService();
+    Navigator.pop(context);
+    authService.signOut();
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      WelcomeScreen.id,
+      (route) => false,
+    );
   }
 }

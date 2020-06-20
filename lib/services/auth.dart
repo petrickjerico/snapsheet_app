@@ -8,11 +8,13 @@ class AuthService {
 
   // create user ob based on FirebaseUser
   User _userFromFirebaseUser(FirebaseUser user) {
+    print(user);
+//    print(user.uid);
     return user != null ? User(uid: user.uid) : null;
   }
 
-  Future currentUser() async {
-    return await _auth.currentUser().then(_userFromFirebaseUser);
+  Future<User> currentUser() async {
+    return _auth.currentUser().then(_userFromFirebaseUser);
   }
 
   // auth change user stream
@@ -89,14 +91,10 @@ class AuthService {
     }
   }
 
-  Future signOutGoogle() async {
-    await googleSignIn.signOut();
-    print("User sign out");
-  }
-
   // sign out
   Future signOut() async {
     try {
+      googleSignIn.signOut();
       return await _auth.signOut();
     } catch (e) {
       print(e.toString());

@@ -43,7 +43,7 @@ dependencies:
   google_sign_in: ^4.5.1
   carousel_slider: ^2.1.0
   flutter_reorderable_list: ^0.1.4
-
+  after_layout: ^1.0.7+2
 
 dev_dependencies:
   flutter_test:

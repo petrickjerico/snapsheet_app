@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:snapsheetapp/components/button/rounded_button.dart';
 import 'package:snapsheetapp/config/config.dart';
+import 'package:snapsheetapp/screens/authentication/profile_setup.dart';
+import 'package:snapsheetapp/screens/home/homepage_screen.dart';
 import 'package:snapsheetapp/services/auth.dart';
+import 'package:snapsheetapp/services/database/user_db.dart';
 import 'package:snapsheetapp/shared/loading.dart';
+import 'package:snapsheetapp/shared/snapsheet/snapsheet_logo.dart';
 
 import 'email.dart';
 
@@ -16,64 +20,71 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   final AuthService _auth = AuthService();
-  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
-    return loading
-        ? Loading()
-        : Scaffold(
-            backgroundColor: Colors.white,
-            body: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(
-                    child: Image.asset('assets/images/snapsheet_logo.png'),
-                    height: 150.0,
-                  ),
-                  Text(
-                    'SNAPSHEET',
-                    textAlign: TextAlign.center,
-                    style: kWelcomeTextStyle,
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  RoundedButton(
-                    textColor: Colors.black,
-                    color: Colors.white,
-                    onPressed: () async {
-                      //Go to login screen.
-                      setState(() => loading = true);
-                      dynamic result = await _auth.signInWithGoogle();
-                      if (result == null) {
-                        setState(() => loading = false);
-                      }
-                    },
-                    title: 'Google',
-                    icon: Icon(
-                      FontAwesomeIcons.google,
-                      color: Colors.black,
-                    ),
-                  ),
-                  RoundedButton(
-                    textColor: Colors.white,
-                    color: Colors.black,
-                    onPressed: () {
-                      Navigator.pushNamed(context, Email.id);
-                    },
-                    title: 'Email',
-                    icon: Icon(
-                      Icons.mail,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 40.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Hero(
+              tag: 'logo',
+              child: SnapSheetLogo(size: 150),
+            ),
+            Text(
+              'SNAPSHEET',
+              textAlign: TextAlign.center,
+              style: kWelcomeTextStyle,
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            RoundedButton(
+              textColor: Colors.black,
+              color: Colors.white,
+              onPressed: () => signIn(false),
+              title: 'Google',
+              icon: Icon(
+                FontAwesomeIcons.google,
+                color: Colors.black,
               ),
             ),
-          );
+            RoundedButton(
+              textColor: Colors.white,
+              color: Colors.black,
+              onPressed: () {
+                Navigator.pushNamed(context, EmailScreen.id);
+              },
+              title: 'Email',
+              icon: Icon(
+                Icons.mail,
+                color: Colors.white,
+              ),
+            ),
+            FlatButton(
+              child: Text('Continue as Guest'),
+              onPressed: () => signIn(true),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> signIn(bool isAnonymous) async {
+    try {
+      var user = isAnonymous
+          ? await _auth.signInAnon()
+          : await _auth.signInWithGoogle();
+      print(user);
+      print(user == null);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 }

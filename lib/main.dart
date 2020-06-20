@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/archive/temp_data.dart';
 import 'package:snapsheetapp/models/user.dart';
+import 'package:snapsheetapp/screens/authentication/profile_setup.dart';
+import 'package:snapsheetapp/screens/authentication/wrapper.dart';
 import 'package:snapsheetapp/screens/calculator/addexpenses_screen.dart';
 import 'package:snapsheetapp/screens/calculator/editinfo_screen.dart';
 import 'package:snapsheetapp/screens/home/edit_order_accounts.dart';
@@ -15,7 +17,7 @@ import 'package:snapsheetapp/screens/home/homepage_screen.dart';
 import 'package:snapsheetapp/screens/sidebar/bulk_scan_screen.dart';
 import 'package:snapsheetapp/screens/sidebar/receipt_preview.dart';
 import 'package:snapsheetapp/screens/sidebar/settings_screen.dart';
-import 'package:snapsheetapp/screens/wrapper.dart';
+import 'package:snapsheetapp/screens/splash.dart';
 import 'package:snapsheetapp/services/auth.dart';
 import 'models/user_data.dart';
 
@@ -39,10 +41,12 @@ class Snapsheet extends StatelessWidget {
       child: MaterialApp(
         initialRoute: Wrapper.id,
         routes: {
+          SplashScreen.id: (context) => SplashScreen(),
           Wrapper.id: (context) => Wrapper(),
           WelcomeScreen.id: (context) => WelcomeScreen(),
           HomepageScreen.id: (context) => HomepageScreen(),
-          Email.id: (context) => Email(),
+          EmailScreen.id: (context) => EmailScreen(),
+          ProfileSetupScreen.id: (context) => ProfileSetupScreen(),
           AddExpensesScreen.id: (context) => AddExpensesScreen(),
           ExportSelectScreen.id: (context) => ExportSelectScreen(),
           AddCategoryScreen.id: (context) => AddCategoryScreen(),

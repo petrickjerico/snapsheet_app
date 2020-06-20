@@ -5,14 +5,14 @@ import 'package:snapsheetapp/config/config.dart';
 import 'package:snapsheetapp/services/auth.dart';
 import 'package:snapsheetapp/shared/loading.dart';
 
-class Email extends StatefulWidget {
+class EmailScreen extends StatefulWidget {
   static final String id = 'email_screen';
 
   @override
-  _EmailState createState() => _EmailState();
+  _EmailScreenState createState() => _EmailScreenState();
 }
 
-class _EmailState extends State<Email> {
+class _EmailScreenState extends State<EmailScreen> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;

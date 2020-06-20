@@ -3,11 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/config/config.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/calculator/addexpenses_screen.dart';
 import 'package:snapsheetapp/screens/home/accounts_tab.dart';
 import 'package:snapsheetapp/screens/sidebar/sidebar_menu.dart';
-import 'package:snapsheetapp/shared/constants.dart';
 
 import '../authentication/welcome_screen.dart';
 import 'history_tab.dart';

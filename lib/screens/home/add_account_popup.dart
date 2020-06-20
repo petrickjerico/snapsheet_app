@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/config/config.dart';
 import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/shared/constants.dart';
 
 class AddAccountPopup extends StatefulWidget {
   static final _formKey = GlobalKey<FormState>();
@@ -14,7 +14,7 @@ class AddAccountPopup extends StatefulWidget {
 class _AddAccountPopupState extends State<AddAccountPopup> {
   String accountTitle;
 
-  Color _color = Colors.blueGrey;
+  Color _color = kCyan;
   Color _tempColor;
 
   void _openDialog(String title, Widget content) {

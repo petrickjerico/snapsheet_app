@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/button/rounded_button.dart';
 import 'package:snapsheetapp/components/receipt_image_dialog.dart';
+import 'package:snapsheetapp/config/config.dart';
 import 'package:snapsheetapp/models/record.dart';
 import 'package:snapsheetapp/models/recordView.dart';
 import 'package:snapsheetapp/models/user.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/authentication/welcome_screen.dart';
 import 'package:snapsheetapp/screens/home/homepage_screen.dart';
-import 'package:snapsheetapp/shared/constants.dart';
 
 class ReceiptScreen extends StatefulWidget {
   final int recordId;

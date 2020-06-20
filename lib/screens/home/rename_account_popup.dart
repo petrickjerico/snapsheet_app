@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/config/config.dart';
 import 'package:snapsheetapp/models/account.dart';
 import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/shared/constants.dart';
 
 class RenameAccountPopup extends StatefulWidget {
   RenameAccountPopup(this.id);

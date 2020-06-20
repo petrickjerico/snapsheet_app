@@ -62,10 +62,6 @@ class UserData extends ChangeNotifier {
     Category(
         'Income', Icon(FontAwesomeIcons.moneyBill), Colors.amberAccent, true),
     Category('Others', Icon(Icons.category), Colors.black),
-    Category(
-      'Travel',
-      Icon(Icons.place),
-    )
   ];
 
   List<Record> get specifiedRecords => _selectedAccount == -1

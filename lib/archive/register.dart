@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:snapsheetapp/config/config.dart';
 import 'package:snapsheetapp/services/auth.dart';
-import 'package:snapsheetapp/shared/constants.dart';
 import 'package:snapsheetapp/shared/loading.dart';
 
 class RegisterScreen extends StatefulWidget {

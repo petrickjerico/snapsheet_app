@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/button/rounded_button.dart';
-import 'package:snapsheetapp/models/user.dart';
+import 'package:snapsheetapp/config/config.dart';
 import 'package:snapsheetapp/services/auth.dart';
-import 'package:snapsheetapp/shared/constants.dart';
 import 'package:snapsheetapp/shared/loading.dart';
 
 class Email extends StatefulWidget {
@@ -36,10 +34,10 @@ class _EmailState extends State<Email> {
       print(result);
       print(result == null);
       if (result == null) {
-//        setState(() {
-//          error = 'Invalid email and password';
-//          loading = false;
-//        });
+        setState(() {
+          error = 'Invalid email and password';
+          loading = false;
+        });
       }
     }
   }

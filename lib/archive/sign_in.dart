@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/config/config.dart';
 import 'package:snapsheetapp/models/user.dart';
-import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/services/auth.dart';
-import 'package:snapsheetapp/shared/constants.dart';
-import 'package:snapsheetapp/shared/loading.dart';
 import 'package:snapsheetapp/shared/loading.dart';
 
 class SignInScreen extends StatefulWidget {

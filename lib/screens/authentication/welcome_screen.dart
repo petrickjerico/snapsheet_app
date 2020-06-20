@@ -49,9 +49,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       //Go to login screen.
                       setState(() => loading = true);
                       dynamic result = await _auth.signInWithGoogle();
-                      if (result == null) {
-                        setState(() => loading = false);
-                      }
+                      setState(() => loading = false);
                     },
                     title: 'Google',
                     icon: Icon(

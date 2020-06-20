@@ -89,14 +89,10 @@ class AuthService {
     }
   }
 
-  Future signOutGoogle() async {
-    await googleSignIn.signOut();
-    print("User sign out");
-  }
-
   // sign out
   Future signOut() async {
     try {
+      googleSignIn.signOut();
       return await _auth.signOut();
     } catch (e) {
       print(e.toString());

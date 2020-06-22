@@ -37,6 +37,7 @@ class Snapsheet extends StatelessWidget {
         ChangeNotifierProvider<UserData>(create: (context) => UserData()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         initialRoute: Wrapper.id,
         routes: {
           Wrapper.id: (context) => Wrapper(),

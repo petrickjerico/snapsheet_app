@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/components/account/list_of_accounts.dart';
+import 'package:snapsheetapp/components/account/accounts_carousel.dart';
 import 'package:snapsheetapp/components/stats/statistics.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
@@ -13,7 +13,7 @@ class AccountsTab extends StatelessWidget {
           color: Colors.black.withOpacity(0.8),
           child: Column(
             children: <Widget>[
-              ListOfAccounts(),
+              AccountsCarousel(),
               Flexible(
                 child: Container(
                   padding: EdgeInsets.all(8.0),

@@ -80,7 +80,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
         builder: (context, userData, child) => SingleChildScrollView(
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: RenameAccountPopup(userData.selectedAccount),
+          child: RenameAccountPopup(),
         ),
       ),
     );
@@ -119,7 +119,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0)),
                       onPressed: () {
-                        userData.deleteAccount(userData.selectedAccount);
+                        userData.deleteAccount();
                         Navigator.pop(context);
                       },
                     ),

@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 
 class Account {
+  static int accIndexGen = 0;
+
   String accTitle;
   Color accColor;
   int accIndex;
   int accOrder;
   bool isSelected = true;
 
-  Account({this.accTitle, this.accColor, this.accIndex, this.accOrder});
+  Account(String accTitle, Color accColor, int accOrder) {
+    assert(accIndexGen != null, 'accIndexGen not initialised.');
+    this.accTitle = accTitle;
+    this.accColor = accColor;
+    this.accIndex = accIndexGen;
+    this.accOrder = accOrder;
+    accIndexGen++;
+  }
 
   String get title => accTitle;
 

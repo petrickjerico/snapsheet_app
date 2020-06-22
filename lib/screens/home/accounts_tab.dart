@@ -22,11 +22,7 @@ class AccountsTab extends StatelessWidget {
                     color: Colors.black38,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: ListView(
-                    children: <Widget>[
-                      Statistics(),
-                    ],
-                  ),
+                  child: Statistics(),
                 ),
               ),
             ],

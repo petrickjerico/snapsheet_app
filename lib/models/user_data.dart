@@ -34,18 +34,13 @@ class UserData extends ChangeNotifier {
       Record("Online course", 5.75, DateTime(2020, 5, 20), 6, 2, "SGD"),
       Record("Teacher's Birthday Gift", 4, DateTime(2020, 4, 3), 3, 2, "SGD"),
     ]);
+    Account.accIndexGen = accounts.length;
   }
 
   List<Account> _accounts = [
-    Account(
-        accTitle: 'DBS', accColor: Colors.red[900], accIndex: 0, accOrder: 0),
-    Account(
-        accTitle: 'Cash',
-        accColor: Colors.deepPurple[700],
-        accIndex: 1,
-        accOrder: 1),
-    Account(
-        accTitle: 'CCA', accColor: Colors.blue[600], accIndex: 2, accOrder: 2),
+    Account('DBS', Colors.red[900], 0),
+    Account('Cash', Colors.deepPurple[700], 1),
+    Account('CCA', Colors.blue[600], 2),
   ];
 
   List<Category> _categories = [
@@ -101,7 +96,7 @@ class UserData extends ChangeNotifier {
   }
 
   void addAccount(String title, Color color) {
-    _accounts.add(Account(accTitle: title, accColor: color));
+    _accounts.add(Account(title, color, accounts.length));
     notifyListeners();
   }
 
@@ -147,9 +142,18 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void editAccount(int accId, String newTitle, Color newColor) {
-    accounts.firstWhere((acc) => acc.accIndex == accId).title = newTitle;
-    accounts.firstWhere((acc) => acc.accIndex == accId).color = newColor;
+  Account getCurrentAccount() {
+    return accounts.firstWhere((acc) => acc.accIndex == _selectedAccount);
+  }
+
+  Account getThisAccount(Account account) {
+    return accounts.firstWhere((acc) => acc.accIndex == account.accIndex);
+  }
+
+  void editAccount(String newTitle, Color newColor) {
+    Account target = getCurrentAccount();
+    target.title = newTitle;
+    target.color = newColor;
     notifyListeners();
   }
 
@@ -157,7 +161,7 @@ class UserData extends ChangeNotifier {
     return (_selectedAccount == -1 || rec.accountId == _selectedAccount);
   }
 
-  double get statsExpensesTotal {
+  double get currentExpensesTotal {
     double total = 0;
     for (Record rec in records) {
       if (!rec.isIncome && recordMatchesStats(rec)) {
@@ -188,10 +192,15 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteAccount(int accId) {
-    accounts.removeWhere((acc) => acc.accIndex == accId);
-    records.removeWhere((rec) => rec.accountId == accId);
-    _selectedAccount--;
+  void deleteAccount() {
+    Account target = getCurrentAccount();
+    int pos = target.accOrder;
+    accounts.remove(target);
+    records.removeWhere((rec) => rec.accountId == _selectedAccount);
+    _selectedAccount = accounts[pos - 1].accIndex;
+    for (Account acc in accounts) {
+      if (acc.accOrder > pos) acc.accOrder--;
+    }
     notifyListeners();
   }
 
@@ -252,8 +261,9 @@ class UserData extends ChangeNotifier {
     return res;
   }
 
-  void orderUpdateAccount(int pos, int newIndex) {
-    _accounts[pos].order = newIndex;
+  void orderUpdateAccount(int oldOrder, int newOrder) {
+    Account target = accounts.firstWhere((acc) => acc.accOrder == oldOrder);
+    target.accOrder = newOrder;
     notifyListeners();
   }
 }

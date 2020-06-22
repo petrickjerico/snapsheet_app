@@ -6,8 +6,6 @@ import 'package:snapsheetapp/models/account.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
 class RenameAccountPopup extends StatefulWidget {
-  RenameAccountPopup(this.id);
-  int id;
   static final _formKey = GlobalKey<FormState>();
 
   @override
@@ -23,7 +21,7 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Account acc = Provider.of<UserData>(context).accounts[widget.id];
+    Account acc = Provider.of<UserData>(context).getCurrentAccount();
     color = acc.color;
     accountTitle = acc.title;
   }
@@ -138,7 +136,7 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
                     ),
                     onPressed: () {
                       if (RenameAccountPopup._formKey.currentState.validate()) {
-                        userData.editAccount(widget.id, accountTitle, color);
+                        userData.editAccount(accountTitle, color);
                         Navigator.pop(context);
                       }
                     },

@@ -30,7 +30,7 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
               child: ReorderableListSimple(
                   handleIcon: Icon(Icons.reorder),
                   children: userData.accounts.map((e) {
-                    int accId = userData.accounts.indexOf(e);
+                    int accId = userData.getThisAccount(e).accIndex;
                     return AccountOrderTile(
                       index: accId,
                       color: e.color,

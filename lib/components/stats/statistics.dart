@@ -125,7 +125,7 @@ class _StatisticsState extends State<Statistics> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                            'Total: \$${userData.statsExpensesTotal.toStringAsFixed(2)}',
+                            'Total: \$${userData.currentExpensesTotal.toStringAsFixed(2)}',
                             style: TextStyle(
                                 fontSize: 25,
                                 color: Colors.black87,

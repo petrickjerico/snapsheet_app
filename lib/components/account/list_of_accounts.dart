@@ -131,16 +131,17 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
   }
 
   List<Widget> makeAccountTiles(UserData userData) {
-    return userData.accounts.map((e) {
-      int accId = userData.accounts.indexOf(e);
+    return userData.orderGetAccounts().map((e) {
+      Account acc = userData.getThisAccount(e);
+      int accIndex = acc.accIndex;
       return Opacity(
-        opacity: accId == userData.selectedAccount ? 1.0 : 0.5,
+        opacity: accIndex == userData.selectedAccount ? 1.0 : 0.5,
         child: AccountTile(
-          index: accId,
+          index: accIndex,
           color: e.color,
           title: e.title,
-          count: userData.statsCountRecords(accId),
-          total: userData.statsGetAccountTotal(accId),
+          count: userData.statsCountRecords(accIndex),
+          total: userData.statsGetAccountTotal(accIndex),
         ),
       );
     }).toList();

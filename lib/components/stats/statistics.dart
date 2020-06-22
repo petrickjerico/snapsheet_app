@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/homepage_card.dart';
+import 'package:snapsheetapp/main.dart';
 import 'package:snapsheetapp/models/category.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:random_color/random_color.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:snapsheetapp/screens/calculator/addexpenses_screen.dart';
 import '../history_tile.dart';
 import 'indicator.dart';
 
@@ -74,7 +76,36 @@ class _StatisticsState extends State<Statistics> {
           );
         }
 
-        return Column(
+        if (!userData.records.any((rec) => rec.accountId == selectedAccount) &&
+            userData.selectedAccount != -1) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              GestureDetector(
+                child: Icon(
+                  Icons.add_circle,
+                  color: Colors.white24,
+                  size: 120.0,
+                ),
+                onTap: () {
+                  userData.newRecord();
+                  Navigator.pushNamed(context, AddExpensesScreen.id);
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'No records found for this account yet.\nTap to create one.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white30, fontSize: 15),
+                ),
+              )
+            ],
+          );
+        }
+
+        return ListView(
           children: <Widget>[
 //            HomepageCard(
 //              cardChild: Container(

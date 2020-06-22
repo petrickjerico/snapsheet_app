@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/button/add_account_button.dart';
+import 'package:snapsheetapp/components/button/edit_accounts_button.dart';
+import 'package:snapsheetapp/components/button/select_all_button.dart';
 import 'package:snapsheetapp/screens/home/edit_order_accounts.dart';
 import 'package:snapsheetapp/screens/home/rename_account_popup.dart';
 import 'package:snapsheetapp/models/account.dart';
@@ -12,12 +14,12 @@ import 'account_order_tile.dart';
 import 'account_tile.dart';
 import '../../screens/home/add_account_popup.dart';
 
-class ListOfAccounts extends StatefulWidget {
+class AccountsCarousel extends StatefulWidget {
   @override
-  _ListOfAccountsState createState() => _ListOfAccountsState();
+  _AccountsCarouselState createState() => _AccountsCarouselState();
 }
 
-class _ListOfAccountsState extends State<ListOfAccounts> {
+class _AccountsCarouselState extends State<AccountsCarousel> {
   static final CarouselController controller = CarouselController();
 
   @override
@@ -60,22 +62,7 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
                         SizedBox(
                           width: 5.0,
                         ),
-                        MaterialButton(
-                          visualDensity: VisualDensity.comfortable,
-                          minWidth: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(color: Colors.white),
-                          ),
-                          child: Icon(
-                            Icons.list,
-                            size: 20.0,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            Navigator.pushNamed(context, EditAccountsOrder.id);
-                          },
-                        ),
+                        EditAccountsButton(),
                       ],
                     ),
                   ],
@@ -118,7 +105,8 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
                         enableInfiniteScroll: false,
                         autoPlayAnimationDuration: Duration(milliseconds: 100),
                         onPageChanged: (index, manual) {
-                          userData.selectAccount(index);
+                          Account target = userData.accounts[index];
+                          userData.selectAccount(target.accountId);
                         }),
                   ),
                 ],
@@ -132,8 +120,8 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
 
   List<Widget> makeAccountTiles(UserData userData) {
     return userData.orderGetAccounts().map((e) {
-      Account acc = userData.getThisAccount(e);
-      int accIndex = acc.accIndex;
+      Account acc = userData.getThisAccount(e.accountId);
+      int accIndex = acc.accountId;
       return Opacity(
         opacity: accIndex == userData.selectedAccount ? 1.0 : 0.5,
         child: AccountTile(
@@ -145,39 +133,5 @@ class _ListOfAccountsState extends State<ListOfAccounts> {
         ),
       );
     }).toList();
-  }
-}
-
-class SelectAllButton extends StatelessWidget {
-  const SelectAllButton({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<UserData>(
-      builder: (context, userData, child) => Visibility(
-        visible: userData.selectedAccount != -1,
-        child: MaterialButton(
-          visualDensity: VisualDensity.comfortable,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            side: BorderSide(color: Colors.blueAccent),
-          ),
-          child: Text(
-            'SELECT ALL',
-            style: TextStyle(
-              color: Colors.blueAccent,
-            ),
-          ),
-          onPressed: () {
-            userData.selectAccount(-1);
-            for (Account acc in userData.accounts) {
-              acc.isSelected = true;
-            }
-          },
-        ),
-      ),
-    );
   }
 }

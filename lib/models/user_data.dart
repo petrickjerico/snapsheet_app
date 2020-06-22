@@ -34,7 +34,7 @@ class UserData extends ChangeNotifier {
       Record("Online course", 5.75, DateTime(2020, 5, 20), 6, 2, "SGD"),
       Record("Teacher's Birthday Gift", 4, DateTime(2020, 4, 3), 3, 2, "SGD"),
     ]);
-    Account.accIndexGen = accounts.length;
+    Account.accountIndexGen = accounts.length;
   }
 
   List<Account> _accounts = [
@@ -143,11 +143,11 @@ class UserData extends ChangeNotifier {
   }
 
   Account getCurrentAccount() {
-    return accounts.firstWhere((acc) => acc.accIndex == _selectedAccount);
+    return accounts.firstWhere((acc) => acc.accountId == _selectedAccount);
   }
 
-  Account getThisAccount(Account account) {
-    return accounts.firstWhere((acc) => acc.accIndex == account.accIndex);
+  Account getThisAccount(int id) {
+    return accounts.firstWhere((acc) => acc.accountId == id);
   }
 
   void editAccount(String newTitle, Color newColor) {
@@ -194,13 +194,14 @@ class UserData extends ChangeNotifier {
 
   void deleteAccount() {
     Account target = getCurrentAccount();
-    int pos = target.accOrder;
+    int pos = target.accountOrder;
     accounts.remove(target);
-    records.removeWhere((rec) => rec.accountId == _selectedAccount);
-    _selectedAccount = accounts[pos - 1].accIndex;
+    records.removeWhere((rec) => rec.accountId == target.accountId);
+    _selectedAccount = accounts[pos - 1].accountId;
     for (Account acc in accounts) {
-      if (acc.accOrder > pos) acc.accOrder--;
+      if (acc.accountOrder > pos) acc.accountOrder--;
     }
+
     notifyListeners();
   }
 
@@ -250,20 +251,21 @@ class UserData extends ChangeNotifier {
         total += rec.value;
       }
     }
+    print('Account $accId has total: $total');
     return total;
   }
 
   List<Account> orderGetAccounts() {
     List<Account> res = [];
     for (Account acc in accounts) {
-      res.insert(acc.accOrder, acc);
+      res.insert(acc.accountOrder, acc);
     }
     return res;
   }
 
   void orderUpdateAccount(int oldOrder, int newOrder) {
-    Account target = accounts.firstWhere((acc) => acc.accOrder == oldOrder);
-    target.accOrder = newOrder;
+    Account target = accounts.firstWhere((acc) => acc.accountOrder == oldOrder);
+    target.accountOrder = newOrder;
     notifyListeners();
   }
 }

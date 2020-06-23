@@ -6,7 +6,7 @@ import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/services/export/export.dart';
 import 'package:sorted_list/sorted_list.dart';
 
-class UserData extends ChangeNotifier {
+class OldUserData extends ChangeNotifier {
   int _selectedAccount = -1;
   Record _tempRecord;
   bool _isEditing = false;
@@ -16,7 +16,7 @@ class UserData extends ChangeNotifier {
   List<Record> records =
       SortedList<Record>((r1, r2) => r2.dateTime.compareTo(r1.dateTime));
 
-  UserData() {
+  OldUserData() {
     records.addAll([
       Record.unnamed("Steam Dota", 12, DateTime(2020, 4, 12), 3, 0),
       Record.unnamed("UNIQLO", 30, DateTime(2020, 5, 12), 2, 0),

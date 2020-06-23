@@ -1,4 +1,5 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -61,13 +62,33 @@ class _HomepageScreenState extends State<HomepageScreen> {
             HistoryTab(),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: kBlack,
-          child: Icon(Icons.add),
-          onPressed: () {
-            userData.newRecord();
-            Navigator.pushNamed(context, AddExpensesScreen.id);
-          },
+        floatingActionButton: Material(
+          elevation: 16.0,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: kBlack),
+            borderRadius: BorderRadius.all(
+              Radius.circular(30),
+            ),
+          ),
+          child: OpenContainer(
+            transitionType: ContainerTransitionType.fade,
+            closedColor: kBlack,
+            closedShape: RoundedRectangleBorder(
+              side: BorderSide(color: kBlack),
+              borderRadius: BorderRadius.all(
+                Radius.circular(30),
+              ),
+            ),
+            openBuilder: (context, _) {
+              userData.newRecord();
+              return AddExpensesScreen();
+            },
+            closedBuilder: (context, _) => FloatingActionButton(
+              elevation: 0.0,
+              backgroundColor: kBlack,
+              child: Icon(Icons.add),
+            ),
+          ),
         ),
       );
     });

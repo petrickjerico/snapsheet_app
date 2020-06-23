@@ -3,7 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/history_tile.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 
-class HistoryTab extends StatelessWidget {
+class HistoryTab extends StatefulWidget {
+  @override
+  _HistoryTabState createState() => _HistoryTabState();
+}
+
+class _HistoryTabState extends State<HistoryTab> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, userData, child) {
@@ -33,6 +38,7 @@ class HistoryTab extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10.0),
                 ),
+                padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 5.0),
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: ListView.builder(

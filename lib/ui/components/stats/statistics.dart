@@ -78,7 +78,7 @@ class _StatisticsState extends State<Statistics> {
           );
         }
 
-        if (!userData.records.any((rec) => rec.accountId == selectedAccount) &&
+        if (!userData.records.any((rec) => rec.id == selectedAccount) &&
             userData.selectedAccount != -1) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -362,7 +362,7 @@ class _StatisticsState extends State<Statistics> {
                           final record = userData.statsGetRecords(4)[index];
                           return Visibility(
                             visible:
-                                record.accountId == userData.selectedAccount ||
+                                record.id == userData.selectedAccount ||
                                     userData.selectedAccount == -1,
                             child: HistoryTile(
                                 record: record,

@@ -44,7 +44,7 @@ class RecordPreview extends ChangeNotifier {
           value: map['value'],
           dateTime: map['date'],
           categoryId: map['catId'],
-          accountId: accountId,
+          id: accountId,
           image: image,
           toDelete: false);
       records.add(record);

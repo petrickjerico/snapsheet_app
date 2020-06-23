@@ -30,7 +30,7 @@ class HistoryTile extends StatelessWidget {
           record.title == "" ? category.title : record.title,
           style: kHistoryRecordTitle,
         ),
-        subtitle: Text(userData.getThisAccount(record.accountId).title),
+        subtitle: Text(userData.getThisAccount(record.id).title),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,

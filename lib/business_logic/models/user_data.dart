@@ -140,11 +140,11 @@ class UserData extends ChangeNotifier {
   }
 
   Account getCurrentAccount() {
-    return accounts.firstWhere((acc) => acc.accountId == _selectedAccount);
+    return accounts.firstWhere((acc) => acc.id == _selectedAccount);
   }
 
   Account getThisAccount(int id) {
-    return accounts.firstWhere((acc) => acc.accountId == id);
+    return accounts.firstWhere((acc) => acc.id == id);
   }
 
   void editAccount(String newTitle, Color newColor) {
@@ -195,12 +195,12 @@ class UserData extends ChangeNotifier {
 
   void deleteAccount() {
     Account target = getCurrentAccount();
-    int pos = target.accountOrder;
+    int pos = target.index;
     accounts.remove(target);
-    records.removeWhere((rec) => rec.accountId == target.accountId);
-    _selectedAccount = accounts[pos - 1].accountId;
+    records.removeWhere((rec) => rec.accountId == target.id);
+    _selectedAccount = accounts[pos - 1].id;
     for (Account acc in accounts) {
-      if (acc.accountOrder > pos) acc.accountOrder--;
+      if (acc.index > pos) acc.index--;
     }
 
     notifyListeners();
@@ -281,14 +281,14 @@ class UserData extends ChangeNotifier {
   List<Account> orderGetAccounts() {
     List<Account> res = [];
     for (Account acc in accounts) {
-      res.insert(acc.accountOrder, acc);
+      res.insert(acc.index, acc);
     }
     return res;
   }
 
   void orderUpdateAccount(int oldOrder, int newOrder) {
-    Account target = accounts.firstWhere((acc) => acc.accountOrder == oldOrder);
-    target.accountOrder = newOrder;
+    Account target = accounts.firstWhere((acc) => acc.index == oldOrder);
+    target.index = newOrder;
     notifyListeners();
   }
 }

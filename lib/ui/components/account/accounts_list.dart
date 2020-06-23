@@ -85,7 +85,7 @@ class _AccountsListState extends State<AccountsList> {
                         showSpinner = true;
                       });
                       RecordView recordView = RecordView(
-                          accountId: index, assets: assets, userData: userData);
+                          id: index, assets: assets, userData: userData);
                       print('recordView');
                       await recordView.initialize();
                       print('INITIALIZED');

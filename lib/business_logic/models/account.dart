@@ -1,39 +1,37 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Account {
-  static int accountIndexGen = 0;
-
-  String accountTitle;
-  Color accountColor;
-  int accountId;
-  int accountOrder;
+  String title;
+  Color color;
+  int index;
+  String uid;
   bool isSelected = true;
 
-  Account(String accTitle, Color accColor, int accOrder) {
-    this.accountTitle = accTitle;
-    this.accountColor = accColor;
-    this.accountId = accountIndexGen;
-    this.accountOrder = accOrder;
-    accountIndexGen++;
+  Account.unnamed(String accTitle, Color accColor, int accOrder) {
+    this.title = accTitle;
+    this.color = accColor;
+    this.index = accOrder;
   }
 
-  String get title => accountTitle;
+  Account({this.title, this.color, this.index, this.uid});
 
-  Color get color => accountColor;
+  factory Account.fromFirestore(DocumentSnapshot doc) {
+    Map json = doc.data;
 
-  int get index => accountId;
-
-  int get order => accountOrder;
-
-  set title(String value) {
-    accountTitle = value;
+    return Account(
+        title: json['title'],
+        color: Color(json['color']),
+        index: json['index'],
+        uid: json['uid']);
   }
 
-  set color(Color value) {
-    accountColor = value;
-  }
-
-  set order(int value) {
-    accountOrder = value;
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'color': color.value,
+      'order': index,
+      'uid': uid,
+    };
   }
 }

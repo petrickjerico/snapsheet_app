@@ -106,7 +106,7 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                         autoPlayAnimationDuration: Duration(milliseconds: 100),
                         onPageChanged: (index, manual) {
                           Account target = userData.accounts[index];
-                          userData.selectAccount(target.accountId);
+                          userData.selectAccount(target.id);
                         }),
                   ),
                 ],
@@ -120,8 +120,8 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
 
   List<Widget> makeAccountTiles(UserData userData) {
     return userData.orderGetAccounts().map((e) {
-      Account acc = userData.getThisAccount(e.accountId);
-      int accIndex = acc.accountId;
+      Account acc = userData.getThisAccount(e.id);
+      int accIndex = acc.id;
       return Opacity(
         opacity: accIndex == userData.selectedAccount ? 1.0 : 0.5,
         child: AccountTile(

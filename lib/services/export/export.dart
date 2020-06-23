@@ -43,7 +43,7 @@ class Exporter {
 
   Future<String> processCSV() async {
     List<Record> filtered =
-        records.where((e) => isExport[e.accountId]).toList();
+        records.where((e) => isExport[e.id]).toList();
 
     List<List<dynamic>> rows = List<List<dynamic>>();
 
@@ -52,7 +52,7 @@ class Exporter {
       row.add(r.dateTime);
       row.add(r.title);
       row.add(r.value);
-      row.add(accounts[r.accountId].title);
+      row.add(accounts[r.id].title);
       row.add(categories[r.categoryId].title);
       row.add(r.currency);
       rows.add(row);

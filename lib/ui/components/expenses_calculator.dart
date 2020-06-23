@@ -533,7 +533,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           userData.toggleScanned();
         }
         _catId = userData.tempRecord.categoryId;
-        _accId = userData.isEditing ? userData.tempRecord.accountId : _accId;
+        _accId = userData.isEditing ? userData.tempRecord.id : _accId;
         return Column(children: <Widget>[
           Expanded(child: _getDisplay(userData), flex: 3),
           Expanded(child: _getButtons(), flex: 4),
@@ -772,7 +772,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                   ),
                   Expanded(
                     child: PopupMenuButton(
-                      initialValue: userData.tempRecord.accountId,
+                      initialValue: userData.tempRecord.id,
                       onSelected: (input) {
                         setState(() {
                           _accId = input;

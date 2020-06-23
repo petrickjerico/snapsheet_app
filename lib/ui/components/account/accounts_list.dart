@@ -6,7 +6,7 @@ import 'package:snapsheetapp/models/record_preview.dart';
 import 'package:snapsheetapp/models/user.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:snapsheetapp/screens/sidebar/receipt_preview.dart';
-import 'package:snapsheetapp/services/scanner.dart';
+import 'package:snapsheetapp/services/scanner_old_impl.dart';
 
 class AccountsList extends StatefulWidget {
   @override

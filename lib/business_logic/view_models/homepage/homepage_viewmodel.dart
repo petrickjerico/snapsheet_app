@@ -5,7 +5,7 @@ import 'package:snapsheetapp/services/database/database_impl.dart';
 import 'package:snapsheetapp/ui/screens/wrapper.dart';
 import 'package:sorted_list/sorted_list.dart';
 
-class HistoryScreenViewModel extends ChangeNotifier {
+class HomepageScreenViewModel extends ChangeNotifier {
   final User user;
   final AuthService _auth = AuthServiceImpl();
   DatabaseService _db;
@@ -13,7 +13,7 @@ class HistoryScreenViewModel extends ChangeNotifier {
       SortedList<Record>((r1, r2) => r2.dateTime.compareTo(r1.dateTime));
   List<Account> _accounts = SortedList<Account>((a1, a2) => a1.or)
 
-  HistoryScreenViewModel(this.user) {
+  HomepageScreenViewModel(this.user) {
     _db = DatabaseServiceImpl(uid: user.uid);
     loadData();
   }

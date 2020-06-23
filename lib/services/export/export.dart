@@ -4,11 +4,9 @@ import 'dart:typed_data';
 import 'package:csv/csv.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/services.dart';
-import 'package:snapsheetapp/models/account.dart';
-import 'package:snapsheetapp/models/category.dart';
-import 'package:snapsheetapp/models/record.dart';
 import 'package:downloads_path_provider/downloads_path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
 
 class Exporter {
   final List<Record> records;
@@ -43,18 +41,17 @@ class Exporter {
 
   Future<String> processCSV() async {
     List<Record> filtered =
-        records.where((e) => isExport[e.id]).toList();
+        records.where((e) => isExport[records.indexOf(e)]).toList();
 
     List<List<dynamic>> rows = List<List<dynamic>>();
 
-    for (Record r in filtered) {
+    for (Record record in filtered) {
       List<dynamic> row = List();
-      row.add(r.dateTime);
-      row.add(r.title);
-      row.add(r.value);
-      row.add(accounts[r.id].title);
-      row.add(categories[r.categoryId].title);
-      row.add(r.currency);
+      row.add(record.dateTime);
+      row.add(record.title);
+      row.add(record.value);
+      row.add(accounts[record.accountId].title);
+      row.add(categories[record.categoryId].title);
       rows.add(row);
     }
 

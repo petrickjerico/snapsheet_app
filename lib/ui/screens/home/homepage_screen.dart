@@ -1,21 +1,6 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/config/config.dart';
-import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/screens/calculator/addexpenses_screen.dart';
-import 'package:snapsheetapp/screens/home/accounts_tab.dart';
-import 'package:snapsheetapp/screens/sidebar/sidebar_menu.dart';
-import 'package:snapsheetapp/screens/wrapper.dart';
-import 'package:snapsheetapp/services/auth_impl.dart';
-
-import '../authentication/welcome_screen.dart';
-import 'history_tab.dart';
-
-//final _firestore = Firestore.instance;
-FirebaseUser loggedInUser;
+import 'package:snapsheetapp/ui/screens/screens.dart';
 
 class HomepageScreen extends StatefulWidget {
   static final String id = 'homepage_screen';
@@ -25,25 +10,6 @@ class HomepageScreen extends StatefulWidget {
 }
 
 class _HomepageScreenState extends State<HomepageScreen> {
-  final _auth = FirebaseAuth.instance;
-
-  @override
-  void initState() {
-    super.initState();
-    getCurrentUser();
-  }
-
-  void getCurrentUser() async {
-    try {
-      final user = await _auth.currentUser();
-      if (user != null) {
-        loggedInUser = user;
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, userData, child) {
@@ -54,7 +20,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
           backgroundColor: Colors.black,
           title: Text('HOMEPAGE'),
         ),
-        drawer: SidebarMenu(currentUser: loggedInUser),
+        drawer: SidebarMenu(),
         body: PageView(
           children: <Widget>[
             AccountsTab(),
@@ -66,7 +32,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
           child: Icon(Icons.add),
           onPressed: () {
             userData.newRecord();
-            Navigator.pushNamed(context, AddExpensesScreen.id);
+            Navigator.pushNamed(context, AddE xpensesScreen.id);
           },
         ),
       );

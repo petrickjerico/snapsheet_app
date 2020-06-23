@@ -1,20 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/screens/sidebar/addcategory_screen.dart';
-import 'package:snapsheetapp/screens/sidebar/bulk_scan_screen.dart';
-import 'package:snapsheetapp/screens/sidebar/editprofile_screen.dart';
-import 'package:snapsheetapp/screens/sidebar/exportselect_screen.dart';
-import 'package:snapsheetapp/screens/sidebar/settings_screen.dart';
-import 'package:snapsheetapp/screens/wrapper.dart';
-import 'package:snapsheetapp/services/auth_impl.dart';
+import 'package:snapsheetapp/ui/screens/screens.dart';
 
 class SidebarMenu extends StatelessWidget {
-  SidebarMenu({@required this.currentUser});
-
-  final FirebaseUser currentUser;
-
   @override
   Widget build(BuildContext context) {
     return Consumer<UserData>(

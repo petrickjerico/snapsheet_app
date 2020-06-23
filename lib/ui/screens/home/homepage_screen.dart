@@ -32,7 +32,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
           child: Icon(Icons.add),
           onPressed: () {
             userData.newRecord();
-            Navigator.pushNamed(context, AddE xpensesScreen.id);
+            Navigator.pushNamed(context, ExpenseScreen.id);
           },
         ),
       );

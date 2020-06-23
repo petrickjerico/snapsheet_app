@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/components/date_time.dart';
-import 'package:snapsheetapp/components/receipt_image_dialog.dart';
-import 'package:snapsheetapp/config/config.dart';
-import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/screens/home/homepage_screen.dart';
-import 'package:snapsheetapp/services/scanner.dart';
 
-class EditInfoScreen extends StatefulWidget {
-  static const String id = 'editinfo_screen';
+class EditExpenseInfoScreen extends StatefulWidget {
+  static const String id = 'edit_expense_info_screen';
 
-  const EditInfoScreen({
+  const EditExpenseInfoScreen({
     Key key,
   }) : super(key: key);
 
   @override
-  _EditInfoScreenState createState() => _EditInfoScreenState();
+  _EditExpenseInfoScreenState createState() => _EditExpenseInfoScreenState();
 }
 
-class _EditInfoScreenState extends State<EditInfoScreen> {
+class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
   String title;
   UserData userData;
 
@@ -93,7 +87,7 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                   await scanner.process();
                   setState(() {
                     Navigator.pop(context);
-                    Navigator.pushNamed(context, EditInfoScreen.id);
+                    Navigator.pushNamed(context, EditExpenseInfoScreen.id);
                   });
                 },
               ),

@@ -361,9 +361,8 @@ class _StatisticsState extends State<Statistics> {
                           // print(userData.recordsCount);
                           final record = userData.statsGetRecords(4)[index];
                           return Visibility(
-                            visible:
-                                record.id == userData.selectedAccount ||
-                                    userData.selectedAccount == -1,
+                            visible: record.id == userData.selectedAccount ||
+                                userData.selectedAccount == -1,
                             child: HistoryTile(
                                 record: record,
                                 index: userData.records.indexOf(record)),

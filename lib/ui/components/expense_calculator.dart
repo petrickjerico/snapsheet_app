@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/config/config.dart';
-import 'package:snapsheetapp/models/account.dart';
-import 'package:snapsheetapp/models/user_data.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_grid_button/flutter_grid_button.dart';
@@ -10,15 +7,15 @@ import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart' as intl;
 
-class ExpensesCalculator extends StatefulWidget {
-  const ExpensesCalculator({
+class ExpenseCalculator extends StatefulWidget {
+  const ExpenseCalculator({
     Key key,
   }) : super(key: key);
   @override
-  _ExpensesCalculatorState createState() => _ExpensesCalculatorState();
+  _ExpenseCalculatorState createState() => _ExpenseCalculatorState();
 }
 
-class _ExpensesCalculatorState extends State<ExpensesCalculator> {
+class _ExpenseCalculatorState extends State<ExpenseCalculator> {
   double value;
 
   @override

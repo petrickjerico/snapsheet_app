@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/components/history_tile.dart';
-import 'package:snapsheetapp/models/user_data.dart';
 
 class HistoryTab extends StatelessWidget {
   @override

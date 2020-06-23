@@ -45,6 +45,7 @@ dependencies:
   flutter_reorderable_list: ^0.1.4
   esys_flutter_share: ^1.0.2
   animations: ^1.1.1
+  flutter_speed_dial: ^1.2.5
 
 dev_dependencies:
   flutter_test:

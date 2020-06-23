@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
+import 'package:snapsheetapp/services/auth/auth_impl.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 
 class SidebarMenu extends StatelessWidget {
@@ -25,16 +26,15 @@ class SidebarMenu extends StatelessWidget {
                 leading: Icon(Icons.file_upload),
                 title: Text('Export'),
                 onTap: () {
-                  userData.Export();
                   Navigator.pushNamed(context, ExportScreen.id);
                 },
               ),
-              ListTile(
-                leading: Icon(Icons.add_circle),
-                title: Text('Add category'),
-                onTap: () =>
-                    {Navigator.pushNamed(context, AddCategoryScreen.id)},
-              ),
+//              ListTile(
+//                leading: Icon(Icons.add_circle),
+//                title: Text('Add category'),
+//                onTap: () =>
+//                    {Navigator.pushNamed(context, AddCategoryScreen.id)},
+//              ),
               ListTile(
                 leading: Icon(Icons.filter),
                 title: Text('Bulk-input receipts'),
@@ -64,7 +64,7 @@ class SidebarMenu extends StatelessWidget {
   }
 
   logout(BuildContext context) {
-    AuthService authService = AuthService();
+    AuthService authService = AuthServiceImpl();
     Navigator.pop(context);
     authService.signOut();
     Navigator.pushNamedAndRemoveUntil(

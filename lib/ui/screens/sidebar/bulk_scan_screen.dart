@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/components/account/accounts_list.dart';
-import 'package:snapsheetapp/screens/home/add_account_popup.dart';
+import 'package:snapsheetapp/ui/components/account/bulk_scan_accounts_list.dart';
 
 class BulkScanScreen extends StatelessWidget {
   static const String id = 'bulkscan_screen';
@@ -14,28 +13,7 @@ class BulkScanScreen extends StatelessWidget {
         leading: BackButton(),
         title: Text('BULK SCAN'),
       ),
-      body: AccountsList(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        backgroundColor: Colors.black,
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (context) => SingleChildScrollView(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: AddAccountPopup(),
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0),
-              ),
-            ),
-          );
-        },
-      ),
+      body: BulkScanAccountsList(),
     );
   }
 }

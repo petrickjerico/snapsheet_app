@@ -1,11 +1,8 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:snapsheetapp/business_logic/view_models/receipt_preview/receipt_preview_basemodel.dart';
 
-class RecordPreview extends ChangeNotifier {
+class ReceiptPreviewViewModel extends ChangeNotifier
+    implements ReceiptPreviewBaseModel {
   int accountId;
   List<Asset> assets;
   List<File> images = [];

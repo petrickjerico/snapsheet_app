@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/models/record_preview.dart';
-import 'package:snapsheetapp/models/user.dart';
-import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/screens/sidebar/receipt_preview.dart';
-import 'package:snapsheetapp/services/scanner_old_impl.dart';
 
-class AccountsList extends StatefulWidget {
+class BulkScanAccountsList extends StatefulWidget {
   @override
-  _AccountsListState createState() => _AccountsListState();
+  _BulkScanAccountsListState createState() => _BulkScanAccountsListState();
 }
 
-class _AccountsListState extends State<AccountsList> {
+class _BulkScanAccountsListState extends State<BulkScanAccountsList> {
   List<Asset> assets = List<Asset>();
   bool showSpinner = false;
 

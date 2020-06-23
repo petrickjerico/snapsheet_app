@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'package:snapsheetapp/business_logic/view_models/homepage/expense_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 
@@ -15,10 +16,10 @@ class HomepageScreen extends StatefulWidget {
 class _HomepageScreenState extends State<HomepageScreen> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final userData = Provider.of<UserData>(context, listen: false);
     return ChangeNotifierProvider<ExpenseViewModel>(
-      create: (context) => ExpenseViewModel(user),
-      child: Scaffold(
+        create: (context) => ExpenseViewModel(userData),
+        child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -36,12 +37,12 @@ class _HomepageScreenState extends State<HomepageScreen> {
             backgroundColor: kBlack,
             child: Icon(Icons.add),
             onPressed: () {
-              final model = Provider.of<ExpenseViewModel>(context);
+              final model =
+                  Provider.of<ExpenseViewModel>(context, listen: false);
               model.setTempRecord(Record.newBlankRecord());
               Navigator.pushNamed(context, ExpenseScreen.id);
             },
           ),
-        )
-      );
+        ));
   }
 }

@@ -1,14 +1,15 @@
 import 'package:snapsheetapp/business_logic/models/models.dart';
 
-abstract class HomepageBaseModel {
-  Future loadData();
+abstract class ExpenseBaseModel {
+  void loadData();
 
   // CREATE
   Future addRecord(Record record);
-  Future addAccount(Account account);
 
   // READ
   List<Record> get records;
+  List<Account> get accounts;
+  List<Category> get categories;
 
   // UPDATE
   Future updateRecord(int index, Record record);

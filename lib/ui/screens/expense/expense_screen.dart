@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
+import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/screens/expense/expense_calculator.dart';
 
 import 'edit_expense_info_screen.dart';
 
@@ -36,7 +37,7 @@ class ExpenseScreen extends StatelessWidget {
             )
           ],
         ),
-        body: ExpensesCalculator(),
+        body: ExpenseCalculator(),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.black,
           child: Icon(Icons.check),

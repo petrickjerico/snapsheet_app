@@ -14,6 +14,17 @@ class Record {
   File image;
   bool toDelete;
 
+  factory Record.newBlankRecord() {
+    return Record(
+      title: "",
+      value: 0,
+      dateTime: DateTime.now(),
+      categoryId: 0,
+      accountId: 0,
+      isIncome: false,
+    );
+  }
+
   Record.fromReceipt({
     this.title,
     this.value,

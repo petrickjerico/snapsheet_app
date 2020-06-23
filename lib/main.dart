@@ -32,7 +32,7 @@ class Snapsheet extends StatelessWidget {
           EmailScreen.id: (context) => EmailScreen(),
           ExpenseScreen.id: (context) => ExpenseScreen(),
           EditExpenseInfoScreen.id: (context) => EditExpenseInfoScreen(),
-          ExportSelectScreen.id: (context) => ExportSelectScreen(),
+          ExportScreen.id: (context) => ExportScreen(),
           AddCategoryScreen.id: (context) => AddCategoryScreen(),
           EditProfileScreen.id: (context) => EditProfileScreen(),
           SettingsScreen.id: (context) => SettingsScreen(),

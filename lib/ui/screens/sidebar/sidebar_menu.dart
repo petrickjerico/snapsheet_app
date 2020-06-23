@@ -26,7 +26,7 @@ class SidebarMenu extends StatelessWidget {
                 title: Text('Export'),
                 onTap: () {
                   userData.Export();
-                  Navigator.pushNamed(context, ExportSelectScreen.id);
+                  Navigator.pushNamed(context, ExportScreen.id);
                 },
               ),
               ListTile(

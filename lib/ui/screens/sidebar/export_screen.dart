@@ -1,10 +1,8 @@
 import 'package:downloads_path_provider/downloads_path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/components/export/export_list.dart';
-import 'package:snapsheetapp/models/user_data.dart';
 
-class ExportSelectScreen extends StatelessWidget {
+class ExportScreen extends StatelessWidget {
   static const String id = 'exportselect_screen';
   @override
   Widget build(BuildContext context) {

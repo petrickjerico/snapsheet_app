@@ -11,7 +11,7 @@ export 'home/rename_account_popup.dart';
 export 'sidebar/addcategory_screen.dart';
 export 'sidebar/bulk_scan_screen.dart';
 export 'sidebar/editprofile_screen.dart';
-export 'sidebar/exportselect_screen.dart';
+export 'sidebar/export_screen.dart';
 export 'sidebar/settings_screen.dart';
 export 'sidebar/sidebar_menu.dart';
 export 'wrapper.dart';

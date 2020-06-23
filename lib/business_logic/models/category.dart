@@ -27,29 +27,6 @@ class Category {
     this.uid,
   });
 
-  factory Category.fromFirestore(DocumentSnapshot doc) {
-    Map json = doc.data;
-
-    return Category(
-        title: json['title'],
-        icon: Icon(IconData(json['icon'])),
-        color: Color(json['color']),
-        isIncome: json['isIncome'],
-        index: json['index'],
-        uid: json['uid']);
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'title': title,
-      'icon': icon.icon.codePoint,
-      'color': color.value,
-      'isIncome': isIncome,
-      'order': index,
-      'uid': uid,
-    };
-  }
-
   @override
   String toString() {
     return "Category($title, ${icon.icon.toString()}, [${color.toString()}, $isIncome])";

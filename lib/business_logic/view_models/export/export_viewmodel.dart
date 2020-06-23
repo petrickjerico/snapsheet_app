@@ -6,6 +6,7 @@ import 'package:downloads_path_provider/downloads_path_provider.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/export/export_basemodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
@@ -14,14 +15,13 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
   final UserData userData;
   List<Record> records;
   List<Account> accounts;
-  List<Category> categories;
+  List<Category> _categories = categories;
   List<bool> isExport;
   File target;
 
   ExportViewModel({this.userData}) {
     records = userData.records;
     accounts = userData.accounts;
-    categories = userData.categories;
   }
 
   void toggleExport(index) {

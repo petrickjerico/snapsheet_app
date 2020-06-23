@@ -12,8 +12,6 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
       SortedList<Record>((r1, r2) => r2.dateTime.compareTo(r1.dateTime));
   List<Account> _accounts =
       SortedList<Account>((a1, a2) => a1.index.compareTo(a2.index));
-  List<Category> _categories =
-      SortedList<Category>((c1, c2) => c1.index.compareTo(c2.index));
 
   UserData(this.user) {
     _db = DatabaseServiceImpl(uid: user.uid);
@@ -23,10 +21,8 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   void loadData() async {
     List<Record> unorderedRecords = await _db.getRecords();
     List<Account> unorderedAccounts = await _db.getAccounts();
-    List<Category> unorderedCategories = await _db.getCategories();
     _records.addAll(unorderedRecords);
     _accounts.addAll(unorderedAccounts);
-    _categories.addAll(unorderedCategories);
     notifyListeners();
   }
 
@@ -45,17 +41,9 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     account.uid = await uid;
   }
 
-  Future addCategory(Category category) async {
-    _categories.add(category);
-    notifyListeners();
-    Future<String> uid = _db.addCategory(category);
-    category.uid = await uid;
-  }
-
   // READ
   List<Record> get records => _records;
   List<Account> get accounts => _accounts;
-  List<Category> get categories => _categories;
 
   // UPDATE
   Future<void> updateRecord(int index, Record record) async {
@@ -71,13 +59,6 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     notifyListeners();
   }
 
-  Future<void> updateCategory(int index, Category category) async {
-    _db.updateCategory(category);
-    _categories.removeAt(index);
-    _categories.add(category);
-    notifyListeners();
-  }
-
   // DELETE
   Future<void> deleteRecord(Record record) async {
     _db.deleteRecord(record);
@@ -90,13 +71,6 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     _db.deleteAccount(account);
     print(account.uid);
     _records.remove(account);
-    notifyListeners();
-  }
-
-  Future<void> deleteCategory(Category category) async {
-    _db.deleteCategory(category);
-    print(category.uid);
-    _records.remove(category);
     notifyListeners();
   }
 }

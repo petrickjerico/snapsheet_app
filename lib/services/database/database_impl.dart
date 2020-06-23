@@ -15,7 +15,6 @@ class DatabaseServiceImpl implements DatabaseService {
     userDocument = Firestore.instance.collection('users').document(uid);
     recordCollection = userDocument.collection('records');
     accountCollection = userDocument.collection('accounts');
-    categoryCollection = userDocument.collection('categories');
   }
 
   /// CREATE
@@ -39,16 +38,6 @@ class DatabaseServiceImpl implements DatabaseService {
     return uid;
   }
 
-  @override
-  Future<String> addCategory(Category category) async {
-    final categoryDocument = categoryCollection.document();
-    final uid = categoryDocument.documentID;
-    Map<String, dynamic> json = category.toJson();
-    json['uid'] = uid;
-    categoryDocument.setData(json);
-    return uid;
-  }
-
   /// READ
   @override
   Future<List<Record>> getRecords() async {
@@ -64,14 +53,6 @@ class DatabaseServiceImpl implements DatabaseService {
     return snapshots.map((doc) => Account.fromFirestore(doc)).toList();
   }
 
-  @override
-  Future<List<Category>> getCategories() async {
-    List<DocumentSnapshot> snapshots = await categoryCollection
-        .getDocuments()
-        .then((value) => value.documents);
-    return snapshots.map((doc) => Category.fromFirestore(doc)).toList();
-  }
-
   /// UPDATE
   @override
   Future<void> updateRecord(Record record) async {
@@ -83,11 +64,6 @@ class DatabaseServiceImpl implements DatabaseService {
     recordCollection.document(account.uid).setData(account.toJson());
   }
 
-  @override
-  Future<void> updateCategory(Category category) async {
-    recordCollection.document(category.uid).setData(category.toJson());
-  }
-
   /// DELETE
   @override
   Future<void> deleteRecord(Record record) async {
@@ -97,10 +73,5 @@ class DatabaseServiceImpl implements DatabaseService {
   @override
   Future<void> deleteAccount(Account account) async {
     recordCollection.document(account.uid).delete();
-  }
-
-  @override
-  Future<void> deleteCategory(Category category) async {
-    recordCollection.document(category.uid).delete();
   }
 }

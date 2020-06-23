@@ -182,12 +182,6 @@ class OldUserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  Exporter get exporter => _exporter;
-
-  void Export() {
-    _exporter = Exporter(records, accounts, categories);
-  }
-
   void toggleExport(index) {
     _exporter.toggleExport(index);
     notifyListeners();

@@ -25,7 +25,7 @@ class _ExpensesCalculatorState extends State<ExpensesCalculator> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     var temp = value;
-    value = Provider.of<UserData>(context).tempRecord.value;
+    value = Provider.of<UserData>(context).tempRecord?.value;
   }
 
   @override

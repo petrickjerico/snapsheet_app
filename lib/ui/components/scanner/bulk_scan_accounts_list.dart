@@ -4,6 +4,7 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
+import 'package:snapsheetapp/ui/components/scanner/receipt_preview.dart';
 
 class BulkScanAccountsList extends StatefulWidget {
   @override
@@ -40,20 +41,12 @@ class _BulkScanAccountsListState extends State<BulkScanAccountsList> {
                         setState(() {
                           showSpinner = true;
                         });
-                        RecordView recordView = RecordView(
-                            id: index, assets: assets, userData: userData);
-                        print('recordView');
-                        await recordView.initialize();
+                        await model.initialize();
                         print('INITIALIZED');
                         setState(() {
                           showSpinner = false;
                         });
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ReceiptPreview(
-                                      recordView: recordView,
-                                    )));
+                        Navigator.pushNamed(context, ReceiptPreviewScreen.id);
                       }
                     },
                   ),

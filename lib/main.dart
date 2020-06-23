@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/services/auth/auth_impl.dart';
+import 'package:snapsheetapp/ui/components/scanner/receipt_preview.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 
 void main() {
@@ -32,10 +33,11 @@ class Snapsheet extends StatelessWidget {
           ExpenseScreen.id: (context) => ExpenseScreen(),
           EditExpenseInfoScreen.id: (context) => EditExpenseInfoScreen(),
           ExportScreen.id: (context) => ExportScreen(),
-          AddCategoryScreen.id: (context) => AddCategoryScreen(),
+//          AddCategoryScreen.id: (context) => AddCategoryScreen(),
           EditProfileScreen.id: (context) => EditProfileScreen(),
           SettingsScreen.id: (context) => SettingsScreen(),
           BulkScanScreen.id: (context) => BulkScanScreen(),
+          ReceiptPreviewScreen.id: (context) => ReceiptPreviewScreen(),
           EditAccountsOrder.id: (context) => EditAccountsOrder(),
         },
         theme: ThemeData.light().copyWith(primaryColor: Colors.black),

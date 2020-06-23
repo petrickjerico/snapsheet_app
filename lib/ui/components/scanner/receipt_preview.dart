@@ -1,30 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/components/scanner/receipt_screen.dart';
-import 'package:snapsheetapp/models/record_preview.dart';
+import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
+import 'package:snapsheetapp/ui/components/scanner/receipt_screen.dart';
+import 'package:snapsheetapp/ui/config/colors.dart';
 
-class ReceiptPreview extends StatefulWidget {
+class ReceiptPreviewScreen extends StatefulWidget {
   static const String id = 'receipt_preview_screen';
 
-  RecordView recordView;
-
-  ReceiptPreview({this.recordView});
-
   @override
-  _ReceiptPreviewState createState() => _ReceiptPreviewState();
+  _ReceiptPreviewScreenState createState() => _ReceiptPreviewScreenState();
 }
 
-class _ReceiptPreviewState extends State<ReceiptPreview> {
+class _ReceiptPreviewScreenState extends State<ReceiptPreviewScreen> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: widget.recordView,
-      child: PageView.builder(
-        itemBuilder: (context, position) {
-          return ReceiptScreen(recordId: position);
-        },
-        itemCount: widget.recordView.records.length,
-      ),
+    return Consumer<BulkScanViewModel>(
+      builder: (context, model, child) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: kBlack,
+          ),
+          body: PageView.builder(
+            itemBuilder: (context, position) {
+              return ReceiptScreen(recordId: position);
+            },
+            itemCount: model.records.length,
+          ),
+        );
+      },
     );
   }
 }

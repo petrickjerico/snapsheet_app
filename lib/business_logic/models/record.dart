@@ -12,7 +12,6 @@ class Record {
   String receiptURL;
   String uid;
   File image;
-  bool toDelete;
 
   factory Record.newBlankRecord() {
     return Record(
@@ -33,7 +32,6 @@ class Record {
     this.accountId,
     this.isIncome = false,
     this.image,
-    this.toDelete,
   });
 
   Record.unnamed(

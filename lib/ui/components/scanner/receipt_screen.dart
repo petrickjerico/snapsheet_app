@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/components/button/delete_button.dart';
-import 'package:snapsheetapp/components/button/rounded_button.dart';
-import 'package:snapsheetapp/components/receipt_image_dialog.dart';
-import 'package:snapsheetapp/config/config.dart';
-import 'package:snapsheetapp/models/record.dart';
-import 'package:snapsheetapp/models/record_preview.dart';
-import 'package:snapsheetapp/models/user.dart';
-import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/screens/authentication/welcome_screen.dart';
-import 'package:snapsheetapp/screens/home/homepage_screen.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
+import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
+import 'package:snapsheetapp/ui/components/button/delete_button.dart';
+import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
+import 'package:snapsheetapp/ui/components/receipt_image_dialog.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/screens/screens.dart';
 
 class ReceiptScreen extends StatefulWidget {
   final int recordId;
@@ -32,10 +28,9 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RecordView>(
-      builder: (context, recordView, child) {
-        UserData userData = Provider.of<UserData>(context);
-        Record record = recordView.records[recordId];
+    return Consumer<BulkScanViewModel>(
+      builder: (context, model, child) {
+        Record record = model.records[recordId];
         return Scaffold(
           resizeToAvoidBottomPadding: false,
           backgroundColor: kBlack,
@@ -70,7 +65,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                       ),
                       onChanged: (value) {
                         setState(() {
-                          recordView.records[recordId].title = value;
+                          model.records[recordId].title = value;
                         });
                       },
                     ),
@@ -84,17 +79,16 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                       ),
                       onChanged: (value) {
                         setState(() {
-                          recordView.records[recordId].value =
-                              double.parse(value);
+                          model.records[recordId].value = double.parse(value);
                         });
                       },
                     ),
                     DeleteConfirmButton(
-                        isDelete: record.toDelete,
+                        isDelete: model.isDelete[recordId],
                         callBack: () {
                           setState(() {
-                            recordView.records[recordId].toDelete =
-                                !recordView.records[recordId].toDelete;
+                            model.isDelete[recordId] =
+                                !model.isDelete[recordId];
                           });
                         }),
                     RoundedButton(
@@ -103,7 +97,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                       title: 'Confirm All Receipts',
                       icon: Icon(Icons.done_all, color: kBlack),
                       onPressed: () {
-                        recordView.addAll();
+                        model.addAll();
                         Navigator.pushNamed(context, HomepageScreen.id);
                       },
                     )

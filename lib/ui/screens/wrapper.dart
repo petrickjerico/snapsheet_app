@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/models/user.dart';
-import 'package:snapsheetapp/screens/home/homepage_screen.dart';
-
-import 'authentication/welcome_screen.dart';
+import 'package:snapsheetapp/business_logic/models/user.dart';
+import 'package:snapsheetapp/ui/screens/screens.dart';
 
 class Wrapper extends StatelessWidget {
   static final String id = 'wrapper';

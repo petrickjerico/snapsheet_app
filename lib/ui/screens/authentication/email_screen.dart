@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/components/button/rounded_button.dart';
-import 'package:snapsheetapp/config/config.dart';
-import 'package:snapsheetapp/services/auth.dart';
-import 'package:snapsheetapp/shared/loading.dart';
+import 'package:snapsheetapp/services/auth/auth_impl.dart';
+import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/shared/loading.dart';
 
-class Email extends StatefulWidget {
+class EmailScreen extends StatefulWidget {
   static final String id = 'email_screen';
 
   @override
-  _EmailState createState() => _EmailState();
+  _EmailScreenState createState() => _EmailScreenState();
 }
 
-class _EmailState extends State<Email> {
-  final AuthService _auth = AuthService();
+class _EmailScreenState extends State<EmailScreen> {
+  final AuthServiceImpl _auth = AuthServiceImpl();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
   String email = '';
@@ -38,6 +38,8 @@ class _EmailState extends State<Email> {
           error = 'Invalid email and password';
           loading = false;
         });
+      } else {
+        Navigator.pop(context);
       }
     }
   }

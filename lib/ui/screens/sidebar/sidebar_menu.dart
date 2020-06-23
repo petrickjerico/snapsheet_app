@@ -8,7 +8,7 @@ import 'package:snapsheetapp/screens/sidebar/editprofile_screen.dart';
 import 'package:snapsheetapp/screens/sidebar/exportselect_screen.dart';
 import 'package:snapsheetapp/screens/sidebar/settings_screen.dart';
 import 'package:snapsheetapp/screens/wrapper.dart';
-import 'package:snapsheetapp/services/auth.dart';
+import 'package:snapsheetapp/services/auth_impl.dart';
 
 class SidebarMenu extends StatelessWidget {
   SidebarMenu({@required this.currentUser});

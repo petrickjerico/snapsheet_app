@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/services/auth/auth.dart';
+import 'package:snapsheetapp/services/auth/auth_impl.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/shared/shared.dart';
 
@@ -19,7 +19,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final AuthService _auth = AuthService();
+  final AuthServiceImpl _auth = AuthServiceImpl();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
   String email;

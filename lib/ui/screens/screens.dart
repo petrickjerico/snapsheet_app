@@ -1,4 +1,4 @@
-export 'authentication/email.dart';
+export 'authentication/email_screen.dart';
 export 'authentication/welcome_screen.dart';
 export 'expense/addexpenses_screen.dart';
 export 'expense/editinfo_screen.dart';
@@ -14,3 +14,4 @@ export 'sidebar/editprofile_screen.dart';
 export 'sidebar/exportselect_screen.dart';
 export 'sidebar/settings_screen.dart';
 export 'sidebar/sidebar_menu.dart';
+export 'wrapper.dart';

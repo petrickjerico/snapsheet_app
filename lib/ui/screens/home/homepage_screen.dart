@@ -9,7 +9,7 @@ import 'package:snapsheetapp/screens/calculator/addexpenses_screen.dart';
 import 'package:snapsheetapp/screens/home/accounts_tab.dart';
 import 'package:snapsheetapp/screens/sidebar/sidebar_menu.dart';
 import 'package:snapsheetapp/screens/wrapper.dart';
-import 'package:snapsheetapp/services/auth.dart';
+import 'package:snapsheetapp/services/auth_impl.dart';
 
 import '../authentication/welcome_screen.dart';
 import 'history_tab.dart';

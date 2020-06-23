@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:snapsheetapp/components/button/rounded_button.dart';
-import 'package:snapsheetapp/config/config.dart';
-import 'package:snapsheetapp/services/auth.dart';
-import 'package:snapsheetapp/shared/loading.dart';
-
-import 'email.dart';
+import 'package:snapsheetapp/services/auth/auth_impl.dart';
+import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/screens/authentication/email_screen.dart';
+import 'package:snapsheetapp/ui/shared/loading.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static final String id = 'welcome_screen';
@@ -15,7 +14,7 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  final AuthService _auth = AuthService();
+  final AuthServiceImpl _auth = AuthServiceImpl();
   bool loading = false;
 
   @override
@@ -61,7 +60,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     textColor: Colors.white,
                     color: Colors.black,
                     onPressed: () {
-                      Navigator.pushNamed(context, Email.id);
+                      Navigator.pushNamed(context, EmailScreen.id);
                     },
                     title: 'Email',
                     icon: Icon(

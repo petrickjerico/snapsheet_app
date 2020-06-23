@@ -1,23 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/archive/temp_data.dart';
-import 'package:snapsheetapp/models/user.dart';
-import 'package:snapsheetapp/screens/calculator/addexpenses_screen.dart';
-import 'package:snapsheetapp/screens/calculator/editinfo_screen.dart';
-import 'package:snapsheetapp/screens/home/edit_order_accounts.dart';
-import 'package:snapsheetapp/screens/sidebar/addcategory_screen.dart';
-import 'package:snapsheetapp/screens/authentication/email.dart';
-import 'package:snapsheetapp/screens/authentication/welcome_screen.dart';
-import 'package:snapsheetapp/screens/sidebar/editprofile_screen.dart';
-import 'package:snapsheetapp/screens/sidebar/exportselect_screen.dart';
-import 'package:snapsheetapp/screens/home/homepage_screen.dart';
-import 'package:snapsheetapp/screens/sidebar/bulk_scan_screen.dart';
-import 'package:snapsheetapp/screens/sidebar/receipt_preview.dart';
-import 'package:snapsheetapp/screens/sidebar/settings_screen.dart';
-import 'package:snapsheetapp/screens/wrapper.dart';
-import 'package:snapsheetapp/services/auth.dart';
-import 'models/user_data.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
+import 'package:snapsheetapp/services/auth/auth_impl.dart';
+import 'package:snapsheetapp/ui/screens/screens.dart';
 
 void main() {
   //To lock orientation of the app.
@@ -33,7 +19,7 @@ class Snapsheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        StreamProvider<User>.value(value: AuthService().user),
+        StreamProvider<User>.value(value: AuthServiceImpl().user),
         ChangeNotifierProvider<UserData>(create: (context) => UserData()),
       ],
       child: MaterialApp(
@@ -43,7 +29,7 @@ class Snapsheet extends StatelessWidget {
           Wrapper.id: (context) => Wrapper(),
           WelcomeScreen.id: (context) => WelcomeScreen(),
           HomepageScreen.id: (context) => HomepageScreen(),
-          Email.id: (context) => Email(),
+          EmailScreen.id: (context) => EmailScreen(),
           AddExpensesScreen.id: (context) => AddExpensesScreen(),
           ExportSelectScreen.id: (context) => ExportSelectScreen(),
           AddCategoryScreen.id: (context) => AddCategoryScreen(),

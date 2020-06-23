@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'package:snapsheetapp/services/auth/auth.dart';
+import 'package:snapsheetapp/services/auth/auth_impl.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/shared/shared.dart';
 
@@ -20,7 +20,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final AuthService _auth = AuthService();
+  final AuthServiceImpl _auth = AuthServiceImpl();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
   String email;

@@ -1,4 +1,4 @@
-import 'package:snapsheetapp/models/shop.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:string_similarity/string_similarity.dart';
 
 class Parser {
@@ -18,23 +18,23 @@ class Parser {
   };
 
   var shops = {
-    "4fingers": Shop(shopTitle: '4Fingers', catId: 0),
-    "cheers": Shop(shopTitle: 'Cheers', catId: 0),
-    "cold storage": Shop(shopTitle: 'Cold Storage', catId: 0),
-    "fairprice": Shop(shopTitle: 'Fairprice', catId: 0),
-    "golden village": Shop(shopTitle: 'Golden Village', catId: 3),
-    "hachi tech": Shop(shopTitle: 'Hachi Tech', catId: 6),
-    "kfc": Shop(shopTitle: 'KFC', catId: 0),
-    "koi": Shop(shopTitle: 'Koi', catId: 0),
-    "mcdonald's": Shop(shopTitle: "McDonald's", catId: 0),
-    "paylah": Shop(shopTitle: 'Paylah', catId: 8),
-    "paynow": Shop(shopTitle: 'Paynow', catId: 8),
-    "pepper lunch": Shop(shopTitle: 'Pepper Lunch', catId: 0),
-    "popular": Shop(shopTitle: 'Popular', catId: 5),
-    "ride": Shop(shopTitle: 'Grab ride', catId: 1),
-    "starbucks": Shop(shopTitle: 'Starbucks', catId: 0),
-    "uniqlo": Shop(shopTitle: 'UNIQLO', catId: 2),
-    "monster curry": Shop(shopTitle: 'Monster Curry', catId: 0)
+    "4fingers": Shop(title: '4Fingers', categoryId: 0),
+    "cheers": Shop(title: 'Cheers', categoryId: 0),
+    "cold storage": Shop(title: 'Cold Storage', categoryId: 0),
+    "fairprice": Shop(title: 'Fairprice', categoryId: 0),
+    "golden village": Shop(title: 'Golden Village', categoryId: 3),
+    "hachi tech": Shop(title: 'Hachi Tech', categoryId: 6),
+    "kfc": Shop(title: 'KFC', categoryId: 0),
+    "koi": Shop(title: 'Koi', categoryId: 0),
+    "mcdonald's": Shop(title: "McDonald's", categoryId: 0),
+    "paylah": Shop(title: 'Paylah', categoryId: 8),
+    "paynow": Shop(title: 'Paynow', categoryId: 8),
+    "pepper lunch": Shop(title: 'Pepper Lunch', categoryId: 0),
+    "popular": Shop(title: 'Popular', categoryId: 5),
+    "ride": Shop(title: 'Grab ride', categoryId: 1),
+    "starbucks": Shop(title: 'Starbucks', categoryId: 0),
+    "uniqlo": Shop(title: 'UNIQLO', categoryId: 2),
+    "monster curry": Shop(title: 'Monster Curry', categoryId: 0)
   };
 
   String matchedName;
@@ -54,7 +54,7 @@ class Parser {
       Rating best = match.bestMatch;
       if (best.rating > 0.7) {
         matchedName = best.target;
-        return shops[matchedName].shopTitle;
+        return shops[matchedName].title;
       }
     }
 
@@ -64,7 +64,7 @@ class Parser {
       Rating best = match.bestMatch;
       if (best.rating > 0.7) {
         matchedName = best.target;
-        return shops[matchedName].shopTitle;
+        return shops[matchedName].title;
       }
     }
 
@@ -75,7 +75,7 @@ class Parser {
       Rating best = match.bestMatch;
       if (best.rating > 0.7) {
         matchedName = best.target;
-        return shops[matchedName].shopTitle;
+        return shops[matchedName].title;
       }
     }
 
@@ -83,7 +83,7 @@ class Parser {
   }
 
   int findCategoryId() {
-    return matchedName != null ? shops[matchedName].catId : 0;
+    return matchedName != null ? shops[matchedName].categoryId : 0;
   }
 
   DateTime findDate(String input) {

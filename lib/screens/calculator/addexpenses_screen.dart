@@ -42,7 +42,31 @@ class AddExpensesScreen extends StatelessWidget {
               onPressed: () async {
                 Scanner scanner = Scanner.withUserData(userData);
                 await scanner.showChoiceDialog(context);
-                scanner.process();
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    print('Loading screen showing...');
+                    return Dialog(
+                      child: Container(
+                        height: 100,
+                        width: 200,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            CircularProgressIndicator(),
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            Text('Loading receipt...')
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+                await scanner.process();
+                Navigator.pop(context);
               },
             )
           ],

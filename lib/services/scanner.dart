@@ -29,16 +29,19 @@ class Scanner {
     var picture = await _picker.getImage(source: ImageSource.gallery);
     imageFile = File(picture.path);
     Navigator.of(context).pop();
+    return picture != null;
   }
 
   _openCamera(BuildContext context) async {
     var picture = await _picker.getImage(source: ImageSource.camera);
     imageFile = File(picture.path);
     Navigator.of(context).pop();
+    return picture != null;
   }
 
-  Future<void> showChoiceDialog(BuildContext context) {
+  Future<bool> showChoiceDialog(BuildContext context) {
     return showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(
@@ -49,14 +52,14 @@ class Scanner {
                   GestureDetector(
                     child: Text("Gallery"),
                     onTap: () {
-                      _openGallery(context);
+                      return _openGallery(context);
                     },
                   ),
                   SizedBox(height: 20),
                   GestureDetector(
                     child: Text("Camera"),
                     onTap: () {
-                      _openCamera(context);
+                      return _openCamera(context);
                     },
                   )
                 ],

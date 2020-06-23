@@ -10,7 +10,6 @@ class Account {
   bool isSelected = true;
 
   Account(String accTitle, Color accColor, int accOrder) {
-    assert(accountIndexGen != null, 'accIndexGen not initialised.');
     this.accountTitle = accTitle;
     this.accountColor = accColor;
     this.accountId = accountIndexGen;

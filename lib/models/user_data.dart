@@ -157,6 +157,10 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool hasIncome(int id) {
+    return records.any((rec) => rec.accountId == id && rec.isIncome);
+  }
+
   bool recordMatchesStats(Record rec) {
     return (_selectedAccount == -1 || rec.accountId == _selectedAccount);
   }
@@ -234,6 +238,22 @@ class UserData extends ChangeNotifier {
     return res;
   }
 
+  List<double> statsGetBalanceData() {
+    double incomeSum = hasIncome(selectedAccount)
+        ? records
+            .where((rec) => rec.isIncome)
+            .map((rec) => rec.value)
+            .reduce((value, element) => value + element)
+        : 0;
+
+    double expenseSum = currentExpensesTotal;
+    double balanceSum = incomeSum - expenseSum;
+    double incomePercent = incomeSum * 100 / (incomeSum + expenseSum);
+    double expensePercent = expenseSum * 100 / (incomeSum + expenseSum);
+
+    return [incomeSum, expenseSum, balanceSum, incomePercent, expensePercent];
+  }
+
   int statsCountRecords(int accId) {
     int count = 0;
     for (Record rec in records) {
@@ -245,14 +265,20 @@ class UserData extends ChangeNotifier {
   }
 
   double statsGetAccountTotal(int accId) {
-    double total = 0;
+    double expensesTotal = 0;
+    double incomeTotal = 0;
+
     for (Record rec in records) {
       if (rec.accountId == accId) {
-        total += rec.value;
+        if (rec.isIncome) {
+          incomeTotal += rec.value;
+        } else {
+          expensesTotal += rec.value;
+        }
       }
     }
-    print('Account $accId has total: $total');
-    return total;
+
+    return hasIncome(accId) ? incomeTotal - expensesTotal : expensesTotal;
   }
 
   List<Account> orderGetAccounts() {

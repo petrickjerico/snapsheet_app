@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/homepage_card.dart';
 import 'package:snapsheetapp/main.dart';
@@ -107,32 +109,138 @@ class _StatisticsState extends State<Statistics> {
 
         return ListView(
           children: <Widget>[
-//            HomepageCard(
-//              cardChild: Container(
-//                height: 250,
-//                child: Padding(
-//                  padding: const EdgeInsets.all(20.0),
-//                  child: Column(
-//                    mainAxisSize: MainAxisSize.min,
-//                    mainAxisAlignment: MainAxisAlignment.center,
-//                    children: <Widget>[
-//                      Flexible(
-//                        child: Text('Total: ${userData.statsTotal}'),
-//                        fit: FlexFit.loose,
-//                      ),
-//                      Flexible(
-//                        fit: FlexFit.loose,
-//                        child: Text(
-//                          'Account: ${userData.selectedAccount == -1 ? "all" : userData.accounts[userData.selectedAccount].title} \n\n'
-//                          'Height Test for scrollable.',
-//                          textAlign: TextAlign.center,
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                ),
-//              ),
-//            ),
+            Visibility(
+              visible: userData.hasIncome(userData.selectedAccount),
+              child: Card(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20.0, right: 20.0, top: 20.0),
+                      child: Column(
+                        children: <Widget>[
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'Balance',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          Divider(
+                            thickness: 1,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                                'Balance: \$${userData.statsGetBalanceData()[2].toStringAsFixed(2)}',
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.w600)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10.0, bottom: 20.0),
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text('Income',
+                                        style: TextStyle(fontSize: 12.0)),
+                                    Text('Expense',
+                                        style: TextStyle(fontSize: 12.0)),
+                                  ],
+                                ),
+                                Stack(
+                                  alignment: AlignmentDirectional.center,
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.green[600],
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(5.0),
+                                                bottomLeft:
+                                                    Radius.circular(5.0),
+                                              ),
+                                            ),
+                                            alignment: AlignmentDirectional
+                                                .centerStart,
+                                            height: 25,
+                                            child: Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 5.0),
+                                              child: Text(
+                                                userData
+                                                    .statsGetBalanceData()[0]
+                                                    .toStringAsFixed(2),
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          ),
+                                          flex: userData
+                                              .statsGetBalanceData()[0]
+                                              .round(),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.red[600],
+                                              borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(5.0),
+                                                bottomRight:
+                                                    Radius.circular(5.0),
+                                              ),
+                                            ),
+                                            alignment:
+                                                AlignmentDirectional.centerEnd,
+                                            height: 25,
+                                            child: Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 5.0),
+                                              child: Text(
+                                                userData
+                                                    .statsGetBalanceData()[1]
+                                                    .toStringAsFixed(2),
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          ),
+                                          flex: userData
+                                              .statsGetBalanceData()[1]
+                                              .round(),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      color: Colors.black.withOpacity(0.6),
+                                      height: 30,
+                                      width: 2,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             AspectRatio(
               aspectRatio: 1.05,
               child: Card(
@@ -217,8 +325,8 @@ class _StatisticsState extends State<Statistics> {
                 ),
               ),
             ),
-            HomepageCard(
-              cardChild: Column(
+            Card(
+              child: Column(
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(
@@ -268,11 +376,6 @@ class _StatisticsState extends State<Statistics> {
                 ],
               ),
             ),
-//            HomepageCard(
-//              cardChild: Container(
-//                height: 250,
-//              ),
-//            ),
           ],
         );
       },

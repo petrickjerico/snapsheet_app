@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
 
-import 'editinfo_screen.dart';
+import 'edit_expense_info_screen.dart';
 
-class AddExpensesScreen extends StatelessWidget {
-  static const String id = 'addexpenses_screen';
+class ExpenseScreen extends StatelessWidget {
+  static const String id = 'expense_screen';
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class AddExpensesScreen extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
-                Navigator.pushNamed(context, EditInfoScreen.id);
+                Navigator.pushNamed(context, EditExpenseInfoScreen.id);
               },
             ),
             IconButton(

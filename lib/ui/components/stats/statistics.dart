@@ -8,7 +8,7 @@ import 'package:snapsheetapp/models/category.dart';
 import 'package:snapsheetapp/models/user_data.dart';
 import 'package:random_color/random_color.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:snapsheetapp/screens/calculator/addexpenses_screen.dart';
+import 'package:snapsheetapp/screens/calculator/expense_screen.dart';
 import '../history_tile.dart';
 import 'indicator.dart';
 

@@ -15,13 +15,13 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
   final UserData userData;
   List<Record> records;
   List<Account> accounts;
-  List<Category> _categories = categories;
   List<bool> isExport;
   File target;
 
   ExportViewModel({this.userData}) {
     records = userData.records;
     accounts = userData.accounts;
+    isExport = List.generate(records.length, (_) => true);
   }
 
   void toggleExport(index) {
@@ -29,9 +29,9 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
   }
 
   Future<void> exportCSV() async {
-    Future<String> data = processCSV();
+    Future<String> data = _processCSV();
     await Permission.storage.request();
-    target = await targetFile();
+    target = await _targetFile();
     File file = await _writeData(await data);
     final ByteData bytes = ByteData.view(file.readAsBytesSync().buffer);
     await Share.file(
@@ -42,7 +42,7 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
     );
   }
 
-  Future<String> processCSV() async {
+  Future<String> _processCSV() async {
     List<Record> filtered =
         records.where((e) => isExport[records.indexOf(e)]).toList();
 
@@ -61,7 +61,7 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
     return ListToCsvConverter().convert(rows);
   }
 
-  Future<File> targetFile() async {
+  Future<File> _targetFile() async {
     String dir = (await DownloadsPathProvider.downloadsDirectory).path;
     String path = "$dir/snapsheet-${DateTime.now()}.csv";
     return File(path);

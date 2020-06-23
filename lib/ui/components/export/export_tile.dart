@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/models/account.dart';
+import 'package:snapsheetapp/business_logic/models/account.dart';
 
 class ExportTile extends StatelessWidget {
   final bool isExport;
@@ -10,7 +10,7 @@ class ExportTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Card(
       color: isExport ? account.color : Colors.grey,
       child: ListTile(
         onTap: voidCallback,

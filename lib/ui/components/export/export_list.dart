@@ -1,31 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/components/export/export_tile.dart';
-import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/services/export.dart';
+import 'package:snapsheetapp/business_logic/view_models/export/export_viewmodel.dart';
+import 'package:snapsheetapp/ui/components/export/export_tile.dart';
 
 class ExportList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserData>(
-      builder: (context, userData, child) {
-        Exporter exporter = userData.exporter;
+    return Consumer<ExportViewModel>(
+      builder: (context, model, child) {
         return ListView.separated(
           padding: EdgeInsets.all(12),
           separatorBuilder: (context, index) => Divider(),
           itemBuilder: (context, index) {
-            final account = exporter.accounts[index];
-            final isExport = exporter.isExport[index];
+            final account = model.accounts[index];
+            final isExport = model.isExport[index];
             return ExportTile(
               account: account,
               isExport: isExport,
               voidCallback: () {
-                userData.toggleExport(index);
-                print(exporter.isExport.toString());
+                model.toggleExport(index);
               },
             );
           },
-          itemCount: exporter.accountCount,
+          itemCount: model.accounts.length,
         );
       },
     );

@@ -20,7 +20,6 @@ class Snapsheet extends StatelessWidget {
     return MultiProvider(
       providers: [
         StreamProvider<User>.value(value: AuthServiceImpl().user),
-        ChangeNotifierProvider<UserData>(create: (context) => UserData()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

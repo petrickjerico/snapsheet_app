@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/config/config.dart';
-import 'package:snapsheetapp/services/auth.dart';
-import 'package:snapsheetapp/shared/loading.dart';
+import 'package:snapsheetapp/services/auth/auth.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/shared/shared.dart';
 
 class RegisterScreen extends StatefulWidget {
   static final String id = 'register_screen';

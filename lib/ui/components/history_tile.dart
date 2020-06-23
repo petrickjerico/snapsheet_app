@@ -41,7 +41,7 @@ class HistoryTile extends StatelessWidget {
                   record.isIncome ? kHistoryIncomeValue : kHistoryExpenseValue,
             ),
             Text(
-              DateFormat('d/M/y').format(record.date),
+              DateFormat('d/M/y').format(record.dateTime),
               style: kHistoryRecordDate,
             ),
           ],

@@ -4,11 +4,8 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:snapsheetapp/models/record.dart';
-import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/services/scanner.dart';
 
-class RecordView extends ChangeNotifier {
+class RecordPreview extends ChangeNotifier {
   int accountId;
   List<Asset> assets;
   List<File> images = [];
@@ -17,7 +14,7 @@ class RecordView extends ChangeNotifier {
   Scanner scanner = Scanner();
   UserData userData;
 
-  RecordView({this.accountId, this.assets, this.userData});
+  RecordPreview({this.accountId, this.assets, this.userData});
 
   Future initialize() async {
     await assetsToImages();
@@ -45,7 +42,7 @@ class RecordView extends ChangeNotifier {
       Record record = Record.fromReceipt(
           title: map['title'],
           value: map['value'],
-          date: map['date'],
+          dateTime: map['date'],
           categoryId: map['catId'],
           accountId: accountId,
           image: image,

@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:snapsheetapp/components/button/rounded_button.dart';
-import 'package:snapsheetapp/config/config.dart';
-import '../screens/home/homepage_screen.dart';
+import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/screens/screens.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static final String id = 'registration';

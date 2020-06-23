@@ -2,10 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:snapsheetapp/models/account.dart';
-import 'package:snapsheetapp/models/category.dart';
-import 'package:snapsheetapp/models/record.dart';
-import 'package:snapsheetapp/services/export.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
+import 'package:snapsheetapp/services/export/export.dart';
 import 'package:sorted_list/sorted_list.dart';
 
 class UserData extends ChangeNotifier {
@@ -16,23 +14,23 @@ class UserData extends ChangeNotifier {
   bool _isScanned = false;
   static int imageCounter = 0;
   List<Record> records =
-      SortedList<Record>((r1, r2) => r2.date.compareTo(r1.date));
+      SortedList<Record>((r1, r2) => r2.dateTime.compareTo(r1.dateTime));
 
   UserData() {
     records.addAll([
-      Record("Steam Dota", 12, DateTime(2020, 4, 12), 3, 0, "SGD"),
-      Record("UNIQLO", 30, DateTime(2020, 5, 12), 2, 0, "SGD"),
-      Record("Mother's Day", 20, DateTime(2020, 5, 10), 2, 0, "SGD"),
-      Record("Sentosa Outing", 14.50, DateTime(2020, 2, 12), 3, 1, "SGD"),
-      Record("Netflix Subscription", 12, DateTime(2020, 6, 1), 3, 0, "SGD"),
-      Record("Food & Beverage", 5.8, DateTime(2020, 5, 29), 0, 1, "SGD"),
-      Record("Dental check up", 30, DateTime(2020, 6, 3), 4, 1, "SGD"),
-      Record("First Aid kit", 20, DateTime(2020, 3, 12), 4, 2, "SGD"),
-      Record("Group outing", 15, DateTime(2020, 4, 5), 0, 2, "SGD"),
-      Record("Bus transport", 25, DateTime(2020, 5, 6), 1, 2, "SGD"),
-      Record("CCA book", 16.75, DateTime(2020, 5, 3), 5, 2, "SGD"),
-      Record("Online course", 5.75, DateTime(2020, 5, 20), 6, 2, "SGD"),
-      Record("Teacher's Birthday Gift", 4, DateTime(2020, 4, 3), 3, 2, "SGD"),
+      Record.unnamed("Steam Dota", 12, DateTime(2020, 4, 12), 3, 0),
+      Record.unnamed("UNIQLO", 30, DateTime(2020, 5, 12), 2, 0),
+      Record.unnamed("Mother's Day", 20, DateTime(2020, 5, 10), 2, 0),
+      Record.unnamed("Sentosa Outing", 14.50, DateTime(2020, 2, 12), 3, 1),
+      Record.unnamed("Netflix Subscription", 12, DateTime(2020, 6, 1), 3, 0),
+      Record.unnamed("Food & Beverage", 5.8, DateTime(2020, 5, 29), 0, 1),
+      Record.unnamed("Dental check up", 30, DateTime(2020, 6, 3), 4, 1),
+      Record.unnamed("First Aid kit", 20, DateTime(2020, 3, 12), 4, 2),
+      Record.unnamed("Group outing", 15, DateTime(2020, 4, 5), 0, 2),
+      Record.unnamed("Bus transport", 25, DateTime(2020, 5, 6), 1, 2),
+      Record.unnamed("CCA book", 16.75, DateTime(2020, 5, 3), 5, 2),
+      Record.unnamed("Online course", 5.75, DateTime(2020, 5, 20), 6, 2),
+      Record.unnamed("Teacher's Birthday Gift", 4, DateTime(2020, 4, 3), 3, 2),
     ]);
     Account.accountIndexGen = accounts.length;
   }
@@ -111,8 +109,7 @@ class UserData extends ChangeNotifier {
   }
 
   void newRecord() {
-    _tempRecord =
-        new Record("", 0, DateTime.now(), Record.catId, Record.accId, "SGD");
+    _tempRecord = new Record.unnamed("", 0, DateTime.now(), 0, 0);
     notifyListeners();
   }
 
@@ -181,7 +178,7 @@ class UserData extends ChangeNotifier {
   }
 
   void changeDate(DateTime newDate) {
-    _tempRecord.date = newDate;
+    _tempRecord.dateTime = newDate;
     notifyListeners();
   }
 

@@ -49,7 +49,7 @@ class Exporter {
 
     for (Record r in filtered) {
       List<dynamic> row = List();
-      row.add(r.date);
+      row.add(r.dateTime);
       row.add(r.title);
       row.add(r.value);
       row.add(accounts[r.accountId].title);

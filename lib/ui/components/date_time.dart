@@ -14,7 +14,7 @@ class _RecordDateTimeState extends State<RecordDateTime> {
   Widget build(BuildContext context) {
     return Consumer<UserData>(
       builder: (context, userData, child) {
-        DateTime date = userData.tempRecord.date;
+        DateTime date = userData.tempRecord.dateTime;
         return Row(
           children: <Widget>[
             Expanded(

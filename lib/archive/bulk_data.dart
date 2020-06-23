@@ -3,9 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:snapsheetapp/models/account.dart';
-import 'package:snapsheetapp/models/category.dart';
-import 'package:snapsheetapp/models/record.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
 
 class BulkData extends ChangeNotifier {
   Record _tempRecord;
@@ -98,7 +96,7 @@ class BulkData extends ChangeNotifier {
   }
 
   void changeDate(DateTime newDate) {
-    _tempRecord.date = newDate;
+    _tempRecord.dateTime = newDate;
     notifyListeners();
   }
 }

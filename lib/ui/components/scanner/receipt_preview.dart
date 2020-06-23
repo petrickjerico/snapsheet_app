@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/components/scanner/receipt_screen.dart';
-import 'package:snapsheetapp/models/recordView.dart';
+import 'package:snapsheetapp/models/record_preview.dart';
 
 class ReceiptPreview extends StatefulWidget {
   static const String id = 'receipt_preview_screen';

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:snapsheetapp/services/parser/parser_impl.dart';
 import 'package:snapsheetapp/services/scanner/scanner.dart';
+export 'scanner.dart';
 
 class ScannerImpl implements Scanner {
   final textRecognizer = FirebaseVision.instance.textRecognizer();
@@ -51,5 +52,4 @@ class ScannerImpl implements Scanner {
   void clearResources() {
     textRecognizer.close();
   }
-
 }

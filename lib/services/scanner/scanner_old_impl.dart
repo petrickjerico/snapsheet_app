@@ -66,22 +66,6 @@ class Scanner {
         });
   }
 
-  Future<void> bulkProcess(List<Asset> images, int accId) async {
-    final directory = await getApplicationDocumentsDirectory();
-    String path;
-    for (Asset asset in images) {
-      userData.newRecord();
-      userData.changeAccount(accId);
-      ByteData byteData = await asset.getByteData();
-      path = '${directory.path}/${UserData.imageCounter++}';
-      final buffer = byteData.buffer;
-      imageFile = await File(path).writeAsBytes(
-          buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-      await process();
-      userData.addRecord();
-    }
-  }
-
   Future<Map<String, dynamic>> getData(File image) async {
     imageFile = image;
     List<String> txt = await txtListFromImage();

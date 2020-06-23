@@ -17,7 +17,15 @@ class AddExpensesScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.black,
-          leading: BackButton(),
+          leading: BackButton(
+            onPressed: () {
+              if (userData.isEditing) {
+                print('UNDO CALLED');
+                userData.undoEditRecord();
+              }
+              Navigator.pop(context);
+            },
+          ),
           title: Text('EXPENSES EDITOR'),
           actions: <Widget>[
             IconButton(

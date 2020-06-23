@@ -532,7 +532,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           _displayValue = userData.tempRecord.value.toString();
           userData.toggleScanned();
         }
-        _catId = userData.tempRecord.categoryId;
+        _catId = userData.isEditing ? userData.tempRecord.categoryId : _catId;
         _accId = userData.isEditing ? userData.tempRecord.accountId : _accId;
         return Column(children: <Widget>[
           Expanded(child: _getDisplay(userData), flex: 3),

@@ -11,6 +11,7 @@ import 'package:sorted_list/sorted_list.dart';
 class UserData extends ChangeNotifier {
   int _selectedAccount = -1;
   Record _tempRecord;
+  Record _editRecord;
   bool _isEditing = false;
   Exporter _exporter;
   bool _isScanned = false;
@@ -34,7 +35,6 @@ class UserData extends ChangeNotifier {
       Record("Online course", 5.75, DateTime(2020, 5, 20), 6, 2, "SGD"),
       Record("Teacher's Birthday Gift", 4, DateTime(2020, 4, 3), 3, 2, "SGD"),
     ]);
-    Account.accountIndexGen = accounts.length;
   }
 
   List<Account> _accounts = [
@@ -75,20 +75,22 @@ class UserData extends ChangeNotifier {
 
   Record get tempRecord => _tempRecord;
 
-  bool get isEditing => _isEditing;
+  Record get editRecord => _editRecord;
 
   bool get isScanned => _isScanned;
+
+  bool get isEditing => _isEditing;
 
   void toggleScanned() {
     _isScanned = !_isScanned;
   }
 
   void addRecord() {
-    if (!_isEditing) {
+    if (!isEditing) {
       records.add(_tempRecord);
     }
 
-    if (_isEditing) {
+    if (isEditing) {
       _isEditing = false;
     }
 
@@ -133,7 +135,26 @@ class UserData extends ChangeNotifier {
 
   void changeTempRecord(int recordIndex) {
     _tempRecord = records[recordIndex];
+    _editRecord = Record(
+      tempRecord.title,
+      tempRecord.value,
+      tempRecord.date,
+      tempRecord.categoryId,
+      tempRecord.accountId,
+      tempRecord.currency,
+      tempRecord.isIncome,
+    );
     _isEditing = true;
+    notifyListeners();
+  }
+
+  void undoEditRecord() {
+    changeValue(_editRecord.value);
+    _tempRecord.accountId = _editRecord.accountId;
+    _tempRecord.categoryId = _editRecord.categoryId;
+    _tempRecord.isIncome = _editRecord.isIncome;
+    _tempRecord.date = _editRecord.date;
+    print("${_tempRecord.value} => ${_editRecord.value}");
     notifyListeners();
   }
 

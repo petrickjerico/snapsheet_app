@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -18,38 +19,43 @@ class HistoryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, userData, child) {
       Category category = userData.categories[record.categoryId];
-      return ListTile(
-        leading: CircleAvatar(
-          backgroundColor: category.color.withOpacity(0.2),
-          child: IconTheme(
-            data: IconThemeData(color: category.color, size: 17),
-            child: FaIcon(category.icon.icon),
+      return OpenContainer(
+        closedElevation: 0.0,
+        transitionType: ContainerTransitionType.fade,
+        openBuilder: (context, _) {
+          userData.changeTempRecord(index);
+          return AddExpensesScreen();
+        },
+        closedBuilder: (context, openContainer) => ListTile(
+          leading: CircleAvatar(
+            backgroundColor: category.color.withOpacity(0.2),
+            child: IconTheme(
+              data: IconThemeData(color: category.color, size: 17),
+              child: FaIcon(category.icon.icon),
+            ),
+          ),
+          title: Text(
+            record.title == "" ? category.title : record.title,
+            style: kHistoryRecordTitle,
+          ),
+          subtitle: Text(userData.getThisAccount(record.accountId).title),
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Text(
+                record.value.toStringAsFixed(2),
+                style: record.isIncome
+                    ? kHistoryIncomeValue
+                    : kHistoryExpenseValue,
+              ),
+              Text(
+                DateFormat('d/M/y').format(record.date),
+                style: kHistoryRecordDate,
+              ),
+            ],
           ),
         ),
-        title: Text(
-          record.title == "" ? category.title : record.title,
-          style: kHistoryRecordTitle,
-        ),
-        subtitle: Text(userData.getThisAccount(record.accountId).title),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            Text(
-              record.value.toStringAsFixed(2),
-              style:
-                  record.isIncome ? kHistoryIncomeValue : kHistoryExpenseValue,
-            ),
-            Text(
-              DateFormat('d/M/y').format(record.date),
-              style: kHistoryRecordDate,
-            ),
-          ],
-        ),
-        onTap: () {
-          userData.changeTempRecord(index);
-          Navigator.pushNamed(context, AddExpensesScreen.id);
-        },
       );
     });
   }

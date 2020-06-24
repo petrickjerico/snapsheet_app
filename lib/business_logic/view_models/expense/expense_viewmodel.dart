@@ -86,10 +86,6 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     Navigator.of(context).pop();
   }
 
-  Account getThisAccount(String accountUid) {
-    return userData.accounts.firstWhere((acc) => acc.uid == accountUid);
-  }
-
   void newTempRecord(Record record) {
     tempRecord = record;
   }
@@ -130,8 +126,8 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     notifyListeners();
   }
 
-  void changeAccount(int newAccountId) {
-    tempRecord.accountId = newAccountId;
+  void changeAccount(int newAccountIndex) {
+    tempRecord.accountUid = userData.accounts[newAccountIndex].uid;
     notifyListeners();
   }
 

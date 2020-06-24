@@ -1,18 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/components/button/add_account_button.dart';
-import 'package:snapsheetapp/components/button/edit_accounts_button.dart';
-import 'package:snapsheetapp/components/button/select_all_button.dart';
-import 'package:snapsheetapp/screens/home/edit_order_accounts.dart';
-import 'package:snapsheetapp/screens/home/rename_account_popup.dart';
-import 'package:snapsheetapp/models/account.dart';
-import 'package:snapsheetapp/models/user_data.dart';
-
-import 'account_order_tile.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/ui/components/button/add_account_button.dart';
+import 'package:snapsheetapp/ui/components/button/edit_accounts_button.dart';
+import 'package:snapsheetapp/ui/components/button/select_all_button.dart';
 import 'account_tile.dart';
-import '../../screens/home/add_account_popup.dart';
 
 class AccountsCarousel extends StatefulWidget {
   @override
@@ -25,8 +19,8 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    var userData = Provider.of<UserData>(context);
-    var index = userData.selectedAccount;
+    var model = Provider.of<DashboardViewModel>(context);
+    var index = model.selectedAccountIndex;
     if (index != -1) controller.animateToPage(index);
   }
 
@@ -34,8 +28,7 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
   Widget build(BuildContext context) {
     return Provider<CarouselController>(
       create: (_) => controller,
-      builder: (context, child) =>
-          Consumer<UserData>(builder: (context, userData, child) {
+      builder: (context, child) {
         return Container(
           child: Column(
             children: <Widget>[
@@ -55,10 +48,6 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                     Row(
                       children: <Widget>[
                         SelectAllButton(),
-                        SizedBox(
-                          width: 5.0,
-                        ),
-                        AddAccountButton(),
                         SizedBox(
                           width: 5.0,
                         ),
@@ -92,44 +81,46 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                           ),
                         ],
                       )),
-                  CarouselSlider(
-                    carouselController: controller,
-                    items: makeAccountTiles(userData),
-                    options: CarouselOptions(
-                        initialPage: userData.selectedAccount != -1
-                            ? userData.selectedAccount
-                            : 0,
-                        height: 55.0,
-                        viewportFraction: 0.3,
-                        enlargeCenterPage: true,
-                        enableInfiniteScroll: false,
-                        autoPlayAnimationDuration: Duration(milliseconds: 100),
-                        onPageChanged: (index, manual) {
-                          Account target = userData.accounts[index];
-                          userData.selectAccount(target.id);
-                        }),
+                  Consumer<DashboardViewModel>(
+                    builder: (context, model, child) {
+                      return CarouselSlider(
+                        carouselController: controller,
+                        items: makeAccountTiles(model),
+                        options: CarouselOptions(
+                          initialPage: model.selectedAccountIndex != -1
+                              ? model.selectedAccountIndex
+                              : 0,
+                          height: 55.0,
+                          viewportFraction: 0.3,
+                          enlargeCenterPage: true,
+                          enableInfiniteScroll: false,
+                          autoPlayAnimationDuration:
+                              Duration(milliseconds: 100),
+                          onPageChanged: (index, manual) {
+                            model.selectAccount(index);
+                          },
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
             ],
           ),
         );
-      }),
+      },
     );
   }
 
-  List<Widget> makeAccountTiles(UserData userData) {
-    return userData.orderGetAccounts().map((e) {
-      Account acc = userData.getThisAccount(e.id);
-      int accIndex = acc.id;
+  List<Widget> makeAccountTiles(DashboardViewModel model) {
+    return model.accounts.map((acc) {
       return Opacity(
-        opacity: accIndex == userData.selectedAccount ? 1.0 : 0.5,
+        opacity: acc.index == model.selectedAccountIndex ? 1.0 : 0.5,
         child: AccountTile(
-          index: accIndex,
-          color: e.color,
-          title: e.title,
-          count: userData.statsCountRecords(accIndex),
-          total: userData.statsGetAccountTotal(accIndex),
+          index: acc.index,
+          color: acc.color,
+          title: acc.title,
+          total: model.getSumFromAccount(acc),
         ),
       );
     }).toList();

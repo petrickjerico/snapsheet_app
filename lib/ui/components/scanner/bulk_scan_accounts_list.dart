@@ -36,16 +36,13 @@ class _BulkScanAccountsListState extends State<BulkScanAccountsList> {
                       style: TextStyle(color: Colors.white),
                     ),
                     onTap: () async {
+                      model.selectedAccountUid = account.uid;
                       await model.loadAssets();
                       if (model.assets != null) {
-                        setState(() {
-                          showSpinner = true;
-                        });
+                        setState(() => showSpinner = true);
                         await model.initialize();
                         print('INITIALIZED');
-                        setState(() {
-                          showSpinner = false;
-                        });
+                        setState(() => showSpinner = false);
                         Navigator.pushNamed(context, ReceiptPreviewScreen.id);
                       }
                     },

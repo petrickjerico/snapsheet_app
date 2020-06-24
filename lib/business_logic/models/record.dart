@@ -7,7 +7,7 @@ class Record {
   double value;
   DateTime dateTime;
   int categoryId;
-  int accountId;
+  String accountUid;
   bool isIncome;
   String receiptURL;
   String uid;
@@ -19,7 +19,6 @@ class Record {
       value: 0,
       dateTime: DateTime.now(),
       categoryId: 0,
-      accountId: 0,
       isIncome: false,
     );
   }
@@ -29,13 +28,13 @@ class Record {
     this.value,
     this.dateTime,
     this.categoryId,
-    this.accountId,
+    this.accountUid,
     this.isIncome = false,
     this.image,
   });
 
   Record.unnamed(
-      this.title, this.value, this.dateTime, this.categoryId, this.accountId,
+      this.title, this.value, this.dateTime, this.categoryId, this.accountUid,
       [this.isIncome = false]);
 
   Record(
@@ -43,7 +42,7 @@ class Record {
       this.value,
       this.dateTime,
       this.categoryId,
-      this.accountId,
+      this.accountUid,
       this.isIncome,
       this.receiptURL,
       this.uid,
@@ -55,7 +54,7 @@ class Record {
       value: record.value,
       dateTime: record.dateTime,
       categoryId: record.categoryId,
-      accountId: record.accountId,
+      accountUid: record.accountUid,
       isIncome: record.isIncome,
       receiptURL: record.receiptURL,
       uid: record.uid,
@@ -71,7 +70,7 @@ class Record {
         value: json['value'],
         dateTime: DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
         categoryId: json['categoryId'],
-        accountId: json['accountId'],
+        accountUid: json['accountId'],
         isIncome: json['isIncome'],
         receiptURL: json['receiptURL'],
         uid: json['uid']);
@@ -83,7 +82,7 @@ class Record {
       'value': value,
       'dateTime': dateTime.millisecondsSinceEpoch,
       'categoryId': categoryId,
-      'accountId': accountId,
+      'accountId': accountUid,
       'isIncome': isIncome,
       'receiptURL': receiptURL,
       'uid': uid

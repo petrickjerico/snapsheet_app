@@ -44,6 +44,9 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   // READ
   List<Record> get records => _records;
   List<Account> get accounts => _accounts;
+  Account getThisAccount(String accountUid) {
+    return accounts.firstWhere((acc) => acc.uid == accountUid);
+  }
 
   // UPDATE
   Future<void> updateRecord(Record record) async {
@@ -57,15 +60,9 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   // DELETE
   Future<void> deleteRecord(Record record) async {
     _db.deleteRecord(record);
-    print(record.uid);
-    _records.remove(record);
-    notifyListeners();
   }
 
   Future<void> deleteAccount(Account account) async {
     _db.deleteAccount(account);
-    print(account.uid);
-    _records.remove(account);
-    notifyListeners();
   }
 }

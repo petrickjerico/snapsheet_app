@@ -536,7 +536,9 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           model.toggleScanned();
         }
         _catId = model.tempRecord.categoryId;
-        _accId = model.isEditing ? model.tempRecord.accountId : _accId;
+        Account account =
+            model.userData.getThisAccount(model.tempRecord.accountUid);
+        _accId = model.isEditing ? account.index : _accId;
         return Column(children: <Widget>[
           Expanded(child: _getDisplay(model), flex: 3),
           Expanded(child: _getButtons(), flex: 4),
@@ -774,7 +776,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                   ),
                   Expanded(
                     child: PopupMenuButton(
-                      initialValue: model.tempRecord.accountId,
+                      initialValue: model.tempRecord.accountUid,
                       onSelected: (input) {
                         setState(() {
                           _accId = input;
@@ -782,11 +784,11 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                         });
                       },
                       itemBuilder: (context) {
-                        List<Account> accs = model.userData.accounts;
-                        return accs
+                        List<Account> accounts = model.userData.accounts;
+                        return accounts
                             .map(
                               (e) => PopupMenuItem(
-                                value: accs.indexOf(e),
+                                value: e.index,
                                 child: ListTile(
                                   title: Text(e.title),
                                 ),

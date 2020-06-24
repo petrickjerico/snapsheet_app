@@ -13,6 +13,6 @@ abstract class ExpenseBaseModel {
   void changeValue(double newValue);
   void changeDate(DateTime newDateTime);
   void changeCategory(int newCategoryId);
-  void changeAccount(int newAccountId);
+  void changeAccount(int newAccountIndex);
   void changeImage(File imageFile);
 }

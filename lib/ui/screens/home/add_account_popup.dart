@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/config/config.dart';
-import 'package:snapsheetapp/models/user_data.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
 
 class AddAccountPopup extends StatefulWidget {
   static final _formKey = GlobalKey<FormState>();

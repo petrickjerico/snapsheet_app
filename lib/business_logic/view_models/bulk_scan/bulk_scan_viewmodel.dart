@@ -19,7 +19,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   List<bool> isDelete = [];
   int counter = 0;
   Scanner scanner = ScannerImpl();
-  int selectedAccountId;
+  String selectedAccountUid;
 
   BulkScanViewModel({this.userData}) {
     accounts = userData.accounts;
@@ -63,7 +63,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
         value: map['value'],
         dateTime: map['date'],
         categoryId: map['catId'],
-        accountId: selectedAccountId,
+        accountUid: selectedAccountUid,
         image: image,
       );
       records.add(record);

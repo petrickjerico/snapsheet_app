@@ -6,7 +6,6 @@ class Account {
   Color color;
   int index;
   String uid;
-  bool isSelected = true;
 
   Account.unnamed(String accTitle, Color accColor, int accOrder) {
     this.title = accTitle;

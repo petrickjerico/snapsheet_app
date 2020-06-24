@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/models/user_data.dart';
+import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 
 class RecordDateTime extends StatefulWidget {
   @override
@@ -12,9 +12,9 @@ class RecordDateTime extends StatefulWidget {
 class _RecordDateTimeState extends State<RecordDateTime> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserData>(
-      builder: (context, userData, child) {
-        DateTime date = userData.tempRecord.dateTime;
+    return Consumer<ExpenseViewModel>(
+      builder: (context, model, child) {
+        DateTime date = model.tempRecord.dateTime;
         return Row(
           children: <Widget>[
             Expanded(
@@ -66,7 +66,7 @@ class _RecordDateTimeState extends State<RecordDateTime> {
                       },
                     ).then((value) {
                       setState(() {
-                        userData.changeDate(DateTime(
+                        model.changeDate(DateTime(
                           value.year,
                           value.month,
                           value.day,
@@ -127,7 +127,7 @@ class _RecordDateTimeState extends State<RecordDateTime> {
                       },
                     ).then((value) {
                       setState(() {
-                        userData.changeDate(DateTime(
+                        model.changeDate(DateTime(
                           date.year,
                           date.month,
                           date.day,

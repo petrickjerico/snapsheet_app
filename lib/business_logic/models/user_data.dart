@@ -59,7 +59,7 @@ class OldUserData extends ChangeNotifier {
 
   List<Record> get specifiedRecords => _selectedAccount == -1
       ? records
-      : records.where((rec) => rec.accountId == _selectedAccount).toList();
+      : records.where((rec) => rec.accountUid == _selectedAccount).toList();
 
   int get recordsCount => records.length;
 
@@ -119,7 +119,7 @@ class OldUserData extends ChangeNotifier {
   }
 
   void changeAccount(int accId) {
-    _tempRecord.accountId = accId;
+    _tempRecord.accountUid = accId;
     notifyListeners();
   }
 
@@ -155,11 +155,11 @@ class OldUserData extends ChangeNotifier {
   }
 
   bool hasIncome(int id) {
-    return records.any((rec) => rec.accountId == id && rec.isIncome);
+    return records.any((rec) => rec.accountUid == id && rec.isIncome);
   }
 
   bool recordMatchesStats(Record rec) {
-    return (_selectedAccount == -1 || rec.accountId == _selectedAccount);
+    return (_selectedAccount == -1 || rec.accountUid == _selectedAccount);
   }
 
   double get currentExpensesTotal {
@@ -191,7 +191,7 @@ class OldUserData extends ChangeNotifier {
     Account target = getCurrentAccount();
     int pos = target.index;
     accounts.remove(target);
-    records.removeWhere((rec) => rec.accountId == target.id);
+    records.removeWhere((rec) => rec.accountUid == target.id);
     _selectedAccount = accounts[pos - 1].id;
     for (Account acc in accounts) {
       if (acc.index > pos) acc.index--;
@@ -248,7 +248,7 @@ class OldUserData extends ChangeNotifier {
   int statsCountRecords(int accId) {
     int count = 0;
     for (Record rec in records) {
-      if (rec.accountId == accId) {
+      if (rec.accountUid == accId) {
         count++;
       }
     }
@@ -260,7 +260,7 @@ class OldUserData extends ChangeNotifier {
     double incomeTotal = 0;
 
     for (Record rec in records) {
-      if (rec.accountId == accId) {
+      if (rec.accountUid == accId) {
         if (rec.isIncome) {
           incomeTotal += rec.value;
         } else {

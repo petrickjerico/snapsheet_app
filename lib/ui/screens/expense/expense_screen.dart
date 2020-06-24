@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
+import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/screens/expense/expense_calculator.dart';
 
 import 'edit_expense_info_screen.dart';
@@ -10,7 +11,7 @@ class ExpenseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserData>(builder: (context, userData, child) {
+    return Consumer<ExpenseViewModel>(builder: (context, model, child) {
       return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -30,9 +31,8 @@ class ExpenseScreen extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.receipt),
               onPressed: () async {
-                Scanner scanner = Scanner.withUserData(userData);
-                await scanner.showChoiceDialog(context);
-                scanner.process();
+                await model.showChoiceDialog(context);
+                model.imageToTempRecord();
               },
             )
           ],
@@ -42,7 +42,7 @@ class ExpenseScreen extends StatelessWidget {
           backgroundColor: Colors.black,
           child: Icon(Icons.check),
           onPressed: () {
-            userData.addRecord();
+            model.addRecord();
             Navigator.pop(context);
           },
         ),

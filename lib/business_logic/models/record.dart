@@ -46,7 +46,22 @@ class Record {
       this.accountId,
       this.isIncome,
       this.receiptURL,
-      this.uid});
+      this.uid,
+      this.image});
+
+  factory Record.of(Record record) {
+    return Record(
+      title: record.title,
+      value: record.value,
+      dateTime: record.dateTime,
+      categoryId: record.categoryId,
+      accountId: record.accountId,
+      isIncome: record.isIncome,
+      receiptURL: record.receiptURL,
+      uid: record.uid,
+      image: record.image,
+    );
+  }
 
   factory Record.fromFirestore(DocumentSnapshot doc) {
     Map json = doc.data;

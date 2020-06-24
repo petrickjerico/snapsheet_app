@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/screens/home/add_account_popup.dart';
 
 class AddAccountButton extends StatelessWidget {
   @override

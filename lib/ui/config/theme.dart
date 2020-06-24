@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/config/colors.dart';
+import 'colors.dart';
 
 ThemeData kTheme = ThemeData.dark().copyWith(
-  primaryColor: kCyan,
-  backgroundColor: kBlack,
-  scaffoldBackgroundColor: kBlack
-);
+    primaryColor: kCyan,
+    backgroundColor: kBlack,
+    scaffoldBackgroundColor: kBlack);

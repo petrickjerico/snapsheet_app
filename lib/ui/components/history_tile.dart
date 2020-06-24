@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/config/config.dart';
-import 'package:snapsheetapp/models/category.dart';
-import 'package:snapsheetapp/models/record.dart';
-import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/screens/calculator/expense_screen.dart';
 
 class HistoryTile extends StatelessWidget {
   final Record record;

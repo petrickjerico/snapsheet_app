@@ -9,13 +9,41 @@ import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/services/scanner/scanner_impl.dart';
 
 class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
-  Record tempRecord;
   final UserData userData;
+  ExpenseViewModel({this.userData});
+
+  Record tempRecord;
+  Record editRecord;
+  bool isEditing = false;
+  bool isScanned = false;
+
   File imageFile;
   ImagePicker _picker = ImagePicker();
   Scanner scanner = ScannerImpl();
 
-  ExpenseViewModel(this.userData);
+  Future imageToTempRecord() async {
+    if (imageFile != null) {
+      Map<String, dynamic> map = await scanner.getDataFromImage(imageFile);
+      tempRecord.value = map['value'];
+      tempRecord.dateTime = map['dateTime'];
+      tempRecord.title = map['title'];
+      tempRecord.categoryId = map['categoryId'];
+    }
+  }
+
+  void toggleScanned() {
+    isScanned = !isScanned;
+  }
+
+  void addRecord() {
+    if (!isEditing) {
+      userData.addRecord(tempRecord);
+    }
+    if (isEditing) {
+      userData.updateRecord(tempRecord);
+    }
+    notifyListeners();
+  }
 
   Future<void> showChoiceDialog(BuildContext context) {
     return showDialog(
@@ -58,31 +86,53 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     Navigator.of(context).pop();
   }
 
-  void setTempRecord(Record record) {
+  void newTempRecord(Record record) {
     tempRecord = record;
+  }
+
+  void changeTempRecord(int recordIndex) {
+    tempRecord = userData.records[recordIndex];
+    editRecord = Record.of(tempRecord);
+    isEditing = true;
+    notifyListeners();
+  }
+
+  void undoEditRecord() {
+    tempRecord.value = editRecord.value;
+    tempRecord.categoryId = editRecord.categoryId;
+    tempRecord.isIncome = editRecord.isIncome;
+    tempRecord.dateTime = editRecord.dateTime;
+    print("${tempRecord.value} => ${tempRecord.value}");
+    notifyListeners();
   }
 
   void changeTitle(String newTitle) {
     tempRecord.title = newTitle;
+    notifyListeners();
   }
 
   void changeValue(double newValue) {
     tempRecord.value = newValue;
+    notifyListeners();
   }
 
   void changeDate(DateTime newDateTime) {
     tempRecord.dateTime = newDateTime;
+    notifyListeners();
   }
 
   void changeCategory(int newCategoryId) {
     tempRecord.categoryId = newCategoryId;
+    notifyListeners();
   }
 
   void changeAccount(int newAccountId) {
     tempRecord.accountId = newAccountId;
+    notifyListeners();
   }
 
   void changeImage(File imageFile) {
     tempRecord.image = imageFile;
+    notifyListeners();
   }
 }

@@ -14,8 +14,8 @@ abstract class UserDataBaseModel {
 //  List<Category> get categories;
 
   // UPDATE
-  Future<void> updateRecord(int index, Record record);
-  Future<void> updateAccount(int index, Account account);
+  Future<void> updateRecord(Record record);
+  Future<void> updateAccount(Account account);
 //  Future<void> updateCategory(int index, Category category);
 
   // DELETE

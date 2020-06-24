@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
+import 'package:snapsheetapp/ui/components/date_time.dart';
+import 'package:snapsheetapp/ui/components/receipt_image_dialog.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/screens/screens.dart';
 
 class EditExpenseInfoScreen extends StatefulWidget {
   static const String id = 'edit_expense_info_screen';
@@ -15,14 +20,14 @@ class EditExpenseInfoScreen extends StatefulWidget {
 
 class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
   String title;
-  UserData userData;
+  ExpenseViewModel model;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     var temp = title;
-    title = Provider.of<UserData>(context).tempRecord.title;
-    userData = Provider.of<UserData>(context);
+    model = Provider.of<ExpenseViewModel>(context);
+    title = model.tempRecord.title;
     print('Title changed: $temp -> $title');
   }
 
@@ -51,24 +56,24 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
                 ),
                 onChanged: (value) {
                   setState(() {
-                    userData.changeTitle(value);
+                    model.changeTitle(value);
                   });
                 },
               ),
               SizedBox(height: 10.0),
               RecordDateTime(),
               SizedBox(height: 10.0),
-              userData.tempRecord.image == null
+              model.tempRecord.image == null
                   ? SizedBox.shrink()
                   : GestureDetector(
                       onTap: () async {
                         await showDialog(
                             context: context,
                             builder: (_) =>
-                                ReceiptImageDialog(userData.tempRecord.image));
+                                ReceiptImageDialog(model.tempRecord.image));
                       },
                       child: Image.file(
-                        userData.tempRecord.image,
+                        model.tempRecord.image,
                         fit: BoxFit.cover,
                         height: 200,
                       ),
@@ -82,9 +87,8 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
                   style: kStandardStyle,
                 ),
                 onPressed: () async {
-                  Scanner scanner = Scanner.withUserData(userData);
-                  await scanner.showChoiceDialog(context);
-                  await scanner.process();
+                  await model.showChoiceDialog(context);
+                  model.imageToTempRecord();
                   setState(() {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, EditExpenseInfoScreen.id);
@@ -99,8 +103,8 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
         backgroundColor: Colors.black,
         child: Icon(Icons.check),
         onPressed: () {
-          print("Adding to record: \$${userData.tempRecord.value}");
-          userData.addRecord();
+          print("Adding to record: \$${model.tempRecord.value}");
+          model.addRecord();
           Navigator.popUntil(
             context,
             ModalRoute.withName(HomepageScreen.id),

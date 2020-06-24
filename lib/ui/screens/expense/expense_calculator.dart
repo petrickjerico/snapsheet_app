@@ -6,6 +6,10 @@ import 'package:flutter_grid_button/flutter_grid_button.dart';
 import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:snapsheetapp/business_logic/default_data/categories.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
+import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
 
 class ExpenseCalculator extends StatefulWidget {
   const ExpenseCalculator({
@@ -22,30 +26,32 @@ class _ExpenseCalculatorState extends State<ExpenseCalculator> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     var temp = value;
-    value = Provider.of<UserData>(context).tempRecord.value;
+    value = Provider.of<ExpenseViewModel>(context).tempRecord.value;
   }
 
   @override
   Widget build(BuildContext context) {
-    UserData userData = Provider.of<UserData>(context);
     print('ExpensesCalculator build() was called.');
-    return SimpleCalculator(
-        value: value,
-        hideExpression: true,
-        theme: CalculatorThemeData(
-            borderWidth: 0.0,
-            operatorColor: Colors.grey[500],
-            displayColor: kBlack),
-        onChanged: (key, value, expression) {
-          print(key);
-          print(value);
-          print(expression);
-          var userData = Provider.of<UserData>(context, listen: false);
-          double temp = userData.tempRecord.value;
-          userData.changeValue(value);
-          print(
-              "Temp Record value changed: $temp -> ${userData.tempRecord.value} ");
-        });
+    return Consumer<ExpenseViewModel>(
+      builder: (context, model, child) {
+        return SimpleCalculator(
+            value: value,
+            hideExpression: true,
+            theme: CalculatorThemeData(
+                borderWidth: 0.0,
+                operatorColor: Colors.grey[500],
+                displayColor: kBlack),
+            onChanged: (key, value, expression) {
+              print(key);
+              print(value);
+              print(expression);
+              double temp = model.tempRecord.value;
+              model.changeValue(value);
+              print(
+                  "Temp Record value changed: $temp -> ${model.tempRecord.value} ");
+            });
+      },
+    );
   }
 }
 
@@ -523,16 +529,16 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
       color: widget.theme?.borderColor ?? Theme.of(context).dividerColor,
       width: widget.theme?.borderWidth ?? 1.0,
     );
-    return Consumer<UserData>(
-      builder: (context, userData, child) {
-        if (userData.isScanned) {
-          _displayValue = userData.tempRecord.value.toString();
-          userData.toggleScanned();
+    return Consumer<ExpenseViewModel>(
+      builder: (context, model, child) {
+        if (model.isScanned) {
+          _displayValue = model.tempRecord.value.toString();
+          model.toggleScanned();
         }
-        _catId = userData.tempRecord.categoryId;
-        _accId = userData.isEditing ? userData.tempRecord.id : _accId;
+        _catId = model.tempRecord.categoryId;
+        _accId = model.isEditing ? model.tempRecord.accountId : _accId;
         return Column(children: <Widget>[
-          Expanded(child: _getDisplay(userData), flex: 3),
+          Expanded(child: _getDisplay(model), flex: 3),
           Expanded(child: _getButtons(), flex: 4),
         ]);
       },
@@ -617,9 +623,9 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
     );
   }
 
-  Widget _getDisplay(UserData userData) {
+  Widget _getDisplay(ExpenseViewModel model) {
     List<bool> isSelected() {
-      return userData.tempRecord.isIncome ? [false, true] : [true, false];
+      return model.tempRecord.isIncome ? [false, true] : [true, false];
     }
 
     return Container(
@@ -703,13 +709,13 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                         onPressed: (value) {
                           setState(() {
                             if (value == 1) {
-                              userData.changeCategory(7);
-                              userData.tempRecord.isIncome = true;
+                              model.changeCategory(7);
+                              model.tempRecord.isIncome = true;
                             } else {
-                              if (userData.tempRecord.categoryId == 7) {
-                                userData.changeCategory(0);
+                              if (model.tempRecord.categoryId == 7) {
+                                model.changeCategory(0);
                               }
-                              userData.tempRecord.isIncome = false;
+                              model.tempRecord.isIncome = false;
                             }
                           });
                         },
@@ -718,25 +724,24 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                   ),
                   Expanded(
                     child: PopupMenuButton(
-                      initialValue: userData.tempRecord.categoryId,
+                      initialValue: model.tempRecord.categoryId,
                       onSelected: (input) {
                         setState(() {
                           _catId = input;
-                          userData.changeCategory(_catId);
-                          userData.tempRecord.isIncome =
+                          model.changeCategory(_catId);
+                          model.tempRecord.isIncome =
                               _catId == 7 ? true : false;
                         });
                       },
                       itemBuilder: (context) {
                         List<String> categoryTitles =
-                            userData.categories.map((e) => e.title).toList();
+                            categories.map((e) => e.title).toList();
                         return categoryTitles
                             .map(
                               (e) => PopupMenuItem(
                                 value: categoryTitles.indexOf(e),
                                 child: ListTile(
-                                  leading: userData
-                                      .categories[categoryTitles.indexOf(e)]
+                                  leading: categories[categoryTitles.indexOf(e)]
                                       .icon,
                                   title: Text(e),
                                 ),
@@ -756,7 +761,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                             ),
                           ),
                           Text(
-                            userData.categories[_catId].title,
+                            categories[_catId].title,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18.0,
@@ -769,15 +774,15 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                   ),
                   Expanded(
                     child: PopupMenuButton(
-                      initialValue: userData.tempRecord.id,
+                      initialValue: model.tempRecord.accountId,
                       onSelected: (input) {
                         setState(() {
                           _accId = input;
-                          userData.changeAccount(_accId);
+                          model.changeAccount(_accId);
                         });
                       },
                       itemBuilder: (context) {
-                        List<Account> accs = userData.accounts;
+                        List<Account> accs = model.userData.accounts;
                         return accs
                             .map(
                               (e) => PopupMenuItem(
@@ -801,7 +806,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                             ),
                           ),
                           Text(
-                            userData.accounts[_accId].title,
+                            model.userData.accounts[_accId].title,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18.0,

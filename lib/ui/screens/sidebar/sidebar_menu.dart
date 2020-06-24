@@ -23,7 +23,7 @@ class SidebarMenu extends StatelessWidget {
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.file_upload),
+                leading: Icon(Icons.import_export),
                 title: Text('Export'),
                 onTap: () {
                   Navigator.pushNamed(context, ExportScreen.id);

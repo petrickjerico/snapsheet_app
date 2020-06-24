@@ -18,7 +18,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserData>(context, listen: false);
     return ChangeNotifierProvider<ExpenseViewModel>(
-        create: (context) => ExpenseViewModel(userData),
+        create: (context) => ExpenseViewModel(userData: userData),
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: Colors.white,
@@ -39,7 +39,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
             onPressed: () {
               final model =
                   Provider.of<ExpenseViewModel>(context, listen: false);
-              model.setTempRecord(Record.newBlankRecord());
+              model.newTempRecord(Record.newBlankRecord());
               Navigator.pushNamed(context, ExpenseScreen.id);
             },
           ),

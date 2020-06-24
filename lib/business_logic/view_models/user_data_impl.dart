@@ -46,17 +46,12 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   List<Account> get accounts => _accounts;
 
   // UPDATE
-  Future<void> updateRecord(int index, Record record) async {
+  Future<void> updateRecord(Record record) async {
     _db.updateRecord(record);
-    _records.removeAt(index);
-    _records.add(record);
   }
 
-  Future<void> updateAccount(int index, Account account) async {
+  Future<void> updateAccount(Account account) async {
     _db.updateAccount(account);
-    _accounts.removeAt(index);
-    _accounts.add(account);
-    notifyListeners();
   }
 
   // DELETE

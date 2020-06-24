@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/models/account.dart';
-import 'package:snapsheetapp/models/user_data.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
 
 class SelectAllButton extends StatelessWidget {
   const SelectAllButton({
@@ -10,9 +10,9 @@ class SelectAllButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserData>(
-      builder: (context, userData, child) => Visibility(
-        visible: userData.selectedAccount != -1,
+    return Consumer<DashboardViewModel>(
+      builder: (context, model, child) => Visibility(
+        visible: model.selectedAccountIndex != -1,
         child: MaterialButton(
           visualDensity: VisualDensity.comfortable,
           shape: RoundedRectangleBorder(
@@ -26,10 +26,7 @@ class SelectAllButton extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            userData.selectAccount(-1);
-            for (Account acc in userData.accounts) {
-              acc.isSelected = true;
-            }
+            model.selectAccount(-1);
           },
         ),
       ),

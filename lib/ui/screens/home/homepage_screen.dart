@@ -39,7 +39,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
             onPressed: () {
               final model =
                   Provider.of<ExpenseViewModel>(context, listen: false);
-              model.newTempRecord(Record.newBlankRecord());
+              model.newRecord();
               Navigator.pushNamed(context, ExpenseScreen.id);
             },
           ),

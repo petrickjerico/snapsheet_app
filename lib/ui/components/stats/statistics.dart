@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:random_color/random_color.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:snapsheetapp/business_logic/default_data/categories.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
+import 'package:snapsheetapp/ui/screens/expense/expense_screen.dart';
 import '../history_tile.dart';
 import 'indicator.dart';
 
@@ -13,68 +16,13 @@ class Statistics extends StatefulWidget {
 }
 
 class _StatisticsState extends State<Statistics> {
-  final RandomColor _randomColor = RandomColor();
-  int selectedAccount;
-  int touchedIndex;
   bool isTouched = false;
-  void updateTouchedIndex(int i) {
-    print("input is: $i");
-    if (touchedIndex == i) {
-      touchedIndex = null;
-    } else {
-      touchedIndex = i;
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    selectedAccount = -1;
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    var userData = Provider.of<UserData>(context);
-    if (selectedAccount != userData.selectedAccount) {
-      selectedAccount = userData.selectedAccount;
-      touchedIndex = null;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserData>(
-      builder: (context, userData, child) {
-        List<Category> cats = userData.categories;
-        List<PieChartSectionData> showingCategorySections() {
-          return List.generate(
-            cats.length,
-            (i) {
-              final Category cat = cats[i];
-              final bool isTouched = i == touchedIndex;
-              final bool isIncome = cat.isIncome;
-              final double opacity = isTouched ? 1 : 0.4;
-              final value = userData.statsGetCategTotalFromCurrent(i);
-              switch (i) {
-                default:
-                  return PieChartSectionData(
-                    color: cat.color.withOpacity(opacity),
-                    value: isIncome ? 0 : value,
-                    showTitle: isTouched && value > 0 && !isIncome,
-                    title: '${cat.title} \n ${value.toStringAsFixed(2)}',
-                    radius: isTouched ? 40 : 30,
-                    titleStyle: TextStyle(
-                        fontSize: 15, color: Colors.black.withOpacity(0.8)),
-                    titlePositionPercentageOffset: -1.5,
-                  );
-              }
-            },
-          );
-        }
-
-        if (!userData.records.any((rec) => rec.id == selectedAccount) &&
-            userData.selectedAccount != -1) {
+    return Consumer<DashboardViewModel>(
+      builder: (context, model, child) {
+        if (model.selectedAccountIsEmpty()) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -86,8 +34,10 @@ class _StatisticsState extends State<Statistics> {
                   size: 120.0,
                 ),
                 onTap: () {
-                  userData.newRecord();
-                  Navigator.pushNamed(context, AddExpensesScreen.id);
+                  ExpenseViewModel expenseModel =
+                      Provider.of<ExpenseViewModel>(context);
+                  expenseModel.newRecord();
+                  Navigator.pushNamed(context, ExpenseScreen.id);
                 },
               ),
               Padding(
@@ -105,7 +55,7 @@ class _StatisticsState extends State<Statistics> {
         return ListView(
           children: <Widget>[
             Visibility(
-              visible: userData.hasIncome(userData.selectedAccount),
+              visible: model.selectedAccountHasIncome(),
               child: Card(
                 child: Column(
                   children: <Widget>[
@@ -130,7 +80,7 @@ class _StatisticsState extends State<Statistics> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                                'Balance: \$${userData.statsGetBalanceData()[2].toStringAsFixed(2)}',
+                                'Balance: \$${model.statsGetBalanceData()[2].toStringAsFixed(2)}',
                                 style: TextStyle(
                                     fontSize: 25,
                                     color: Colors.black87,
@@ -172,7 +122,7 @@ class _StatisticsState extends State<Statistics> {
                                               padding:
                                                   EdgeInsets.only(left: 5.0),
                                               child: Text(
-                                                userData
+                                                model
                                                     .statsGetBalanceData()[0]
                                                     .toStringAsFixed(2),
                                                 style: TextStyle(
@@ -182,7 +132,7 @@ class _StatisticsState extends State<Statistics> {
                                               ),
                                             ),
                                           ),
-                                          flex: userData
+                                          flex: model
                                               .statsGetBalanceData()[0]
                                               .round(),
                                         ),
@@ -203,7 +153,7 @@ class _StatisticsState extends State<Statistics> {
                                               padding:
                                                   EdgeInsets.only(right: 5.0),
                                               child: Text(
-                                                userData
+                                                model
                                                     .statsGetBalanceData()[1]
                                                     .toStringAsFixed(2),
                                                 style: TextStyle(
@@ -213,7 +163,7 @@ class _StatisticsState extends State<Statistics> {
                                               ),
                                             ),
                                           ),
-                                          flex: userData
+                                          flex: model
                                               .statsGetBalanceData()[1]
                                               .round(),
                                         ),
@@ -259,7 +209,7 @@ class _StatisticsState extends State<Statistics> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                            'Total: \$${userData.currentExpensesTotal.toStringAsFixed(2)}',
+                            'Total: \$${model.currentExpensesTotal().toStringAsFixed(2)}',
                             style: TextStyle(
                                 fontSize: 25,
                                 color: Colors.black87,
@@ -273,10 +223,9 @@ class _StatisticsState extends State<Statistics> {
                                 if (pieTouchResponse.touchedSectionIndex !=
                                     null) {
                                   setState(() {
-                                    updateTouchedIndex(
+                                    model.updateTouchedIndex(
                                         pieTouchResponse.touchedSectionIndex);
                                   });
-                                  print(touchedIndex);
                                 }
                               }),
                               startDegreeOffset: -90,
@@ -285,7 +234,7 @@ class _StatisticsState extends State<Statistics> {
                               ),
                               sectionsSpace: 2,
                               centerSpaceRadius: 60,
-                              sections: showingCategorySections()),
+                              sections: model.showingCategorySections()),
                           swapAnimationDuration: Duration(seconds: 0),
                         ),
                       ),
@@ -295,19 +244,16 @@ class _StatisticsState extends State<Statistics> {
                       Wrap(
                         direction: Axis.horizontal,
                         alignment: WrapAlignment.center,
-                        children: cats
-                            .where((e) =>
-                                userData.statsGetCategTotalFromCurrent(
-                                    cats.indexOf(e)) >
+                        children: categories
+                            .where((category) =>
+                                model.getCategoryTotal(
+                                    categories.indexOf(category)) >
                                 0)
-                            .toList()
                             .map(
-                          (e) {
-                            double value = userData
-                                .statsGetCategTotalFromCurrent(cats.indexOf(e));
+                          (category) {
                             return Indicator(
-                              color: e.color,
-                              text: e.title,
+                              color: category.color,
+                              text: category.title,
                               isSquare: false,
                               size: 6,
                               textColor: Colors.black87,
@@ -353,17 +299,17 @@ class _StatisticsState extends State<Statistics> {
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          // print(userData.recordsCount);
-                          final record = userData.statsGetRecords(4)[index];
+                          final record = model.getTop5Records()[index];
                           return Visibility(
-                            visible: record.id == userData.selectedAccount ||
-                                userData.selectedAccount == -1,
+                            visible:
+                                record.uid == model.getSelectedAccountUid() ||
+                                    model.selectedAccountIndex == -1,
                             child: HistoryTile(
                                 record: record,
-                                index: userData.records.indexOf(record)),
+                                index: model.records.indexOf(record)),
                           );
                         },
-                        itemCount: userData.statsGetRecords(4).length,
+                        itemCount: 5,
                       ),
                     ),
                   ),

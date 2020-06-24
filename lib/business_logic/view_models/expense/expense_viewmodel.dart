@@ -86,8 +86,8 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     Navigator.of(context).pop();
   }
 
-  void newTempRecord(Record record) {
-    tempRecord = record;
+  void newRecord() {
+    tempRecord = Record.newBlankRecord();
   }
 
   void changeTempRecord(int recordIndex) {

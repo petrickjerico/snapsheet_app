@@ -1,18 +1,14 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/screens/home/rename_account_popup.dart';
 
 class AccountOrderTile extends StatefulWidget {
-  AccountOrderTile(
-      {Key key, this.index, this.color, this.title, this.count, this.total})
+  AccountOrderTile({Key key, this.index, this.color, this.title, this.total})
       : super(key: key);
 
   int index;
   Color color;
   String title;
-  int count;
   double total;
 
   @override

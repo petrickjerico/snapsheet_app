@@ -8,7 +8,7 @@ abstract class ExpenseBaseModel {
   void addRecord();
   Future<void> showChoiceDialog(BuildContext context);
   Future imageToTempRecord();
-  void newTempRecord(Record record);
+  void newRecord();
   void changeTitle(String newTitle);
   void changeValue(double newValue);
   void changeDate(DateTime newDateTime);

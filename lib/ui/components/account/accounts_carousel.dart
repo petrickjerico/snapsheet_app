@@ -51,6 +51,10 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                         SizedBox(
                           width: 5.0,
                         ),
+                        AddAccountButton(),
+                        SizedBox(
+                          width: 5.0,
+                        ),
                         EditAccountsButton(),
                       ],
                     ),

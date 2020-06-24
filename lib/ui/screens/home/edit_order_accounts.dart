@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/components/account/account_order_tile.dart';
-import 'package:snapsheetapp/components/account/account_tile.dart';
-import 'package:snapsheetapp/components/reorderable_list.dart';
-import 'package:snapsheetapp/models/user_data.dart';
-import 'package:snapsheetapp/screens/home/add_account_popup.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/ui/components/account/account_order_tile.dart';
+import 'package:snapsheetapp/ui/components/reorderable_list.dart';
+
+import 'add_account_popup.dart';
 
 class EditAccountsOrder extends StatefulWidget {
   static final String id = 'edit_order_accounts';
@@ -15,7 +15,7 @@ class EditAccountsOrder extends StatefulWidget {
 class _EditAccountsOrderState extends State<EditAccountsOrder> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserData>(builder: (context, userData, child) {
+    return Consumer<DashboardViewModel>(builder: (context, model, child) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
@@ -29,14 +29,12 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
               data: ThemeData.dark().copyWith(accentColor: Colors.white),
               child: ReorderableListSimple(
                   handleIcon: Icon(Icons.reorder),
-                  children: userData.accounts.map((e) {
-                    int accId = userData.getThisAccount(e.id).id;
+                  children: model.accounts.map((account) {
                     return AccountOrderTile(
-                      index: accId,
-                      color: e.color,
-                      title: e.title,
-                      count: userData.statsCountRecords(accId),
-                      total: userData.statsGetAccountTotal(accId),
+                      index: account.index,
+                      color: account.color,
+                      title: account.title,
+                      total: model.getSumFromAccount(account),
                     );
                   }).toList()),
             )),

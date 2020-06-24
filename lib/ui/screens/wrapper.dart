@@ -29,7 +29,7 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    UserData userData = Provider.of<UserData>(context, listen: false);
+    UserData userData = Provider.of<UserData>(context);
     // either home or authenticate
     if (user == null) {
       return WelcomeScreen();
@@ -44,13 +44,13 @@ class _WrapperState extends State<Wrapper> {
           return Loading();
         } else {
           ExpenseViewModel expenseViewModel =
-              Provider.of<ExpenseViewModel>(context, listen: false);
+              Provider.of<ExpenseViewModel>(context);
           DashboardViewModel dashboardViewModel =
-              Provider.of<DashboardViewModel>(context, listen: false);
+              Provider.of<DashboardViewModel>(context);
           ExportViewModel exportViewModel =
-              Provider.of<ExportViewModel>(context, listen: false);
+              Provider.of<ExportViewModel>(context);
           BulkScanViewModel bulkScanViewModel =
-              Provider.of<BulkScanViewModel>(context, listen: false);
+              Provider.of<BulkScanViewModel>(context);
           expenseViewModel.init(userData);
           dashboardViewModel.init(userData);
           exportViewModel.init(userData);

@@ -20,7 +20,10 @@ class _StatisticsState extends State<Statistics> {
   Widget build(BuildContext context) {
     return Consumer<DashboardViewModel>(
       builder: (context, model, child) {
+        print('Before model.selectedAccountIsEmpty()');
         if (model.selectedAccountIsEmpty()) {
+          print('After model.selectedAccountIsEmpty()');
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,

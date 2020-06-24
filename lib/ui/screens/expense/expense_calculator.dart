@@ -536,8 +536,10 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           model.toggleScanned();
         }
         _catId = model.tempRecord.categoryId;
-        Account account =
-            model.userData.getThisAccount(model.tempRecord.accountUid);
+        print(
+            'from calculator: model.userData.accounts.length = ${model.userData.accounts.length}');
+        Account account = model.userData.getThisAccount(
+            model.tempRecord.accountUid ?? model.userData.accounts.first.uid);
         _accId = model.isEditing ? account.index : _accId;
         return Column(children: <Widget>[
           Expanded(child: _getDisplay(model), flex: 3),

@@ -29,6 +29,8 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
   }
 
   String getSelectedAccountUid() {
+    print('getSelectedAccountUid() called');
+    print('selectedAccountIndex: $selectedAccountIndex');
     if (selectedAccountIndex != -1) return accounts[selectedAccountIndex].uid;
   }
 
@@ -129,6 +131,7 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
   }
 
   bool selectedAccountIsEmpty() {
+    print('selectedAccountIsEmpty() called');
     return records.any((rec) =>
         rec.uid == getSelectedAccountUid() && selectedAccountIndex != -1);
   }

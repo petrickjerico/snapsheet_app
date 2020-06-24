@@ -93,7 +93,8 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                         carouselController: controller,
                         items: makeAccountTiles(model),
                         options: CarouselOptions(
-                          initialPage: model.selectedAccountIndex != -1
+                          initialPage: model.selectedAccountIndex != -1 &&
+                                  model.selectedAccountIndex != null
                               ? model.selectedAccountIndex
                               : 0,
                           height: 55.0,
@@ -120,6 +121,9 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
 
   List<Widget> makeAccountTiles(DashboardViewModel model) {
     return model.accounts.map((acc) {
+      print("model.accounts.length = ${model.accounts.length}");
+      print("acc.uid = ${acc.uid}");
+      print("acc.index = ${acc.index}");
       return Opacity(
         opacity: acc.index == model.selectedAccountIndex ? 1.0 : 0.5,
         child: AccountTile(

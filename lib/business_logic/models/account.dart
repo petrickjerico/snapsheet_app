@@ -30,7 +30,7 @@ class Account {
     return Account(
         title: json['title'],
         color: Color(json['color']),
-        index: json['index'],
+        index: json['order'],
         uid: json['uid']);
   }
 

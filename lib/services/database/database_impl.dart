@@ -31,6 +31,8 @@ class DatabaseServiceImpl implements DatabaseService {
         categoryId: 0,
         accountUid: accounts[0].uid,
         isIncome: false));
+    print(
+        "from database_impl: accounts[0].uid accounts[0].uid ${accounts[0].uid}");
   }
 
   /// CREATE

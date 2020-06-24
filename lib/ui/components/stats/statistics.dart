@@ -298,14 +298,9 @@ class _StatisticsState extends State<Statistics> {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           final record = model.getTop5Records()[index];
-                          return Visibility(
-                            visible:
-                                record.uid == model.getSelectedAccountUid() ||
-                                    model.selectedAccountIndex == -1,
-                            child: HistoryTile(
-                                record: record,
-                                index: model.records.indexOf(record)),
-                          );
+                          return HistoryTile(
+                              record: record,
+                              index: model.records.indexOf(record));
                         },
                         itemCount: model.getTop5Records().length,
                       ),

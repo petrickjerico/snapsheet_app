@@ -143,7 +143,7 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
 
   bool recordMatchesStats(Record rec) {
     return (selectedAccountIndex == -1 ||
-        rec.accountUid == accounts[selectedAccountIndex].uid);
+        rec.accountUid == getSelectedAccount().uid);
   }
 
   double getCategoryTotal(int catId) {

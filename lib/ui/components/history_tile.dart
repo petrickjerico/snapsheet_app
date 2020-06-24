@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/business_logic/default_data/categories.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
+import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/screens/screens.dart';
 
 class HistoryTile extends StatelessWidget {
   final Record record;
@@ -11,8 +16,8 @@ class HistoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserData>(builder: (context, userData, child) {
-      Category category = userData.categories[record.categoryId];
+    return Consumer<ExpenseViewModel>(builder: (context, model, child) {
+      Category category = categories[record.categoryId];
       return ListTile(
         leading: CircleAvatar(
           backgroundColor: category.color.withOpacity(0.2),
@@ -25,7 +30,7 @@ class HistoryTile extends StatelessWidget {
           record.title == "" ? category.title : record.title,
           style: kHistoryRecordTitle,
         ),
-        subtitle: Text(userData.getThisAccount(record.id).title),
+        subtitle: Text(model.getThisAccount(record.accountId).title),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -42,8 +47,8 @@ class HistoryTile extends StatelessWidget {
           ],
         ),
         onTap: () {
-          userData.changeTempRecord(index);
-          Navigator.pushNamed(context, AddExpensesScreen.id);
+          model.changeTempRecord(index);
+          Navigator.pushNamed(context, ExpenseScreen.id);
         },
       );
     });

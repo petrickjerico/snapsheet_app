@@ -86,6 +86,10 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     Navigator.of(context).pop();
   }
 
+  Account getThisAccount(String accountUid) {
+    return userData.accounts.firstWhere((acc) => acc.uid == accountUid);
+  }
+
   void newTempRecord(Record record) {
     tempRecord = record;
   }

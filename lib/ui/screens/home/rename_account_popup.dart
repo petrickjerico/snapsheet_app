@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/config/config.dart';
-import 'package:snapsheetapp/models/account.dart';
-import 'package:snapsheetapp/models/user_data.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
 
 class RenameAccountPopup extends StatefulWidget {
   static final _formKey = GlobalKey<FormState>();
@@ -13,25 +12,14 @@ class RenameAccountPopup extends StatefulWidget {
 }
 
 class _RenameAccountPopupState extends State<RenameAccountPopup> {
-  String accountTitle;
-
-  Color color;
   Color tempColor;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    Account acc = Provider.of<UserData>(context).getCurrentAccount();
-    color = acc.color;
-    accountTitle = acc.title;
-  }
 
   void _openDialog(String title, Widget content) {
     showDialog(
       context: context,
       builder: (_) {
         return AlertDialog(
-          contentPadding: const EdgeInsets.all(6.0),
+          contentPadding: EdgeInsets.all(6.0),
           title: Text(title),
           content: content,
           actions: [
@@ -42,8 +30,9 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
             FlatButton(
               child: Text('SUBMIT'),
               onPressed: () {
+                final model = Provider.of<DashboardViewModel>(context);
                 Navigator.of(context).pop();
-                setState(() => color = tempColor);
+                setState(() => model.tempAccount.color = tempColor);
               },
             ),
           ],
@@ -54,7 +43,7 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserData>(builder: (context, userData, child) {
+    return Consumer<DashboardViewModel>(builder: (context, model, child) {
       return Theme(
         data: ThemeData.light(),
         child: Form(
@@ -75,10 +64,10 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
                   children: <Widget>[
                     SizedBox(height: 10.0),
                     TextFormField(
-                      initialValue: accountTitle,
+                      initialValue: model.tempAccount.title,
                       autofocus: true,
                       onChanged: (value) {
-                        accountTitle = value;
+                        model.tempAccount.title = value;
                       },
                       decoration: kTextFieldDecorationLogin.copyWith(
                           hintText: 'Rename your account'),
@@ -102,7 +91,7 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
                       ),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0)),
-                      color: color,
+                      color: model.tempAccount.color,
                       onPressed: () async {
                         _openDialog(
                           "Color your account",
@@ -114,7 +103,7 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
                                 tempColor = newColor;
                               });
                             },
-                            selectedColor: color,
+                            selectedColor: model.tempAccount.color,
                           ),
                         );
                       },
@@ -136,7 +125,7 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
                     ),
                     onPressed: () {
                       if (RenameAccountPopup._formKey.currentState.validate()) {
-                        userData.editAccount(accountTitle, color);
+                        model.updateAccount();
                         Navigator.pop(context);
                       }
                     },

@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
+import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/export/export_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/services/auth/auth_impl.dart';
 import 'package:snapsheetapp/ui/components/scanner/receipt_preview.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
@@ -21,6 +26,17 @@ class Snapsheet extends StatelessWidget {
     return MultiProvider(
       providers: [
         StreamProvider<User>.value(value: AuthServiceImpl().user),
+        ChangeNotifierProvider<ExpenseViewModel>(
+            create: (context) => ExpenseViewModel()),
+        ChangeNotifierProvider<DashboardViewModel>(
+            create: (context) => DashboardViewModel()),
+        ChangeNotifierProvider<ExportViewModel>(
+            create: (context) => ExportViewModel()),
+        ChangeNotifierProvider<BulkScanViewModel>(
+            create: (context) => BulkScanViewModel()),
+        ChangeNotifierProvider<UserData>(
+          create: (context) => UserData(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

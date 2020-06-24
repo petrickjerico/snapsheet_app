@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/screens/expense/expense_calculator.dart';
+import 'package:snapsheetapp/ui/screens/expense/expense_calculator.dart';
 
 import 'edit_expense_info_screen.dart';
 
@@ -11,7 +11,9 @@ class ExpenseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("BEFORE CONSUMER");
     return Consumer<ExpenseViewModel>(builder: (context, model, child) {
+      print("AFTER CONSUMER");
       return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(

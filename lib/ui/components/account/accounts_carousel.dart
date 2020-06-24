@@ -87,6 +87,8 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                       )),
                   Consumer<DashboardViewModel>(
                     builder: (context, model, child) {
+                      print('CAROUSEL');
+                      print(model.selectedAccountIndex);
                       return CarouselSlider(
                         carouselController: controller,
                         items: makeAccountTiles(model),

@@ -10,7 +10,7 @@ import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/services/scanner/scanner_impl.dart';
 
 class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
-  final UserData userData;
+  UserData userData;
 
   List<Asset> assets = List<Asset>();
   List<Account> accounts;
@@ -21,7 +21,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   Scanner scanner = ScannerImpl();
   String selectedAccountUid;
 
-  BulkScanViewModel({this.userData}) {
+  void init(UserData userData) {
     accounts = userData.accounts;
   }
 

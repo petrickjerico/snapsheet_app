@@ -15,7 +15,7 @@ class AccountTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        final model = Provider.of<DashboardViewModel>(context);
+        final model = Provider.of<DashboardViewModel>(context, listen: false);
         if (model.selectedAccountIndex != index) {
           model.selectAccount(index);
         }

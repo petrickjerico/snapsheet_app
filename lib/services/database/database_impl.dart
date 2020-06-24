@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/services/database/database.dart';
 export 'database.dart';
@@ -15,6 +16,21 @@ class DatabaseServiceImpl implements DatabaseService {
     userDocument = Firestore.instance.collection('users').document(uid);
     recordCollection = userDocument.collection('records');
     accountCollection = userDocument.collection('accounts');
+  }
+
+  Future<void> initialize() async {
+    await addAccount(Account(title: 'Cash', color: Colors.red, index: 0));
+    List<DocumentSnapshot> snapshots =
+        await accountCollection.getDocuments().then((value) => value.documents);
+    List<Account> accounts =
+        snapshots.map((doc) => Account.fromFirestore(doc)).toList();
+    addRecord(Record(
+        title: 'MACS',
+        value: 12,
+        dateTime: DateTime.now(),
+        categoryId: 0,
+        accountUid: accounts[0].uid,
+        isIncome: false));
   }
 
   /// CREATE

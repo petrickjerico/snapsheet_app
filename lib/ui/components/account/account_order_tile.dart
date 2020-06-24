@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/ui/screens/home/rename_account_popup.dart';
 
 class AccountOrderTile extends StatefulWidget {
   AccountOrderTile({Key key, this.index, this.color, this.title, this.total})
@@ -18,66 +20,65 @@ class AccountOrderTile extends StatefulWidget {
 class _AccountOrderTileState extends State<AccountOrderTile> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserData>(
-      builder: (context, userData, child) => ListTile(
+    return ListTile(
 //        onTap: () {
 //          setState(() {
 //            userData.selectAccount(widget.index);
 //          });
 //          Navigator.pop(context);
 //        },
-        dense: true,
-        leading: Container(
-          height: 40,
-          width: 40,
-          decoration: BoxDecoration(
-              color: widget.color, borderRadius: BorderRadius.circular(5.0)),
-        ),
-        title: Text(
-          widget.title,
-          style: TextStyle(color: Colors.white),
-        ),
-        subtitle: Text(
-          widget.total.toStringAsFixed(2),
-          style: TextStyle(color: Colors.white, fontSize: 20.0),
-        ),
-        trailing: Theme(
-          data: ThemeData.light(),
-          child: PopupMenuButton(
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: () => rename(),
-                child: Text('Edit'),
-              ),
-              PopupMenuItem(
-                value: () => delete(),
-                child: Text('Delete'),
-              ),
-            ],
-            icon: Icon(
-              Icons.more_vert,
-              color: Colors.white,
+      dense: true,
+      leading: Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+            color: widget.color, borderRadius: BorderRadius.circular(5.0)),
+      ),
+      title: Text(
+        widget.title,
+        style: TextStyle(color: Colors.white),
+      ),
+      subtitle: Text(
+        widget.total.toStringAsFixed(2),
+        style: TextStyle(color: Colors.white, fontSize: 20.0),
+      ),
+      trailing: Theme(
+        data: ThemeData.light(),
+        child: PopupMenuButton(
+          itemBuilder: (context) => [
+            PopupMenuItem(
+              value: () => rename(),
+              child: Text('Edit'),
             ),
-            onSelected: (Function value) {
-              userData.selectAccount(widget.index);
-              value.call();
-            },
+            PopupMenuItem(
+              value: () => delete(),
+              child: Text('Delete'),
+            ),
+          ],
+          icon: Icon(
+            Icons.more_vert,
+            color: Colors.white,
           ),
+          onSelected: (Function value) {
+            final model = Provider.of<DashboardViewModel>(context);
+            model.selectAccount(widget.index);
+            value.call();
+          },
         ),
       ),
     );
   }
 
   void rename() {
+    final model = Provider.of<DashboardViewModel>(context);
+    model.initEditAccount(widget.index);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (context) => Consumer<UserData>(
-        builder: (context, userData, child) => SingleChildScrollView(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: RenameAccountPopup(),
-        ),
+      builder: (context) => SingleChildScrollView(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: RenameAccountPopup(),
       ),
     );
   }
@@ -85,8 +86,8 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
   void delete() {
     showDialog(
       context: context,
-      builder: (context) => Consumer<UserData>(
-        builder: (context, userData, child) => Theme(
+      builder: (context) => Consumer<DashboardViewModel>(
+        builder: (context, model, child) => Theme(
           data: ThemeData.light(),
           child: AlertDialog(
             titlePadding: EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -98,7 +99,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Are you sure you want to delete ${userData.accounts[userData.selectedAccount].title}?',
+                  'Are you sure you want to delete ${model.getSelectedAccount().title}?',
                 ),
                 SizedBox(
                   height: 10,
@@ -115,7 +116,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0)),
                       onPressed: () {
-                        userData.deleteAccount();
+                        model.deleteAccount();
                         Navigator.pop(context);
                       },
                     ),

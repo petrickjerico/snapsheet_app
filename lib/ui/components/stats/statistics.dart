@@ -16,8 +16,6 @@ class Statistics extends StatefulWidget {
 }
 
 class _StatisticsState extends State<Statistics> {
-  bool isTouched = false;
-
   @override
   Widget build(BuildContext context) {
     return Consumer<DashboardViewModel>(
@@ -309,7 +307,7 @@ class _StatisticsState extends State<Statistics> {
                                 index: model.records.indexOf(record)),
                           );
                         },
-                        itemCount: 5,
+                        itemCount: model.getTop5Records().length,
                       ),
                     ),
                   ),

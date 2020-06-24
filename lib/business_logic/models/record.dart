@@ -70,7 +70,7 @@ class Record {
         value: json['value'],
         dateTime: DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
         categoryId: json['categoryId'],
-        accountUid: json['accountId'],
+        accountUid: json['accountUid'],
         isIncome: json['isIncome'],
         receiptURL: json['receiptURL'],
         uid: json['uid']);
@@ -82,7 +82,7 @@ class Record {
       'value': value,
       'dateTime': dateTime.millisecondsSinceEpoch,
       'categoryId': categoryId,
-      'accountId': accountUid,
+      'accountUid': accountUid,
       'isIncome': isIncome,
       'receiptURL': receiptURL,
       'uid': uid

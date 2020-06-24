@@ -8,28 +8,28 @@ import 'package:snapsheetapp/ui/components/stats/statistics.dart';
 class AccountsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserData>(context);
-    return ChangeNotifierProvider<DashboardViewModel>(
-      create: (context) => DashboardViewModel(userData: userData),
-      child: Container(
-        color: Colors.black.withOpacity(0.8),
-        child: Column(
-          children: <Widget>[
-            AccountsCarousel(),
-            Flexible(
-              child: Container(
-                padding: EdgeInsets.all(8.0),
-                margin: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.black38,
-                  borderRadius: BorderRadius.circular(10.0),
+    return Consumer<DashboardViewModel>(
+      builder: (context, model, child) {
+        return Container(
+          color: Colors.black.withOpacity(0.8),
+          child: Column(
+            children: <Widget>[
+              AccountsCarousel(),
+              Flexible(
+                child: Container(
+                  padding: EdgeInsets.all(8.0),
+                  margin: EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: Colors.black38,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Statistics(),
                 ),
-                child: Statistics(),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

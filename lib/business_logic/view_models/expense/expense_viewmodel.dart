@@ -9,8 +9,10 @@ import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/services/scanner/scanner_impl.dart';
 
 class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
-  final UserData userData;
-  ExpenseViewModel({this.userData});
+  UserData userData;
+  void init(UserData userData) {
+    this.userData = userData;
+  }
 
   Record tempRecord;
   Record editRecord;

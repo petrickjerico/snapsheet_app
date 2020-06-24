@@ -15,6 +15,15 @@ class Account {
 
   Account({this.title, this.color, this.index, this.uid});
 
+  factory Account.of(Account account) {
+    return Account(
+      title: account.title,
+      color: account.color,
+      index: account.index,
+      uid: account.uid,
+    );
+  }
+
   factory Account.fromFirestore(DocumentSnapshot doc) {
     Map json = doc.data;
 

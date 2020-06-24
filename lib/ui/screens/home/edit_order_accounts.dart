@@ -28,6 +28,7 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
             child: Theme(
               data: ThemeData.dark().copyWith(accentColor: Colors.white),
               child: ReorderableListSimple(
+                  handleSide: ReorderableListSimpleSide.Left,
                   handleIcon: Icon(Icons.reorder),
                   children: model.accounts.map((account) {
                     return AccountOrderTile(

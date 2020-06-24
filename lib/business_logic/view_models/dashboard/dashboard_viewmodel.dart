@@ -7,21 +7,33 @@ import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_base
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 
 class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
-  final UserData userData;
+  UserData userData;
   List<Account> accounts;
   List<Record> records;
-  List<bool> isSelected;
-  int selectedAccountIndex;
-  int touchedIndex;
+  List<bool> isSelected = [];
+  int selectedAccountIndex = -1;
+  int touchedIndex = -1;
+  Account originalAccount;
+  Account tempAccount;
 
-  DashboardViewModel({this.userData}) {
+  void init(UserData userData) {
+    print('init from dashboardviewmodel');
     accounts = userData.accounts;
     records = userData.records;
     isSelected = List.generate(accounts.length, (_) => true);
   }
 
+  void initEditAccount(int accountIndex) {
+    originalAccount = accounts[accountIndex];
+    tempAccount = Account.of(originalAccount);
+  }
+
   String getSelectedAccountUid() {
     if (selectedAccountIndex != -1) return accounts[selectedAccountIndex].uid;
+  }
+
+  Account getSelectedAccount() {
+    if (selectedAccountIndex != -1) return accounts[selectedAccountIndex];
   }
 
   void addAccount(String title, Color color) {
@@ -30,11 +42,10 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
     notifyListeners();
   }
 
-  void updateAccount(String newTitle, Color newColor) {
-    Account target = accounts[selectedAccountIndex];
-    target.title = newTitle;
-    target.color = newColor;
-    userData.updateAccount(target);
+  void updateAccount() {
+    originalAccount.title = tempAccount.title;
+    originalAccount.color = tempAccount.color;
+    userData.updateAccount(originalAccount);
     notifyListeners();
   }
 

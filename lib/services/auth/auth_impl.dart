@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/services/auth/auth.dart';
+import 'package:snapsheetapp/services/database/database_impl.dart';
 export 'auth.dart';
 
 class AuthServiceImpl implements AuthService {
@@ -55,8 +56,8 @@ class AuthServiceImpl implements AuthService {
       FirebaseUser user = result.user;
 
       // Adding initial data
-//      DatabaseService databaseService = DatabaseService(uid: user.uid);
-//      await databaseService.initialize();
+      DatabaseServiceImpl _db = DatabaseServiceImpl(uid: user.uid);
+      await _db.initialize();
 
       return _userFromFirebaseUser(user);
     } catch (e) {

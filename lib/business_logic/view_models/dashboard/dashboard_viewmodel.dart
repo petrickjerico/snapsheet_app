@@ -18,6 +18,7 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
 
   void init(UserData userData) {
     print('init from dashboardviewmodel');
+    this.userData = userData;
     accounts = userData.accounts;
     records = userData.records;
     isSelected = List.generate(accounts.length, (_) => true);

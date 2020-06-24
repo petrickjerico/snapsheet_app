@@ -10,8 +10,10 @@ import 'package:snapsheetapp/services/scanner/scanner_impl.dart';
 
 class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   UserData userData;
+  List<Account> accounts;
   void init(UserData userData) {
     this.userData = userData;
+    accounts = userData.accounts;
   }
 
   Record tempRecord;
@@ -31,6 +33,13 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
       tempRecord.title = map['title'];
       tempRecord.categoryId = map['categoryId'];
     }
+  }
+
+  int getAccountIndexFromTempRecord() {
+    return accounts
+            .firstWhere((acc) => acc.uid == tempRecord.accountUid)
+            ?.index ??
+        0;
   }
 
   void toggleScanned() {
@@ -90,6 +99,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
 
   void newRecord() {
     tempRecord = Record.newBlankRecord();
+    tempRecord.accountUid = accounts.first.uid;
   }
 
   void changeTempRecord(int recordIndex) {
@@ -130,6 +140,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
 
   void changeAccount(int newAccountIndex) {
     tempRecord.accountUid = userData.accounts[newAccountIndex].uid;
+    print("is this updated? ${tempRecord.accountUid}");
     notifyListeners();
   }
 

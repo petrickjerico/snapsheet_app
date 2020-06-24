@@ -778,7 +778,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                   ),
                   Expanded(
                     child: PopupMenuButton(
-                      initialValue: model.tempRecord.accountUid,
+                      initialValue: model.getAccountIndexFromTempRecord(),
                       onSelected: (input) {
                         setState(() {
                           _accId = input;

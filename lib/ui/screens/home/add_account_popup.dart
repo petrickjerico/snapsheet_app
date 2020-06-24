@@ -104,26 +104,29 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
             SizedBox(
               height: 20.0,
             ),
-            Container(
-              height: 50.0,
-              width: 150.0,
-              child: FlatButton(
-                color: Colors.black,
-                child: Text(
-                  'CREATE',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20.0, color: Colors.white),
+            Consumer<DashboardViewModel>(builder: (context, model, child) {
+              return Container(
+                height: 50.0,
+                width: 150.0,
+                child: FlatButton(
+                  color: Colors.black,
+                  child: Text(
+                    'CREATE',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  ),
+                  onPressed: () {
+                    if (AddAccountPopup._formKey.currentState.validate()) {
+                      print(accountTitle);
+                      print(_color.toString());
+                      model.addAccount(accountTitle, _color);
+                      model.selectAccount(model.accounts.length);
+                      Navigator.pop(context);
+                    }
+                  },
                 ),
-                onPressed: () {
-                  if (AddAccountPopup._formKey.currentState.validate()) {
-                    final model = Provider.of<DashboardViewModel>(context);
-                    model.addAccount(accountTitle, _color);
-                    model.selectAccount(model.accounts.length);
-                    Navigator.pop(context);
-                  }
-                },
-              ),
-            ),
+              );
+            }),
             SizedBox(
               height: 15.0,
             ),

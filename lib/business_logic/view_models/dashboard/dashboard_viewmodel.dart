@@ -12,12 +12,11 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
   List<Record> records;
   List<bool> isSelected = [];
   int selectedAccountIndex = -1;
-  int touchedIndex = -1;
+  int touchedIndex;
   Account originalAccount;
   Account tempAccount;
 
   void init(UserData userData) {
-    print('init from dashboardviewmodel');
     this.userData = userData;
     accounts = userData.accounts;
     records = userData.records;
@@ -30,8 +29,6 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
   }
 
   String getSelectedAccountUid() {
-    print('getSelectedAccountUid() called');
-    print('selectedAccountIndex: $selectedAccountIndex');
     if (selectedAccountIndex != -1) return accounts[selectedAccountIndex].uid;
   }
 
@@ -97,7 +94,7 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
   }
 
   void updateTouchedIndex(int i) {
-    print("input is: $i");
+    print('touched $i');
     if (touchedIndex == i) {
       touchedIndex = null;
     } else {
@@ -132,9 +129,11 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
   }
 
   bool selectedAccountIsEmpty() {
-    print('selectedAccountIsEmpty() called');
-    return records.any((rec) =>
-        rec.uid == getSelectedAccountUid() && selectedAccountIndex != -1);
+    bool res =
+        !records.any((rec) => rec.accountUid == getSelectedAccountUid()) &&
+            selectedAccountIndex != -1;
+
+    return res;
   }
 
   bool selectedAccountHasIncome() {
@@ -174,7 +173,8 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
   List<double> statsGetBalanceData() {
     double incomeSum = selectedAccountHasIncome()
         ? records
-            .where((rec) => rec.isIncome)
+            .where((rec) =>
+                rec.isIncome && rec.accountUid == getSelectedAccountUid())
             .map((rec) => rec.value)
             .reduce((value, element) => value + element)
         : 0;

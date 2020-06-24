@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/ui/screens/expense/expense_calculator.dart';
-
+import 'package:flushbar/flushbar.dart';
 import 'edit_expense_info_screen.dart';
 
 class ExpenseScreen extends StatelessWidget {
@@ -11,9 +12,7 @@ class ExpenseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("BEFORE CONSUMER");
     return Consumer<ExpenseViewModel>(builder: (context, model, child) {
-      print("AFTER CONSUMER");
       return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -40,12 +39,32 @@ class ExpenseScreen extends StatelessWidget {
           ],
         ),
         body: ExpenseCalculator(),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.black,
-          child: Icon(Icons.check),
-          onPressed: () {
-            model.addRecord();
-            Navigator.pop(context);
+        floatingActionButton: Consumer<DashboardViewModel>(
+          builder: (context, dashboardModel, child) {
+            return FloatingActionButton(
+              backgroundColor: Colors.black,
+              child: Icon(Icons.check),
+              onPressed: () {
+                bool isEditing = model.isEditing;
+                model.addRecord();
+                dashboardModel
+                    .selectAccount(model.getAccountIndexFromTempRecord());
+                Navigator.pop(context);
+                String title = dashboardModel.getSelectedAccount().title;
+                String messageStatus =
+                    isEditing ? 'updated' : 'added to account: $title';
+                Flushbar(
+                  message: "Record successfully $messageStatus.",
+                  icon: Icon(
+                    Icons.info_outline,
+                    size: 28.0,
+                    color: Colors.blue[300],
+                  ),
+                  duration: Duration(seconds: 3),
+                  leftBarIndicatorColor: Colors.blue[300],
+                )..show(context);
+              },
+            );
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

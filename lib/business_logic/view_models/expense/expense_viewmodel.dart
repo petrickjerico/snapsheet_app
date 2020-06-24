@@ -36,10 +36,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   }
 
   int getAccountIndexFromTempRecord() {
-    return accounts
-            .firstWhere((acc) => acc.uid == tempRecord.accountUid)
-            ?.index ??
-        0;
+    return accounts.firstWhere((acc) => acc.uid == tempRecord.accountUid).index;
   }
 
   void toggleScanned() {
@@ -52,6 +49,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     }
     if (isEditing) {
       userData.updateRecord(tempRecord);
+      isEditing = false;
     }
     notifyListeners();
   }
@@ -140,7 +138,6 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
 
   void changeAccount(int newAccountIndex) {
     tempRecord.accountUid = userData.accounts[newAccountIndex].uid;
-    print("is this updated? ${tempRecord.accountUid}");
     notifyListeners();
   }
 

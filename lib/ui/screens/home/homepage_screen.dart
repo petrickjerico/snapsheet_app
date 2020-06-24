@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
@@ -32,14 +33,18 @@ class _HomepageScreenState extends State<HomepageScreen> {
             HistoryTab(),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: kBlack,
-          child: Icon(Icons.add),
-          onPressed: () {
-            model.newRecord();
-            Navigator.pushNamed(context, ExpenseScreen.id);
-          },
-        ),
+        floatingActionButton: Consumer<DashboardViewModel>(
+            builder: (context, dashboardModel, child) {
+          return FloatingActionButton(
+            backgroundColor: kBlack,
+            child: Icon(Icons.add),
+            onPressed: () {
+              model.newRecord();
+              model.changeAccount(dashboardModel.getSelectedAccount().index);
+              Navigator.pushNamed(context, ExpenseScreen.id);
+            },
+          );
+        }),
       );
     });
   }

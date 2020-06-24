@@ -18,41 +18,37 @@ class Statistics extends StatefulWidget {
 class _StatisticsState extends State<Statistics> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardViewModel>(
-      builder: (context, model, child) {
-        print('Before model.selectedAccountIsEmpty()');
-        if (model.selectedAccountIsEmpty()) {
-          print('After model.selectedAccountIsEmpty()');
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              GestureDetector(
+    return Consumer<DashboardViewModel>(builder: (context, model, child) {
+      if (model.selectedAccountIsEmpty()) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Consumer<ExpenseViewModel>(builder: (context, expenseModel, child) {
+              return GestureDetector(
                 child: Icon(
                   Icons.add_circle,
                   color: Colors.white24,
                   size: 120.0,
                 ),
                 onTap: () {
-                  ExpenseViewModel expenseModel =
-                      Provider.of<ExpenseViewModel>(context);
                   expenseModel.newRecord();
+                  expenseModel.changeAccount(model.getSelectedAccount().index);
                   Navigator.pushNamed(context, ExpenseScreen.id);
                 },
+              );
+            }),
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'No records found for this account yet.\nTap to create one.',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white30, fontSize: 15),
               ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'No records found for this account yet.\nTap to create one.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white30, fontSize: 15),
-                ),
-              )
-            ],
-          );
-        }
-
+            )
+          ],
+        );
+      } else {
         return ListView(
           children: <Widget>[
             Visibility(
@@ -221,6 +217,7 @@ class _StatisticsState extends State<Statistics> {
                           PieChartData(
                               pieTouchData: PieTouchData(
                                   touchCallback: (pieTouchResponse) {
+                                print(pieTouchResponse.touchedSectionIndex);
                                 if (pieTouchResponse.touchedSectionIndex !=
                                     null) {
                                   setState(() {
@@ -319,7 +316,7 @@ class _StatisticsState extends State<Statistics> {
             ),
           ],
         );
-      },
-    );
+      }
+    });
   }
 }

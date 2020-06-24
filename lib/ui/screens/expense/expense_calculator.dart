@@ -540,7 +540,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             'from calculator: model.userData.accounts.length = ${model.userData.accounts.length}');
         Account account = model.userData.getThisAccount(
             model.tempRecord.accountUid ?? model.userData.accounts.first.uid);
-        _accId = model.isEditing ? account.index : _accId;
+        _accId = account.index;
         return Column(children: <Widget>[
           Expanded(child: _getDisplay(model), flex: 3),
           Expanded(child: _getButtons(), flex: 4),

@@ -17,8 +17,8 @@ class AccountTile extends StatelessWidget {
     return Consumer<DashboardViewModel>(builder: (context, model, child) {
       return GestureDetector(
         onTap: () {
-          model.syncController();
           model.selectAccount(index);
+          model.syncController();
         },
         child: Container(
           decoration: BoxDecoration(

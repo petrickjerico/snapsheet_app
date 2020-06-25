@@ -1,6 +1,7 @@
 import 'package:snapsheetapp/business_logic/models/record.dart';
 
 List<Record> records = [
+  Record.unnamed("Carousel sales", 120, DateTime(2020, 4, 12), 7, 0, true),
   Record.unnamed("Steam Dota", 12, DateTime(2020, 4, 12), 3, 0),
   Record.unnamed("UNIQLO", 30, DateTime(2020, 5, 12), 2, 0),
   Record.unnamed("Mother's Day", 20, DateTime(2020, 5, 10), 2, 0),

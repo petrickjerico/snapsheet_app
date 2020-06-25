@@ -103,6 +103,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   void newRecord() {
     tempRecord = Record.newBlankRecord();
     tempRecord.accountUid = accounts.first.uid;
+    notifyListeners();
   }
 
   void changeTempRecord(int recordIndex) {
@@ -154,6 +155,9 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
 
   void deleteRecord() {
     userData.deleteRecord(tempRecord);
+    if (isEditing) {
+      isEditing = false;
+    }
     notifyListeners();
   }
 }

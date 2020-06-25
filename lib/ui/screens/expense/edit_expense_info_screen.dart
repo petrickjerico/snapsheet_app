@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/date_time.dart';
 import 'package:snapsheetapp/ui/components/receipt_image_dialog.dart';
@@ -37,6 +39,7 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
   Widget build(BuildContext context) {
     print('EditInfoScreen build() called.');
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: kBlack,
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -105,12 +108,28 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
         backgroundColor: Colors.black,
         child: Icon(Icons.check),
         onPressed: () {
+          final dashboardModel =
+              Provider.of<DashboardViewModel>(context, listen: false);
           print("Adding to record: \$${model.tempRecord.value}");
           model.addRecord();
-          Navigator.popUntil(
-            context,
-            ModalRoute.withName(HomepageScreen.id),
-          );
+          bool isEditing = model.isEditing;
+          dashboardModel.selectAccount(model.getAccountIndexFromTempRecord());
+          dashboardModel.syncController();
+          Navigator.pop(context);
+          Navigator.pop(context);
+          String title = dashboardModel.getSelectedAccount().title;
+          String messageStatus =
+              isEditing ? 'updated' : 'added to account: $title';
+          Flushbar(
+            message: "Record successfully $messageStatus.",
+            icon: Icon(
+              Icons.info_outline,
+              size: 28.0,
+              color: Colors.blue[300],
+            ),
+            duration: Duration(seconds: 3),
+            leftBarIndicatorColor: Colors.blue[300],
+          )..show(context);
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

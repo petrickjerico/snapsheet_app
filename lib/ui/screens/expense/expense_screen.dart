@@ -55,9 +55,8 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
               icon: Icon(Icons.receipt),
               onPressed: () async {
                 await model.showChoiceDialog(context);
-                await model
-                    .imageToTempRecord()
-                    .then((value) => model.toggleScanned());
+                await model.imageToTempRecord();
+                model.toggleScanned();
               },
             ),
             IconButton(
@@ -79,6 +78,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                 model.addRecord();
                 dashboardModel
                     .selectAccount(model.getAccountIndexFromTempRecord());
+                dashboardModel.syncController();
                 Navigator.pop(context);
                 String title = dashboardModel.getSelectedAccount().title;
                 String messageStatus =

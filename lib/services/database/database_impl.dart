@@ -79,7 +79,7 @@ class DatabaseServiceImpl implements DatabaseService {
 
   @override
   Future<void> updateAccount(Account account) async {
-    recordCollection.document(account.uid).setData(account.toJson());
+    accountCollection.document(account.uid).setData(account.toJson());
   }
 
   /// DELETE
@@ -90,6 +90,6 @@ class DatabaseServiceImpl implements DatabaseService {
 
   @override
   Future<void> deleteAccount(Account account) async {
-    recordCollection.document(account.uid).delete();
+    accountCollection.document(account.uid).delete();
   }
 }

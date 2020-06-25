@@ -22,11 +22,13 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
     print('init from exportviewmodel');
     records = userData.records;
     accounts = userData.accounts;
-    isExport = List.generate(records.length, (_) => true);
+    isExport = List.generate(accounts.length, (_) => true);
   }
 
   void toggleExport(index) {
+    print(isExport);
     isExport[index] = !isExport[index];
+    notifyListeners();
   }
 
   Future<void> exportCSV() async {

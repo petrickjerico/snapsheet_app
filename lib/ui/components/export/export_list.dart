@@ -9,8 +9,6 @@ class ExportList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ExportViewModel>(
       builder: (context, model, child) {
-        print("ACCOUNTS LENGHT IN EXPORT");
-        print(model.accounts.length);
         return ListView.separated(
           separatorBuilder: (context, index) => Divider(),
           itemBuilder: (context, index) {

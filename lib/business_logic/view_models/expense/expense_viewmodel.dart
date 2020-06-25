@@ -32,7 +32,10 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
       tempRecord.dateTime = map['dateTime'];
       tempRecord.title = map['title'];
       tempRecord.categoryId = map['categoryId'];
+      tempRecord.image = map['image'];
+      print(tempRecord);
     }
+    notifyListeners();
   }
 
   int getAccountIndexFromTempRecord() {

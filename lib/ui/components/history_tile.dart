@@ -16,10 +16,8 @@ class HistoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("BEFORE CONSUMER");
     return Consumer<ExpenseViewModel>(builder: (context, model, child) {
       Category category = categories[record.categoryId];
-      print("BEFORE LIST TILE");
       return ListTile(
         leading: CircleAvatar(
           backgroundColor: category.color.withOpacity(0.2),

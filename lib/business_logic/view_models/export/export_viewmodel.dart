@@ -19,7 +19,6 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
   File target;
 
   ExportViewModel({this.userData}) {
-    print('init from exportviewmodel');
     records = userData.records;
     accounts = userData.accounts;
     isExport = List.generate(accounts.length, (_) => true);
@@ -27,7 +26,6 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
 
   void toggleExport(index) {
     isExport[index] = !isExport[index];
-    print(isExport);
     notifyListeners();
   }
 
@@ -37,7 +35,6 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
     target = await _targetFile();
     File file = await _writeData(await data);
     final ByteData bytes = ByteData.view(file.readAsBytesSync().buffer);
-    print("BYTEDATA");
     await Share.file(
       'snapsheet',
       'snapsheet.csv',

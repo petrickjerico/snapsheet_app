@@ -12,7 +12,7 @@ class ScannerImpl implements Scanner {
   Future<Map<String, dynamic>> getDataFromImage(File imageFile) async {
     List<String> txt = await _txtListFromImage(imageFile);
     Map<String, dynamic> map = _extractDataFromTxt(txt);
-    map['file'] = imageFile;
+    map['image'] = imageFile;
     return map;
   }
 
@@ -36,9 +36,9 @@ class ScannerImpl implements Scanner {
   Map<String, dynamic> _extractDataFromTxt(List<String> txt) {
     Map<String, dynamic> map = {
       'title': "",
-      'catId': 0,
+      'categoryId': 0,
       'value': 0,
-      'date': DateTime.now()
+      'dateTime': DateTime.now()
     };
 
     String title = parser.findTitle(txt);
@@ -49,9 +49,9 @@ class ScannerImpl implements Scanner {
     print('${value} ${date.toString()} ${title}');
 
     map['title'] = title;
-    map['catId'] = catId;
+    map['categoryId'] = catId;
     map['value'] = value;
-    map['date'] = date;
+    map['dateTime'] = date;
 
     return map;
   }

@@ -16,9 +16,9 @@ class AccountTile extends StatelessWidget {
     return Consumer<DashboardViewModel>(builder: (context, model, child) {
       return GestureDetector(
         onTap: () {
-          print(
-              "from AccountTile: model.selectedAccountIndex = ${model.selectedAccountIndex}");
-          print("from AccountTile: index = $index");
+//          print(
+//              "from AccountTile: model.selectedAccountIndex = ${model.selectedAccountIndex}");
+//          print("from AccountTile: index = $index");
           if (model.selectedAccountIndex != index) {
             model.selectAccount(index);
           }

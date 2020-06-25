@@ -73,6 +73,7 @@ class Record {
         accountUid: json['accountUid'],
         isIncome: json['isIncome'],
         receiptURL: json['receiptURL'],
+        image: json['image'],
         uid: json['uid']);
   }
 
@@ -85,7 +86,24 @@ class Record {
       'accountUid': accountUid,
       'isIncome': isIncome,
       'receiptURL': receiptURL,
+      'image': image,
       'uid': uid
     };
+  }
+
+  @override
+  String toString() {
+    Map<String, dynamic> map = {
+      'title': title,
+      'value': value,
+      'dateTime': dateTime,
+      'categoryId': categoryId,
+      'accountUid': accountUid,
+      'isIncome': isIncome,
+      'receiptURL': receiptURL,
+      'image': image,
+      'uid': uid
+    };
+    return map.toString();
   }
 }

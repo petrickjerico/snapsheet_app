@@ -16,42 +16,38 @@ class HomepageScreen extends StatefulWidget {
 }
 
 class _HomepageScreenState extends State<HomepageScreen> {
-  bool isWiping = false;
-
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserData>(context);
-    return isWiping
-        ? Loading()
-        : Consumer<ExpenseViewModel>(builder: (context, model, child) {
-            model.userData = userData;
-            return Scaffold(
-              resizeToAvoidBottomInset: false,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.black,
-                title: Text('HOMEPAGE'),
-              ),
-              drawer: SidebarMenu(),
-              body: PageView(
-                children: <Widget>[
-                  AccountsTab(),
-                  HistoryTab(),
-                ],
-              ),
-              floatingActionButton: Consumer<DashboardViewModel>(
-                  builder: (context, dashboardModel, child) {
-                return FloatingActionButton(
-                  backgroundColor: kBlack,
-                  child: Icon(Icons.add),
-                  onPressed: () {
-                    model.newRecord();
+    return Consumer<ExpenseViewModel>(builder: (context, model, child) {
+      model.userData = userData;
+      return Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Text('HOMEPAGE'),
+        ),
+        drawer: SidebarMenu(),
+        body: PageView(
+          children: <Widget>[
+            AccountsTab(),
+            HistoryTab(),
+          ],
+        ),
+        floatingActionButton: Consumer<DashboardViewModel>(
+            builder: (context, dashboardModel, child) {
+          return FloatingActionButton(
+            backgroundColor: kBlack,
+            child: Icon(Icons.add),
+            onPressed: () {
+              model.newRecord();
 //              model.changeAccount(dashboardModel.getSelectedAccount().index);
-                    Navigator.pushNamed(context, ExpenseScreen.id);
-                  },
-                );
-              }),
-            );
-          });
+              Navigator.pushNamed(context, ExpenseScreen.id);
+            },
+          );
+        }),
+      );
+    });
   }
 }

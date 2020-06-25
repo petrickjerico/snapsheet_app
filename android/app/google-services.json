@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "918824185229-3b0rlod071f64s0mngb3heijlhlmpl5e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petrickjerico.snapsheetapp",
+            "certificate_hash": "60547bdb44fcf2d9a03b2822863500911172def8"
+          }
+        },
+        {
           "client_id": "918824185229-qihgfeejnkgvaplen2ca5smd9nbkp86i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

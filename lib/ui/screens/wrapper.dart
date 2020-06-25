@@ -39,6 +39,7 @@ class _WrapperState extends State<Wrapper> {
         setState(() {
           initialized = true;
         });
+        return Loading();
       } else {
         if (!loadDone) {
           return Loading();

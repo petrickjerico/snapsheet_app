@@ -22,6 +22,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   String selectedAccountUid;
 
   void init(UserData userData) {
+    this.userData = userData;
     accounts = userData.accounts;
   }
 
@@ -61,8 +62,8 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
       Record record = Record.fromReceipt(
         title: map['title'],
         value: map['value'],
-        dateTime: map['date'],
-        categoryId: map['catId'],
+        dateTime: map['dateTime'],
+        categoryId: map['categoryId'],
         accountUid: selectedAccountUid,
         image: image,
       );
@@ -74,7 +75,9 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   void addAll() {
     for (int i = 0; i < records.length; i++) {
       if (isDelete[i]) continue;
+      print(records[i]);
       userData.addRecord(records[i]);
     }
+    print("ALL ADDED");
   }
 }

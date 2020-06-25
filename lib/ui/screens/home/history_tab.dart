@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/components/history_tile.dart';
 
 class HistoryTab extends StatelessWidget {
@@ -33,15 +34,15 @@ class HistoryTab extends StatelessWidget {
               ),
               child: Align(
                 alignment: Alignment.topCenter,
-                child: Consumer<ExpenseViewModel>(
-                  builder: (context, model, child) {
+                child: Consumer<UserData>(
+                  builder: (context, userData, child) {
                     return ListView.builder(
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        final record = model.userData.records[index];
+                        final record = userData.records[index];
                         return HistoryTile(record: record, index: index);
                       },
-                      itemCount: model.userData.records.length,
+                      itemCount: userData.records.length,
                     );
                   },
                 ),

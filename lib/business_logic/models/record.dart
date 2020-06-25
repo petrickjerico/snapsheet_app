@@ -33,8 +33,7 @@ class Record {
     this.image,
   });
 
-  Record.unnamed(
-      this.title, this.value, this.dateTime, this.categoryId, this.accountUid,
+  Record.unnamed(this.title, this.value, this.dateTime, this.categoryId,
       [this.isIncome = false]);
 
   Record(

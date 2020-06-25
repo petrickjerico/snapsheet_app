@@ -16,7 +16,6 @@ class _BulkScanAccountsListState extends State<BulkScanAccountsList> {
 
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserData>(context, listen: false);
     return Consumer<BulkScanViewModel>(
       builder: (context, model, child) {
         return ModalProgressHUD(
@@ -47,7 +46,7 @@ class _BulkScanAccountsListState extends State<BulkScanAccountsList> {
                 ),
               );
             },
-            itemCount: userData.accounts.length,
+            itemCount: model.accounts.length,
           ),
         );
       },

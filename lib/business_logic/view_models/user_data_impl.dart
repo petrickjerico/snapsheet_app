@@ -35,6 +35,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     notifyListeners();
     Future<String> uid = _db.addRecord(record);
     record.uid = await uid;
+    print(record);
   }
 
   Future addAccount(Account account) async {

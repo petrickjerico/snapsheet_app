@@ -73,7 +73,7 @@ class Record {
         accountUid: json['accountUid'],
         isIncome: json['isIncome'],
         receiptURL: json['receiptURL'],
-        image: json['image'],
+        image: File(json['image']),
         uid: json['uid']);
   }
 
@@ -86,7 +86,7 @@ class Record {
       'accountUid': accountUid,
       'isIncome': isIncome,
       'receiptURL': receiptURL,
-      'image': image,
+      'image': image.path,
       'uid': uid
     };
   }
@@ -101,7 +101,7 @@ class Record {
       'accountUid': accountUid,
       'isIncome': isIncome,
       'receiptURL': receiptURL,
-      'image': image,
+      'image': image.path,
       'uid': uid
     };
     return map.toString();

@@ -83,9 +83,6 @@ class AuthServiceImpl implements AuthService {
       assert(!user.isAnonymous);
       assert(await user.getIdToken() != null);
 
-      DatabaseServiceImpl _db = DatabaseServiceImpl(uid: user.uid);
-      await _db.initialize();
-
       final FirebaseUser currentUser = await _auth.currentUser();
       assert(user.uid == currentUser.uid);
 

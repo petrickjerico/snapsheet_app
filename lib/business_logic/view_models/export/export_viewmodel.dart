@@ -2,9 +2,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:csv/csv.dart';
-import 'package:downloads_path_provider/downloads_path_provider.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
@@ -70,7 +70,7 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
   }
 
   Future<File> _targetFile() async {
-    String dir = (await DownloadsPathProvider.downloadsDirectory).path;
+    String dir = (await getApplicationDocumentsDirectory()).path;
     String path = "$dir/snapsheet-${DateTime.now()}.csv";
     return File(path);
   }

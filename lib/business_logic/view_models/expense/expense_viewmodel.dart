@@ -152,4 +152,9 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     tempRecord.imagePath = newImagePath;
     notifyListeners();
   }
+
+  void deleteRecord() {
+    userData.deleteRecord(tempRecord);
+    notifyListeners();
+  }
 }

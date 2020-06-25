@@ -79,10 +79,12 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
 
   // DELETE
   Future<void> deleteRecord(Record record) async {
+    _records.removeWhere((rec) => rec.uid == record.uid);
     _db.deleteRecord(record);
   }
 
   Future<void> deleteAccount(Account account) async {
+    _accounts.removeWhere((acc) => acc.uid == account.uid);
     _db.deleteAccount(account);
   }
 }

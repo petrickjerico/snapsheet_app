@@ -14,21 +14,10 @@ class AccountsCarousel extends StatefulWidget {
 }
 
 class _AccountsCarouselState extends State<AccountsCarousel> {
-  static final CarouselController controller = CarouselController();
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    var model = Provider.of<DashboardViewModel>(context);
-    var index = model.selectedAccountIndex;
-    if (index != -1) controller.animateToPage(index);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Provider<CarouselController>(
-      create: (_) => controller,
-      builder: (context, child) {
+    return Consumer<CarouselController>(
+      builder: (context, controller, child) {
         return Container(
           child: Column(
             children: <Widget>[

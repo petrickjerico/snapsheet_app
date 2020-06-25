@@ -29,7 +29,10 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
               data: ThemeData.dark().copyWith(accentColor: Colors.white),
               child: ReorderableListSimple(
                   handleSide: ReorderableListSimpleSide.Left,
-                  handleIcon: Icon(Icons.reorder),
+                  handleIcon: Icon(
+                    Icons.reorder,
+                    size: 30.0,
+                  ),
                   children: model.accounts.map((account) {
                     return AccountOrderTile(
                       index: account.index,

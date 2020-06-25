@@ -176,7 +176,7 @@ class ReorderableItemSimple extends StatelessWidget {
     return IconTheme.merge(
       data: IconThemeData(color: _iconColor(theme, tileTheme)),
       child: Padding(
-        padding: EdgeInsets.only(right: 20.0),
+        padding: EdgeInsets.only(left: 20.0),
         child: row,
       ),
     );

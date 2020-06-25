@@ -30,7 +30,8 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
             FlatButton(
               child: Text('SUBMIT'),
               onPressed: () {
-                final model = Provider.of<DashboardViewModel>(context);
+                final model =
+                    Provider.of<DashboardViewModel>(context, listen: false);
                 Navigator.of(context).pop();
                 setState(() => model.tempAccount.color = tempColor);
               },

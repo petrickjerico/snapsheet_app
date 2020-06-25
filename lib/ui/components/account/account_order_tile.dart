@@ -21,12 +21,12 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-//        onTap: () {
-//          setState(() {
-//            userData.selectAccount(widget.index);
-//          });
-//          Navigator.pop(context);
-//        },
+      onTap: () {
+        final model = Provider.of<DashboardViewModel>(context, listen: false);
+        model.selectAccount(widget.index);
+        Navigator.pop(context);
+      },
+      contentPadding: EdgeInsets.only(left: 20),
       dense: true,
       leading: Container(
         height: 40,
@@ -60,7 +60,8 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
             color: Colors.white,
           ),
           onSelected: (Function value) {
-            final model = Provider.of<DashboardViewModel>(context);
+            final model =
+                Provider.of<DashboardViewModel>(context, listen: false);
             model.selectAccount(widget.index);
             value.call();
           },
@@ -70,7 +71,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
   }
 
   void rename() {
-    final model = Provider.of<DashboardViewModel>(context);
+    final model = Provider.of<DashboardViewModel>(context, listen: false);
     model.initEditAccount(widget.index);
     showModalBottomSheet(
       context: context,

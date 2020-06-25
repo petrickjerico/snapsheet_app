@@ -65,7 +65,6 @@ class SidebarMenu extends StatelessWidget {
 
   logout(BuildContext context) {
     AuthService authService = AuthServiceImpl();
-    Navigator.pop(context);
     authService.signOut();
     Navigator.pushNamedAndRemoveUntil(
       context,

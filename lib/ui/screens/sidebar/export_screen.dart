@@ -9,7 +9,6 @@ class ExportScreen extends StatelessWidget {
   static const String id = 'export_screen';
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserData>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

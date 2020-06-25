@@ -13,7 +13,7 @@ class ExportTile extends StatelessWidget {
     return Card(
       color: isExport ? account.color : Colors.grey,
       child: ListTile(
-        onTap: voidCallback,
+        onTap: () => voidCallback(),
         title: Text(
           account.title,
           style: TextStyle(color: isExport ? Colors.white : Colors.black),

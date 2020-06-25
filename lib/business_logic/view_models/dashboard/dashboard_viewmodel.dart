@@ -53,7 +53,6 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
   void deleteAccount() {
     Account target = accounts[selectedAccountIndex];
     userData.deleteAccount(target);
-    accounts.remove(target);
     isSelected.removeAt(selectedAccountIndex);
     for (Record record in records) {
       if (record.accountUid == target.uid) {

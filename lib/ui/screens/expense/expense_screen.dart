@@ -7,9 +7,14 @@ import 'package:snapsheetapp/ui/screens/expense/expense_calculator.dart';
 import 'package:flushbar/flushbar.dart';
 import 'edit_expense_info_screen.dart';
 
-class ExpenseScreen extends StatelessWidget {
+class ExpenseScreen extends StatefulWidget {
   static const String id = 'expense_screen';
 
+  @override
+  _ExpenseScreenState createState() => _ExpenseScreenState();
+}
+
+class _ExpenseScreenState extends State<ExpenseScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<ExpenseViewModel>(builder: (context, model, child) {
@@ -37,7 +42,13 @@ class ExpenseScreen extends StatelessWidget {
                     .imageToTempRecord()
                     .then((value) => model.toggleScanned());
               },
-            )
+            ),
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                delete();
+              },
+            ),
           ],
         ),
         body: ExpenseCalculator(),
@@ -82,5 +93,61 @@ class ExpenseScreen extends StatelessWidget {
         ),
       );
     });
+  }
+
+  void delete() {
+    showDialog(
+      context: context,
+      builder: (context) => Consumer<ExpenseViewModel>(
+        builder: (context, model, child) => Theme(
+          data: ThemeData.light(),
+          child: AlertDialog(
+            titlePadding: EdgeInsets.only(left: 20, right: 20, top: 20),
+            contentPadding:
+                EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+            title: Text("Delete record?"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Are you sure you want to delete this record?',
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text(
+                        'DELETE',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: Colors.black,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0)),
+                      onPressed: () {
+                        model.deleteRecord();
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                    ),
+                    OutlineButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0)),
+                      child: Text('NO'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

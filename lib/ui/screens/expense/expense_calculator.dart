@@ -34,7 +34,7 @@ class _ExpenseCalculatorState extends State<ExpenseCalculator> {
       builder: (context, model, child) {
         return SimpleCalculator(
             value: value,
-            hideExpression: true,
+            hideExpression: false,
             theme: CalculatorThemeData(
                 borderWidth: 0.0,
                 operatorColor: Colors.grey[500],
@@ -632,7 +632,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
-            flex: 4,
+            flex: 8,
             child: Container(
               color: widget.theme?.displayColor,
               child: Row(
@@ -671,9 +671,42 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             ),
           ),
           Expanded(
-            flex: 1,
+            child: Visibility(
+              visible: !widget.hideExpression,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                color: widget.theme?.displayColor.withOpacity(0.9),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      'Current Expression:',
+                      style: widget.theme?.expressionStyle ??
+                          const TextStyle(color: Colors.grey),
+                      maxLines: 1,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        reverse: true,
+                        child: Text(
+                          _expression,
+                          style: widget.theme?.expressionStyle ??
+                              const TextStyle(color: Colors.grey),
+                          maxLines: 1,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
             child: Container(
-              color: widget.theme?.displayColor,
+              color: widget.theme?.displayColor.withOpacity(0.8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
@@ -809,28 +842,6 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                     ),
                   ),
                 ],
-              ),
-            ),
-          ),
-          Visibility(
-            visible: !widget.hideExpression,
-            child: Expanded(
-              child: Container(
-                color: widget.theme?.expressionColor,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    scrollDirection: Axis.horizontal,
-                    reverse: true,
-                    child: Text(
-                      _expression,
-                      style: widget.theme?.expressionStyle ??
-                          const TextStyle(color: Colors.grey),
-                      maxLines: 1,
-                    ),
-                  ),
-                ),
               ),
             ),
           ),

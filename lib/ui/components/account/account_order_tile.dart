@@ -100,7 +100,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Are you sure you want to delete ${model.getSelectedAccount().title}?',
+                  'Are you sure you want to delete ${widget.title}?',
                 ),
                 SizedBox(
                   height: 10,

@@ -39,6 +39,7 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
   void addAccount(String title, Color color) {
     userData.addAccount(
         Account(title: title, color: color, index: accounts.length));
+    isSelected.add(false);
     notifyListeners();
   }
 
@@ -51,6 +52,7 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
 
   void deleteAccount() {
     Account target = accounts[selectedAccountIndex];
+    userData.deleteAccount(target);
     accounts.remove(target);
     isSelected.removeAt(selectedAccountIndex);
     for (Record record in records) {

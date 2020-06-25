@@ -26,8 +26,8 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
   }
 
   void toggleExport(index) {
-    print(isExport);
     isExport[index] = !isExport[index];
+    print(isExport);
     notifyListeners();
   }
 
@@ -37,6 +37,7 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
     target = await _targetFile();
     File file = await _writeData(await data);
     final ByteData bytes = ByteData.view(file.readAsBytesSync().buffer);
+    print("BYTEDATA");
     await Share.file(
       'snapsheet',
       'snapsheet.csv',
@@ -45,10 +46,17 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
     );
   }
 
-  Future<String> _processCSV() async {
-    List<Record> filtered =
-        records.where((e) => isExport[records.indexOf(e)]).toList();
+  int getAccountIndexFromUid(String accountUid) {
+    for (int i = 0; i < accounts.length; i++) {
+      if (accounts[i].uid == accountUid) return i;
+    }
+  }
 
+  Future<String> _processCSV() async {
+    List<Record> filtered = records
+        .where(
+            (record) => (isExport[getAccountIndexFromUid(record.accountUid)]))
+        .toList();
     List<List<dynamic>> rows = List<List<dynamic>>();
 
     for (Record record in filtered) {
@@ -56,7 +64,7 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
       row.add(record.dateTime);
       row.add(record.title);
       row.add(record.value);
-      row.add(userData.getThisAccount(record.accountUid).title);
+      row.add(accounts[getAccountIndexFromUid(record.accountUid)].title);
       row.add(categories[record.categoryId].title);
       rows.add(row);
     }

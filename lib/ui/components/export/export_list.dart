@@ -8,7 +8,6 @@ class ExportList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ExportViewModel>(
       builder: (context, model, child) {
-        print("REBUILD EXPORT");
         return ListView.separated(
           separatorBuilder: (context, index) => Divider(),
           itemBuilder: (context, index) {

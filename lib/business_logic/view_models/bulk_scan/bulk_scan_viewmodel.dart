@@ -78,6 +78,5 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
       print(records[i]);
       userData.addRecord(records[i]);
     }
-    print("ALL ADDED");
   }
 }

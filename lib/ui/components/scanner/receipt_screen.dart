@@ -98,7 +98,6 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                       icon: Icon(Icons.done_all, color: kBlack),
                       onPressed: () {
                         model.addAll();
-                        print("BEFORE PUSH");
                         Navigator.pushNamed(context, HomepageScreen.id);
                       },
                     )

@@ -26,12 +26,10 @@ class _ExpenseCalculatorState extends State<ExpenseCalculator> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     value = Provider.of<ExpenseViewModel>(context).tempRecord.value;
-    print("DIDCHANGEDEPENDENCY: " + value.toString());
   }
 
   @override
   Widget build(BuildContext context) {
-    print('ExpensesCalculator build() was called.');
     return Consumer<ExpenseViewModel>(
       builder: (context, model, child) {
         return SimpleCalculator(
@@ -42,13 +40,8 @@ class _ExpenseCalculatorState extends State<ExpenseCalculator> {
                 operatorColor: Colors.grey[500],
                 displayColor: kBlack),
             onChanged: (key, value, expression) {
-              print(key);
-              print(value);
-              print(expression);
               double temp = model.tempRecord.value;
               model.changeValue(value);
-              print(
-                  "Temp Record value changed: $temp -> ${model.tempRecord.value} ");
             });
       },
     );
@@ -116,9 +109,7 @@ class CalcDisplay {
   /// Set the value.
   void setValue(double val) {
     value = val;
-    print('INSIDE CalcDisplay - setValue value: $value');
     string = numberFormat.format(val);
-    print('INSIDE CalcDisplay - setValue string: $string');
   }
 
   /// Toggle between a plus sign and a minus sign.
@@ -285,7 +276,6 @@ class Calculator {
     _operated = false;
     _display.setValue(val);
     _expression.setVal(_display);
-    print('INSIDE CALCULATOR: ${_display.value}');
   }
 
   /// Add a digit to the display.
@@ -523,7 +513,6 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
 
   @override
   Widget build(BuildContext context) {
-    print("SimpleCalculator build() was called.");
     _borderSide = Divider.createBorderSide(
       context,
       color: widget.theme?.borderColor ?? Theme.of(context).dividerColor,
@@ -536,8 +525,6 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           model.toggleScanned();
         }
         _catId = model.tempRecord.categoryId;
-        print(
-            'from calculator: model.userData.accounts.length = ${model.userData.accounts.length}');
         Account account = model.userData.getThisAccount(
             model.tempRecord.accountUid ?? model.userData.accounts.first.uid);
         _accId = account.index;

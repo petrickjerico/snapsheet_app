@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
+import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 
@@ -16,7 +17,7 @@ class HomepageScreen extends StatefulWidget {
 class _HomepageScreenState extends State<HomepageScreen> {
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserData>(context, listen: false);
+    final userData = Provider.of<UserData>(context);
     return Consumer<ExpenseViewModel>(builder: (context, model, child) {
       model.userData = userData;
       return Scaffold(
@@ -25,6 +26,21 @@ class _HomepageScreenState extends State<HomepageScreen> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           title: Text('HOMEPAGE'),
+          actions: <Widget>[
+            userData.isDemo == null
+                ? FlatButton.icon(
+                    icon: Icon(
+                      Icons.exit_to_app,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      'Exit Demo',
+                      style: kWhiteTextStyle,
+                    ),
+                    onPressed: () => userData.wipeData(),
+                  )
+                : SizedBox.shrink()
+          ],
         ),
         drawer: SidebarMenu(),
         body: PageView(

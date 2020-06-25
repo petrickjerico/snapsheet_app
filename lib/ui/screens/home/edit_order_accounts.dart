@@ -28,6 +28,7 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
             child: Theme(
               data: ThemeData.dark().copyWith(accentColor: Colors.white),
               child: ReorderableListSimple(
+                  allowReordering: false,
                   handleSide: ReorderableListSimpleSide.Left,
                   handleIcon: Icon(
                     Icons.reorder,

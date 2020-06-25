@@ -22,7 +22,22 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.black,
-          leading: BackButton(),
+          leading: BackButton(
+            onPressed: () {
+              model.undoEditRecord();
+              Navigator.pop(context);
+              Flushbar(
+                message: "Exited calculator. No changes done.",
+                icon: Icon(
+                  Icons.info_outline,
+                  size: 28.0,
+                  color: Colors.blue[300],
+                ),
+                duration: Duration(seconds: 3),
+                leftBarIndicatorColor: Colors.blue[300],
+              )..show(context);
+            },
+          ),
           title: Text('EXPENSES EDITOR'),
           actions: <Widget>[
             IconButton(

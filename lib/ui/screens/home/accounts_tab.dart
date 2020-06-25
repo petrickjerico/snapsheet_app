@@ -6,7 +6,12 @@ import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/components/account/accounts_carousel.dart';
 import 'package:snapsheetapp/ui/components/stats/statistics.dart';
 
-class AccountsTab extends StatelessWidget {
+class AccountsTab extends StatefulWidget {
+  @override
+  _AccountsTabState createState() => _AccountsTabState();
+}
+
+class _AccountsTabState extends State<AccountsTab> {
   static final CarouselController controller = CarouselController();
 
   @override

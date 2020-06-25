@@ -50,7 +50,6 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   Account getThisAccount(String accountUid) {
     print("length" + accounts.length.toString());
     print(accountUid);
-    accounts.forEach((e) => print(e.uid));
     return accounts.firstWhere((acc) {
       print(acc.uid == accountUid);
       return acc.uid == accountUid;

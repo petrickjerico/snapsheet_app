@@ -40,7 +40,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
             child: Icon(Icons.add),
             onPressed: () {
               model.newRecord();
-              model.changeAccount(dashboardModel.getSelectedAccount().index);
+//              model.changeAccount(dashboardModel.getSelectedAccount().index);
               Navigator.pushNamed(context, ExpenseScreen.id);
             },
           );

@@ -65,7 +65,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
         dateTime: map['dateTime'],
         categoryId: map['categoryId'],
         accountUid: selectedAccountUid,
-        image: image,
+        imagePath: image.path,
       );
       records.add(record);
       isDelete.add(false);

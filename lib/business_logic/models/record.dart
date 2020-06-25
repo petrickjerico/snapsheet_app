@@ -8,10 +8,11 @@ class Record {
   DateTime dateTime;
   int categoryId;
   String accountUid;
+  int accountId;
   bool isIncome;
   String receiptURL;
   String uid;
-  File image;
+  String imagePath;
 
   factory Record.newBlankRecord() {
     return Record(
@@ -30,10 +31,11 @@ class Record {
     this.categoryId,
     this.accountUid,
     this.isIncome = false,
-    this.image,
+    this.imagePath,
   });
 
-  Record.unnamed(this.title, this.value, this.dateTime, this.categoryId,
+  Record.unnamed(
+      this.title, this.value, this.dateTime, this.categoryId, this.accountId,
       [this.isIncome = false]);
 
   Record(
@@ -45,7 +47,7 @@ class Record {
       this.isIncome,
       this.receiptURL,
       this.uid,
-      this.image});
+      this.imagePath});
 
   factory Record.of(Record record) {
     return Record(
@@ -57,7 +59,7 @@ class Record {
       isIncome: record.isIncome,
       receiptURL: record.receiptURL,
       uid: record.uid,
-      image: record.image,
+      imagePath: record.imagePath,
     );
   }
 
@@ -72,7 +74,7 @@ class Record {
         accountUid: json['accountUid'],
         isIncome: json['isIncome'],
         receiptURL: json['receiptURL'],
-        image: File(json['image']),
+        imagePath: json['imagePath'],
         uid: json['uid']);
   }
 
@@ -85,7 +87,7 @@ class Record {
       'accountUid': accountUid,
       'isIncome': isIncome,
       'receiptURL': receiptURL,
-      'image': image.path,
+      'image': imagePath,
       'uid': uid
     };
   }
@@ -100,7 +102,7 @@ class Record {
       'accountUid': accountUid,
       'isIncome': isIncome,
       'receiptURL': receiptURL,
-      'image': image.path,
+      'image': imagePath,
       'uid': uid
     };
     return map.toString();

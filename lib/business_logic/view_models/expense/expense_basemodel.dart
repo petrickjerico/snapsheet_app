@@ -14,5 +14,5 @@ abstract class ExpenseBaseModel {
   void changeDate(DateTime newDateTime);
   void changeCategory(int newCategoryId);
   void changeAccount(int newAccountIndex);
-  void changeImage(File imageFile);
+  void changeImage(String imagePath);
 }

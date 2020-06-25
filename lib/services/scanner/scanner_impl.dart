@@ -12,7 +12,7 @@ class ScannerImpl implements Scanner {
   Future<Map<String, dynamic>> getDataFromImage(File imageFile) async {
     List<String> txt = await _txtListFromImage(imageFile);
     Map<String, dynamic> map = _extractDataFromTxt(txt);
-    map['image'] = imageFile;
+    map['imagePath'] = imageFile.path;
     return map;
   }
 

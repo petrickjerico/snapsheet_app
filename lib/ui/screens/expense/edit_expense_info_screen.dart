@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -63,17 +65,17 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
               SizedBox(height: 10.0),
               RecordDateTime(),
               SizedBox(height: 10.0),
-              model.tempRecord.image == null
+              model.tempRecord.imagePath == null
                   ? SizedBox.shrink()
                   : GestureDetector(
                       onTap: () async {
                         await showDialog(
                             context: context,
-                            builder: (_) =>
-                                ReceiptImageDialog(model.tempRecord.image));
+                            builder: (_) => ReceiptImageDialog(
+                                File(model.tempRecord.imagePath)));
                       },
                       child: Image.file(
-                        model.tempRecord.image,
+                        File(model.tempRecord.imagePath),
                         fit: BoxFit.cover,
                         height: 200,
                       ),

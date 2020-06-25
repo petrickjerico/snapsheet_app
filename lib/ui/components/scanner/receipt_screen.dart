@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
@@ -46,10 +48,11 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                       onTap: () async {
                         await showDialog(
                             context: context,
-                            builder: (_) => ReceiptImageDialog(record.image));
+                            builder: (_) =>
+                                ReceiptImageDialog(File(record.imagePath)));
                       },
                       child: Image.file(
-                        record.image,
+                        File(record.imagePath),
                         fit: BoxFit.fitWidth,
                         height: 200,
                         width: 800,

@@ -32,7 +32,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
       tempRecord.dateTime = map['dateTime'];
       tempRecord.title = map['title'];
       tempRecord.categoryId = map['categoryId'];
-      tempRecord.image = map['image'];
+      tempRecord.imagePath = map['imagePath'];
       print(tempRecord);
     }
     notifyListeners();
@@ -116,6 +116,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     tempRecord.categoryId = editRecord.categoryId;
     tempRecord.isIncome = editRecord.isIncome;
     tempRecord.dateTime = editRecord.dateTime;
+    tempRecord.imagePath = editRecord.imagePath;
     print("${tempRecord.value} => ${tempRecord.value}");
     notifyListeners();
   }
@@ -145,8 +146,8 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     notifyListeners();
   }
 
-  void changeImage(File imageFile) {
-    tempRecord.image = imageFile;
+  void changeImage(String newImagePath) {
+    tempRecord.imagePath = newImagePath;
     notifyListeners();
   }
 }

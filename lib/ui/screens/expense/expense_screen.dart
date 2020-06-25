@@ -33,7 +33,9 @@ class ExpenseScreen extends StatelessWidget {
               icon: Icon(Icons.receipt),
               onPressed: () async {
                 await model.showChoiceDialog(context);
-                await model.imageToTempRecord();
+                await model
+                    .imageToTempRecord()
+                    .then((value) => model.toggleScanned());
               },
             )
           ],

@@ -25,7 +25,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   ImagePicker _picker = ImagePicker();
   Scanner scanner = ScannerImpl();
 
-  Future imageToTempRecord() async {
+  Future<void> imageToTempRecord() async {
     if (imageFile != null) {
       Map<String, dynamic> map = await scanner.getDataFromImage(imageFile);
       tempRecord.value = map['value'];
@@ -44,6 +44,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
 
   void toggleScanned() {
     isScanned = !isScanned;
+    notifyListeners();
   }
 
   void addRecord() {

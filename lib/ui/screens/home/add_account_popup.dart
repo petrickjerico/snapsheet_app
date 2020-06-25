@@ -119,8 +119,8 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                     if (AddAccountPopup._formKey.currentState.validate()) {
                       print(accountTitle);
                       print(_color.toString());
-                      model.addAccount(accountTitle, _color);
                       model.selectAccount(model.accounts.length);
+                      model.addAccount(accountTitle, _color);
                       Navigator.pop(context);
                     }
                   },

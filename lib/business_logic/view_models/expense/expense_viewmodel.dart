@@ -49,9 +49,11 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
 
   void addRecord() {
     if (!isEditing) {
+      print("NOT EDITING");
       userData.addRecord(tempRecord);
     }
     if (isEditing) {
+      print("IS EDITING");
       userData.updateRecord(tempRecord);
       isEditing = false;
     }

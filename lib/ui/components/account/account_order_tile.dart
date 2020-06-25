@@ -21,11 +21,12 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-//      onTap: () {
-//        final model = Provider.of<DashboardViewModel>(context, listen: false);
-//        model.selectAccount(widget.index);
-//        Navigator.pop(context);
-//      },
+      onTap: () {
+        final model = Provider.of<DashboardViewModel>(context, listen: false);
+        model.selectAccount(widget.index);
+        model.syncController();
+        Navigator.pop(context);
+      },
       contentPadding: EdgeInsets.only(left: 20),
       dense: true,
       leading: Container(
@@ -118,6 +119,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
                           borderRadius: BorderRadius.circular(5.0)),
                       onPressed: () {
                         model.deleteAccount();
+                        model.syncController();
                         Navigator.pop(context);
                       },
                     ),

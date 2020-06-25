@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_base
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 
 class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
+  static final CarouselController controller = CarouselController();
   UserData userData;
   List<Account> accounts;
   List<Record> records;
@@ -15,6 +17,14 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
   int touchedIndex;
   Account originalAccount;
   Account tempAccount;
+
+  void syncController() {
+    if (selectedAccountIndex != -1) {
+      controller.animateToPage(selectedAccountIndex);
+    } else {
+      controller.animateToPage(0);
+    }
+  }
 
   void init(UserData userData) {
     this.userData = userData;
@@ -51,14 +61,16 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
   }
 
   void deleteAccount() {
-    Account target = accounts[selectedAccountIndex];
+    Account target = getSelectedAccount();
     userData.deleteAccount(target);
     isSelected.removeAt(selectedAccountIndex);
-    for (Record record in records) {
+    List<Record> newRecords = List.from(records);
+    for (Record record in newRecords) {
       if (record.accountUid == target.uid) {
         userData.deleteRecord(record);
       }
     }
+    records = List.from(newRecords);
     selectedAccountIndex--;
     for (Account account in accounts) {
       if (account.index > selectedAccountIndex) {
@@ -201,5 +213,9 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
     }
 
     return res;
+  }
+
+  bool isAccountSelected(Account acc) {
+    return acc.index == selectedAccountIndex;
   }
 }

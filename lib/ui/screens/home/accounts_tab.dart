@@ -12,35 +12,30 @@ class AccountsTab extends StatefulWidget {
 }
 
 class _AccountsTabState extends State<AccountsTab> {
-  static final CarouselController controller = CarouselController();
-
   @override
   Widget build(BuildContext context) {
-    return Provider<CarouselController>(
-      create: (_) => controller,
-      child: Consumer<DashboardViewModel>(
-        builder: (context, model, child) {
-          return Container(
-            color: Colors.black.withOpacity(0.8),
-            child: Column(
-              children: <Widget>[
-                AccountsCarousel(),
-                Flexible(
-                  child: Container(
-                    padding: EdgeInsets.all(8.0),
-                    margin: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.black38,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Statistics(),
+    return Consumer<DashboardViewModel>(
+      builder: (context, model, child) {
+        return Container(
+          color: Colors.black.withOpacity(0.8),
+          child: Column(
+            children: <Widget>[
+              AccountsCarousel(),
+              Flexible(
+                child: Container(
+                  padding: EdgeInsets.all(8.0),
+                  margin: EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: Colors.black38,
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
+                  child: Statistics(),
                 ),
-              ],
-            ),
-          );
-        },
-      ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

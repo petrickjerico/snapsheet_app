@@ -15,42 +15,43 @@ class AccountTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<DashboardViewModel>(builder: (context, model, child) {
-      return Consumer<CarouselController>(
-          builder: (context, controller, child) {
-        return GestureDetector(
-          onTap: () {
-            controller.animateToPage(index);
-            model.selectAccount(index);
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            height: 50.0,
-            width: 100.0,
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
+      return GestureDetector(
+        onTap: () {
+          model.syncController();
+          model.selectAccount(index);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          height: 60.0,
+          width: 100.0,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Flexible(
+                  child: Text(
                     title,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.white),
                   ),
-                  Text(
+                ),
+                Flexible(
+                  child: Text(
                     total.toStringAsFixed(2),
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.white, fontSize: 20.0),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        );
-      });
+        ),
+      );
     });
   }
 }

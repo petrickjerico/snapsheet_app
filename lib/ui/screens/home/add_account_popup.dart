@@ -121,6 +121,7 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                       print(_color.toString());
                       model.selectAccount(model.accounts.length);
                       model.addAccount(accountTitle, _color);
+                      model.syncController();
                       Navigator.pop(context);
                     }
                   },

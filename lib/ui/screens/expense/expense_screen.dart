@@ -24,7 +24,9 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           backgroundColor: Colors.black,
           leading: BackButton(
             onPressed: () {
-              model.undoEditRecord();
+              if (model.isEditing) {
+                model.undoEditRecord();
+              }
               Navigator.pop(context);
               Flushbar(
                 message: "Exited calculator. No changes done.",

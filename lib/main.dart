@@ -30,8 +30,6 @@ class Snapsheet extends StatelessWidget {
             create: (context) => ExpenseViewModel()),
         ChangeNotifierProvider<DashboardViewModel>(
             create: (context) => DashboardViewModel()),
-        ChangeNotifierProvider<ExportViewModel>(
-            create: (context) => ExportViewModel()),
         ChangeNotifierProvider<BulkScanViewModel>(
             create: (context) => BulkScanViewModel()),
         ChangeNotifierProvider<UserData>(

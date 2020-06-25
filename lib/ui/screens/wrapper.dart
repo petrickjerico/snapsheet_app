@@ -48,13 +48,10 @@ class _WrapperState extends State<Wrapper> {
               Provider.of<ExpenseViewModel>(context, listen: false);
           DashboardViewModel dashboardViewModel =
               Provider.of<DashboardViewModel>(context, listen: false);
-          ExportViewModel exportViewModel =
-              Provider.of<ExportViewModel>(context, listen: false);
           BulkScanViewModel bulkScanViewModel =
               Provider.of<BulkScanViewModel>(context, listen: false);
           expenseViewModel.init(userData);
           dashboardViewModel.init(userData);
-          exportViewModel.init(userData);
           bulkScanViewModel.init(userData);
           return HomepageScreen();
         }

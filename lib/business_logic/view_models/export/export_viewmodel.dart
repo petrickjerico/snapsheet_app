@@ -12,13 +12,13 @@ import 'package:snapsheetapp/business_logic/view_models/export/export_basemodel.
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 
 class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
-  UserData userData;
+  final UserData userData;
   List<Record> records;
   List<Account> accounts;
   List<bool> isExport;
   File target;
 
-  void init(UserData userData) {
+  ExportViewModel({this.userData}) {
     print('init from exportviewmodel');
     records = userData.records;
     accounts = userData.accounts;

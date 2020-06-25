@@ -8,7 +8,6 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   User user;
   DatabaseService _db;
   Function loadCallback;
-  bool isDemo;
 
   List<Record> _records =
       SortedList<Record>((r1, r2) => r2.dateTime.compareTo(r1.dateTime));
@@ -30,15 +29,15 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     loadCallback();
   }
 
-  void wipeData() async {
-    print("WIPE DATA");
-    _records = [];
-    _accounts = [];
-    isDemo = false;
-    notifyListeners();
-    _records.forEach((record) => deleteRecord(record));
-    _accounts.forEach((account) => deleteAccount(account));
-  }
+//  Future wipeData() async {
+//    print("WIPE DATA");
+//    _records = [];
+//    _accounts = [];
+//    isDemo = false;
+//    notifyListeners();
+//    _records.forEach((record) => _db.deleteRecord(record));
+//    _accounts.forEach((account) => _db.deleteAccount(account));
+//  }
 
   // CREATE
   Future addRecord(Record record) async {

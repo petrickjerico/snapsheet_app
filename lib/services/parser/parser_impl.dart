@@ -1,3 +1,4 @@
+import 'package:snapsheetapp/business_logic/default_data/shops.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/services/parser/parser.dart';
 import 'package:string_similarity/string_similarity.dart';
@@ -16,26 +17,6 @@ class ParserImpl implements Parser {
     'oct': '10',
     'nov': '11',
     'dec': '12'
-  };
-
-  var shops = {
-    "4fingers": Shop(title: '4Fingers', categoryId: 0),
-    "cheers": Shop(title: 'Cheers', categoryId: 0),
-    "cold storage": Shop(title: 'Cold Storage', categoryId: 0),
-    "fairprice": Shop(title: 'Fairprice', categoryId: 0),
-    "golden village": Shop(title: 'Golden Village', categoryId: 3),
-    "hachi tech": Shop(title: 'Hachi Tech', categoryId: 6),
-    "kfc": Shop(title: 'KFC', categoryId: 0),
-    "koi": Shop(title: 'Koi', categoryId: 0),
-    "mcdonald's": Shop(title: "McDonald's", categoryId: 0),
-    "paylah": Shop(title: 'Paylah', categoryId: 8),
-    "paynow": Shop(title: 'Paynow', categoryId: 8),
-    "pepper lunch": Shop(title: 'Pepper Lunch', categoryId: 0),
-    "popular": Shop(title: 'Popular', categoryId: 5),
-    "ride": Shop(title: 'Grab ride', categoryId: 1),
-    "starbucks": Shop(title: 'Starbucks', categoryId: 0),
-    "uniqlo": Shop(title: 'UNIQLO', categoryId: 2),
-    "monster curry": Shop(title: 'Monster Curry', categoryId: 0)
   };
 
   String matchedName;
@@ -88,7 +69,7 @@ class ParserImpl implements Parser {
   }
 
   DateTime findDate(String input) {
-    for (Function parser in parsers) {
+    for (Function parser in dateFormats) {
       DateTime parsed = parser(input);
       if (parsed != null) {
         return parsed;
@@ -117,7 +98,7 @@ class ParserImpl implements Parser {
     return alertWords.hasMatch(input) ? reversed[1] : reversed[0];
   }
 
-  List<Function> parsers = [ddmmyy, yyyymmdd];
+  List<Function> dateFormats = [ddmmyy, yyyymmdd];
 
   static DateTime ddmmyy(String input) {
     RegExp date = RegExp(r"(\d{2}/\d{2}/\d{2,4}|\d{2} \w{3} \d{2,4})");

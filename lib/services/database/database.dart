@@ -1,6 +1,7 @@
 import 'package:snapsheetapp/business_logic/models/models.dart';
 
 abstract class DatabaseService {
+  // Initialize DatabaseService with UserDocument and CollectionReferences
   Future<void> initialize();
 
   // CREATE

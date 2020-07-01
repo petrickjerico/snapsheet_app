@@ -1,6 +1,8 @@
 import 'package:snapsheetapp/business_logic/models/models.dart';
 
 abstract class DatabaseService {
+  Future<void> initialize();
+
   // CREATE
   Future<String> addRecord(Record record);
   Future<String> addAccount(Account account);

@@ -15,6 +15,7 @@ List<Category> categories = [
   Category.unnamed(
       'Education', Icon(FontAwesomeIcons.graduationCap), Colors.orange),
   Category.unnamed('Electronics', Icon(FontAwesomeIcons.tv), Colors.teal),
+  Category.unnamed('Giving', Icon(FontAwesomeIcons.gift), Colors.pinkAccent),
   Category.unnamed(
       'Income', Icon(FontAwesomeIcons.moneyBill), Colors.amberAccent, true),
   Category.unnamed('Others', Icon(Icons.category), Colors.black),

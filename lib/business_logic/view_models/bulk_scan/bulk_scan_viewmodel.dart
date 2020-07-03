@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -39,6 +38,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   Future initialize() async {
     await assetsToImages();
     await imagesToRecords();
+    scanner.clearResources();
   }
 
   Future assetsToImages() async {

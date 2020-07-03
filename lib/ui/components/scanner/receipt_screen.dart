@@ -8,7 +8,6 @@ import 'package:snapsheetapp/ui/components/button/delete_button.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/components/receipt_image_dialog.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
-import 'package:snapsheetapp/ui/screens/screens.dart';
 
 class ReceiptScreen extends StatefulWidget {
   final int recordId;
@@ -101,7 +100,10 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                       icon: Icon(Icons.done_all, color: kBlack),
                       onPressed: () {
                         model.addAll();
-                        Navigator.pushNamed(context, HomepageScreen.id);
+//                        Navigator.pushNamed(context, HomepageScreen.id);
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        Navigator.pop(context);
                       },
                     )
                   ],

@@ -3,10 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
-import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
-import 'package:snapsheetapp/ui/shared/loading.dart';
 
 class HomepageScreen extends StatefulWidget {
   static final String id = 'homepage_screen';
@@ -21,35 +19,32 @@ class _HomepageScreenState extends State<HomepageScreen> {
     final userData = Provider.of<UserData>(context);
     return Consumer<ExpenseViewModel>(builder: (context, model, child) {
       model.userData = userData;
-      return WillPopScope(
-        onWillPop: () async => false,
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.black,
-            title: Text('HOMEPAGE'),
-          ),
-          drawer: SidebarMenu(),
-          body: PageView(
-            children: <Widget>[
-              AccountsTab(),
-              HistoryTab(),
-            ],
-          ),
-          floatingActionButton: Consumer<DashboardViewModel>(
-              builder: (context, dashboardModel, child) {
-            return FloatingActionButton(
-              backgroundColor: kBlack,
-              child: Icon(Icons.add),
-              onPressed: () {
-                model.newRecord();
-//              model.changeAccount(dashboardModel.getSelectedAccount().index);
-                Navigator.pushNamed(context, ExpenseScreen.id);
-              },
-            );
-          }),
+      return Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Text('HOMEPAGE'),
         ),
+        drawer: SidebarMenu(),
+        body: PageView(
+          children: <Widget>[
+            AccountsTab(),
+            HistoryTab(),
+          ],
+        ),
+        floatingActionButton: Consumer<DashboardViewModel>(
+            builder: (context, dashboardModel, child) {
+          return FloatingActionButton(
+            backgroundColor: kBlack,
+            child: Icon(Icons.add),
+            onPressed: () {
+              model.newRecord();
+//              model.changeAccount(dashboardModel.getSelectedAccount().index);
+              Navigator.pushNamed(context, ExpenseScreen.id);
+            },
+          );
+        }),
       );
     });
   }

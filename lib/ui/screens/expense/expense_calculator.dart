@@ -7,6 +7,7 @@ import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
+import 'package:snapsheetapp/business_logic/default_data/shops.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
@@ -733,10 +734,10 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                         onPressed: (value) {
                           setState(() {
                             if (value == 1) {
-                              model.changeCategory(7);
+                              model.changeCategory(INCOME);
                               model.tempRecord.isIncome = true;
                             } else {
-                              if (model.tempRecord.categoryId == 7) {
+                              if (model.tempRecord.categoryId == INCOME) {
                                 model.changeCategory(0);
                               }
                               model.tempRecord.isIncome = false;
@@ -754,7 +755,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                           _catId = input;
                           model.changeCategory(_catId);
                           model.tempRecord.isIncome =
-                              _catId == 7 ? true : false;
+                              _catId == INCOME ? true : false;
                         });
                       },
                       itemBuilder: (context) {

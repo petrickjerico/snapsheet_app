@@ -47,8 +47,8 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                       onTap: () async {
                         await showDialog(
                             context: context,
-                            builder: (_) =>
-                                ReceiptImageDialog(File(record.imagePath)));
+                            builder: (_) => ReceiptImageDialog(
+                                imagePath: record.imagePath));
                       },
                       child: Image.file(
                         File(record.imagePath),

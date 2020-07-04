@@ -117,8 +117,6 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                   ),
                   onPressed: () {
                     if (AddAccountPopup._formKey.currentState.validate()) {
-                      print(accountTitle);
-                      print(_color.toString());
                       model.selectAccount(model.accounts.length);
                       model.addAccount(accountTitle, _color);
                       model.syncController();

@@ -87,7 +87,7 @@ class Record {
       'accountUid': accountUid,
       'isIncome': isIncome,
       'receiptURL': receiptURL,
-      'image': imagePath,
+      'imagePath': imagePath,
       'uid': uid
     };
   }
@@ -102,7 +102,7 @@ class Record {
       'accountUid': accountUid,
       'isIncome': isIncome,
       'receiptURL': receiptURL,
-      'image': imagePath,
+      'imagePath': imagePath,
       'uid': uid
     };
     return map.toString();

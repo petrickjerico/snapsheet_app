@@ -31,8 +31,6 @@ class _EmailScreenState extends State<EmailScreen> {
           ? _auth.signInWithEmailAndPassword(email, pwd)
           : _auth.registerWithEmailAndPassword(email, pwd));
 
-      print(result);
-      print(result == null);
       if (result == null) {
         setState(() {
           error = 'Invalid email and password';

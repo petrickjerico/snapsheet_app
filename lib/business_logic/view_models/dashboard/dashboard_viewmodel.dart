@@ -107,7 +107,6 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
   }
 
   void updateTouchedIndex(int i) {
-    print('touched $i');
     if (touchedIndex == i) {
       touchedIndex = null;
     } else {

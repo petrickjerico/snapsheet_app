@@ -38,7 +38,6 @@ class _BulkScanAccountsListState extends State<BulkScanAccountsList> {
                     if (model.assets != null) {
                       setState(() => showSpinner = true);
                       await model.initialize();
-                      print('INITIALIZED');
                       setState(() => showSpinner = false);
                       Navigator.pushNamed(context, ReceiptPreviewScreen.id);
                     }

@@ -74,8 +74,8 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                   )),
               Consumer<DashboardViewModel>(
                 builder: (context, model, child) {
-                  print('CAROUSEL');
-                  print(model.selectedAccountIndex);
+//                  print('CAROUSEL');
+//                  print(model.selectedAccountIndex);
                   return CarouselSlider(
                     carouselController: DashboardViewModel.controller,
                     items: makeAccountTiles(model),
@@ -105,9 +105,9 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
 
   List<Widget> makeAccountTiles(DashboardViewModel model) {
     return model.accounts.map((acc) {
-      print("model.accounts.length = ${model.accounts.length}");
-      print("acc.uid = ${acc.uid}");
-      print("acc.index = ${acc.index}");
+//      print("model.accounts.length = ${model.accounts.length}");
+//      print("acc.uid = ${acc.uid}");
+//      print("acc.index = ${acc.index}");
       return Opacity(
         opacity: model.isAccountSelected(acc) ? 1.0 : 0.5,
         child: AccountTile(

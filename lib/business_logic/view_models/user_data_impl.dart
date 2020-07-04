@@ -1,12 +1,17 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_basemodel.dart';
+import 'package:snapsheetapp/services/cloud_storage/cloud_storage.dart';
 import 'package:snapsheetapp/services/database/database_impl.dart';
 import 'package:sorted_list/sorted_list.dart';
 
 class UserData extends ChangeNotifier implements UserDataBaseModel {
   User user;
   DatabaseService _db;
+  CloudStorageService _cloud;
   Function loadCallback;
 
   List<Record> _records =
@@ -29,23 +34,16 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     loadCallback();
   }
 
-//  Future wipeData() async {
-//    print("WIPE DATA");
-//    _records = [];
-//    _accounts = [];
-//    isDemo = false;
-//    notifyListeners();
-//    _records.forEach((record) => _db.deleteRecord(record));
-//    _accounts.forEach((account) => _db.deleteAccount(account));
-//  }
-
   // CREATE
   Future addRecord(Record record) async {
     _records.add(record);
     notifyListeners();
+
     Future<String> uid = _db.addRecord(record);
     record.uid = await uid;
-    print(record);
+    await _cloud.addReceiptURL(record);
+
+    _db.updateRecord(record);
   }
 
   Future addAccount(Account account) async {
@@ -58,17 +56,16 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   // READ
   List<Record> get records => _records;
   List<Account> get accounts => _accounts;
+
   Account getThisAccount(String accountUid) {
-    print("length" + accounts.length.toString());
-    print(accountUid);
     return accounts.firstWhere((acc) {
-      print(acc.uid == accountUid);
       return acc.uid == accountUid;
     });
   }
 
   // UPDATE
   Future<void> updateRecord(Record record) async {
+    await _cloud.addReceiptURL(record);
     _db.updateRecord(record);
   }
 
@@ -78,6 +75,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
 
   // DELETE
   Future<void> deleteRecord(Record record) async {
+    _cloud.deleteCloudImage(record);
     _records.removeWhere((rec) => rec.uid == record.uid);
     _db.deleteRecord(record);
   }

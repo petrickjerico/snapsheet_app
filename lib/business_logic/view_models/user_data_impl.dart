@@ -34,14 +34,6 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     loadCallback();
   }
 
-  Future processImage(Record record) async {
-    if (record.imagePath != null) {
-      Future<String> receiptURL = _cloud.getReceiptURL(record);
-      record.receiptURL = await receiptURL;
-      _cloud.clearLocalImage(record);
-    }
-  }
-
   // CREATE
   Future addRecord(Record record) async {
     _records.add(record);
@@ -49,7 +41,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
 
     Future<String> uid = _db.addRecord(record);
     record.uid = await uid;
-    await processImage(record);
+    await _cloud.addReceiptURL(record);
 
     _db.updateRecord(record);
   }
@@ -73,7 +65,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
 
   // UPDATE
   Future<void> updateRecord(Record record) async {
-    await processImage(record);
+    await _cloud.addReceiptURL(record);
     _db.updateRecord(record);
   }
 

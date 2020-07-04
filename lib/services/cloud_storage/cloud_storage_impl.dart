@@ -14,24 +14,26 @@ class CloudStorageServiceImpl implements CloudStorageService {
 
   CloudStorageServiceImpl({this.uid});
 
-  Future<String> getReceiptURL(Record record) async {
-    File image = File(record.imagePath);
+  Future<void> addReceiptURL(Record record) async {
+    if (record.imagePath != null) {
+      File image = File(record.imagePath);
 
-    // Upload to Firebase
-    String cloudFilePath = 'receipts/$uid/${record.uid}.png';
-    StorageReference storageReference = _storage.ref().child(cloudFilePath);
-    StorageUploadTask _uploadTask;
+      // Upload to Firebase
+      String cloudFilePath = 'receipts/$uid/${record.uid}.png';
+      StorageReference storageReference = _storage.ref().child(cloudFilePath);
+      StorageUploadTask _uploadTask;
 
-    _uploadTask = storageReference.putFile(image);
-    StorageTaskSnapshot taskSnapshot = await _uploadTask.onComplete;
-    String downloadURL = await taskSnapshot.ref.getDownloadURL();
-    return downloadURL;
-  }
+      _uploadTask = storageReference.putFile(image);
+      StorageTaskSnapshot taskSnapshot = await _uploadTask.onComplete;
+      String downloadURL = await taskSnapshot.ref.getDownloadURL();
+      record.receiptURL = downloadURL;
 
-  Future<void> clearLocalImage(Record record) async {
-    File image = File(record.imagePath);
-    await image.delete();
-    record.imagePath = null;
+      // Clear local cache
+      image.delete();
+
+      // Clear record's imagePath
+      record.imagePath = null;
+    }
   }
 
   Future<void> deleteCloudImage(Record record) async {

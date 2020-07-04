@@ -118,7 +118,6 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     tempRecord.isIncome = editRecord.isIncome;
     tempRecord.dateTime = editRecord.dateTime;
     tempRecord.imagePath = editRecord.imagePath;
-//    print("${tempRecord.value} => ${tempRecord.value}");
     notifyListeners();
   }
 

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
+import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/components/date_time.dart';
 import 'package:snapsheetapp/ui/components/receipt_image_dialog.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
@@ -69,13 +70,11 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
               SizedBox(height: 10.0),
               ReceiptImage(tempRecord: model.tempRecord),
               SizedBox(height: 10),
-              RaisedButton(
-                padding: EdgeInsets.all(10),
-                color: Colors.black,
-                child: Text(
-                  "Add Receipt",
-                  style: kStandardStyle,
-                ),
+              RoundedButton(
+                color: Colors.white,
+                textColor: Colors.black,
+                title: 'Add Receipt',
+                icon: Icon(Icons.receipt, color: Colors.black),
                 onPressed: () async {
                   await model.showChoiceDialog(context);
                   model.imageToTempRecord();
@@ -84,7 +83,7 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
                     Navigator.pushNamed(context, EditExpenseInfoScreen.id);
                   });
                 },
-              ),
+              )
             ],
           ),
         ),

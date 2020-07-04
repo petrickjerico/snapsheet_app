@@ -22,9 +22,7 @@ class ReceiptImageDialog extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(
-                          'gs://snapsheet-e7f7b.appspot.com/${receiptURL}'),
-                      fit: BoxFit.cover)),
+                      image: NetworkImage(receiptURL), fit: BoxFit.cover)),
             ),
           );
   }

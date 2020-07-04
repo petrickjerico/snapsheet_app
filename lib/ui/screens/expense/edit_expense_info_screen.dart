@@ -164,9 +164,24 @@ class ReceiptImage extends StatelessWidget {
                   ));
         },
         child: Image.network(
-          'gs://snapsheet-e7f7b.appspot.com/${tempRecord.receiptURL}',
+          tempRecord.receiptURL,
           fit: BoxFit.cover,
           height: 200,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Container(
+              height: 200,
+              child: Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                          loadingProgress.expectedTotalBytes
+                      : null,
+                  backgroundColor: kDarkCyan,
+                ),
+              ),
+            );
+          },
         ),
       );
     } else {

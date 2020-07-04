@@ -9,9 +9,9 @@ class ReceiptUploader {
         .child('receipts/${p.basename(imageFile.path)}');
     StorageUploadTask uploadTask = storageReference.putFile(imageFile);
     await uploadTask.onComplete;
-    print('File Uploaded');
+//    print('File Uploaded');
     String fileURL = await storageReference.getDownloadURL();
-    print(fileURL);
+//    print(fileURL);
     return fileURL;
   }
 }

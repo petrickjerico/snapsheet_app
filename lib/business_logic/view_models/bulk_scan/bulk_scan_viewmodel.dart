@@ -47,11 +47,9 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
     for (Asset asset in assets) {
       ByteData byteData = await asset.getByteData();
       path = '${directory.path}/what${counter++}';
-      print(path);
       final buffer = byteData.buffer;
       File image = await File(path).writeAsBytes(
           buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-      print(image.toString());
       images.add(image);
     }
   }
@@ -75,7 +73,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   void addAll() {
     for (int i = 0; i < records.length; i++) {
       if (isDelete[i]) continue;
-      print(records[i]);
+//      print(records[i]);
       userData.addRecord(records[i]);
     }
   }

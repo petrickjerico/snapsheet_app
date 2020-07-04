@@ -217,7 +217,6 @@ class _StatisticsState extends State<Statistics> {
                           PieChartData(
                               pieTouchData: PieTouchData(
                                   touchCallback: (pieTouchResponse) {
-                                print(pieTouchResponse.touchedSectionIndex);
                                 if (pieTouchResponse.touchedSectionIndex !=
                                     null) {
                                   setState(() {

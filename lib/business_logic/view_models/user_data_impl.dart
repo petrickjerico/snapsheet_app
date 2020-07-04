@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_basemodel.dart';
@@ -8,6 +11,8 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   User user;
   DatabaseService _db;
   Function loadCallback;
+  final FirebaseStorage _storage =
+      FirebaseStorage(storageBucket: 'gs://snapsheet-e7f7b.appspot.com/');
 
   List<Record> _records =
       SortedList<Record>((r1, r2) => r2.dateTime.compareTo(r1.dateTime));
@@ -39,6 +44,29 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
 //    _accounts.forEach((account) => _db.deleteAccount(account));
 //  }
 
+  Future<Record> _getReceiptURL(Record record) async {
+    if (record.imagePath != null) {
+      File image = File(record.imagePath);
+
+      // Upload to Firebase
+      String cloudFilePath = 'receipts/${user.uid}/${record.uid}.png';
+      StorageReference storageReference = _storage.ref().child(cloudFilePath);
+      StorageUploadTask _uploadTask;
+
+      _uploadTask = storageReference.putFile(image);
+      StorageTaskSnapshot taskSnapshot = await _uploadTask.onComplete;
+      String downloadURL = await taskSnapshot.ref.getDownloadURL();
+      record.receiptURL = downloadURL;
+
+      // Delete image cache from device
+      await image.delete();
+
+      // Delete imagePath attributes
+      record.imagePath = null;
+    }
+    return record;
+  }
+
   // CREATE
   Future addRecord(Record record) async {
     _records.add(record);
@@ -46,6 +74,10 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     Future<String> uid = _db.addRecord(record);
     record.uid = await uid;
     print(record);
+
+    // Add receiptURL
+    Future<Record> updatedRecord = _getReceiptURL(record);
+    _db.updateRecord(await updatedRecord);
   }
 
   Future addAccount(Account account) async {
@@ -59,17 +91,15 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   List<Record> get records => _records;
   List<Account> get accounts => _accounts;
   Account getThisAccount(String accountUid) {
-    print("length" + accounts.length.toString());
-    print(accountUid);
     return accounts.firstWhere((acc) {
-      print(acc.uid == accountUid);
       return acc.uid == accountUid;
     });
   }
 
   // UPDATE
   Future<void> updateRecord(Record record) async {
-    _db.updateRecord(record);
+    Future<Record> updatedRecord = _getReceiptURL(record);
+    _db.updateRecord(await updatedRecord);
   }
 
   Future<void> updateAccount(Account account) async {

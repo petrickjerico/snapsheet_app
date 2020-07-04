@@ -4,12 +4,12 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/date_time.dart';
 import 'package:snapsheetapp/ui/components/receipt_image_dialog.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
-import 'package:snapsheetapp/ui/screens/screens.dart';
 
 class EditExpenseInfoScreen extends StatefulWidget {
   static const String id = 'edit_expense_info_screen';
@@ -32,12 +32,11 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
     var temp = title;
     model = Provider.of<ExpenseViewModel>(context);
     title = model.tempRecord.title;
-    print('Title changed: $temp -> $title');
+//    print('Title changed: $temp -> $title');
   }
 
   @override
   Widget build(BuildContext context) {
-    print('EditInfoScreen build() called.');
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: kBlack,
@@ -68,21 +67,7 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
               SizedBox(height: 10.0),
               RecordDateTime(),
               SizedBox(height: 10.0),
-              model.tempRecord.imagePath == null
-                  ? SizedBox.shrink()
-                  : GestureDetector(
-                      onTap: () async {
-                        await showDialog(
-                            context: context,
-                            builder: (_) => ReceiptImageDialog(
-                                File(model.tempRecord.imagePath)));
-                      },
-                      child: Image.file(
-                        File(model.tempRecord.imagePath),
-                        fit: BoxFit.cover,
-                        height: 200,
-                      ),
-                    ),
+              ReceiptImage(tempRecord: model.tempRecord),
               SizedBox(height: 10),
               RaisedButton(
                 padding: EdgeInsets.all(10),
@@ -110,7 +95,7 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
         onPressed: () {
           final dashboardModel =
               Provider.of<DashboardViewModel>(context, listen: false);
-          print("Adding to record: \$${model.tempRecord.value}");
+//          print("Adding to record: \$${model.tempRecord.value}");
           model.addRecord();
           bool isEditing = model.isEditing;
           dashboardModel.selectAccount(model.getAccountIndexFromTempRecord());
@@ -146,5 +131,46 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
     );
 //      },
 //    );
+  }
+}
+
+class ReceiptImage extends StatelessWidget {
+  Record tempRecord;
+
+  ReceiptImage({this.tempRecord});
+  @override
+  Widget build(BuildContext context) {
+    if (tempRecord.imagePath != null) {
+      return GestureDetector(
+        onTap: () async {
+          await showDialog(
+              context: context,
+              builder: (_) =>
+                  ReceiptImageDialog(imagePath: tempRecord.imagePath));
+        },
+        child: Image.file(
+          File(tempRecord.imagePath),
+          fit: BoxFit.cover,
+          height: 200,
+        ),
+      );
+    } else if (tempRecord.receiptURL != null) {
+      return GestureDetector(
+        onTap: () async {
+          await showDialog(
+              context: context,
+              builder: (_) => ReceiptImageDialog(
+                    receiptURL: tempRecord.receiptURL,
+                  ));
+        },
+        child: Image.network(
+          'gs://snapsheet-e7f7b.appspot.com/${tempRecord.receiptURL}',
+          fit: BoxFit.cover,
+          height: 200,
+        ),
+      );
+    } else {
+      return SizedBox.shrink();
+    }
   }
 }

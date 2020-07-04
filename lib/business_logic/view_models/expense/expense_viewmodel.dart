@@ -49,10 +49,8 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
 
   void addRecord() {
     if (!isEditing) {
-      print("NOT EDITING");
       userData.addRecord(tempRecord);
     } else {
-      print("IS EDITING");
       userData.updateRecord(tempRecord);
       isEditing = false;
     }
@@ -110,6 +108,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     tempRecord = userData.records[recordIndex];
     editRecord = Record.of(tempRecord);
     isEditing = true;
+    print(tempRecord);
     notifyListeners();
   }
 
@@ -119,7 +118,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     tempRecord.isIncome = editRecord.isIncome;
     tempRecord.dateTime = editRecord.dateTime;
     tempRecord.imagePath = editRecord.imagePath;
-    print("${tempRecord.value} => ${tempRecord.value}");
+//    print("${tempRecord.value} => ${tempRecord.value}");
     notifyListeners();
   }
 

@@ -115,8 +115,6 @@ class _SignInScreenState extends State<SignInScreen> {
                           FlatButton(
                             padding: EdgeInsets.all(0),
                             onPressed: () {
-                              print(email);
-                              print(pwd);
                               widget.updateCredential(email, pwd);
                               widget.toggleView();
                             },

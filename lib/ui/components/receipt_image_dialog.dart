@@ -3,18 +3,29 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ReceiptImageDialog extends StatelessWidget {
-  final File imageFile;
+  String receiptURL;
+  String imagePath;
 
-  ReceiptImageDialog(this.imageFile);
+  ReceiptImageDialog({this.receiptURL, this.imagePath});
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: FileImage(imageFile), fit: BoxFit.cover)),
-      ),
-    );
+    return receiptURL == null
+        ? Dialog(
+            child: Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: FileImage(File(imagePath)), fit: BoxFit.cover)),
+            ),
+          )
+        : Dialog(
+            child: Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          'gs://snapsheet-e7f7b.appspot.com/${receiptURL}'),
+                      fit: BoxFit.cover)),
+            ),
+          );
   }
 }

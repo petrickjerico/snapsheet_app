@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_basemodel.dart';
 import 'package:snapsheetapp/services/cloud_storage/cloud_storage.dart';
+import 'package:snapsheetapp/services/cloud_storage/cloud_storage_impl.dart';
 import 'package:snapsheetapp/services/database/database_impl.dart';
 import 'package:sorted_list/sorted_list.dart';
 
@@ -23,6 +24,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     this.loadCallback = loadCallback;
     this.user = user;
     _db = DatabaseServiceImpl(uid: user.uid);
+    _cloud = CloudStorageServiceImpl(uid: user.uid);
     loadData();
   }
 
@@ -34,6 +36,13 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     loadCallback();
   }
 
+  Future processImage(Record record) async {
+    if (record.imagePath != null) {
+      record.receiptURL = await _cloud.addReceiptURL(record);
+      record.imagePath = null;
+    }
+  }
+
   // CREATE
   Future addRecord(Record record) async {
     _records.add(record);
@@ -41,7 +50,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
 
     Future<String> uid = _db.addRecord(record);
     record.uid = await uid;
-    await _cloud.addReceiptURL(record);
+    await processImage(record);
 
     _db.updateRecord(record);
   }
@@ -65,7 +74,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
 
   // UPDATE
   Future<void> updateRecord(Record record) async {
-    await _cloud.addReceiptURL(record);
+    await processImage(record);
     _db.updateRecord(record);
   }
 

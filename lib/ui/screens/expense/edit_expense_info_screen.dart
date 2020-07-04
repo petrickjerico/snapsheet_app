@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
@@ -11,6 +12,8 @@ import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/components/date_time.dart';
 import 'package:snapsheetapp/ui/components/receipt_image_dialog.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/shared/shared.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class EditExpenseInfoScreen extends StatefulWidget {
   static const String id = 'edit_expense_info_screen';
@@ -49,7 +52,7 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
       body: Theme(
         data: ThemeData.dark(),
         child: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -140,47 +143,42 @@ class ReceiptImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (tempRecord.imagePath != null) {
-      return GestureDetector(
-        onTap: () async {
-          await showDialog(
-              context: context,
-              builder: (_) =>
-                  ReceiptImageDialog(imagePath: tempRecord.imagePath));
-        },
-        child: Image.file(
-          File(tempRecord.imagePath),
-          fit: BoxFit.cover,
-          height: 200,
+      return Expanded(
+        child: GestureDetector(
+          onTap: () async {
+            await showDialog(
+                context: context,
+                builder: (_) =>
+                    ReceiptImageDialog(imagePath: tempRecord.imagePath));
+          },
+          child: Image.file(
+            File(tempRecord.imagePath),
+            fit: BoxFit.cover,
+//          height: 200,
+          ),
         ),
       );
     } else if (tempRecord.receiptURL != null) {
-      return GestureDetector(
-        onTap: () async {
-          await showDialog(
-              context: context,
-              builder: (_) => ReceiptImageDialog(
-                    receiptURL: tempRecord.receiptURL,
-                  ));
-        },
-        child: Image.network(
-          tempRecord.receiptURL,
-          fit: BoxFit.cover,
-          height: 200,
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            return Container(
-              height: 200,
-              child: Center(
-                child: CircularProgressIndicator(
-                  value: loadingProgress.expectedTotalBytes != null
-                      ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes
-                      : null,
-                  backgroundColor: kDarkCyan,
-                ),
-              ),
-            );
+      return Expanded(
+        child: GestureDetector(
+          onTap: () async {
+            await showDialog(
+                context: context,
+                builder: (_) => ReceiptImageDialog(
+                      receiptURL: tempRecord.receiptURL,
+                    ));
           },
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              Loading(),
+              FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: tempRecord.receiptURL,
+                fit: BoxFit.cover,
+              ),
+            ],
+          ),
         ),
       );
     } else {

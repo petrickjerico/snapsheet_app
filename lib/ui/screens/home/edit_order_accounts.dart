@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/account/account_order_tile.dart';
 import 'package:snapsheetapp/ui/components/reorderable_list.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
 
 import 'add_account_popup.dart';
 
@@ -55,12 +56,7 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: AddAccountPopup(),
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0),
-                ),
-              ),
+              shape: kBottomSheetShape,
             );
           },
         ),

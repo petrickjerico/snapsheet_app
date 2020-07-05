@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+const kBottomSheetShape = RoundedRectangleBorder(
+  borderRadius: BorderRadius.only(
+    topLeft: Radius.circular(15.0),
+    topRight: Radius.circular(15.0),
+  ),
+);
+
 const kMessageTextFieldDecoration = InputDecoration(
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
   hintText: 'Type your message here...',

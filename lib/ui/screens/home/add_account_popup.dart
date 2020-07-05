@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 
 class AddAccountPopup extends StatefulWidget {
@@ -108,13 +109,10 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
               return Container(
                 height: 50.0,
                 width: 150.0,
-                child: FlatButton(
+                child: RoundedButton(
                   color: Colors.black,
-                  child: Text(
-                    'CREATE',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 20.0, color: Colors.white),
-                  ),
+                  textColor: Colors.white,
+                  title: 'CREATE',
                   onPressed: () {
                     if (AddAccountPopup._formKey.currentState.validate()) {
                       model.selectAccount(model.accounts.length);
@@ -124,6 +122,22 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                     }
                   },
                 ),
+//                child: FlatButton(
+//                  color: Colors.black,
+//                  child: Text(
+//                    'CREATE',
+//                    textAlign: TextAlign.center,
+//                    style: TextStyle(fontSize: 20.0, color: Colors.white),
+//                  ),
+//                  onPressed: () {
+//                    if (AddAccountPopup._formKey.currentState.validate()) {
+//                      model.selectAccount(model.accounts.length);
+//                      model.addAccount(accountTitle, _color);
+//                      model.syncController();
+//                      Navigator.pop(context);
+//                    }
+//                  },
+//                ),
               );
             }),
             SizedBox(

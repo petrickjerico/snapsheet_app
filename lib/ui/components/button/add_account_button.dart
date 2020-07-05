@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:snapsheetapp/ui/config/decoration.dart';
 import 'package:snapsheetapp/ui/screens/home/add_account_popup.dart';
 
 class AddAccountButton extends StatelessWidget {
@@ -40,12 +41,7 @@ class AddAccountButton extends StatelessWidget {
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: AddAccountPopup(),
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            ),
-          ),
+          shape: kBottomSheetShape,
         );
       },
     );

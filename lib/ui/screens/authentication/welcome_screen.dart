@@ -50,7 +50,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       dynamic result = await _auth.signInWithGoogle();
                       setState(() => loading = false);
                     },
-                    title: 'Google',
+                    title: 'Login with Google',
                     icon: Icon(
                       FontAwesomeIcons.google,
                       color: Colors.black,
@@ -62,7 +62,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     onPressed: () {
                       Navigator.pushNamed(context, EmailScreen.id);
                     },
-                    title: 'Email',
+                    title: 'Login with Email',
                     icon: Icon(
                       Icons.mail,
                       color: Colors.white,

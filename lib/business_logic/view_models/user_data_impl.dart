@@ -21,6 +21,8 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
       SortedList<Account>((a1, a2) => a1.index.compareTo(a2.index));
 
   void init(User user, Function loadCallback) {
+    _records.clear();
+    _accounts.clear();
     this.loadCallback = loadCallback;
     this.user = user;
     _db = DatabaseServiceImpl(uid: user.uid);

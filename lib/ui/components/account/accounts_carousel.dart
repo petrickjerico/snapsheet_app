@@ -22,29 +22,17 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Text(
-                  'Your accounts',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w500,
-                  ),
+                SelectAllButton(),
+                SizedBox(
+                  width: 5.0,
                 ),
-                Row(
-                  children: <Widget>[
-                    SelectAllButton(),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    AddAccountButton(),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    EditAccountsButton(),
-                  ],
+                AddAccountButton(),
+                SizedBox(
+                  width: 5.0,
                 ),
+                EditAccountsButton(),
               ],
             ),
           ),

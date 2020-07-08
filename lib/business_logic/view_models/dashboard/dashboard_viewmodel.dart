@@ -70,7 +70,7 @@ class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
         userData.deleteRecord(record);
       }
     }
-    records = List.from(newRecords);
+    records = userData.records;
     selectedAccountIndex--;
     for (Account account in accounts) {
       if (account.index > selectedAccountIndex) {

@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:snapsheetapp/services/auth/auth_impl.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
-import 'package:snapsheetapp/ui/screens/home/homepage_screen.dart';
 import 'package:snapsheetapp/ui/shared/shared.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -20,9 +19,11 @@ class _SignupScreenState extends State<SignupScreen> {
   bool loading = false;
   String email = '';
   String pwd = '';
+  String confirmPwd = '';
   String error = '';
 
   FocusNode pwdFocus = FocusNode();
+  FocusNode confirmPwdFocus = FocusNode();
 
   void signUp() async {
     if (_formKey.currentState.validate()) {
@@ -82,8 +83,25 @@ class _SignupScreenState extends State<SignupScreen> {
                           ? 'Enter a password 6+ chars long'
                           : null,
                       onChanged: (val) => setState(() => pwd = val),
-                      textInputAction: TextInputAction.done,
+                      textInputAction: TextInputAction.next,
                       focusNode: pwdFocus,
+                      onFieldSubmitted: (val) {
+                        FocusScope.of(context).requestFocus(confirmPwdFocus);
+                      },
+                    ),
+                    SizedBox(height: 12),
+                    TextFormField(
+                      initialValue: confirmPwd,
+                      decoration: kTextFieldDecorationLogin.copyWith(
+                          hintText: 'Confirm Password'),
+                      cursorColor: Colors.black,
+                      textAlign: TextAlign.left,
+                      obscureText: true,
+                      validator: (val) =>
+                          val != pwd ? 'Password does not match' : null,
+                      onChanged: (val) => setState(() => confirmPwd = val),
+                      textInputAction: TextInputAction.done,
+                      focusNode: confirmPwdFocus,
                       onFieldSubmitted: (val) => signUp(),
                     ),
                     SizedBox(height: 12),
@@ -97,7 +115,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       onPressed: () {
                         Navigator.pushNamed(context, SignupScreen.id);
                       },
-                      title: 'Login',
+                      title: 'Sign up',
                       icon: Icon(
                         Icons.mail,
                         color: Colors.white,
@@ -113,7 +131,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         dynamic result = await _auth.signInWithGoogle();
                         setState(() => loading = false);
                       },
-                      title: 'Login with Google',
+                      title: 'Sign up with Google',
                       icon: Icon(
                         FontAwesomeIcons.google,
                         color: Colors.black,

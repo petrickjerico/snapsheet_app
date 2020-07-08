@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 
-class SplashScreen extends StatelessWidget {
+class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,12 +1,6 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/services/auth/auth_impl.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 import 'package:snapsheetapp/ui/shared/splash.dart';

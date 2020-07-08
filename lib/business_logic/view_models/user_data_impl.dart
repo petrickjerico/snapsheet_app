@@ -20,22 +20,16 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   List<Account> _accounts =
       SortedList<Account>((a1, a2) => a1.index.compareTo(a2.index));
 
-  void init(User user, Function loadCallback) {
+  Future init(User user) async {
+    this.user = user;
     _records.clear();
     _accounts.clear();
-    this.loadCallback = loadCallback;
-    this.user = user;
     _db = DatabaseServiceImpl(uid: user.uid);
     _cloud = CloudStorageServiceImpl(uid: user.uid);
-    loadData();
-  }
-
-  void loadData() async {
     List<Record> unorderedRecords = await _db.getRecords();
     List<Account> unorderedAccounts = await _db.getAccounts();
     _records.addAll(unorderedRecords);
     _accounts.addAll(unorderedAccounts);
-    loadCallback();
   }
 
   Future processImage(Record record) async {

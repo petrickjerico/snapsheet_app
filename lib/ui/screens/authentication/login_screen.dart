@@ -89,7 +89,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         decoration: kPasswordTextFieldDecoration.copyWith(
                           suffixIcon: IconButton(
                             icon: Icon(
-                              // Based on passwordVisible state choose the icon
                               obscurePwd
                                   ? Icons.visibility
                                   : Icons.visibility_off,

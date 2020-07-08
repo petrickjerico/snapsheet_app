@@ -47,6 +47,7 @@ dependencies:
   flushbar: ^1.10.4
   animations: ^1.1.1
   transparent_image: ^1.0.0
+  after_layout: ^1.0.7+2
 
 dev_dependencies:
   flutter_test:

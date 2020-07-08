@@ -35,7 +35,7 @@ class _WrapperState extends State<Wrapper> {
       return WelcomeScreen();
     } else {
       if (!initialized) {
-        userData.init(user, loadCallback);
+        userData.init(user);
         setState(() {
           initialized = true;
         });

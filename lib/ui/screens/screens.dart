@@ -14,4 +14,4 @@ export 'sidebar/editprofile_screen.dart';
 export 'sidebar/export_screen.dart';
 export 'sidebar/settings_screen.dart';
 export 'sidebar/sidebar_menu.dart';
-export 'wrapper.dart';
+export '../../archive/wrapper.dart';

@@ -10,6 +10,8 @@ import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/services/auth/auth_impl.dart';
 import 'package:snapsheetapp/ui/components/scanner/receipt_preview.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
+import 'package:snapsheetapp/ui/screens/splash_screen.dart';
+import 'package:snapsheetapp/ui/shared/splash.dart';
 
 void main() {
   //To lock orientation of the app.
@@ -38,9 +40,9 @@ class Snapsheet extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: Wrapper.id,
+        initialRoute: SplashScreen.id,
         routes: {
-          Wrapper.id: (context) => Wrapper(),
+          SplashScreen.id: (context) => SplashScreen(),
           WelcomeScreen.id: (context) => WelcomeScreen(),
           HomepageScreen.id: (context) => HomepageScreen(),
           EmailScreen.id: (context) => EmailScreen(),

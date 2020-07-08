@@ -1,8 +1,6 @@
 import 'package:snapsheetapp/business_logic/models/models.dart';
 
 abstract class UserDataBaseModel {
-  void loadData();
-
   // CREATE
   Future addRecord(Record record);
   Future addAccount(Account account);

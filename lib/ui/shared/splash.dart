@@ -6,12 +6,21 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.black,
+        color: Colors.white,
         child: Center(
-          child: Text(
-            'SNAPSHEET',
-            textAlign: TextAlign.center,
-            style: kWelcomeTextStyle.copyWith(color: Colors.white),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                child: Image.asset('assets/images/snapsheet_logo.png'),
+                height: 150.0,
+              ),
+              Text(
+                'SNAPSHEET',
+                textAlign: TextAlign.center,
+                style: kWelcomeTextStyle,
+              ),
+            ],
           ),
         ),
       ),

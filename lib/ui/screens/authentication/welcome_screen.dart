@@ -29,14 +29,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Container(
-                    child: Image.asset('assets/images/snapsheet_logo.png'),
-                    height: 150.0,
-                  ),
-                  Text(
-                    'SNAPSHEET',
-                    textAlign: TextAlign.center,
-                    style: kWelcomeTextStyle,
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        child: Image.asset('assets/images/snapsheet_logo.png'),
+                        height: 60.0,
+                      ),
+                      Text(
+                        'SNAPSHEET',
+                        textAlign: TextAlign.center,
+                        style: kWelcomeTextStyle,
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 10.0,

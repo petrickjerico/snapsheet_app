@@ -27,11 +27,7 @@ class _SplashScreenState extends State<SplashScreen>
     print("CHECKIFUSERLOGGEDIN ${user.toString()}");
 
     try {
-      if (user != null) {
-        Navigator.pushReplacementNamed(context, Wrapper.id);
-      } else {
-        Navigator.pushReplacementNamed(context, WelcomeScreen.id);
-      }
+      Navigator.pushReplacementNamed(context, Wrapper.id);
     } on PlatformException catch (e) {
       showDialog(
           context: context,

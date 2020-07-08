@@ -1,5 +1,5 @@
-export 'authentication/email_screen.dart';
-export 'authentication/welcome_screen.dart';
+export 'authentication/signup_screen.dart';
+export 'authentication/login_screen.dart';
 export 'expense/expense_screen.dart';
 export 'expense/edit_expense_info_screen.dart';
 export 'home/accounts_tab.dart';

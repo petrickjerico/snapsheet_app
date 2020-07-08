@@ -25,7 +25,7 @@ class _WrapperState extends State<Wrapper> {
     UserData userData = Provider.of<UserData>(context, listen: false);
     // either home or authenticate
     if (user == null) {
-      return WelcomeScreen();
+      return LoginScreen();
     } else {
       if (!loadDone) {
         userData.init(user, loadCallback);

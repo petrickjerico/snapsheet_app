@@ -46,115 +46,121 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return loading
         ? Loading()
-        : Scaffold(
-            backgroundColor: Colors.white,
-            resizeToAvoidBottomPadding: false,
-            body: Container(
-              padding: EdgeInsets.symmetric(horizontal: 40.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    SnapSheetBanner(),
-                    SizedBox(height: 10.0),
-                    TextFormField(
-                      initialValue: email,
-                      decoration: kEmailTextFieldDecoration,
-                      cursorColor: Colors.black,
-                      keyboardType: TextInputType.emailAddress,
-                      textAlign: TextAlign.left,
-                      validator: (val) =>
-                          val.isEmpty ? "Enter a valid email" : null,
-                      onChanged: (val) => setState(() => email = val),
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (val) {
-                        FocusScope.of(context).requestFocus(pwdFocus);
-                      },
-                    ),
-                    SizedBox(height: 12),
-                    TextFormField(
-                      initialValue: pwd,
-                      decoration: kPasswordTextFieldDecoration.copyWith(
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            // Based on passwordVisible state choose the icon
-                            obscurePwd
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: Colors.black,
+        : GestureDetector(
+            onTap: () => unfocus(context),
+            child: Scaffold(
+              backgroundColor: Colors.white,
+              resizeToAvoidBottomPadding: false,
+              body: Container(
+                padding: EdgeInsets.symmetric(horizontal: 40.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      SnapSheetBanner(),
+                      SizedBox(height: 10.0),
+                      TextFormField(
+                        initialValue: email,
+                        decoration: kEmailTextFieldDecoration,
+                        cursorColor: Colors.black,
+                        keyboardType: TextInputType.emailAddress,
+                        textAlign: TextAlign.left,
+                        validator: (val) =>
+                            val.isEmpty ? "Enter a valid email" : null,
+                        onChanged: (val) => setState(() => email = val),
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (val) {
+                          FocusScope.of(context).requestFocus(pwdFocus);
+                        },
+                      ),
+                      SizedBox(height: 12),
+                      TextFormField(
+                        initialValue: pwd,
+                        decoration: kPasswordTextFieldDecoration.copyWith(
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              obscurePwd
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                obscurePwd = !obscurePwd;
+                              });
+                            },
                           ),
-                          onPressed: () {
-                            // Update the state i.e. toogle the state of passwordVisible variable
-                            setState(() {
-                              obscurePwd = !obscurePwd;
-                            });
-                          },
+                        ),
+                        cursorColor: Colors.black,
+                        textAlign: TextAlign.left,
+                        obscureText: obscurePwd,
+                        validator: (val) => val.length < 6
+                            ? 'Enter a password 6+ chars long'
+                            : null,
+                        onChanged: (val) => setState(() => pwd = val),
+                        textInputAction: TextInputAction.next,
+                        focusNode: pwdFocus,
+                        onFieldSubmitted: (val) {
+                          FocusScope.of(context).requestFocus(confirmPwdFocus);
+                        },
+                      ),
+                      SizedBox(height: 12),
+                      TextFormField(
+                        initialValue: confirmPwd,
+                        decoration: kConfirmPasswordTextFieldDecoration,
+                        cursorColor: Colors.black,
+                        textAlign: TextAlign.left,
+                        obscureText: true,
+                        validator: (val) =>
+                            val != pwd ? 'Password does not match' : null,
+                        onChanged: (val) => setState(() => confirmPwd = val),
+                        textInputAction: TextInputAction.done,
+                        focusNode: confirmPwdFocus,
+                        onFieldSubmitted: (val) => signUp(),
+                      ),
+                      SizedBox(height: 12),
+                      Text(
+                        error,
+                        style: TextStyle(color: Colors.red, fontSize: 14),
+                      ),
+                      RoundedButton(
+                        textColor: Colors.white,
+                        color: Colors.black,
+                        onPressed: () {
+                          signUp();
+                        },
+                        title: 'Sign up',
+                        icon: Icon(
+                          Icons.mail,
+                          color: Colors.white,
                         ),
                       ),
-                      cursorColor: Colors.black,
-                      textAlign: TextAlign.left,
-                      obscureText: obscurePwd,
-                      validator: (val) => val.length < 6
-                          ? 'Enter a password 6+ chars long'
-                          : null,
-                      onChanged: (val) => setState(() => pwd = val),
-                      textInputAction: TextInputAction.next,
-                      focusNode: pwdFocus,
-                      onFieldSubmitted: (val) {
-                        FocusScope.of(context).requestFocus(confirmPwdFocus);
-                      },
-                    ),
-                    SizedBox(height: 12),
-                    TextFormField(
-                      initialValue: confirmPwd,
-                      decoration: kConfirmPasswordTextFieldDecoration,
-                      cursorColor: Colors.black,
-                      textAlign: TextAlign.left,
-                      obscureText: true,
-                      validator: (val) =>
-                          val != pwd ? 'Password does not match' : null,
-                      onChanged: (val) => setState(() => confirmPwd = val),
-                      textInputAction: TextInputAction.done,
-                      focusNode: confirmPwdFocus,
-                      onFieldSubmitted: (val) => signUp(),
-                    ),
-                    SizedBox(height: 12),
-                    Text(
-                      error,
-                      style: TextStyle(color: Colors.red, fontSize: 14),
-                    ),
-                    RoundedButton(
-                      textColor: Colors.white,
-                      color: Colors.black,
-                      onPressed: () {
-                        Navigator.pushNamed(context, SignupScreen.id);
-                      },
-                      title: 'Sign up',
-                      icon: Icon(
-                        Icons.mail,
+                      Divider(),
+                      RoundedButton(
+                        textColor: Colors.black,
                         color: Colors.white,
+                        onPressed: () async {
+                          //Go to login screen.
+                          setState(() => loading = true);
+                          dynamic result = await _auth.signInWithGoogle();
+                          if (result != null) {
+                            Navigator.pop(context);
+                          }
+                          setState(() => loading = false);
+                        },
+                        title: 'Sign up with Google',
+                        icon: Icon(
+                          FontAwesomeIcons.google,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    Divider(),
-                    RoundedButton(
-                      textColor: Colors.black,
-                      color: Colors.white,
-                      onPressed: () async {
-                        //Go to login screen.
-                        setState(() => loading = true);
-                        dynamic result = await _auth.signInWithGoogle();
-                        setState(() => loading = false);
-                      },
-                      title: 'Sign up with Google',
-                      icon: Icon(
-                        FontAwesomeIcons.google,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Login()
-                  ],
+                      Login()
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -173,7 +179,10 @@ class Login extends StatelessWidget {
           style: TextStyle(fontSize: 12),
         ),
         FlatButton(
-            onPressed: () => Navigator.pop(context),
+            padding: EdgeInsets.all(0),
+            onPressed: () {
+              Navigator.pop(context);
+            },
             child: Text(
               "login",
               style: kLoginSignupTextStyle,

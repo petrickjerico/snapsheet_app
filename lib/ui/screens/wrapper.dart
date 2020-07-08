@@ -23,6 +23,7 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     UserData userData = Provider.of<UserData>(context, listen: false);
+    print("Wrapper is called, user: " + user.toString());
     // either home or authenticate
     if (user == null) {
       return LoginScreen();

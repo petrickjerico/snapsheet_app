@@ -14,6 +14,8 @@ class HomepageScreen extends StatefulWidget {
 }
 
 class _HomepageScreenState extends State<HomepageScreen> {
+  String title = 'DASHBOARD';
+
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserData>(context);
@@ -24,15 +26,27 @@ class _HomepageScreenState extends State<HomepageScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.black,
-          title: Text('HOMEPAGE'),
+          title: Text(title),
         ),
         drawer: SidebarMenu(),
         body: PageView(
+          onPageChanged: (index) {
+            setState(() {
+              if (index == 0) {
+                title = 'DASHBOARD';
+              } else if (index == 1) {
+                title = 'RECORDS';
+              } else {
+                title = '';
+              }
+            });
+          },
           children: <Widget>[
             AccountsTab(),
             HistoryTab(),
           ],
         ),
+        bottomNavigationBar: BottomAppBar(),
         floatingActionButton: Consumer<DashboardViewModel>(
             builder: (context, dashboardModel, child) {
           return FloatingActionButton(
@@ -40,7 +54,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
             child: Icon(Icons.add),
             onPressed: () {
               model.newRecord();
-//              model.changeAccount(dashboardModel.getSelectedAccount().index);
+              model.changeAccount(dashboardModel.getSelectedAccount().index);
               Navigator.pushNamed(context, ExpenseScreen.id);
             },
           );

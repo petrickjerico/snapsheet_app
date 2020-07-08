@@ -19,9 +19,19 @@ const kMessageContainerDecoration = BoxDecoration(
   ),
 );
 
-const kTextFieldDecorationLogin = InputDecoration(
-  hintStyle: TextStyle(
-    color: Colors.grey,
-  ),
+const kEmailTextFieldDecoration = InputDecoration(
+  hintStyle: TextStyle(color: Colors.grey),
   hintText: 'Email',
+  prefixIcon: Icon(Icons.email),
 );
+
+const kPasswordTextFieldDecoration = InputDecoration(
+  hintStyle: TextStyle(color: Colors.grey),
+  hintText: 'Password',
+  prefixIcon: Icon(Icons.search),
+);
+
+const kConfirmPasswordTextFieldDecoration = InputDecoration(
+    hintStyle: TextStyle(color: Colors.grey),
+    hintText: 'Confirm Password',
+    prefixIcon: Icon(Icons.youtube_searched_for));

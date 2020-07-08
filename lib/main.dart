@@ -43,9 +43,10 @@ class Snapsheet extends StatelessWidget {
         initialRoute: SplashScreen.id,
         routes: {
           SplashScreen.id: (context) => SplashScreen(),
-          WelcomeScreen.id: (context) => WelcomeScreen(),
+          Wrapper.id: (context) => Wrapper(),
+          LoginScreen.id: (context) => LoginScreen(),
           HomepageScreen.id: (context) => HomepageScreen(),
-          EmailScreen.id: (context) => EmailScreen(),
+          SignupScreen.id: (context) => SignupScreen(),
           ExpenseScreen.id: (context) => ExpenseScreen(),
           EditExpenseInfoScreen.id: (context) => EditExpenseInfoScreen(),
           ExportScreen.id: (context) => ExportScreen(),

@@ -17,44 +17,30 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   bool loadDone = false;
-  bool initialized = false;
-
-  void loadCallback() {
-    setState(() {
-      loadDone = true;
-    });
-  }
+  loadCallback() => setState(() => loadDone = true);
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    print(user);
     UserData userData = Provider.of<UserData>(context, listen: false);
     // either home or authenticate
     if (user == null) {
-      return WelcomeScreen();
+      return LoginScreen();
     } else {
-      if (!initialized) {
-        userData.init(user);
-        setState(() {
-          initialized = true;
-        });
+      if (!loadDone) {
+        userData.init(user, loadCallback);
         return Loading();
       } else {
-        if (!loadDone) {
-          return Loading();
-        } else {
-          ExpenseViewModel expenseViewModel =
-              Provider.of<ExpenseViewModel>(context, listen: false);
-          DashboardViewModel dashboardViewModel =
-              Provider.of<DashboardViewModel>(context, listen: false);
-          BulkScanViewModel bulkScanViewModel =
-              Provider.of<BulkScanViewModel>(context, listen: false);
-          expenseViewModel.init(userData);
-          dashboardViewModel.init(userData);
-          bulkScanViewModel.init(userData);
-          return HomepageScreen();
-        }
+        ExpenseViewModel expenseViewModel =
+            Provider.of<ExpenseViewModel>(context, listen: false);
+        DashboardViewModel dashboardViewModel =
+            Provider.of<DashboardViewModel>(context, listen: false);
+        BulkScanViewModel bulkScanViewModel =
+            Provider.of<BulkScanViewModel>(context, listen: false);
+        expenseViewModel.init(userData);
+        dashboardViewModel.init(userData);
+        bulkScanViewModel.init(userData);
+        return HomepageScreen();
       }
     }
   }

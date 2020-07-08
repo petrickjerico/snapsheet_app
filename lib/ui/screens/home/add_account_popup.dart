@@ -61,7 +61,7 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                   onChanged: (value) {
                     accountTitle = value;
                   },
-                  decoration: kTextFieldDecorationLogin.copyWith(
+                  decoration: kEmailTextFieldDecoration.copyWith(
                       hintText: 'Name your new account'),
                   validator: (value) {
                     if (value.isEmpty) {

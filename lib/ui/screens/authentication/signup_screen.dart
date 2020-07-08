@@ -147,6 +147,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           //Go to login screen.
                           setState(() => loading = true);
                           dynamic result = await _auth.signInWithGoogle();
+                          if (result != null) {
+                            Navigator.pop(context);
+                          }
                           setState(() => loading = false);
                         },
                         title: 'Sign up with Google',

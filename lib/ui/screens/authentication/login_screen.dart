@@ -50,6 +50,8 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  void loadingCallback() => loading = true;
+
   @override
   Widget build(BuildContext context) {
     return loading

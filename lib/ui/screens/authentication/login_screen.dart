@@ -20,8 +20,21 @@ class _LoginScreenState extends State<LoginScreen> {
   String email = '';
   String pwd = '';
   String error = '';
+  bool obscurePwd = true;
 
-  FocusNode pwdFocus = FocusNode();
+  FocusNode pwdFocus;
+
+  @override
+  void initState() {
+    super.initState();
+    pwdFocus = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    pwdFocus.dispose();
+    super.dispose();
+  }
 
   void login() async {
     if (_formKey.currentState.validate()) {
@@ -43,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ? Loading()
         : Scaffold(
             backgroundColor: Colors.white,
+            resizeToAvoidBottomPadding: false,
             body: Container(
               padding: EdgeInsets.symmetric(horizontal: 40.0),
               child: Form(
@@ -55,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 10.0),
                     TextFormField(
                       initialValue: email,
-                      decoration: kTextFieldDecorationLogin,
+                      decoration: kEmailTextFieldDecoration,
                       cursorColor: Colors.black,
                       keyboardType: TextInputType.emailAddress,
                       textAlign: TextAlign.left,
@@ -70,11 +84,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 12),
                     TextFormField(
                       initialValue: pwd,
-                      decoration: kTextFieldDecorationLogin.copyWith(
-                          hintText: 'Password'),
+                      decoration: kPasswordTextFieldDecoration.copyWith(
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            // Based on passwordVisible state choose the icon
+                            obscurePwd
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            // Update the state i.e. toogle the state of passwordVisible variable
+                            setState(() {
+                              obscurePwd = !obscurePwd;
+                            });
+                          },
+                        ),
+                      ),
                       cursorColor: Colors.black,
                       textAlign: TextAlign.left,
-                      obscureText: true,
+                      obscureText: obscurePwd,
                       validator: (val) => val.length < 6
                           ? 'Enter a password 6+ chars long'
                           : null,

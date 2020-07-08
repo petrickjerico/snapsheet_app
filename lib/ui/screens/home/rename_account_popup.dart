@@ -70,7 +70,7 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
                       onChanged: (value) {
                         model.tempAccount.title = value;
                       },
-                      decoration: kTextFieldDecorationLogin.copyWith(
+                      decoration: kEmailTextFieldDecoration.copyWith(
                           hintText: 'Rename your account'),
                       validator: (value) {
                         if (value.isEmpty) {

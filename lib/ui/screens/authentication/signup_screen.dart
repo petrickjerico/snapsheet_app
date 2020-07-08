@@ -21,6 +21,7 @@ class _SignupScreenState extends State<SignupScreen> {
   String pwd = '';
   String confirmPwd = '';
   String error = '';
+  bool obscurePwd = true;
 
   FocusNode pwdFocus = FocusNode();
   FocusNode confirmPwdFocus = FocusNode();
@@ -47,6 +48,7 @@ class _SignupScreenState extends State<SignupScreen> {
         ? Loading()
         : Scaffold(
             backgroundColor: Colors.white,
+            resizeToAvoidBottomPadding: false,
             body: Container(
               padding: EdgeInsets.symmetric(horizontal: 40.0),
               child: Form(
@@ -59,7 +61,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(height: 10.0),
                     TextFormField(
                       initialValue: email,
-                      decoration: kTextFieldDecorationLogin,
+                      decoration: kEmailTextFieldDecoration,
                       cursorColor: Colors.black,
                       keyboardType: TextInputType.emailAddress,
                       textAlign: TextAlign.left,
@@ -74,11 +76,26 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(height: 12),
                     TextFormField(
                       initialValue: pwd,
-                      decoration: kTextFieldDecorationLogin.copyWith(
-                          hintText: 'Password'),
+                      decoration: kPasswordTextFieldDecoration.copyWith(
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            // Based on passwordVisible state choose the icon
+                            obscurePwd
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            // Update the state i.e. toogle the state of passwordVisible variable
+                            setState(() {
+                              obscurePwd = !obscurePwd;
+                            });
+                          },
+                        ),
+                      ),
                       cursorColor: Colors.black,
                       textAlign: TextAlign.left,
-                      obscureText: true,
+                      obscureText: obscurePwd,
                       validator: (val) => val.length < 6
                           ? 'Enter a password 6+ chars long'
                           : null,
@@ -92,8 +109,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(height: 12),
                     TextFormField(
                       initialValue: confirmPwd,
-                      decoration: kTextFieldDecorationLogin.copyWith(
-                          hintText: 'Confirm Password'),
+                      decoration: kConfirmPasswordTextFieldDecoration,
                       cursorColor: Colors.black,
                       textAlign: TextAlign.left,
                       obscureText: true,

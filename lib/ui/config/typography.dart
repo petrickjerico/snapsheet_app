@@ -3,8 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:snapsheetapp/ui/config/colors.dart';
 
 const kLoginSignupTextStyle = TextStyle(
-  color: kCyan,
+  color: kBlack,
   fontSize: 12,
+  fontWeight: FontWeight.bold,
 );
 
 TextStyle kWelcomeTextStyle = GoogleFonts.lato(

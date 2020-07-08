@@ -2,6 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/config/config.dart';
 import 'package:snapsheetapp/models/models.dart';
 import 'package:snapsheetapp/screens/authentication/wrapper.dart';
 import 'package:snapsheetapp/screens/home/homepage_screen.dart';
@@ -56,13 +57,12 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       key: _scaffoldKey,
       body: Container(
-        color: Colors.white,
+        color: Colors.black,
         child: Center(
-          child: Hero(
-            tag: 'logo',
-            child: SnapSheetLogo(
-              size: 200,
-            ),
+          child: Text(
+            'SNAPSHEET',
+            textAlign: TextAlign.center,
+            style: kWelcomeTextStyle.copyWith(color: Colors.white),
           ),
         ),
       ),

@@ -68,7 +68,7 @@ class SidebarMenu extends StatelessWidget {
     authService.signOut();
     Navigator.pushNamedAndRemoveUntil(
       context,
-      Wrapper.id,
+      WelcomeScreen.id,
       (route) => false,
     );
   }

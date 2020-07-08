@@ -13,14 +13,13 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   User user;
   DatabaseService _db;
   CloudStorageService _cloud;
-  Function loadCallback;
 
   List<Record> _records =
       SortedList<Record>((r1, r2) => r2.dateTime.compareTo(r1.dateTime));
   List<Account> _accounts =
       SortedList<Account>((a1, a2) => a1.index.compareTo(a2.index));
 
-  Future init(User user) async {
+  Future init(User user, Function loadCallback) async {
     this.user = user;
     _records.clear();
     _accounts.clear();
@@ -30,6 +29,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     List<Account> unorderedAccounts = await _db.getAccounts();
     _records.addAll(unorderedRecords);
     _accounts.addAll(unorderedAccounts);
+    loadCallback();
   }
 
   Future processImage(Record record) async {

@@ -2,6 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
@@ -33,19 +34,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     try {
       if (user != null) {
-        UserData userData = Provider.of<UserData>(context, listen: false);
-
-        await userData.init(user);
-        ExpenseViewModel expenseViewModel =
-            Provider.of<ExpenseViewModel>(context, listen: false);
-        DashboardViewModel dashboardViewModel =
-            Provider.of<DashboardViewModel>(context, listen: false);
-        BulkScanViewModel bulkScanViewModel =
-            Provider.of<BulkScanViewModel>(context, listen: false);
-        expenseViewModel.init(userData);
-        dashboardViewModel.init(userData);
-        bulkScanViewModel.init(userData);
-        Navigator.pushReplacementNamed(context, HomepageScreen.id);
+        Navigator.pushReplacementNamed(context, Wrapper.id);
       } else {
         Navigator.pushReplacementNamed(context, WelcomeScreen.id);
       }

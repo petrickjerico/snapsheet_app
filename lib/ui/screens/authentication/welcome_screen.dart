@@ -4,6 +4,7 @@ import 'package:snapsheetapp/services/auth/auth_impl.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/authentication/email_screen.dart';
+import 'package:snapsheetapp/ui/screens/home/homepage_screen.dart';
 import 'package:snapsheetapp/ui/shared/loading.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -53,6 +54,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       setState(() => loading = true);
                       dynamic result = await _auth.signInWithGoogle();
                       setState(() => loading = false);
+                      if (result != null) {
+                        Navigator.pushReplacementNamed(
+                            context, HomepageScreen.id);
+                      }
                     },
                     title: 'Login with Google',
                     icon: Icon(

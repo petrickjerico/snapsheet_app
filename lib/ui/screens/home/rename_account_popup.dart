@@ -48,23 +48,38 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
     return Form(
       key: RenameAccountPopup._formKey,
       child: Container(
-        padding: EdgeInsets.all(20.0),
+        padding:
+            EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0, top: 15.0),
         child: Consumer<DashboardViewModel>(
           builder: (context, model, child) {
             return Column(
               children: <Widget>[
-                Text(
-                  'Edit account',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
+                Padding(
+                  padding: EdgeInsets.only(bottom: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Edit account',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      GestureDetector(
+                        child: Icon(
+                          Icons.close,
+                          size: 25.0,
+                        ),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
                 ListTile(
+                  contentPadding: EdgeInsets.only(right: 2.0),
                   leading: Container(
                     height: 40,
                     width: 40,
@@ -107,10 +122,11 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
                     },
                   ),
                 ),
-                SizedBox(
-                  height: 5.0,
-                ),
                 RoundedButton(
+                  icon: Icon(
+                    Icons.check,
+                    color: Colors.white,
+                  ),
                   color: Colors.black,
                   textColor: Colors.white,
                   title: 'DONE',

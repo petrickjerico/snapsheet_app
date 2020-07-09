@@ -49,21 +49,36 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
     return Form(
       key: AddAccountPopup._formKey,
       child: Container(
-        padding: EdgeInsets.all(20.0),
+        padding:
+            EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0, top: 15.0),
         child: Column(
           children: <Widget>[
-            Text(
-              'Add account',
-              style: TextStyle(
-                fontSize: 24.0,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
+            Padding(
+              padding: EdgeInsets.only(bottom: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Add account',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  GestureDetector(
+                    child: Icon(
+                      Icons.close,
+                      size: 25.0,
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
               ),
             ),
-            SizedBox(
-              height: 10.0,
-            ),
             ListTile(
+              contentPadding: EdgeInsets.only(right: 2.0),
               leading: Container(
                 height: 40,
                 width: 40,
@@ -103,9 +118,6 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                   return null;
                 },
               ),
-            ),
-            SizedBox(
-              height: 5.0,
             ),
             Consumer<DashboardViewModel>(
               builder: (context, model, child) {

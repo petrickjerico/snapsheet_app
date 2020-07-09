@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/export/export_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
@@ -27,6 +28,16 @@ class ExportScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Expanded(flex: 7, child: ExportList()),
+                  Row(
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[Text("From"), Text(model.from)],
+                      ),
+                      Column(
+                        children: <Widget>[Text("To"), Text(model.to)],
+                      ),
+                    ],
+                  ),
                   Expanded(
                     child: RoundedButton(
                       textColor: Colors.white,

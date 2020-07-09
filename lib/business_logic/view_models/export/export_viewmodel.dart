@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:csv/csv.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
@@ -17,11 +18,28 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
   List<Account> accounts;
   List<bool> isExport;
   File target;
+  DateTime _from;
+  DateTime _to;
 
   ExportViewModel({this.userData}) {
     records = userData.records;
     accounts = userData.accounts;
     isExport = List.generate(accounts.length, (_) => true);
+    _from = records.last.dateTime;
+    _to = DateTime.now();
+  }
+
+  get from => DateFormat.yMMMd().format(_from);
+  get to => DateFormat.yMMMd().format(_to);
+
+  void changeFromDate(DateTime dateTime) {
+    _from = dateTime;
+    notifyListeners();
+  }
+
+  void changeToDate(DateTime dateTime) {
+    _to = dateTime;
+    notifyListeners();
   }
 
   void toggleExport(index) {

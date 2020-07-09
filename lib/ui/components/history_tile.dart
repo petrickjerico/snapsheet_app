@@ -21,6 +21,7 @@ class HistoryTile extends StatelessWidget {
       Category category = categories[record.categoryId];
       return ListTile(
         contentPadding: EdgeInsets.all(0),
+        dense: true,
         leading: CircleAvatar(
           backgroundColor: category.color.withOpacity(0.2),
           child: IconTheme(
@@ -30,7 +31,8 @@ class HistoryTile extends StatelessWidget {
         ),
         title: Text(
           record.title == "" ? category.title : record.title,
-          style: kHistoryRecordTitle.copyWith(color: color ?? Colors.black),
+          style: kHistoryRecordTitle.copyWith(
+              color: color ?? Colors.black, fontWeight: FontWeight.w500),
         ),
         subtitle: Text(
           model.userData.getThisAccount(record.accountUid).title,

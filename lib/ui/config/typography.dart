@@ -25,20 +25,18 @@ const kWhiteTextStyle = TextStyle(
 const kStandardStyle = TextStyle(fontSize: 16);
 
 const kHistoryRecordTitle = TextStyle(
-  fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.w500,
   fontSize: 16,
 );
 
 const kHistoryExpenseValue = TextStyle(
   color: Colors.red,
   fontWeight: FontWeight.w700,
-  fontSize: 16,
 );
 
 const kHistoryIncomeValue = TextStyle(
   color: Colors.green,
   fontWeight: FontWeight.w700,
-  fontSize: 16,
 );
 
 const kHistoryRecordDate = TextStyle(

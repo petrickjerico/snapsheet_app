@@ -158,7 +158,7 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
         final Category category = categories[i];
         final bool isTouched = i == touchedIndex;
         final bool isIncome = category.isIncome;
-        final double opacity = isTouched ? 1 : 0.4;
+        final double opacity = isTouched ? 1 : 0.6;
         final value = getCategoryTotal(i);
         switch (i) {
           default:
@@ -168,8 +168,7 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
               showTitle: isTouched && value > 0 && !isIncome,
               title: '${category.title} \n ${value.toStringAsFixed(2)}',
               radius: isTouched ? 40 : 30,
-              titleStyle:
-                  TextStyle(fontSize: 15, color: Colors.black.withOpacity(0.8)),
+              titleStyle: TextStyle(fontSize: 15, color: Colors.white54),
               titlePositionPercentageOffset: -1.5,
             );
         }

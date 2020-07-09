@@ -21,9 +21,9 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
     return Consumer<HomepageViewModel>(
       builder: (context, model, child) {
         return Scaffold(
+          backgroundColor: kHomepageBackgroundTransparency,
           resizeToAvoidBottomInset: false,
           body: Container(
-            color: Colors.black.withOpacity(0.8),
             child: Column(
               children: <Widget>[
                 Padding(

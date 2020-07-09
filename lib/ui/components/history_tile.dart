@@ -11,14 +11,16 @@ import 'package:snapsheetapp/ui/screens/screens.dart';
 class HistoryTile extends StatelessWidget {
   final Record record;
   final int index;
+  final Color color;
 
-  HistoryTile({@required this.record, this.index});
+  HistoryTile({@required this.record, this.index, this.color});
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ExpenseViewModel>(builder: (context, model, child) {
       Category category = categories[record.categoryId];
       return ListTile(
+        contentPadding: EdgeInsets.all(0),
         leading: CircleAvatar(
           backgroundColor: category.color.withOpacity(0.2),
           child: IconTheme(
@@ -28,9 +30,14 @@ class HistoryTile extends StatelessWidget {
         ),
         title: Text(
           record.title == "" ? category.title : record.title,
-          style: kHistoryRecordTitle,
+          style: kHistoryRecordTitle.copyWith(color: color ?? Colors.black),
         ),
-        subtitle: Text(model.userData.getThisAccount(record.accountUid).title),
+        subtitle: Text(
+          model.userData.getThisAccount(record.accountUid).title,
+          style: kHistoryRecordTitle.copyWith(
+              color: color?.withOpacity(0.3) ?? Colors.black,
+              fontWeight: FontWeight.normal),
+        ),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -42,7 +49,7 @@ class HistoryTile extends StatelessWidget {
             ),
             Text(
               DateFormat('d/M/y').format(record.dateTime),
-              style: kHistoryRecordDate,
+              style: kHistoryRecordDate.copyWith(color: color ?? Colors.black),
             ),
           ],
         ),

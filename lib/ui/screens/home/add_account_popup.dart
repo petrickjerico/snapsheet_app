@@ -52,38 +52,14 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
         padding: EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                SizedBox(height: 10.0),
-                TextFormField(
-                  autofocus: true,
-                  onChanged: (value) {
-                    accountTitle = value;
-                  },
-                  decoration: kEmailTextFieldDecoration.copyWith(
-                      hintText: 'Name your new account'),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter some text.';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                FlatButton(
-                  child: Text(
-                    'Tap to change colour',
-                    style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        color: Colors.black87,
-                        fontSize: 15.0),
-                  ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0)),
-                  color: _color,
+            ListTile(
+              leading: Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                    color: _color, borderRadius: BorderRadius.circular(5.0)),
+                child: FlatButton(
+                  padding: EdgeInsets.all(0),
                   onPressed: () async {
                     _openDialog(
                       "Color your account",
@@ -99,45 +75,39 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                       ),
                     );
                   },
-                )
-              ],
+                ),
+              ),
+              title: TextFormField(
+                autofocus: true,
+                onChanged: (value) {
+                  accountTitle = value;
+                },
+                cursorColor: Colors.black,
+                decoration: kAddAccountTextFieldDecoration,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter some text.';
+                  }
+                  return null;
+                },
+              ),
             ),
             SizedBox(
-              height: 20.0,
+              height: 5.0,
             ),
             Consumer<DashboardViewModel>(builder: (context, model, child) {
-              return Container(
-                height: 50.0,
-                width: 150.0,
-                child: RoundedButton(
-                  color: Colors.black,
-                  textColor: Colors.white,
-                  title: 'CREATE',
-                  onPressed: () {
-                    if (AddAccountPopup._formKey.currentState.validate()) {
-                      model.selectAccount(model.accounts.length);
-                      model.addAccount(accountTitle, _color);
-                      model.syncController();
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-//                child: FlatButton(
-//                  color: Colors.black,
-//                  child: Text(
-//                    'CREATE',
-//                    textAlign: TextAlign.center,
-//                    style: TextStyle(fontSize: 20.0, color: Colors.white),
-//                  ),
-//                  onPressed: () {
-//                    if (AddAccountPopup._formKey.currentState.validate()) {
-//                      model.selectAccount(model.accounts.length);
-//                      model.addAccount(accountTitle, _color);
-//                      model.syncController();
-//                      Navigator.pop(context);
-//                    }
-//                  },
-//                ),
+              return RoundedButton(
+                color: Colors.black,
+                textColor: Colors.white,
+                title: 'CREATE',
+                onPressed: () {
+                  if (AddAccountPopup._formKey.currentState.validate()) {
+                    model.selectAccount(model.accounts.length);
+                    model.addAccount(accountTitle, _color);
+                    model.syncController();
+                    Navigator.pop(context);
+                  }
+                },
               );
             }),
             SizedBox(

@@ -1,20 +1,21 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 
 class AccountTile extends StatelessWidget {
   AccountTile({Key key, this.index, this.color, this.title, this.total})
       : super(key: key);
 
   int index;
+  int tempIndex;
   Color color;
   String title;
   double total;
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardViewModel>(builder: (context, model, child) {
+    return Consumer<HomepageViewModel>(builder: (context, model, child) {
       return GestureDetector(
         onTap: () {
           model.selectAccount(index);
@@ -44,7 +45,7 @@ class AccountTile extends StatelessWidget {
                 ),
                 Flexible(
                   child: Text(
-                    total.toStringAsFixed(2),
+                    total == 0 ? '0' : total.toStringAsFixed(2),
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.white, fontSize: 20.0),
                   ),

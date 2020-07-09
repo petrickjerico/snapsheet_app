@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/ui/screens/expense/expense_calculator.dart';
 import 'package:flushbar/flushbar.dart';
@@ -68,7 +68,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           ],
         ),
         body: ExpenseCalculator(),
-        floatingActionButton: Consumer<DashboardViewModel>(
+        floatingActionButton: Consumer<HomepageViewModel>(
           builder: (context, dashboardModel, child) {
             return FloatingActionButton(
               backgroundColor: Colors.black,

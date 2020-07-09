@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/button/add_account_button.dart';
 import 'package:snapsheetapp/ui/components/button/edit_accounts_button.dart';
 import 'package:snapsheetapp/ui/components/button/select_all_button.dart';
@@ -20,23 +20,19 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 SelectAllButton(),
                 SizedBox(
                   width: 5.0,
                 ),
                 AddAccountButton(),
-                SizedBox(
-                  width: 5.0,
-                ),
-                EditAccountsButton(),
               ],
             ),
           ),
-          Consumer<DashboardViewModel>(builder: (context, model, child) {
+          Consumer<HomepageViewModel>(builder: (context, model, child) {
             return Stack(
               alignment: Alignment.center,
               children: <Widget>[
@@ -62,7 +58,7 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                       ],
                     )),
                 CarouselSlider(
-                  carouselController: DashboardViewModel.controller,
+                  carouselController: HomepageViewModel.controller,
                   items: makeAccountTiles(model),
                   options: CarouselOptions(
                     initialPage: model.selectedAccountIndex != -1 &&
@@ -96,20 +92,19 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
     );
   }
 
-  List<Widget> makeAccountTiles(DashboardViewModel model) {
-    return model.accounts.map((acc) {
-//      print("model.accounts.length = ${model.accounts.length}");
-//      print("acc.uid = ${acc.uid}");
-//      print("acc.index = ${acc.index}");
-      return Opacity(
-        opacity: model.isAccountSelected(acc) ? 1.0 : 0.5,
-        child: AccountTile(
-          index: acc.index,
-          color: acc.color,
-          title: acc.title,
-          total: model.getSumFromAccount(acc),
-        ),
-      );
-    }).toList();
+  List<Widget> makeAccountTiles(HomepageViewModel model) {
+    return model.accounts.map(
+      (acc) {
+        return Opacity(
+          opacity: model.isAccountSelected(acc) ? 1.0 : 0.5,
+          child: AccountTile(
+            index: acc.index,
+            color: acc.color,
+            title: acc.title,
+            total: model.getSumFromAccount(acc),
+          ),
+        );
+      },
+    ).toList();
   }
 }

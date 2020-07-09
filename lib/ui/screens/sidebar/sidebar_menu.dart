@@ -41,12 +41,6 @@ class SidebarMenu extends StatelessWidget {
                 onTap: () => {Navigator.pushNamed(context, BulkScanScreen.id)},
               ),
               ListTile(
-                leading: Icon(Icons.mode_edit),
-                title: Text('Edit profile'),
-                onTap: () =>
-                    {Navigator.pushNamed(context, EditProfileScreen.id)},
-              ),
-              ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
                 onTap: () => {Navigator.pushNamed(context, SettingsScreen.id)},

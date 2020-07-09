@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/export/export_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
@@ -30,8 +30,8 @@ class Snapsheet extends StatelessWidget {
         StreamProvider<User>.value(value: AuthServiceImpl().user),
         ChangeNotifierProvider<ExpenseViewModel>(
             create: (context) => ExpenseViewModel()),
-        ChangeNotifierProvider<DashboardViewModel>(
-            create: (context) => DashboardViewModel()),
+        ChangeNotifierProvider<HomepageViewModel>(
+            create: (context) => HomepageViewModel()),
         ChangeNotifierProvider<BulkScanViewModel>(
             create: (context) => BulkScanViewModel()),
         ChangeNotifierProvider<UserData>(

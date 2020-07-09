@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/config/decoration.dart';
 import 'package:snapsheetapp/ui/screens/home/rename_account_popup.dart';
 
@@ -23,10 +23,10 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        final model = Provider.of<DashboardViewModel>(context, listen: false);
+        final model = Provider.of<HomepageViewModel>(context, listen: false);
         model.selectAccount(widget.index);
         model.syncController();
-        Navigator.pop(context);
+        model.syncBarAndTabToBeginning();
       },
       contentPadding: EdgeInsets.only(left: 20),
       dense: true,
@@ -52,7 +52,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
               child: Text('Edit'),
               value: () {
                 final model =
-                    Provider.of<DashboardViewModel>(context, listen: false);
+                    Provider.of<HomepageViewModel>(context, listen: false);
                 model.initEditAccount(widget.index);
                 showModalBottomSheet(
                   context: context,
@@ -71,7 +71,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
               value: () {
                 showDialog(
                   context: context,
-                  builder: (context) => Consumer<DashboardViewModel>(
+                  builder: (context) => Consumer<HomepageViewModel>(
                     builder: (context, model, child) => Theme(
                       data: ThemeData.light(),
                       child: AlertDialog(
@@ -132,7 +132,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
           ),
           onSelected: (Function value) {
             final model =
-                Provider.of<DashboardViewModel>(context, listen: false);
+                Provider.of<HomepageViewModel>(context, listen: false);
             model.selectAccount(widget.index);
             model.syncController();
             value.call();

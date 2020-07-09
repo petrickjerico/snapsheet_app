@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
@@ -91,16 +92,29 @@ class _HomepageScreenState extends State<HomepageScreen> {
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: Consumer<HomepageViewModel>(
               builder: (context, dashboardModel, child) {
-            return FloatingActionButton(
-              backgroundColor: kBlack,
-              child: Icon(Icons.add),
-              onPressed: () {
-                model.newRecord();
-                int targetIndex =
-                    dashboardModel.getSelectedAccount()?.index ?? 0;
-                model.changeAccount(targetIndex == -1 ? 0 : targetIndex);
-                Navigator.pushNamed(context, ExpenseScreen.id);
+            return OpenContainer<bool>(
+              closedBuilder: (_, openContainer) {
+                return FloatingActionButton(
+                  elevation: 0,
+                  backgroundColor: kBlack,
+                  child: Icon(Icons.add),
+                  onPressed: () {
+                    model.newRecord();
+                    int targetIndex =
+                        dashboardModel.getSelectedAccount()?.index ?? 0;
+                    model.changeAccount(targetIndex == -1 ? 0 : targetIndex);
+                    openContainer.call();
+                  },
+                );
               },
+              openBuilder: (_, openContainer) {
+                return ExpenseScreen();
+              },
+              closedElevation: 8,
+              closedColor: kBlack,
+              closedShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50)),
+              transitionType: ContainerTransitionType.fade,
             );
           }),
         );

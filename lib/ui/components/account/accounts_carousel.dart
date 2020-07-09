@@ -36,56 +36,61 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
               ],
             ),
           ),
-          Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black38,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  height: 70.0,
-                  width: 142.0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.chevron_left,
-                        color: Colors.white54,
-                      ),
-                      Icon(
-                        Icons.chevron_right,
-                        color: Colors.white54,
-                      ),
-                    ],
-                  )),
-              Consumer<DashboardViewModel>(
-                builder: (context, model, child) {
-//                  print('CAROUSEL');
-//                  print(model.selectedAccountIndex);
-                  return CarouselSlider(
-                    carouselController: DashboardViewModel.controller,
-                    items: makeAccountTiles(model),
-                    options: CarouselOptions(
-                      initialPage: model.selectedAccountIndex != -1 &&
-                              model.selectedAccountIndex != null
-                          ? model.selectedAccountIndex
-                          : 0,
-                      height: 55.0,
-                      viewportFraction: 0.3,
-                      enlargeCenterPage: true,
-                      enableInfiniteScroll: false,
-                      autoPlayAnimationDuration: Duration(milliseconds: 100),
-                      onPageChanged: (index, manual) {
-                        model.selectAccount(index);
-                      },
+          Consumer<DashboardViewModel>(builder: (context, model, child) {
+            return Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black38,
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  );
-                },
-              ),
-            ],
-          ),
+                    height: 70.0,
+                    width: 142.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.chevron_left,
+                          color: Colors.white54,
+                        ),
+                        Icon(
+                          Icons.chevron_right,
+                          color: Colors.white54,
+                        ),
+                      ],
+                    )),
+                CarouselSlider(
+                  carouselController: DashboardViewModel.controller,
+                  items: makeAccountTiles(model),
+                  options: CarouselOptions(
+                    initialPage: model.selectedAccountIndex != -1 &&
+                            model.selectedAccountIndex != null
+                        ? model.selectedAccountIndex
+                        : 0,
+                    height: 55.0,
+                    viewportFraction: 0.3,
+                    enlargeCenterPage: true,
+                    enableInfiniteScroll: false,
+                    autoPlayAnimationDuration: Duration(milliseconds: 100),
+                    onPageChanged: (index, manual) {
+                      model.selectAccount(index);
+                    },
+                  ),
+                ),
+                Visibility(
+                  child: AccountTile(
+                    index: -1,
+                    title: "ALL",
+                    color: Colors.black,
+                    total: model.currentExpensesTotal(),
+                  ),
+                  visible: model.selectedAccountIndex == -1,
+                )
+              ],
+            );
+          }),
         ],
       ),
     );

@@ -54,7 +54,8 @@ class _HomepageScreenState extends State<HomepageScreen> {
             child: Icon(Icons.add),
             onPressed: () {
               model.newRecord();
-              model.changeAccount(dashboardModel.getSelectedAccount().index);
+              int targetIndex = dashboardModel.getSelectedAccount()?.index ?? 0;
+              model.changeAccount(targetIndex == -1 ? 0 : targetIndex);
               Navigator.pushNamed(context, ExpenseScreen.id);
             },
           );

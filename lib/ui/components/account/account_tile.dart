@@ -18,7 +18,9 @@ class AccountTile extends StatelessWidget {
       return GestureDetector(
         onTap: () {
           model.selectAccount(index);
-          model.syncController();
+          if (index != -1) {
+            model.syncController();
+          }
         },
         child: Container(
           decoration: BoxDecoration(

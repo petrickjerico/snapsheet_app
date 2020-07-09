@@ -19,6 +19,11 @@ const kMessageContainerDecoration = BoxDecoration(
   ),
 );
 
+const kAddAccountTextFieldDecoration = InputDecoration(
+  hintStyle: TextStyle(color: Colors.grey),
+  hintText: 'Name your new account',
+);
+
 const kEmailTextFieldDecoration = InputDecoration(
   hintStyle: TextStyle(color: Colors.grey),
   hintText: 'Email',

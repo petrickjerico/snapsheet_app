@@ -158,4 +158,8 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     }
     notifyListeners();
   }
+
+  bool hasImage() {
+    return tempRecord.imagePath != null || tempRecord.receiptURL != null;
+  }
 }

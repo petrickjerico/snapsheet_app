@@ -56,6 +56,8 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              ReceiptImage(tempRecord: model.tempRecord),
+              SizedBox(height: 10),
               TextFormField(
                 initialValue: title,
                 decoration: InputDecoration(
@@ -71,12 +73,10 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
               SizedBox(height: 10.0),
               RecordDateTime(),
               SizedBox(height: 10.0),
-              ReceiptImage(tempRecord: model.tempRecord),
-              SizedBox(height: 10),
               RoundedButton(
                 color: Colors.white,
                 textColor: Colors.black,
-                title: 'Add Receipt',
+                title: model.hasImage() ? 'Retake Receipt' : 'Add Receipt',
                 icon: Icon(Icons.receipt, color: Colors.black),
                 onPressed: () async {
                   await model.showChoiceDialog(context);

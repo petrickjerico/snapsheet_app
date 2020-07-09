@@ -18,27 +18,32 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
   List<Account> accounts;
   List<bool> isExport;
   File target;
-  DateTime _from;
-  DateTime _to;
+  DateTime start;
+  DateTime end;
 
   ExportViewModel({this.userData}) {
     records = userData.records;
     accounts = userData.accounts;
     isExport = List.generate(accounts.length, (_) => true);
-    _from = records.last.dateTime;
-    _to = DateTime.now();
+    start = records.isEmpty ? DateTime.now() : records.last.dateTime;
+    end = DateTime.now();
   }
 
-  get from => DateFormat.yMMMd().format(_from);
-  get to => DateFormat.yMMMd().format(_to);
+  void changeDate(bool isStart, DateTime dateTime) {
+    if (isStart) {
+      _changeStartDate(dateTime);
+    } else {
+      _changeEndDate(dateTime);
+    }
+  }
 
-  void changeFromDate(DateTime dateTime) {
-    _from = dateTime;
+  void _changeStartDate(DateTime dateTime) {
+    start = dateTime;
     notifyListeners();
   }
 
-  void changeToDate(DateTime dateTime) {
-    _to = dateTime;
+  void _changeEndDate(DateTime dateTime) {
+    end = dateTime;
     notifyListeners();
   }
 

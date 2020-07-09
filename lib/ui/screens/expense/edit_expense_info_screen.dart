@@ -171,7 +171,7 @@ class ReceiptImage extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: <Widget>[
-              Loading(),
+              MiniLoading(),
               FadeInImage.memoryNetwork(
                 placeholder: kTransparentImage,
                 image: tempRecord.receiptURL,

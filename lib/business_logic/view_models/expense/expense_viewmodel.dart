@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,6 +9,7 @@ import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_basemodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/services/scanner/scanner_impl.dart';
+import 'package:http/http.dart' show get;
 
 class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   UserData userData;
@@ -169,5 +172,26 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
 
   bool hasImage() {
     return tempRecord.imagePath != null || tempRecord.receiptURL != null;
+  }
+
+  Future<void> exportImage() async {
+    if (tempRecord.receiptURL != null) {
+      var response = await get(tempRecord.receiptURL);
+      await Share.file(
+        'snapsheet',
+        'snapsheet.png',
+        response.bodyBytes,
+        'image/png',
+      );
+    } else {
+      File target = File(tempRecord.imagePath);
+      final ByteData bytes = ByteData.view(target.readAsBytesSync().buffer);
+      await Share.file(
+        'snapsheet',
+        'snapsheet.png',
+        bytes.buffer.asUint8List(),
+        'image/png',
+      );
+    }
   }
 }

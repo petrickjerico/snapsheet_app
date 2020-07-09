@@ -173,7 +173,9 @@ class ReceiptButtons extends StatelessWidget {
                         Icons.cloud_download,
                         color: Colors.green,
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        await model.exportImage();
+                      },
                     ),
                   )
                 : SizedBox.shrink()

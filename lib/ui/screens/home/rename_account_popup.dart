@@ -53,6 +53,17 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
           builder: (context, model, child) {
             return Column(
               children: <Widget>[
+                Text(
+                  'Edit account',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
                 ListTile(
                   leading: Container(
                     height: 40,

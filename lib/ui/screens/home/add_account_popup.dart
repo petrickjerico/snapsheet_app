@@ -52,6 +52,17 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
         padding: EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
+            Text(
+              'Add account',
+              style: TextStyle(
+                fontSize: 24.0,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
             ListTile(
               leading: Container(
                 height: 40,

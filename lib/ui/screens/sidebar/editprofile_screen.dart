@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:snapsheetapp/ui/config/colors.dart';
 
 class EditProfileScreen extends StatelessWidget {
   static const String id = 'editprofile_screen';
@@ -6,16 +7,11 @@ class EditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        leading: BackButton(),
-        title: Text('EDIT PROFILE'),
-      ),
+      backgroundColor: kHomepageBackgroundTransparency,
       body: Center(
         child: Text(
           'User details will appear here.',
-          style: TextStyle(fontStyle: FontStyle.italic),
+          style: TextStyle(fontStyle: FontStyle.italic, color: Colors.white54),
         ),
       ),
     );

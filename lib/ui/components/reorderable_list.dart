@@ -190,12 +190,11 @@ class ReorderableItemSimple extends StatelessWidget {
       bool placeholder = state == ReorderableItemState.placeholder;
       return BoxDecoration(
         border: Border(
-            top: !placeholder
-                ? Divider.createBorderSide(context)
-                : BorderSide.none,
+            top: BorderSide.none,
             bottom: placeholder
                 ? BorderSide.none
-                : Divider.createBorderSide(context)),
+                : Divider.createBorderSide(context,
+                    color: Colors.grey.withOpacity(0.3))),
       );
     }
   }

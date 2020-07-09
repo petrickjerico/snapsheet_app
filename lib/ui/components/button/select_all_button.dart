@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 
 class SelectAllButton extends StatelessWidget {
   const SelectAllButton({
@@ -10,7 +10,7 @@ class SelectAllButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardViewModel>(
+    return Consumer<HomepageViewModel>(
       builder: (context, model, child) => Visibility(
         visible: model.selectedAccountIndex != -1,
         child: MaterialButton(

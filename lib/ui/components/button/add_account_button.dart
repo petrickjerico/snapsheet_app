@@ -7,7 +7,6 @@ class AddAccountButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       visualDensity: VisualDensity.comfortable,
-      minWidth: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
         side: BorderSide(color: Colors.white),
@@ -26,9 +25,6 @@ class AddAccountButton extends StatelessWidget {
           Text(
             'ADD',
             style: TextStyle(fontSize: 13.0, color: Colors.white),
-          ),
-          SizedBox(
-            width: 2.0,
           ),
         ],
       ),

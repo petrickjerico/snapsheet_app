@@ -69,6 +69,7 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                     child: Icon(
                       Icons.close,
                       size: 25.0,
+                      color: Colors.grey,
                     ),
                     onTap: () {
                       Navigator.pop(context);
@@ -122,6 +123,10 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
             Consumer<DashboardViewModel>(
               builder: (context, model, child) {
                 return RoundedButton(
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
                   color: Colors.black,
                   textColor: Colors.white,
                   title: 'CREATE',

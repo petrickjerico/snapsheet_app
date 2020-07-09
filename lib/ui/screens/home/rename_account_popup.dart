@@ -70,6 +70,7 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
                         child: Icon(
                           Icons.close,
                           size: 25.0,
+                          color: Colors.grey,
                         ),
                         onTap: () {
                           Navigator.pop(context);

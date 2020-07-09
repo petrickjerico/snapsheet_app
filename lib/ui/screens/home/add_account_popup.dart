@@ -14,8 +14,31 @@ class AddAccountPopup extends StatefulWidget {
 
 class _AddAccountPopupState extends State<AddAccountPopup> {
   String accountTitle;
+  static int colorPointer = 0;
 
-  Color _color = kCyan;
+  static const List<ColorSwatch> materialColors = const <ColorSwatch>[
+    Colors.red,
+    Colors.pink,
+    Colors.purple,
+    Colors.deepPurple,
+    Colors.indigo,
+    Colors.blue,
+    Colors.lightBlue,
+    Colors.cyan,
+    Colors.teal,
+    Colors.green,
+    Colors.lightGreen,
+    Colors.lime,
+    Colors.yellow,
+    Colors.amber,
+    Colors.orange,
+    Colors.deepOrange,
+    Colors.brown,
+    Colors.grey,
+    Colors.blueGrey
+  ];
+
+  Color _color = materialColors[colorPointer];
   Color _tempColor;
 
   void _openDialog(String title, Widget content) {
@@ -49,17 +72,45 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
     return Form(
       key: AddAccountPopup._formKey,
       child: Container(
-        padding: EdgeInsets.all(20.0),
+        padding:
+            EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0, top: 15.0),
         child: Column(
           children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(bottom: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Add account',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  GestureDetector(
+                    child: Icon(
+                      Icons.close,
+                      size: 25.0,
+                      color: Colors.grey,
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
+              ),
+            ),
             ListTile(
+              contentPadding: EdgeInsets.only(right: 2.0),
               leading: Container(
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                    color: _color, borderRadius: BorderRadius.circular(5.0)),
+                  color: _color,
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
                 child: FlatButton(
-                  padding: EdgeInsets.all(0),
                   onPressed: () async {
                     _openDialog(
                       "Color your account",
@@ -78,11 +129,11 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                 ),
               ),
               title: TextFormField(
+                cursorColor: Colors.black,
                 autofocus: true,
                 onChanged: (value) {
                   accountTitle = value;
                 },
-                cursorColor: Colors.black,
                 decoration: kAddAccountTextFieldDecoration,
                 validator: (value) {
                   if (value.isEmpty) {
@@ -92,26 +143,30 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                 },
               ),
             ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Consumer<DashboardViewModel>(builder: (context, model, child) {
-              return RoundedButton(
-                color: Colors.black,
-                textColor: Colors.white,
-                title: 'CREATE',
-                onPressed: () {
-                  if (AddAccountPopup._formKey.currentState.validate()) {
-                    model.selectAccount(model.accounts.length);
-                    model.addAccount(accountTitle, _color);
-                    model.syncController();
-                    Navigator.pop(context);
-                  }
-                },
-              );
-            }),
-            SizedBox(
-              height: 15.0,
+            Consumer<DashboardViewModel>(
+              builder: (context, model, child) {
+                return RoundedButton(
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  color: Colors.black,
+                  textColor: Colors.white,
+                  title: 'CREATE',
+                  onPressed: () {
+                    if (AddAccountPopup._formKey.currentState.validate()) {
+                      model.selectAccount(model.accounts.length);
+                      model.addAccount(accountTitle, _color);
+                      model.syncController();
+                      colorPointer++;
+                      if (colorPointer == materialColors.length) {
+                        colorPointer = 0;
+                      }
+                      Navigator.pop(context);
+                    }
+                  },
+                );
+              },
             ),
           ],
         ),

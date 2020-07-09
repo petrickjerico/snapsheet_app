@@ -5,4 +5,4 @@ const kLightBlueGrey = Color(0xFFD8F1F5);
 const kCyan = Color(0xFF56CBDC);
 const kDarkCyan = Color(0xFF5991A0);
 const kGrey = Color(0xFFACABAF);
-var kHomepageBackgroundTransparency = Colors.white.withOpacity(0.2);
+var kHomepageBackgroundTransparency = Colors.white.withOpacity(0.1);

@@ -5,7 +5,6 @@ import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmode
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
 class HomepageScreen extends StatefulWidget {
   static final String id = 'homepage_screen';

@@ -23,12 +23,8 @@ class _RecordDateTimeState extends State<RecordDateTime> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Icon(
-                        FontAwesomeIcons.calendarAlt,
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
+                      Icon(FontAwesomeIcons.calendarAlt),
+                      SizedBox(width: 10.0),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -77,9 +73,7 @@ class _RecordDateTimeState extends State<RecordDateTime> {
                     });
                   }),
             ),
-            SizedBox(
-              width: 10.0,
-            ),
+            SizedBox(width: 10.0),
             Expanded(
               child: OutlineButton(
                   padding: EdgeInsets.all(10),
@@ -87,9 +81,7 @@ class _RecordDateTimeState extends State<RecordDateTime> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Icon(FontAwesomeIcons.clock),
-                      SizedBox(
-                        width: 10.0,
-                      ),
+                      SizedBox(width: 10.0),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[

@@ -71,57 +71,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
               value: () {
                 showDialog(
                   context: context,
-                  builder: (context) => Consumer<DashboardViewModel>(
-                    builder: (context, model, child) => Theme(
-                      data: ThemeData.light(),
-                      child: AlertDialog(
-                        titlePadding:
-                            EdgeInsets.only(left: 20, right: 20, top: 20),
-                        contentPadding: EdgeInsets.only(
-                            left: 20, right: 20, top: 20, bottom: 10),
-                        title: Text("Delete account?"),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              'Are you sure you want to delete ${widget.title}?',
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                FlatButton(
-                                  child: Text(
-                                    'DELETE',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  color: Colors.black,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  onPressed: () {
-                                    model.deleteAccount();
-                                    model.syncController();
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                                OutlineButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  child: Text('NO'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: DeleteDialog(widget: widget),
                 );
               },
             ),
@@ -139,6 +89,67 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
           },
         ),
       ),
+    );
+  }
+}
+
+class DeleteDialog extends StatelessWidget {
+  const DeleteDialog({
+    Key key,
+    @required this.widget,
+  }) : super(key: key);
+
+  final AccountOrderTile widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<DashboardViewModel>(
+      builder: (context, model, child) {
+        return Theme(
+          data: ThemeData.light(),
+          child: AlertDialog(
+            titlePadding: EdgeInsets.only(left: 20, right: 20, top: 20),
+            contentPadding:
+                EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+            title: Text("Delete account?"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Are you sure you want to delete ${widget.title}?'),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text(
+                        'DELETE',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: Colors.black,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0)),
+                      onPressed: () {
+                        model.deleteAccount();
+                        model.syncController();
+                        Navigator.pop(context);
+                      },
+                    ),
+                    OutlineButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0)),
+                      child: Text('NO'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

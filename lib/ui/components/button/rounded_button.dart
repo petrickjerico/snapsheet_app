@@ -6,7 +6,7 @@ class RoundedButton extends StatelessWidget {
   RoundedButton({
     @required this.textColor,
     @required this.color,
-    @required this.title,
+    this.title,
     @required this.onPressed,
     this.icon,
   });
@@ -34,12 +34,14 @@ class RoundedButton extends StatelessWidget {
             children: <Widget>[
               icon ?? SizedBox.shrink(),
               SizedBox(width: 10),
-              Text(
-                title,
-                style: TextStyle(
-                  color: textColor,
-                ),
-              ),
+              title != null
+                  ? Text(
+                      title,
+                      style: TextStyle(
+                        color: textColor,
+                      ),
+                    )
+                  : SizedBox.shrink()
             ],
           ),
         ),

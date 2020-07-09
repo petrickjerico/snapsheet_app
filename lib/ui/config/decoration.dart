@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+const kTitleEditInfoInputDecoration = InputDecoration(
+  border: OutlineInputBorder(),
+  focusedBorder:
+      OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+  labelText: "Title",
+  labelStyle: TextStyle(color: Colors.white),
+);
+
 const kBottomSheetShape = RoundedRectangleBorder(
   borderRadius: BorderRadius.only(
     topLeft: Radius.circular(15.0),

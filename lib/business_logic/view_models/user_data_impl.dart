@@ -35,7 +35,10 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   Future processImage(Record record) async {
     if (record.imagePath != null) {
       record.receiptURL = await _cloud.addReceiptURL(record);
+      record.hasCloudImage = true;
       record.imagePath = null;
+    } else if (record.imagePath == null && record.receiptURL == null) {
+      _cloud.deleteCloudImage(record);
     }
   }
 

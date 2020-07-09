@@ -33,10 +33,10 @@ class CloudStorageServiceImpl implements CloudStorageService {
   }
 
   Future<void> deleteCloudImage(Record record) async {
-    if (record.receiptURL != null) {
+    if (record.hasCloudImage) {
       String cloudFilePath = 'receipts/$uid/${record.uid}.png';
       StorageReference storageReference = _storage.ref().child(cloudFilePath);
-      await storageReference.delete();
+      storageReference.delete();
     }
   }
 }

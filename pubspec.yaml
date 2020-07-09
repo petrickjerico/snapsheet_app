@@ -48,7 +48,7 @@ dependencies:
   animations: ^1.1.1
   transparent_image: ^1.0.0
   after_layout: ^1.0.7+2
-  convex_bottom_bar: ^2.2.4
+  fading_edge_scrollview: ^1.1.4
 
 dev_dependencies:
   flutter_test:

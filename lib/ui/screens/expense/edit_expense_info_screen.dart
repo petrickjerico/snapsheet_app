@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
@@ -151,10 +150,12 @@ class ReceiptImage extends StatelessWidget {
                 builder: (_) =>
                     ReceiptImageDialog(imagePath: tempRecord.imagePath));
           },
-          child: Image.file(
-            File(tempRecord.imagePath),
-            fit: BoxFit.cover,
-//          height: 200,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.file(
+              File(tempRecord.imagePath),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       );
@@ -172,10 +173,13 @@ class ReceiptImage extends StatelessWidget {
             fit: StackFit.expand,
             children: <Widget>[
               MiniLoading(),
-              FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: tempRecord.receiptURL,
-                fit: BoxFit.cover,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: tempRecord.receiptURL,
+                  fit: BoxFit.cover,
+                ),
               ),
             ],
           ),

@@ -129,21 +129,21 @@ class _SignupScreenState extends State<SignupScreen> {
                         style: TextStyle(color: Colors.red, fontSize: 14),
                       ),
                       RoundedButton(
-                        textColor: Colors.white,
-                        color: Colors.black,
+                        textColor: Colors.black,
+                        color: Colors.white,
                         onPressed: () {
                           signUp();
                         },
                         title: 'Sign up',
                         icon: Icon(
                           Icons.mail,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                       Divider(),
                       RoundedButton(
-                        textColor: Colors.black,
-                        color: Colors.white,
+                        textColor: Colors.white,
+                        color: Colors.black,
                         onPressed: () async {
                           //Go to login screen.
                           setState(() => loading = true);
@@ -157,7 +157,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         title: 'Sign up with Google',
                         icon: Icon(
                           FontAwesomeIcons.google,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       ),
                       Login()

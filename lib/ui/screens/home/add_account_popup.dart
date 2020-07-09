@@ -14,8 +14,31 @@ class AddAccountPopup extends StatefulWidget {
 
 class _AddAccountPopupState extends State<AddAccountPopup> {
   String accountTitle;
+  static int colorPointer = 0;
 
-  Color _color = kCyan;
+  static const List<ColorSwatch> materialColors = const <ColorSwatch>[
+    Colors.red,
+    Colors.pink,
+    Colors.purple,
+    Colors.deepPurple,
+    Colors.indigo,
+    Colors.blue,
+    Colors.lightBlue,
+    Colors.cyan,
+    Colors.teal,
+    Colors.green,
+    Colors.lightGreen,
+    Colors.lime,
+    Colors.yellow,
+    Colors.amber,
+    Colors.orange,
+    Colors.deepOrange,
+    Colors.brown,
+    Colors.grey,
+    Colors.blueGrey
+  ];
+
+  Color _color = materialColors[colorPointer];
   Color _tempColor;
 
   void _openDialog(String title, Widget content) {
@@ -135,6 +158,7 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                       model.selectAccount(model.accounts.length);
                       model.addAccount(accountTitle, _color);
                       model.syncController();
+                      colorPointer++;
                       Navigator.pop(context);
                     }
                   },

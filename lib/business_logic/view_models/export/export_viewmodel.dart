@@ -73,10 +73,14 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
   }
 
   Future<String> _processCSV() async {
-    List<Record> filtered = records
-        .where(
-            (record) => (isExport[getAccountIndexFromUid(record.accountUid)]))
-        .toList();
+    List<Record> filtered = [];
+    for (Record record in records) {
+      if (!isExport[getAccountIndexFromUid(record.accountUid)]) continue;
+      if (record.dateTime.isAfter(end)) continue;
+      if (record.dateTime.isBefore(start)) continue;
+      filtered.add(record);
+    }
+
     List<List<dynamic>> rows = List<List<dynamic>>();
 
     for (Record record in filtered) {

@@ -51,6 +51,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     if (!isEditing) {
       userData.addRecord(tempRecord);
     } else {
+      print("update record called");
       userData.updateRecord(tempRecord);
       isEditing = false;
     }
@@ -87,13 +88,15 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   }
 
   _openGallery(BuildContext context) async {
-    var picture = await _picker.getImage(source: ImageSource.gallery);
+    var picture = await _picker.getImage(
+        source: ImageSource.gallery, maxHeight: 500, maxWidth: 500);
     imageFile = File(picture.path);
     Navigator.of(context).pop();
   }
 
   _openCamera(BuildContext context) async {
-    var picture = await _picker.getImage(source: ImageSource.camera);
+    var picture = await _picker.getImage(
+        source: ImageSource.camera, maxHeight: 500, maxWidth: 500);
     imageFile = File(picture.path);
     Navigator.of(context).pop();
   }
@@ -153,6 +156,8 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
 
   void deleteImage() {
     tempRecord.imagePath = null;
+    tempRecord.receiptURL = null;
+    print(tempRecord);
     notifyListeners();
   }
 

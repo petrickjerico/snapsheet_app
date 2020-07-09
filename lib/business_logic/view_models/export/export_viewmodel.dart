@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:csv/csv.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
@@ -17,11 +18,33 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
   List<Account> accounts;
   List<bool> isExport;
   File target;
+  DateTime start;
+  DateTime end;
 
   ExportViewModel({this.userData}) {
     records = userData.records;
     accounts = userData.accounts;
     isExport = List.generate(accounts.length, (_) => true);
+    start = records.isEmpty ? DateTime.now() : records.last.dateTime;
+    end = DateTime.now();
+  }
+
+  void changeDate(bool isStart, DateTime dateTime) {
+    if (isStart) {
+      _changeStartDate(dateTime);
+    } else {
+      _changeEndDate(dateTime);
+    }
+  }
+
+  void _changeStartDate(DateTime dateTime) {
+    start = dateTime;
+    notifyListeners();
+  }
+
+  void _changeEndDate(DateTime dateTime) {
+    end = dateTime;
+    notifyListeners();
   }
 
   void toggleExport(index) {
@@ -50,10 +73,14 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
   }
 
   Future<String> _processCSV() async {
-    List<Record> filtered = records
-        .where(
-            (record) => (isExport[getAccountIndexFromUid(record.accountUid)]))
-        .toList();
+    List<Record> filtered = [];
+    for (Record record in records) {
+      if (!isExport[getAccountIndexFromUid(record.accountUid)]) continue;
+      if (record.dateTime.isAfter(end)) continue;
+      if (record.dateTime.isBefore(start)) continue;
+      filtered.add(record);
+    }
+
     List<List<dynamic>> rows = List<List<dynamic>>();
 
     for (Record record in filtered) {

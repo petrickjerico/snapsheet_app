@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:snapsheetapp/ui/config/colors.dart';
 
+const kDateTextStyle = TextStyle(
+  color: Colors.black,
+);
+
 const kLoginSignupTextStyle = TextStyle(
   color: kBlack,
   fontSize: 12,

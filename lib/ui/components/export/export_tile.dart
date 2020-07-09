@@ -11,6 +11,8 @@ class ExportTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: isExport ? 5 : 0,
+      shadowColor: isExport ? account.color : Colors.black,
       color: isExport ? account.color : Colors.grey,
       child: ListTile(
         onTap: () => voidCallback(),
@@ -18,6 +20,7 @@ class ExportTile extends StatelessWidget {
           account.title,
           style: TextStyle(color: isExport ? Colors.white : Colors.black),
         ),
+        trailing: isExport ? Icon(Icons.check, color: Colors.white) : null,
       ),
     );
   }

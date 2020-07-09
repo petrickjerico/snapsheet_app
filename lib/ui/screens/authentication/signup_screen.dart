@@ -180,15 +180,18 @@ class Login extends StatelessWidget {
           "Already have an account? ",
           style: TextStyle(fontSize: 12),
         ),
-        FlatButton(
-            padding: EdgeInsets.all(0),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              "login",
-              style: kLoginSignupTextStyle,
-            ))
+        Container(
+          width: 35,
+          child: FlatButton(
+              padding: EdgeInsets.all(0),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "login",
+                style: kLoginSignupTextStyle,
+              )),
+        )
       ],
     );
   }

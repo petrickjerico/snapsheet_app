@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
@@ -41,39 +40,118 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: kBlack,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        leading: BackButton(),
-        title: Text('EDIT INFORMATION'),
-      ),
-      body: Theme(
-        data: ThemeData.dark(),
-        child: Padding(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 40),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              ReceiptImage(tempRecord: model.tempRecord),
-              SizedBox(height: 10),
-              TextFormField(
-                initialValue: title,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Title",
+    return GestureDetector(
+      onTap: () => unfocus(context),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: kBlack,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          leading: BackButton(),
+          title: Text('EDIT INFORMATION'),
+        ),
+        body: Theme(
+          data: ThemeData.dark(),
+          child: Padding(
+            padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 40),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                ReceiptImage(tempRecord: model.tempRecord),
+                SizedBox(height: 10),
+                TextFormField(
+                  initialValue: title,
+                  cursorColor: Colors.white,
+                  decoration: kTitleEditInfoInputDecoration,
+                  onChanged: (value) {
+                    setState(() {
+                      model.changeTitle(value);
+                    });
+                  },
                 ),
-                onChanged: (value) {
-                  setState(() {
-                    model.changeTitle(value);
-                  });
-                },
+                SizedBox(height: 10.0),
+                RecordDateTime(),
+                SizedBox(height: 10.0),
+                ReceiptButtons(),
+              ],
+            ),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.black,
+          child: Icon(Icons.check),
+          onPressed: () {
+            final dashboardModel =
+                Provider.of<DashboardViewModel>(context, listen: false);
+//          print("Adding to record: \$${model.tempRecord.value}");
+            model.addRecord();
+            bool isEditing = model.isEditing;
+            dashboardModel.selectAccount(model.getAccountIndexFromTempRecord());
+            dashboardModel.syncController();
+            Navigator.pop(context);
+            Navigator.pop(context);
+            String title = dashboardModel.getSelectedAccount().title;
+            String messageStatus =
+                isEditing ? 'updated' : 'added to account: $title';
+            Flushbar(
+              message: "Record successfully $messageStatus.",
+              icon: Icon(
+                Icons.info_outline,
+                size: 28.0,
+                color: Colors.blue[300],
               ),
-              SizedBox(height: 10.0),
-              RecordDateTime(),
-              SizedBox(height: 10.0),
-              RoundedButton(
+              duration: Duration(seconds: 3),
+              leftBarIndicatorColor: Colors.blue[300],
+            )..show(context);
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.black,
+          shape: CircularNotchedRectangle(),
+          child: Container(
+            height: 40.0,
+            child: Container(
+              child: null,
+            ),
+          ),
+        ),
+      ),
+    );
+//      },
+//    );
+  }
+}
+
+class ReceiptButtons extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ExpenseViewModel>(
+      builder: (context, model, child) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            model.hasImage()
+                ? Expanded(
+                    flex: 1,
+                    child: RoundedButton(
+                      color: Colors.red.withOpacity(0.2),
+                      textColor: Colors.white,
+                      icon: Icon(
+                        Icons.delete_forever,
+                        color: Colors.red,
+                      ),
+                      onPressed: () => showDialog(
+                        context: context,
+                        child: DeleteDialog(),
+                      ),
+                    ),
+                  )
+                : SizedBox.shrink(),
+            model.hasImage() ? SizedBox(width: 20) : SizedBox.shrink(),
+            Expanded(
+              flex: 2,
+              child: RoundedButton(
                 color: Colors.white,
                 textColor: Colors.black,
                 title: model.hasImage() ? 'Retake Receipt' : 'Add Receipt',
@@ -81,58 +159,83 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
                 onPressed: () async {
                   await model.showChoiceDialog(context);
                   model.imageToTempRecord();
-                  setState(() {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, EditExpenseInfoScreen.id);
-                  });
                 },
-              )
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
-        child: Icon(Icons.check),
-        onPressed: () {
-          final dashboardModel =
-              Provider.of<HomepageViewModel>(context, listen: false);
-//          print("Adding to record: \$${model.tempRecord.value}");
-          model.addRecord();
-          bool isEditing = model.isEditing;
-          dashboardModel.selectAccount(model.getAccountIndexFromTempRecord());
-          dashboardModel.syncController();
-          Navigator.pop(context);
-          Navigator.pop(context);
-          String title = dashboardModel.getSelectedAccount().title;
-          String messageStatus =
-              isEditing ? 'updated' : 'added to account: $title';
-          Flushbar(
-            message: "Record successfully $messageStatus.",
-            icon: Icon(
-              Icons.info_outline,
-              size: 28.0,
-              color: Colors.blue[300],
+              ),
             ),
-            duration: Duration(seconds: 3),
-            leftBarIndicatorColor: Colors.blue[300],
-          )..show(context);
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
-        shape: CircularNotchedRectangle(),
-        child: Container(
-          height: 40.0,
-          child: Container(
-            child: null,
-          ),
-        ),
-      ),
+            model.hasImage() ? SizedBox(width: 20) : SizedBox.shrink(),
+            model.hasImage()
+                ? Expanded(
+                    flex: 1,
+                    child: RoundedButton(
+                      color: Colors.green.withOpacity(0.2),
+                      textColor: Colors.white,
+                      icon: Icon(
+                        Icons.cloud_download,
+                        color: Colors.green,
+                      ),
+                      onPressed: () async {
+                        await model.exportImage();
+                      },
+                    ),
+                  )
+                : SizedBox.shrink()
+          ],
+        );
+      },
     );
-//      },
-//    );
+  }
+}
+
+class DeleteDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ExpenseViewModel>(
+      builder: (context, model, child) {
+        return Theme(
+          data: ThemeData.light(),
+          child: AlertDialog(
+            titlePadding: EdgeInsets.only(left: 20, right: 20, top: 20),
+            contentPadding:
+                EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+            title: Text("Delete image?"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Are you sure you want to delete the image?'),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text(
+                        'DELETE',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: Colors.black,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0)),
+                      onPressed: () {
+                        model.deleteImage();
+                        Navigator.pop(context);
+                      },
+                    ),
+                    OutlineButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0)),
+                      child: Text('NO'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -151,10 +254,12 @@ class ReceiptImage extends StatelessWidget {
                 builder: (_) =>
                     ReceiptImageDialog(imagePath: tempRecord.imagePath));
           },
-          child: Image.file(
-            File(tempRecord.imagePath),
-            fit: BoxFit.cover,
-//          height: 200,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.file(
+              File(tempRecord.imagePath),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       );
@@ -172,10 +277,13 @@ class ReceiptImage extends StatelessWidget {
             fit: StackFit.expand,
             children: <Widget>[
               MiniLoading(),
-              FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: tempRecord.receiptURL,
-                fit: BoxFit.cover,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: tempRecord.receiptURL,
+                  fit: BoxFit.cover,
+                ),
               ),
             ],
           ),

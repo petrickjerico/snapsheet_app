@@ -13,6 +13,7 @@ class Record {
   String receiptURL;
   String uid;
   String imagePath;
+  bool hasCloudImage;
 
   factory Record.newBlankRecord() {
     return Record(
@@ -21,6 +22,7 @@ class Record {
       dateTime: DateTime.now(),
       categoryId: 0,
       isIncome: false,
+      hasCloudImage: false,
     );
   }
 
@@ -38,16 +40,18 @@ class Record {
       this.title, this.value, this.dateTime, this.categoryId, this.accountId,
       [this.isIncome = false]);
 
-  Record(
-      {this.title,
-      this.value,
-      this.dateTime,
-      this.categoryId,
-      this.accountUid,
-      this.isIncome,
-      this.receiptURL,
-      this.uid,
-      this.imagePath});
+  Record({
+    this.title,
+    this.value,
+    this.dateTime,
+    this.categoryId,
+    this.accountUid,
+    this.isIncome,
+    this.receiptURL,
+    this.uid,
+    this.imagePath,
+    this.hasCloudImage,
+  });
 
   factory Record.of(Record record) {
     return Record(
@@ -60,6 +64,7 @@ class Record {
       receiptURL: record.receiptURL,
       uid: record.uid,
       imagePath: record.imagePath,
+      hasCloudImage: record.hasCloudImage,
     );
   }
 
@@ -67,15 +72,17 @@ class Record {
     Map json = doc.data;
 
     return Record(
-        title: json['title'],
-        value: json['value'],
-        dateTime: DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
-        categoryId: json['categoryId'],
-        accountUid: json['accountUid'],
-        isIncome: json['isIncome'],
-        receiptURL: json['receiptURL'],
-        imagePath: json['imagePath'],
-        uid: json['uid']);
+      title: json['title'],
+      value: json['value'],
+      dateTime: DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
+      categoryId: json['categoryId'],
+      accountUid: json['accountUid'],
+      isIncome: json['isIncome'],
+      receiptURL: json['receiptURL'],
+      imagePath: json['imagePath'],
+      uid: json['uid'],
+      hasCloudImage: json['hasCloudImage'],
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -88,7 +95,8 @@ class Record {
       'isIncome': isIncome,
       'receiptURL': receiptURL,
       'imagePath': imagePath,
-      'uid': uid
+      'uid': uid,
+      'hasCloudImage': hasCloudImage,
     };
   }
 
@@ -103,7 +111,8 @@ class Record {
       'isIncome': isIncome,
       'receiptURL': receiptURL,
       'imagePath': imagePath,
-      'uid': uid
+      'uid': uid,
+      'hasCloudImage': hasCloudImage,
     };
     return map.toString();
   }

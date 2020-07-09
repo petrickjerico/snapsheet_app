@@ -4,19 +4,56 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_basemodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_basemodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
+import 'package:snapsheetapp/ui/screens/home/dashboard.dart';
+import 'package:snapsheetapp/ui/screens/home/edit_order_accounts.dart';
+import 'package:snapsheetapp/ui/screens/home/history_screen.dart';
+import 'package:snapsheetapp/ui/screens/sidebar/editprofile_screen.dart';
 
-class DashboardViewModel extends ChangeNotifier implements DashboardBaseModel {
+class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   static final CarouselController controller = CarouselController();
+  static final PageController tabController = PageController();
   UserData userData;
   List<Account> accounts;
   List<Record> records;
   List<bool> isSelected = [];
-  int selectedAccountIndex = -1;
+  int selectedAccountIndex = 0;
   int touchedIndex;
   Account originalAccount;
   Account tempAccount;
+  int currentPage = 0;
+  int currentBar = 0;
+
+  void syncBarToPage(int index) {
+    currentBar = index;
+    if (index == 2) {
+      return;
+    } else if (index > 2) {
+      currentPage = index - 1;
+    } else {
+      currentPage = index;
+    }
+    tabController.jumpToPage(currentPage);
+  }
+
+  void syncPageToBar(int index) {
+    currentPage = index;
+    tabController.animateToPage(currentPage,
+        duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+    if (index >= 2) {
+      currentBar = index + 1;
+    } else {
+      currentBar = index;
+    }
+    notifyListeners();
+  }
+
+  void syncBarAndTabToBeginning() {
+    currentPage = 0;
+    currentBar = 0;
+    tabController.jumpToPage(currentPage);
+  }
 
   void syncController() {
     if (selectedAccountIndex != -1) {

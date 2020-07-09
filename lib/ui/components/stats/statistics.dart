@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/ui/screens/expense/expense_screen.dart';
 import '../history_tile.dart';
@@ -18,7 +18,7 @@ class Statistics extends StatefulWidget {
 class _StatisticsState extends State<Statistics> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardViewModel>(builder: (context, model, child) {
+    return Consumer<HomepageViewModel>(builder: (context, model, child) {
       if (model.selectedAccountIsEmpty()) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

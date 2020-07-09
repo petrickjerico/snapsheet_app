@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 
@@ -32,7 +32,7 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
               child: Text('SUBMIT'),
               onPressed: () {
                 final model =
-                    Provider.of<DashboardViewModel>(context, listen: false);
+                    Provider.of<HomepageViewModel>(context, listen: false);
                 Navigator.of(context).pop();
                 setState(() => model.tempAccount.color = tempColor);
               },
@@ -50,7 +50,7 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
       child: Container(
         padding:
             EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0, top: 15.0),
-        child: Consumer<DashboardViewModel>(
+        child: Consumer<HomepageViewModel>(
           builder: (context, model, child) {
             return Column(
               children: <Widget>[

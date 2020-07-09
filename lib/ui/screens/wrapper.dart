@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/user.dart';
 import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
@@ -34,8 +34,8 @@ class _WrapperState extends State<Wrapper> {
       } else {
         ExpenseViewModel expenseViewModel =
             Provider.of<ExpenseViewModel>(context, listen: false);
-        DashboardViewModel dashboardViewModel =
-            Provider.of<DashboardViewModel>(context, listen: false);
+        HomepageViewModel dashboardViewModel =
+            Provider.of<HomepageViewModel>(context, listen: false);
         BulkScanViewModel bulkScanViewModel =
             Provider.of<BulkScanViewModel>(context, listen: false);
         expenseViewModel.init(userData);

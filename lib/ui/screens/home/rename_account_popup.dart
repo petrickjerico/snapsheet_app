@@ -106,7 +106,6 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
                   onPressed: () {
                     if (RenameAccountPopup._formKey.currentState.validate()) {
                       model.updateAccount();
-                      model.syncController();
                       Navigator.pop(context);
                     }
                   },

@@ -134,6 +134,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
             final model =
                 Provider.of<DashboardViewModel>(context, listen: false);
             model.selectAccount(widget.index);
+            model.syncController();
             value.call();
           },
         ),

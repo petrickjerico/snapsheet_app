@@ -51,7 +51,6 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     if (!isEditing) {
       userData.addRecord(tempRecord);
     } else {
-      print("update record called");
       userData.updateRecord(tempRecord);
       isEditing = false;
     }
@@ -157,7 +156,6 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   void deleteImage() {
     tempRecord.imagePath = null;
     tempRecord.receiptURL = null;
-    print(tempRecord);
     notifyListeners();
   }
 

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:snapsheetapp/services/auth/auth_impl.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/screens/home/homepage_screen.dart';
 import 'package:snapsheetapp/ui/shared/shared.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -148,7 +149,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           setState(() => loading = true);
                           dynamic result = await _auth.signInWithGoogle();
                           if (result != null) {
-                            Navigator.pop(context);
+                            await Future.delayed(Duration(seconds: 1),
+                                () => Navigator.pop(context));
                           }
                           setState(() => loading = false);
                         },

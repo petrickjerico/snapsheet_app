@@ -82,7 +82,7 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
           child: Icon(Icons.check),
           onPressed: () {
             final dashboardModel =
-                Provider.of<DashboardViewModel>(context, listen: false);
+                Provider.of<HomepageViewModel>(context, listen: false);
 //          print("Adding to record: \$${model.tempRecord.value}");
             model.addRecord();
             bool isEditing = model.isEditing;

@@ -103,7 +103,7 @@ class DeleteDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardViewModel>(
+    return Consumer<HomepageViewModel>(
       builder: (context, model, child) {
         return Theme(
           data: ThemeData.light(),

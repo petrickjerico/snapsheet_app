@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 
 class RenameAccountPopup extends StatefulWidget {
@@ -44,55 +45,23 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardViewModel>(builder: (context, model, child) {
-      return Theme(
-        data: ThemeData.light(),
-        child: Form(
-          key: RenameAccountPopup._formKey,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0),
-              ),
-            ),
-            padding: EdgeInsets.all(20.0),
-            child: Column(
+    return Form(
+      key: RenameAccountPopup._formKey,
+      child: Container(
+        padding: EdgeInsets.all(20.0),
+        child: Consumer<DashboardViewModel>(
+          builder: (context, model, child) {
+            return Column(
               children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    SizedBox(height: 10.0),
-                    TextFormField(
-                      initialValue: model.tempAccount.title,
-                      autofocus: true,
-                      onChanged: (value) {
-                        model.tempAccount.title = value;
-                      },
-                      decoration: kEmailTextFieldDecoration.copyWith(
-                          hintText: 'Rename your account'),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter some text.';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    FlatButton(
-                      child: Text(
-                        'Tap to change colour',
-                        style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: Colors.black87,
-                            fontSize: 15.0),
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
+                ListTile(
+                  leading: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
                       color: model.tempAccount.color,
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: FlatButton(
                       onPressed: () async {
                         _openDialog(
                           "Color your account",
@@ -108,39 +77,45 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
                           ),
                         );
                       },
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Container(
-                  height: 50.0,
-                  width: 150.0,
-                  child: FlatButton(
-                    color: Colors.black,
-                    child: Text(
-                      'SAVE',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20.0, color: Colors.white),
                     ),
-                    onPressed: () {
-                      if (RenameAccountPopup._formKey.currentState.validate()) {
-                        model.updateAccount();
-                        model.syncController();
-                        Navigator.pop(context);
+                  ),
+                  title: TextFormField(
+                    initialValue: model.tempAccount.title,
+                    cursorColor: Colors.black,
+                    autofocus: true,
+                    onChanged: (value) {
+                      model.tempAccount.title = value;
+                    },
+                    decoration: kAddAccountTextFieldDecoration.copyWith(
+                        hintText: 'Rename your account'),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter some text.';
                       }
+                      return null;
                     },
                   ),
                 ),
                 SizedBox(
-                  height: 15.0,
+                  height: 5.0,
+                ),
+                RoundedButton(
+                  color: Colors.black,
+                  textColor: Colors.white,
+                  title: 'DONE',
+                  onPressed: () {
+                    if (RenameAccountPopup._formKey.currentState.validate()) {
+                      model.updateAccount();
+                      model.syncController();
+                      Navigator.pop(context);
+                    }
+                  },
                 ),
               ],
-            ),
-          ),
+            );
+          },
         ),
-      );
-    });
+      ),
+    );
   }
 }

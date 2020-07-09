@@ -2,16 +2,17 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/dashboard_viewmodel.dart';
+import 'package:snapsheetapp/ui/config/decoration.dart';
 import 'package:snapsheetapp/ui/screens/home/rename_account_popup.dart';
 
 class AccountOrderTile extends StatefulWidget {
   AccountOrderTile({Key key, this.index, this.color, this.title, this.total})
       : super(key: key);
 
-  int index;
-  Color color;
-  String title;
-  double total;
+  final int index;
+  final Color color;
+  final String title;
+  final double total;
 
   @override
   _AccountOrderTileState createState() => _AccountOrderTileState();
@@ -48,12 +49,81 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
         child: PopupMenuButton(
           itemBuilder: (context) => [
             PopupMenuItem(
-              value: () => rename(),
               child: Text('Edit'),
+              value: () {
+                final model =
+                    Provider.of<DashboardViewModel>(context, listen: false);
+                model.initEditAccount(widget.index);
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => SingleChildScrollView(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: RenameAccountPopup(),
+                  ),
+                  shape: kBottomSheetShape,
+                );
+              },
             ),
             PopupMenuItem(
-              value: () => delete(),
               child: Text('Delete'),
+              value: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => Consumer<DashboardViewModel>(
+                    builder: (context, model, child) => Theme(
+                      data: ThemeData.light(),
+                      child: AlertDialog(
+                        titlePadding:
+                            EdgeInsets.only(left: 20, right: 20, top: 20),
+                        contentPadding: EdgeInsets.only(
+                            left: 20, right: 20, top: 20, bottom: 10),
+                        title: Text("Delete account?"),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Are you sure you want to delete ${widget.title}?',
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                FlatButton(
+                                  child: Text(
+                                    'DELETE',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  color: Colors.black,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  onPressed: () {
+                                    model.deleteAccount();
+                                    model.syncController();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                OutlineButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  child: Text('NO'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ],
           icon: Icon(
@@ -70,169 +140,4 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
       ),
     );
   }
-
-  void rename() {
-    final model = Provider.of<DashboardViewModel>(context, listen: false);
-    model.initEditAccount(widget.index);
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => SingleChildScrollView(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: RenameAccountPopup(),
-      ),
-    );
-  }
-
-  void delete() {
-    showDialog(
-      context: context,
-      builder: (context) => Consumer<DashboardViewModel>(
-        builder: (context, model, child) => Theme(
-          data: ThemeData.light(),
-          child: AlertDialog(
-            titlePadding: EdgeInsets.only(left: 20, right: 20, top: 20),
-            contentPadding:
-                EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
-            title: Text("Delete account?"),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Are you sure you want to delete ${widget.title}?',
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    FlatButton(
-                      child: Text(
-                        'DELETE',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      color: Colors.black,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0)),
-                      onPressed: () {
-                        model.deleteAccount();
-                        model.syncController();
-                        Navigator.pop(context);
-                      },
-                    ),
-                    OutlineButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0)),
-                      child: Text('NO'),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-//  Future<void> showChoiceDialog(BuildContext context) {
-//    UserData userData = Provider.of<UserData>(context, listen: false);
-//    return showDialog(
-//      context: context,
-//      builder: (context) {
-//        return PopupMenuButton(
-//          title: Text("Select"),
-//          content: SingleChildScrollView(
-//            child: ListBody(
-//              children: <Widget>[
-//                GestureDetector(
-//                  child: Text("Edit"),
-//                  onTap: () {
-//                    Navigator.pop(context);
-//                    showModalBottomSheet(
-//                      context: context,
-//                      isScrollControlled: true,
-//                      builder: (context) => SingleChildScrollView(
-//                        padding: EdgeInsets.only(
-//                            bottom: MediaQuery.of(context).viewInsets.bottom),
-//                        child: RenameAccountPopup(userData.selectedAccount),
-//                      ),
-//                      shape: RoundedRectangleBorder(
-//                        borderRadius: BorderRadius.only(
-//                          topLeft: Radius.circular(30.0),
-//                          topRight: Radius.circular(30.0),
-//                        ),
-//                      ),
-//                    );
-//                  },
-//                ),
-//                SizedBox(height: 20),
-//                GestureDetector(
-//                  child: Text("Delete"),
-//                  onTap: () {
-//                    Navigator.pop(context);
-//                    showDialog(
-//                      context: context,
-//                      builder: (context) => AlertDialog(
-//                        titlePadding:
-//                            EdgeInsets.only(left: 20, right: 20, top: 20),
-//                        contentPadding: EdgeInsets.only(
-//                            left: 20, right: 20, top: 20, bottom: 10),
-//                        title: Text("Delete account?"),
-//                        content: Column(
-//                          mainAxisSize: MainAxisSize.min,
-//                          mainAxisAlignment: MainAxisAlignment.center,
-//                          children: <Widget>[
-//                            Text(
-//                              'Are you sure you want to delete ${userData.accounts[userData.selectedAccount].title}?',
-//                            ),
-//                            SizedBox(
-//                              height: 10,
-//                            ),
-//                            Row(
-//                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                              children: <Widget>[
-//                                FlatButton(
-//                                  child: Text(
-//                                    'DELETE',
-//                                    style: TextStyle(color: Colors.white),
-//                                  ),
-//                                  color: Colors.black,
-//                                  shape: RoundedRectangleBorder(
-//                                      borderRadius: BorderRadius.circular(5.0)),
-//                                  onPressed: () {
-//                                    userData.deleteAccount(
-//                                        userData.selectedAccount);
-//                                    Navigator.pop(context);
-//                                  },
-//                                ),
-//                                OutlineButton(
-//                                  shape: RoundedRectangleBorder(
-//                                      borderRadius: BorderRadius.circular(5.0)),
-//                                  child: Text('NO'),
-//                                  onPressed: () {
-//                                    Navigator.pop(context);
-//                                  },
-//                                ),
-//                              ],
-//                            )
-//                          ],
-//                        ),
-//                      ),
-//                    );
-//                  },
-//                )
-//              ],
-//            ),
-//          ),
-//        );
-//      },
-//    );
-//  }
 }

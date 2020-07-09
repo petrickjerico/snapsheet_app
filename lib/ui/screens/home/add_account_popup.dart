@@ -57,9 +57,10 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                    color: _color, borderRadius: BorderRadius.circular(5.0)),
+                  color: _color,
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
                 child: FlatButton(
-                  padding: EdgeInsets.all(0),
                   onPressed: () async {
                     _openDialog(
                       "Color your account",
@@ -78,11 +79,11 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                 ),
               ),
               title: TextFormField(
+                cursorColor: Colors.black,
                 autofocus: true,
                 onChanged: (value) {
                   accountTitle = value;
                 },
-                cursorColor: Colors.black,
                 decoration: kAddAccountTextFieldDecoration,
                 validator: (value) {
                   if (value.isEmpty) {
@@ -95,23 +96,22 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
             SizedBox(
               height: 5.0,
             ),
-            Consumer<DashboardViewModel>(builder: (context, model, child) {
-              return RoundedButton(
-                color: Colors.black,
-                textColor: Colors.white,
-                title: 'CREATE',
-                onPressed: () {
-                  if (AddAccountPopup._formKey.currentState.validate()) {
-                    model.selectAccount(model.accounts.length);
-                    model.addAccount(accountTitle, _color);
-                    model.syncController();
-                    Navigator.pop(context);
-                  }
-                },
-              );
-            }),
-            SizedBox(
-              height: 15.0,
+            Consumer<DashboardViewModel>(
+              builder: (context, model, child) {
+                return RoundedButton(
+                  color: Colors.black,
+                  textColor: Colors.white,
+                  title: 'CREATE',
+                  onPressed: () {
+                    if (AddAccountPopup._formKey.currentState.validate()) {
+                      model.selectAccount(model.accounts.length);
+                      model.addAccount(accountTitle, _color);
+                      model.syncController();
+                      Navigator.pop(context);
+                    }
+                  },
+                );
+              },
             ),
           ],
         ),

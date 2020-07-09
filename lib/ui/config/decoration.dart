@@ -22,6 +22,9 @@ const kMessageContainerDecoration = BoxDecoration(
 const kAddAccountTextFieldDecoration = InputDecoration(
   hintStyle: TextStyle(color: Colors.grey),
   hintText: 'Name your new account',
+  focusedBorder: UnderlineInputBorder(
+    borderSide: BorderSide(color: Colors.black, width: 2.0),
+  ),
 );
 
 const kEmailTextFieldDecoration = InputDecoration(

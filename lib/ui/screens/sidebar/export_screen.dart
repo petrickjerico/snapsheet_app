@@ -15,7 +15,7 @@ class ExportScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         leading: BackButton(),
-        title: Text('EXPORT SELECTIONS'),
+        title: Text('Select Accounts'),
       ),
       body: ChangeNotifierProvider<ExportViewModel>(
         create: (context) => ExportViewModel(userData: userData),

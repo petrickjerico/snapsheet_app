@@ -7,6 +7,7 @@ import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/stats/stats_card.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/expense/expense_screen.dart';
 import '../history_tile.dart';
 import 'empty_stats.dart';
@@ -34,14 +35,49 @@ class _StatisticsState extends State<Statistics> {
                   colour: _contentColor,
                   child: Column(
                     children: <Widget>[
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                            'Balance: \$${model.statsGetBalanceData()[2].toStringAsFixed(2)}',
-                            style: TextStyle(
-                                fontSize: 25,
-                                color: _contentColor.withOpacity(0.3),
-                                fontWeight: FontWeight.w400)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Total Expense',
+                            style: TextStyle(color: _contentColor),
+                          ),
+                          Text(
+                            "-" +
+                                model
+                                    .statsGetBalanceData()[1]
+                                    .toStringAsFixed(2),
+                            style: kHistoryExpenseValue,
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Total Income',
+                            style: TextStyle(color: _contentColor),
+                          ),
+                          Text(
+                            model.statsGetBalanceData()[0].toStringAsFixed(2),
+                            style: kHistoryIncomeValue,
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Balance Amount',
+                            style: TextStyle(color: _contentColor),
+                          ),
+                          Text(
+                            model.statsGetBalanceData()[2].toStringAsFixed(2),
+                            style: model.statsGetBalanceData()[2] < 0
+                                ? kHistoryExpenseValue
+                                : kHistoryIncomeValue,
+                          )
+                        ],
                       ),
                       SizedBox(
                         height: 15.0,
@@ -51,81 +87,48 @@ class _StatisticsState extends State<Statistics> {
                         children: <Widget>[
                           Text(
                             'Income',
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              color: _contentColor,
-                            ),
+                            style:
+                                TextStyle(color: _contentColor, fontSize: 10.0),
                           ),
                           Text(
                             'Expense',
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              color: _contentColor,
-                            ),
-                          ),
+                            style:
+                                TextStyle(color: _contentColor, fontSize: 10.0),
+                          )
                         ],
                       ),
-                      Stack(
-                        alignment: AlignmentDirectional.center,
+                      SizedBox(
+                        height: 2.0,
+                      ),
+                      Row(
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.green[600],
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(5.0),
-                                      bottomLeft: Radius.circular(5.0),
-                                    ),
-                                  ),
-                                  alignment: AlignmentDirectional.centerStart,
-                                  height: 25,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 5.0),
-                                    child: Text(
-                                      model
-                                          .statsGetBalanceData()[0]
-                                          .toStringAsFixed(2),
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.green[600],
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(5.0),
+                                  bottomLeft: Radius.circular(5.0),
                                 ),
-                                flex: model.statsGetBalanceData()[0].round(),
                               ),
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.red[600],
-                                    borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(5.0),
-                                      bottomRight: Radius.circular(5.0),
-                                    ),
-                                  ),
-                                  alignment: AlignmentDirectional.centerEnd,
-                                  height: 25,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(right: 5.0),
-                                    child: Text(
-                                      model
-                                          .statsGetBalanceData()[1]
-                                          .toStringAsFixed(2),
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
-                                flex: model.statsGetBalanceData()[1].round(),
-                              ),
-                            ],
+                              alignment: AlignmentDirectional.centerStart,
+                              height: 25,
+                            ),
+                            flex: model.statsGetBalanceData()[0].round(),
                           ),
-                          Container(
-                            color: Colors.black.withOpacity(0.6),
-                            height: 30,
-                            width: 2,
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.red[600],
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(5.0),
+                                  bottomRight: Radius.circular(5.0),
+                                ),
+                              ),
+                              alignment: AlignmentDirectional.centerEnd,
+                              height: 25,
+                            ),
+                            flex: model.statsGetBalanceData()[1].round(),
                           ),
                         ],
                       ),

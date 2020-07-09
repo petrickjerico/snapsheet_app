@@ -145,12 +145,24 @@ class _StatisticsState extends State<Statistics> {
                   children: <Widget>[
                     Align(
                       alignment: Alignment.topLeft,
-                      child: Text(
-                          'Total: \$${model.currentExpensesTotal().toStringAsFixed(2)}',
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Total: ',
                           style: TextStyle(
-                              fontSize: 25,
-                              color: _contentColor.withOpacity(0.3),
-                              fontWeight: FontWeight.w400)),
+                            color: _contentColor,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: model
+                                  .currentExpensesTotal()
+                                  .toStringAsFixed(2),
+                              style:
+                                  kHistoryExpenseValue.copyWith(fontSize: 14),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     Flexible(
                       fit: FlexFit.loose,
@@ -178,6 +190,18 @@ class _StatisticsState extends State<Statistics> {
                                 sections: model.showingCategorySections()),
                             swapAnimationDuration: Duration(seconds: 0),
                           ),
+                          Visibility(
+                            visible: model.touchedIndex == null,
+                            child: Center(
+                                child: Text(
+                              'Tap section for details.',
+                              style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                fontSize: 8,
+                                color: _contentColor,
+                              ),
+                            )),
+                          )
                         ],
                       ),
                     ),

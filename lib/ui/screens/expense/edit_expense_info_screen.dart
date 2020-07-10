@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -73,6 +74,9 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
                 RecordDateTime(),
                 SizedBox(height: 10.0),
                 ReceiptButtons(),
+                Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom)),
               ],
             ),
           ),
@@ -245,6 +249,7 @@ class ReceiptImage extends StatelessWidget {
   ReceiptImage({this.tempRecord});
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<ExpenseViewModel>(context, listen: false);
     if (tempRecord.imagePath != null) {
       return Expanded(
         child: GestureDetector(
@@ -264,31 +269,38 @@ class ReceiptImage extends StatelessWidget {
         ),
       );
     } else if (tempRecord.receiptURL != null) {
-      return Expanded(
-        child: GestureDetector(
-          onTap: () async {
-            await showDialog(
-                context: context,
-                builder: (_) => ReceiptImageDialog(
-                      receiptURL: tempRecord.receiptURL,
-                    ));
-          },
-          child: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              MiniLoading(),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: tempRecord.receiptURL,
-                  fit: BoxFit.cover,
+      return model.connectivityResult == ConnectivityResult.none
+          ? Container(
+              child: Center(
+                child: Text(
+                    "Could not load image. Check your internet connection."),
+              ),
+            )
+          : Expanded(
+              child: GestureDetector(
+                onTap: () async {
+                  await showDialog(
+                      context: context,
+                      builder: (_) => ReceiptImageDialog(
+                            receiptURL: tempRecord.receiptURL,
+                          ));
+                },
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+                    MiniLoading(),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: FadeInImage.memoryNetwork(
+                        placeholder: kTransparentImage,
+                        image: tempRecord.receiptURL,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
-      );
+            );
     } else {
       return SizedBox.shrink();
     }

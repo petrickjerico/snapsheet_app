@@ -13,7 +13,6 @@ import 'package:snapsheetapp/ui/screens/sidebar/editprofile_screen.dart';
 
 class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   static final CarouselController controller = CarouselController();
-  static final PageController tabController = PageController();
   UserData userData;
   List<Account> accounts;
   List<Record> records;
@@ -34,13 +33,11 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     } else {
       currentPage = index;
     }
-    tabController.jumpToPage(currentPage);
+    notifyListeners();
   }
 
   void syncPageToBar(int index) {
     currentPage = index;
-    tabController.animateToPage(currentPage,
-        duration: Duration(milliseconds: 300), curve: Curves.easeIn);
     if (index >= 2) {
       currentBar = index + 1;
     } else {
@@ -52,7 +49,6 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   void syncBarAndTabToBeginning() {
     currentPage = 0;
     currentBar = 0;
-    tabController.jumpToPage(currentPage);
   }
 
   void syncController() {

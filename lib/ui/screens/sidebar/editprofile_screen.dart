@@ -6,13 +6,10 @@ class EditProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kHomepageBackgroundTransparency,
-      body: Center(
-        child: Text(
-          'User details will appear here.',
-          style: TextStyle(fontStyle: FontStyle.italic, color: Colors.white54),
-        ),
+    return Center(
+      child: Text(
+        'User details will appear here.',
+        style: TextStyle(fontStyle: FontStyle.italic, color: Colors.white54),
       ),
     );
   }

@@ -15,24 +15,21 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Consumer<HomepageViewModel>(
       builder: (context, model, child) {
-        return Container(
-          color: kHomepageBackgroundTransparency,
-          child: Column(
-            children: <Widget>[
-              AccountsCarousel(),
-              Flexible(
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  margin: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.black38,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Statistics(),
+        return Column(
+          children: <Widget>[
+            AccountsCarousel(),
+            Flexible(
+              child: Container(
+                padding: EdgeInsets.all(8.0),
+                margin: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Colors.black38,
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
+                child: Statistics(),
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );

@@ -65,23 +65,21 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                             flex: 1,
                             child: ValueFormField(recordId: recordId),
                           ),
-                          SizedBox(width: 20),
+                          SizedBox(width: 10),
                           Flexible(
                             flex: 4,
                             child: TitleFormField(recordId: recordId),
                           ),
                         ],
                       ),
+                      SizedBox(height: 5),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Flexible(
-                            child: DateFormField(recordId: recordId),
-                          ),
-                          SizedBox(width: 20),
-                          Flexible(
-                            child: CategoryFormField(recordId: recordId),
-                          ),
+                          Expanded(child: DateFormField(recordId: recordId)),
+                          SizedBox(width: 10),
+                          Expanded(
+                              child: CategoryFormField(recordId: recordId)),
                         ],
                       ),
                       DeleteConfirmButton(
@@ -128,6 +126,7 @@ class ValueFormField extends StatelessWidget {
         return TextFormField(
             initialValue: model.records[recordId].value.toString(),
             keyboardType: TextInputType.number,
+            cursorColor: Colors.white,
             decoration:
                 kTitleEditInfoInputDecoration.copyWith(labelText: 'Value'),
             onChanged: (value) {
@@ -150,6 +149,7 @@ class TitleFormField extends StatelessWidget {
         return TextFormField(
           initialValue: model.records[recordId].title,
           decoration: kTitleEditInfoInputDecoration,
+          cursorColor: Colors.white,
           onChanged: (value) {
             model.changeTitle(recordId, value);
           },
@@ -191,7 +191,10 @@ class CategoryFormField extends StatelessWidget {
                     )
                     .toList();
               },
-              child: Text(categories[categoryId].title),
+              child: Text(
+                categories[categoryId].title,
+                style: TextStyle(color: Colors.white),
+              ),
             ));
       },
     );
@@ -212,7 +215,7 @@ class DateFormField extends StatelessWidget {
             padding: EdgeInsets.all(10.0),
             child: Text(
               DateFormat.yMMMd().format(date),
-              style: kDateTextStyle,
+              style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
               showDatePicker(

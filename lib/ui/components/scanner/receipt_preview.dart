@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/scanner/receipt_screen.dart';
-import 'package:snapsheetapp/ui/config/colors.dart';
 
 class ReceiptPreviewScreen extends StatefulWidget {
   static const String id = 'receipt_preview_screen';

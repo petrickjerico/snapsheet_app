@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:connectivity/connectivity.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -75,7 +74,7 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
                 ReceiptButtons(),
                 Padding(
                     padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom)),
+                        bottom: MediaQuery.of(context).viewInsets.bottom / 4)),
               ],
             ),
           ),
@@ -166,11 +165,11 @@ class ReceiptButtons extends StatelessWidget {
                 ? Expanded(
                     flex: 1,
                     child: RoundedButton(
-                      color: Colors.green.withOpacity(0.2),
+                      color: Colors.tealAccent.withOpacity(0.2),
                       textColor: Colors.white,
                       icon: Icon(
                         Icons.cloud_download,
-                        color: Colors.green,
+                        color: Colors.tealAccent,
                       ),
                       onPressed: () async {
                         await model.exportImage();

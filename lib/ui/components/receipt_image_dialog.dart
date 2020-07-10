@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 
 class ReceiptImageDialog extends StatelessWidget {
   String receiptURL;
@@ -13,16 +14,18 @@ class ReceiptImageDialog extends StatelessWidget {
     return receiptURL == null
         ? Dialog(
             child: Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: FileImage(File(imagePath)), fit: BoxFit.cover)),
+              child: PhotoView(
+                imageProvider: FileImage(File(imagePath)),
+                enableRotation: true,
+              ),
             ),
           )
         : Dialog(
             child: Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(receiptURL), fit: BoxFit.cover)),
+              child: PhotoView(
+                imageProvider: NetworkImage(receiptURL),
+                enableRotation: true,
+              ),
             ),
           );
   }

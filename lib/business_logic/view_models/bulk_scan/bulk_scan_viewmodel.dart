@@ -17,12 +17,13 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   List<Record> records = [];
   List<bool> isDelete = [];
   int counter = 0;
-  Scanner scanner = ScannerImpl();
+  Scanner scanner;
   String selectedAccountUid;
 
   void init(UserData userData) {
     this.userData = userData;
     accounts = userData.accounts;
+    scanner = ScannerImpl();
   }
 
   Future<void> loadAssets() async {
@@ -73,8 +74,27 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   void addAll() {
     for (int i = 0; i < records.length; i++) {
       if (isDelete[i]) continue;
-//      print(records[i]);
       userData.addRecord(records[i]);
     }
+  }
+
+  void changeValue(int recordId, double newValue) {
+    records[recordId].value = newValue;
+    notifyListeners();
+  }
+
+  void changeTitle(int recordId, String newTitle) {
+    records[recordId].title = newTitle;
+    notifyListeners();
+  }
+
+  void changeDate(int recordId, DateTime newDateTime) {
+    records[recordId].dateTime = newDateTime;
+    notifyListeners();
+  }
+
+  void changeCategory(int recordId, int newCategoryId) {
+    records[recordId].categoryId = newCategoryId;
+    notifyListeners();
   }
 }

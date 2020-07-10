@@ -68,33 +68,31 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           ],
         ),
         body: ExpenseCalculator(),
-        floatingActionButton: Consumer<HomepageViewModel>(
-          builder: (context, dashboardModel, child) {
-            return FloatingActionButton(
-              backgroundColor: Colors.black,
-              child: Icon(Icons.check),
-              onPressed: () {
-                bool isEditing = model.isEditing;
-                model.addRecord();
-                dashboardModel
-                    .selectAccount(model.getAccountIndexFromTempRecord());
-                dashboardModel.syncController();
-                Navigator.pop(context);
-                String title = dashboardModel.getSelectedAccount().title;
-                String messageStatus =
-                    isEditing ? 'updated' : 'added to account: $title';
-                Flushbar(
-                  message: "Record successfully $messageStatus.",
-                  icon: Icon(
-                    Icons.info_outline,
-                    size: 28.0,
-                    color: Colors.blue[300],
-                  ),
-                  duration: Duration(seconds: 3),
-                  leftBarIndicatorColor: Colors.blue[300],
-                )..show(context);
-              },
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.black,
+          child: Icon(Icons.check),
+          onPressed: () {
+            final homepageModel = Provider.of<HomepageViewModel>(
+              context,
+              listen: false,
             );
+            model.addRecord();
+            homepageModel.selectAccount(model.getAccountIndexFromTempRecord());
+            homepageModel.syncController();
+            Navigator.pop(context);
+            String title = homepageModel.getSelectedAccount().title;
+            String messageStatus =
+                model.isEditing ? 'updated' : 'added to account: $title';
+            Flushbar(
+              message: "Record successfully $messageStatus.",
+              icon: Icon(
+                Icons.info_outline,
+                size: 28.0,
+                color: Colors.blue[300],
+              ),
+              duration: Duration(seconds: 3),
+              leftBarIndicatorColor: Colors.blue[300],
+            )..show(context);
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -145,9 +143,26 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0)),
                       onPressed: () {
+                        final homepageModel = Provider.of<HomepageViewModel>(
+                          context,
+                          listen: false,
+                        );
                         model.deleteRecord();
+                        homepageModel.selectAccount(
+                            model.getAccountIndexFromTempRecord());
+                        homepageModel.syncController();
                         Navigator.pop(context);
                         Navigator.pop(context);
+                        Flushbar(
+                          message: "Record successfully deleted.",
+                          icon: Icon(
+                            Icons.info_outline,
+                            size: 28.0,
+                            color: Colors.blue[300],
+                          ),
+                          duration: Duration(seconds: 3),
+                          leftBarIndicatorColor: Colors.blue[300],
+                        )..show(context);
                       },
                     ),
                     OutlineButton(

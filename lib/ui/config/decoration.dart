@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const kTitleEditInfoInputDecoration = InputDecoration(
   border: OutlineInputBorder(),
   focusedBorder:
-      OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+      OutlineInputBorder(borderSide: BorderSide(color: Colors.white, width: 2)),
   labelText: "Title",
   labelStyle: TextStyle(color: Colors.white),
 );

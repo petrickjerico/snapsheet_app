@@ -15,7 +15,7 @@ class DeleteConfirmButton extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: RoundedButton(
-            color: isDelete ? Colors.red.withOpacity(0.5) : kGrey,
+            color: isDelete ? Colors.red.withOpacity(0.3) : kGrey,
             textColor: isDelete ? Colors.red : kBlack,
             title: 'Delete',
             icon: Icon(
@@ -30,7 +30,7 @@ class DeleteConfirmButton extends StatelessWidget {
         ),
         Expanded(
           child: RoundedButton(
-            color: isDelete ? kGrey : Colors.tealAccent.withOpacity(0.5),
+            color: isDelete ? kGrey : Colors.tealAccent.withOpacity(0.3),
             textColor: isDelete ? kBlack : Colors.tealAccent,
             title: 'Add',
             icon: Icon(

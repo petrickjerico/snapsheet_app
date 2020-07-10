@@ -69,10 +69,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     // Value + Title
                     TextFormField(
                       initialValue: record.title,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Title",
-                      ),
+                      decoration: kTitleEditInfoInputDecoration,
                       onChanged: (value) {
                         setState(() {
                           model.records[recordId].title = value;
@@ -83,10 +80,8 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     TextFormField(
                       initialValue: record.value.toString(),
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Value",
-                      ),
+                      decoration: kTitleEditInfoInputDecoration.copyWith(
+                          labelText: 'Value'),
                       onChanged: (value) {
                         setState(() {
                           model.records[recordId].value = double.parse(value);

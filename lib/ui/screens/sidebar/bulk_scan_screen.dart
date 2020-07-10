@@ -14,7 +14,7 @@ class BulkScanScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         leading: BackButton(),
-        title: Text('BULK SCAN'),
+        title: Text('Select Account to Upload Receipts'),
       ),
       body: BulkScanAccountsList(),
     );

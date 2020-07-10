@@ -72,6 +72,7 @@ class HomepageScreen extends StatelessWidget {
                     currentIndex: homepageModel.currentBar,
                     type: BottomNavigationBarType.fixed,
                     showUnselectedLabels: false,
+                    selectedItemColor: kBlack,
                     items: [
                       BottomNavigationBarItem(
                         icon: Icon(Icons.dashboard),
@@ -111,7 +112,7 @@ class HomepageScreen extends StatelessWidget {
                         backgroundColor: Colors.white,
                         child: Icon(
                           Icons.add,
-                          color: kBlack,
+                          color: kDarkCyan,
                         ),
                         onPressed: () {
                           model.newRecord();

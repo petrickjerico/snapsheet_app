@@ -34,13 +34,23 @@ class _ExpenseCalculatorState extends State<ExpenseCalculator> {
     return Consumer<ExpenseViewModel>(
       builder: (context, model, child) {
         return SimpleCalculator(
+            hideSurroundingBorder: true,
             value: value,
             hideExpression: false,
             theme: CalculatorThemeData(
               borderWidth: 0,
-              expressionColor: kBlack,
-              operatorColor: Colors.grey[500],
               displayColor: kBlack,
+              expressionColor: Colors.transparent,
+              expressionStyle: TextStyle(color: kGrey, fontSize: 18),
+              commandColor: Colors.black38,
+              commandStyle: TextStyle(
+                  color: kGrey, fontSize: 26, fontWeight: FontWeight.w300),
+              numStyle: TextStyle(
+                  color: kGrey, fontSize: 26, fontWeight: FontWeight.w300),
+              numColor: Colors.transparent,
+              operatorColor: Colors.black38,
+              operatorStyle: TextStyle(
+                  color: kGrey, fontSize: 26, fontWeight: FontWeight.w300),
             ),
             onChanged: (key, value, expression) {
               model.changeValue(value);
@@ -590,6 +600,10 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             _calc.clear();
             acLabel = "AC";
             break;
+          case "00":
+            _calc.addDigit(0);
+            _calc.addDigit(0);
+            break;
           default:
             if (val == _calc.numberFormat.symbols.DECIMAL_SEP) {
               _calc.addPoint();
@@ -634,7 +648,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
-            flex: 8,
+            flex: 15,
             child: Container(
               color: widget.theme?.displayColor,
               child: Row(
@@ -673,6 +687,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             ),
           ),
           Expanded(
+            flex: 2,
             child: Visibility(
               visible: !widget.hideExpression,
               child: Container(
@@ -706,9 +721,9 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 4,
             child: Container(
-              color: widget.theme?.displayColor?.withOpacity(0.8),
+              color: Colors.black54,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
@@ -859,7 +874,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
       [_nums[7], _nums[8], _nums[9], "×"],
       [_nums[4], _nums[5], _nums[6], "-"],
       [_nums[1], _nums[2], _nums[3], "+"],
-      [_calc.numberFormat.symbols.DECIMAL_SEP, _nums[0], "", "="],
+      [_calc.numberFormat.symbols.DECIMAL_SEP, _nums[0], "00", "="],
     ].map((items) {
       return items.map((title) {
         Color color =

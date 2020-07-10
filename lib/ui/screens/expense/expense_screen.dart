@@ -20,6 +20,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
   Widget build(BuildContext context) {
     return Consumer<ExpenseViewModel>(builder: (context, model, child) {
       return Scaffold(
+        backgroundColor: kBlack,
         appBar: AppBar(
           backgroundColor: kBlack,
           elevation: 0,
@@ -70,8 +71,11 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
         ),
         body: ExpenseCalculator(),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.black,
-          child: Icon(Icons.check),
+          backgroundColor: Colors.white,
+          child: Icon(
+            Icons.check,
+            color: kDarkCyan,
+          ),
           onPressed: () {
             final homepageModel = Provider.of<HomepageViewModel>(
               context,
@@ -98,11 +102,11 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
-          color: Colors.black,
+          color: Colors.white,
           notchMargin: 12,
           shape: CircularNotchedRectangle(),
           child: Container(
-            height: 55.0,
+            height: 56.0,
             child: null,
           ),
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
+import 'package:snapsheetapp/ui/config/colors.dart';
 
 class SelectAllButton extends StatelessWidget {
   const SelectAllButton({
@@ -17,12 +18,12 @@ class SelectAllButton extends StatelessWidget {
           visualDensity: VisualDensity.comfortable,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
-            side: BorderSide(color: Colors.blueAccent),
+            side: BorderSide(color: kDarkCyan),
           ),
           child: Text(
             'SELECT ALL',
             style: TextStyle(
-              color: Colors.blueAccent,
+              color: kDarkCyan,
             ),
           ),
           onPressed: () {

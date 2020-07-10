@@ -37,9 +37,11 @@ class _ExpenseCalculatorState extends State<ExpenseCalculator> {
             value: value,
             hideExpression: false,
             theme: CalculatorThemeData(
-                borderWidth: 0.0,
-                operatorColor: Colors.grey[500],
-                displayColor: kBlack),
+              borderWidth: 0,
+              expressionColor: kBlack,
+              operatorColor: Colors.grey[500],
+              displayColor: kBlack,
+            ),
             onChanged: (key, value, expression) {
               model.changeValue(value);
             });
@@ -529,8 +531,8 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             model.tempRecord.accountUid ?? model.userData.accounts.first.uid);
         _accId = account.index;
         return Column(children: <Widget>[
-          Expanded(child: _getDisplay(model), flex: 3),
-          Expanded(child: _getButtons(), flex: 4),
+          Expanded(child: _getDisplay(model), flex: 4),
+          Expanded(child: _getButtons(), flex: 5),
         ]);
       },
     );
@@ -675,7 +677,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
               visible: !widget.hideExpression,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
-                color: widget.theme?.displayColor?.withOpacity(0.9),
+                color: widget.theme?.expressionColor,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[

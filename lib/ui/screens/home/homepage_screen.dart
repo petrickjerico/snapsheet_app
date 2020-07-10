@@ -9,6 +9,7 @@ import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 
 class HomepageScreen extends StatelessWidget {
+  static GlobalKey bottomKey = GlobalKey();
   static final String id = 'homepage_screen';
 
   final _titles = [
@@ -36,7 +37,7 @@ class HomepageScreen extends StatelessWidget {
             return Scaffold(
               extendBody: true,
               resizeToAvoidBottomInset: false,
-              backgroundColor: Colors.black,
+              backgroundColor: kBlack,
               appBar: AppBar(
                 elevation: 0,
                 backgroundColor: kHomepageBackgroundTransparency,
@@ -62,6 +63,7 @@ class HomepageScreen extends StatelessWidget {
                 ),
               ),
               bottomNavigationBar: BottomAppBar(
+                key: bottomKey,
                 elevation: 10.0,
                 shape: CircularNotchedRectangle(),
                 notchMargin: 12,
@@ -106,8 +108,11 @@ class HomepageScreen extends StatelessWidget {
                     closedBuilder: (_, openContainer) {
                       return FloatingActionButton(
                         elevation: 0,
-                        backgroundColor: kBlack,
-                        child: Icon(Icons.add),
+                        backgroundColor: Colors.white,
+                        child: Icon(
+                          Icons.add,
+                          color: kBlack,
+                        ),
                         onPressed: () {
                           model.newRecord();
                           int targetIndex =

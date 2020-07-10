@@ -18,7 +18,7 @@ class _ReceiptPreviewScreenState extends State<ReceiptPreviewScreen> {
       builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: kBlack,
+            title: Text("Previews"),
           ),
           body: PageView.builder(
             itemBuilder: (context, position) {

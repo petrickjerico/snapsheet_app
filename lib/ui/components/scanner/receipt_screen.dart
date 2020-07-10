@@ -39,10 +39,18 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
             child: Theme(
               data: ThemeData.dark(),
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 50, horizontal: 30),
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        "${recordId + 1} / ${model.records.length}",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                     GestureDetector(
                       onTap: () async {
                         await showDialog(

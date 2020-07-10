@@ -17,12 +17,13 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   List<Record> records = [];
   List<bool> isDelete = [];
   int counter = 0;
-  Scanner scanner = ScannerImpl();
+  Scanner scanner;
   String selectedAccountUid;
 
   void init(UserData userData) {
     this.userData = userData;
     accounts = userData.accounts;
+    scanner = ScannerImpl();
   }
 
   Future<void> loadAssets() async {

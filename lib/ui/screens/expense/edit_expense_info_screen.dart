@@ -269,38 +269,31 @@ class ReceiptImage extends StatelessWidget {
         ),
       );
     } else if (tempRecord.receiptURL != null) {
-      return model.connectivityResult == ConnectivityResult.none
-          ? Container(
-              child: Center(
-                child: Text(
-                    "Could not load image. Check your internet connection."),
-              ),
-            )
-          : Expanded(
-              child: GestureDetector(
-                onTap: () async {
-                  await showDialog(
-                      context: context,
-                      builder: (_) => ReceiptImageDialog(
-                            receiptURL: tempRecord.receiptURL,
-                          ));
-                },
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: <Widget>[
-                    MiniLoading(),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: FadeInImage.memoryNetwork(
-                        placeholder: kTransparentImage,
-                        image: tempRecord.receiptURL,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ],
+      return Expanded(
+        child: GestureDetector(
+          onTap: () async {
+            await showDialog(
+                context: context,
+                builder: (_) => ReceiptImageDialog(
+                      receiptURL: tempRecord.receiptURL,
+                    ));
+          },
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              MiniLoading(),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: tempRecord.receiptURL,
+                  fit: BoxFit.cover,
                 ),
               ),
-            );
+            ],
+          ),
+        ),
+      );
     } else {
       return SizedBox.shrink();
     }

@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
@@ -12,7 +13,7 @@ class HomepageScreen extends StatelessWidget {
 
   final _titles = [
     'DASHBOARD',
-    'HISTORY',
+    'RECORDS',
     'LIST OF ACCOUNTS',
     'EDIT PROFILE',
   ];
@@ -75,8 +76,8 @@ class HomepageScreen extends StatelessWidget {
                         title: Text('Dashboard'),
                       ),
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.receipt),
-                        title: Text('History'),
+                        icon: FaIcon(FontAwesomeIcons.solidListAlt),
+                        title: Text('Records'),
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.add),

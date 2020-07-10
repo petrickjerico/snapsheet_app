@@ -41,7 +41,6 @@ class _ExpenseCalculatorState extends State<ExpenseCalculator> {
                 operatorColor: Colors.grey[500],
                 displayColor: kBlack),
             onChanged: (key, value, expression) {
-              double temp = model.tempRecord.value;
               model.changeValue(value);
             });
       },
@@ -676,7 +675,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
               visible: !widget.hideExpression,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
-                color: widget.theme?.displayColor.withOpacity(0.9),
+                color: widget.theme?.displayColor?.withOpacity(0.9),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -707,28 +706,29 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           Expanded(
             flex: 2,
             child: Container(
-              color: widget.theme?.displayColor.withOpacity(0.8),
+              color: widget.theme?.displayColor?.withOpacity(0.8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.black38,
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: ToggleButtons(
                         constraints:
                             BoxConstraints.expand(width: 70, height: 50),
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(20.0),
                         fillColor: isSelected()[0]
                             ? Colors.red[600]
                             : Colors.green[600],
+                        color: Colors.grey.withOpacity(0.6),
                         selectedColor: Colors.white,
                         children: <Widget>[
-                          Text('EXPENSE'),
-                          Text('INCOME'),
+                          Text(' EXPENSE'),
+                          Text('INCOME '),
                         ],
                         isSelected: isSelected(),
                         onPressed: (value) {

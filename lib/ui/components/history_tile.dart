@@ -28,7 +28,7 @@ class HistoryTile extends StatelessWidget {
             leading: CircleAvatar(
               backgroundColor: category.color.withOpacity(0.2),
               child: IconTheme(
-                data: IconThemeData(color: category.color, size: 17),
+                data: IconThemeData(color: category.color, size: 15),
                 child: FaIcon(category.icon.icon),
               ),
             ),

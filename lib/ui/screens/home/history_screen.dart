@@ -6,12 +6,7 @@ import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/components/history_tile.dart';
 import 'package:snapsheetapp/ui/config/colors.dart';
 
-class HistoryScreen extends StatefulWidget {
-  @override
-  _HistoryScreenState createState() => _HistoryScreenState();
-}
-
-class _HistoryScreenState extends State<HistoryScreen> {
+class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(

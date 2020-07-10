@@ -7,22 +7,17 @@ import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 
-class HomepageScreen extends StatefulWidget {
+class HomepageScreen extends StatelessWidget {
   static final String id = 'homepage_screen';
 
-  @override
-  _HomepageScreenState createState() => _HomepageScreenState();
-}
-
-class _HomepageScreenState extends State<HomepageScreen> {
-  var _titles = [
+  final _titles = [
     'DASHBOARD',
     'HISTORY',
     'LIST OF ACCOUNTS',
     'EDIT PROFILE',
   ];
 
-  List<Widget> _pageList = <Widget>[
+  final List<Widget> _pageList = <Widget>[
     Dashboard(),
     HistoryScreen(),
     EditAccountsOrder(),
@@ -98,9 +93,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
                     ],
                     onTap: (index) {
                       if (index != 2) {
-                        setState(() {
-                          homepageModel.syncBarToPage(index);
-                        });
+                        homepageModel.syncBarToPage(index);
                       }
                     }),
               ),

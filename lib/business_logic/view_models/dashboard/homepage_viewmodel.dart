@@ -36,16 +36,6 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     notifyListeners();
   }
 
-  void syncPageToBar(int index) {
-    currentPage = index;
-    if (index >= 2) {
-      currentBar = index + 1;
-    } else {
-      currentBar = index;
-    }
-    notifyListeners();
-  }
-
   void syncBarAndTabToBeginning() {
     currentPage = 0;
     currentBar = 0;

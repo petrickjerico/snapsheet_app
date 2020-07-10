@@ -32,11 +32,12 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
               ],
             ),
           ),
-          Consumer<HomepageViewModel>(builder: (context, model, child) {
-            return Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Container(
+          Consumer<HomepageViewModel>(
+            builder: (context, model, child) {
+              return Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Container(
                     decoration: BoxDecoration(
                       color: Colors.black38,
                       borderRadius: BorderRadius.circular(10.0),
@@ -56,37 +57,39 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                           color: Colors.white54,
                         ),
                       ],
-                    )),
-                CarouselSlider(
-                  carouselController: HomepageViewModel.controller,
-                  items: makeAccountTiles(model),
-                  options: CarouselOptions(
-                    initialPage: model.selectedAccountIndex != -1 &&
-                            model.selectedAccountIndex != null
-                        ? model.selectedAccountIndex
-                        : 0,
-                    height: 55.0,
-                    viewportFraction: 0.3,
-                    enlargeCenterPage: true,
-                    enableInfiniteScroll: false,
-                    autoPlayAnimationDuration: Duration(milliseconds: 100),
-                    onPageChanged: (index, manual) {
-                      model.selectAccount(index);
-                    },
+                    ),
                   ),
-                ),
-                Visibility(
-                  child: AccountTile(
-                    index: -1,
-                    title: "ALL",
-                    color: Colors.black,
-                    total: model.currentExpensesTotal(),
+                  CarouselSlider(
+                    carouselController: HomepageViewModel.controller,
+                    items: makeAccountTiles(model),
+                    options: CarouselOptions(
+                      initialPage: model.selectedAccountIndex != -1 &&
+                              model.selectedAccountIndex != null
+                          ? model.selectedAccountIndex
+                          : 0,
+                      height: 55.0,
+                      viewportFraction: 0.3,
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll: false,
+                      autoPlayAnimationDuration: Duration(milliseconds: 100),
+                      onPageChanged: (index, manual) {
+                        model.selectAccount(index);
+                      },
+                    ),
                   ),
-                  visible: model.selectedAccountIndex == -1,
-                )
-              ],
-            );
-          }),
+                  Visibility(
+                    child: AccountTile(
+                      index: -1,
+                      title: "ALL",
+                      color: Colors.black,
+                      total: model.currentExpensesTotal(),
+                    ),
+                    visible: model.selectedAccountIndex == -1,
+                  )
+                ],
+              );
+            },
+          ),
         ],
       ),
     );

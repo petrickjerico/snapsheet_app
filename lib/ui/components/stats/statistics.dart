@@ -271,7 +271,7 @@ class _StatisticsState extends State<Statistics> {
                         visualDensity: VisualDensity.compact,
                         child: Text(
                           'SEE MORE',
-                          style: TextStyle(color: Colors.blueAccent),
+                          style: TextStyle(color: kDarkCyan),
                         ),
                         onPressed: () {
                           final homepageModel = Provider.of<HomepageViewModel>(

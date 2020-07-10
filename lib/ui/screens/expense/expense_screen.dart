@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
+import 'package:snapsheetapp/ui/config/colors.dart';
 import 'package:snapsheetapp/ui/screens/expense/expense_calculator.dart';
 import 'package:flushbar/flushbar.dart';
 import 'edit_expense_info_screen.dart';
@@ -19,9 +20,10 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
   Widget build(BuildContext context) {
     return Consumer<ExpenseViewModel>(builder: (context, model, child) {
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: kBlack,
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: kBlack,
+          elevation: 0,
           leading: BackButton(
             onPressed: () {
               if (model.isEditing) {
@@ -40,7 +42,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
               )..show(context);
             },
           ),
-          title: Text('EXPENSES EDITOR'),
+          title: Text('CALCULATOR'),
           actions: <Widget>[
             IconButton(
               icon: Icon(
@@ -69,8 +71,11 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
         ),
         body: ExpenseCalculator(),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.black,
-          child: Icon(Icons.check),
+          backgroundColor: Colors.white,
+          child: Icon(
+            Icons.check,
+            color: kDarkCyan,
+          ),
           onPressed: () {
             final homepageModel = Provider.of<HomepageViewModel>(
               context,
@@ -97,13 +102,12 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
-          color: Colors.black,
+          color: Colors.white,
+          notchMargin: 12,
           shape: CircularNotchedRectangle(),
           child: Container(
-            height: 40.0,
-            child: Container(
-              child: null,
-            ),
+            height: 56.0,
+            child: null,
           ),
         ),
       );

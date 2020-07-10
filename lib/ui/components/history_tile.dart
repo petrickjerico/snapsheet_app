@@ -35,12 +35,12 @@ class HistoryTile extends StatelessWidget {
             title: Text(
               record.title == "" ? category.title : record.title,
               style: kHistoryRecordTitle.copyWith(
-                  color: color ?? Colors.black, fontWeight: FontWeight.w500),
+                  color: color ?? Colors.white, fontWeight: FontWeight.w500),
             ),
             subtitle: Text(
               model.userData.getThisAccount(record.accountUid).title,
               style: kHistoryRecordTitle.copyWith(
-                  color: color?.withOpacity(0.3) ?? Colors.black,
+                  color: color?.withOpacity(0.5) ?? Colors.white,
                   fontWeight: FontWeight.normal),
             ),
             trailing: Column(

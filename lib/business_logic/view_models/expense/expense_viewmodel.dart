@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,8 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   File imageFile;
   ImagePicker _picker = ImagePicker();
   Scanner scanner = ScannerImpl();
+  Future<ConnectivityResult> connectivityResult =
+      Connectivity().checkConnectivity();
 
   Future<void> imageToTempRecord() async {
     if (imageFile != null) {

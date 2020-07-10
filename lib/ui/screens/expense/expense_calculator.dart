@@ -682,7 +682,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                     Text(
                       'Current Expression:',
                       style: widget.theme?.expressionStyle ??
-                          const TextStyle(color: Colors.grey),
+                          const TextStyle(color: Colors.grey, fontSize: 17),
                       maxLines: 1,
                     ),
                     Align(
@@ -693,7 +693,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                         child: Text(
                           _expression,
                           style: widget.theme?.expressionStyle ??
-                              const TextStyle(color: Colors.grey),
+                              const TextStyle(color: Colors.grey, fontSize: 17),
                           maxLines: 1,
                         ),
                       ),

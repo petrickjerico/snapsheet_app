@@ -27,6 +27,7 @@ class _BulkScanAccountsListState extends State<BulkScanAccountsList> {
               final account = model.accounts[index];
               return Card(
                 color: account.color,
+                elevation: 5,
                 child: ListTile(
                   title: Text(
                     account.title,

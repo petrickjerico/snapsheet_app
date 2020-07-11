@@ -52,7 +52,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                         padding: EdgeInsets.only(bottom: 10),
                         child: Text(
                           "${recordId + 1} / ${model.records.length}",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
                       ),
                       ReceiptImage(imagePath: record.imagePath),

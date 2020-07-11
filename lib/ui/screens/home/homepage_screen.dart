@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
+import 'package:snapsheetapp/ui/components/button/add_record_fab_button.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 
@@ -103,10 +104,7 @@ class HomepageScreen extends StatelessWidget {
                 builder: (context, dashboardModel, child) {
                   return OpenContainer<bool>(
                     closedBuilder: (_, openContainer) {
-                      return FloatingActionButton(
-                        elevation: 0,
-                        backgroundColor: kBlack,
-                        child: Icon(Icons.add),
+                      return AddRecordFab(
                         onPressed: () {
                           model.newRecord();
                           int targetIndex =

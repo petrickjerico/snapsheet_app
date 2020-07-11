@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
@@ -9,11 +10,12 @@ import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 
 class HomepageScreen extends StatelessWidget {
+  static GlobalKey bottomKey = GlobalKey();
   static final String id = 'homepage_screen';
 
   final _titles = [
     'DASHBOARD',
-    'HISTORY',
+    'RECORDS',
     'LIST OF ACCOUNTS',
     'EDIT PROFILE',
   ];
@@ -36,7 +38,7 @@ class HomepageScreen extends StatelessWidget {
             return Scaffold(
               extendBody: true,
               resizeToAvoidBottomInset: false,
-              backgroundColor: Colors.black,
+              backgroundColor: kBlack,
               appBar: AppBar(
                 elevation: 0,
                 backgroundColor: kHomepageBackgroundTransparency,
@@ -62,6 +64,7 @@ class HomepageScreen extends StatelessWidget {
                 ),
               ),
               bottomNavigationBar: BottomAppBar(
+                key: bottomKey,
                 elevation: 10.0,
                 shape: CircularNotchedRectangle(),
                 notchMargin: 12,
@@ -70,14 +73,15 @@ class HomepageScreen extends StatelessWidget {
                     currentIndex: homepageModel.currentBar,
                     type: BottomNavigationBarType.fixed,
                     showUnselectedLabels: false,
+                    selectedItemColor: kBlack,
                     items: [
                       BottomNavigationBarItem(
                         icon: Icon(Icons.dashboard),
                         title: Text('Dashboard'),
                       ),
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.receipt),
-                        title: Text('History'),
+                        icon: FaIcon(FontAwesomeIcons.solidListAlt),
+                        title: Text('Records'),
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.add),

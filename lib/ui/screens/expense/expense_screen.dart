@@ -21,9 +21,10 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
   Widget build(BuildContext context) {
     return Consumer<ExpenseViewModel>(builder: (context, model, child) {
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: kBlack,
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: kBlack,
+          elevation: 0,
           leading: BackButton(
             onPressed: () {
               if (model.isEditing) {
@@ -42,7 +43,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
               )..show(context);
             },
           ),
-          title: Text('EXPENSES EDITOR'),
+          title: Text('CALCULATOR'),
           actions: <Widget>[
             IconButton(
               icon: Icon(
@@ -97,13 +98,12 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
-          color: Colors.black,
+          color: Colors.white,
+          notchMargin: 12,
           shape: CircularNotchedRectangle(),
           child: Container(
-            height: 40.0,
-            child: Container(
-              child: null,
-            ),
+            height: 56.0,
+            child: null,
           ),
         ),
       );

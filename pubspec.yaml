@@ -49,6 +49,7 @@ dependencies:
   transparent_image: ^1.0.0
   after_layout: ^1.0.7+2
   fading_edge_scrollview: ^1.1.4
+  connectivity: ^0.4.9
   photo_view: ^0.9.2
 
 dev_dependencies:

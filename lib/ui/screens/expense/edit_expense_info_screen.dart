@@ -33,10 +33,8 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    var temp = title;
     model = Provider.of<ExpenseViewModel>(context);
     title = model.tempRecord.title;
-//    print('Title changed: $temp -> $title');
   }
 
   @override
@@ -47,14 +45,15 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
         resizeToAvoidBottomInset: false,
         backgroundColor: kBlack,
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          elevation: 0,
+          backgroundColor: kBlack,
           leading: BackButton(),
-          title: Text('EDIT INFORMATION'),
+          title: Text('RECORD INFORMATION'),
         ),
         body: Theme(
           data: ThemeData.dark(),
           child: Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 40),
+            padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
@@ -85,7 +84,6 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
           onPressed: () {
             final dashboardModel =
                 Provider.of<HomepageViewModel>(context, listen: false);
-//          print("Adding to record: \$${model.tempRecord.value}");
             model.addRecord();
             bool isEditing = model.isEditing;
             dashboardModel.selectAccount(model.getAccountIndexFromTempRecord());
@@ -109,19 +107,13 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
-          color: Colors.black,
+          color: Colors.white,
+          notchMargin: 12,
           shape: CircularNotchedRectangle(),
-          child: Container(
-            height: 40.0,
-            child: Container(
-              child: null,
-            ),
-          ),
+          child: Container(height: 56.0, child: null),
         ),
       ),
     );
-//      },
-//    );
   }
 }
 
@@ -155,9 +147,9 @@ class ReceiptButtons extends StatelessWidget {
               flex: 2,
               child: RoundedButton(
                 color: Colors.white,
-                textColor: Colors.black,
+                textColor: kDarkCyan,
                 title: model.hasImage() ? 'Retake Receipt' : 'Add Receipt',
-                icon: Icon(Icons.receipt, color: Colors.black),
+                icon: Icon(Icons.receipt, color: kDarkCyan),
                 onPressed: () async {
                   await model.showChoiceDialog(context);
                   model.imageToTempRecord();

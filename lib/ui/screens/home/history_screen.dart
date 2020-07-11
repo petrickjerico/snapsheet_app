@@ -22,7 +22,7 @@ class HistoryScreen extends StatelessWidget {
                 return HistoryTile(
                   record: record,
                   index: index,
-                  color: Colors.white54,
+                  color: Colors.white.withOpacity(0.8),
                 );
               },
               itemCount: model.records.length,

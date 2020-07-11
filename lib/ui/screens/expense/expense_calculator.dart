@@ -34,14 +34,25 @@ class _ExpenseCalculatorState extends State<ExpenseCalculator> {
     return Consumer<ExpenseViewModel>(
       builder: (context, model, child) {
         return SimpleCalculator(
+            hideSurroundingBorder: true,
             value: value,
             hideExpression: false,
             theme: CalculatorThemeData(
-                borderWidth: 0.0,
-                operatorColor: Colors.grey[500],
-                displayColor: kBlack),
+              borderWidth: 0,
+              displayColor: kBlack,
+              expressionColor: Colors.transparent,
+              expressionStyle: TextStyle(color: kGrey, fontSize: 18),
+              commandColor: Colors.black38,
+              commandStyle: TextStyle(
+                  color: kGrey, fontSize: 26, fontWeight: FontWeight.w300),
+              numStyle: TextStyle(
+                  color: kGrey, fontSize: 26, fontWeight: FontWeight.w300),
+              numColor: Colors.transparent,
+              operatorColor: Colors.black38,
+              operatorStyle: TextStyle(
+                  color: kGrey, fontSize: 26, fontWeight: FontWeight.w300),
+            ),
             onChanged: (key, value, expression) {
-              double temp = model.tempRecord.value;
               model.changeValue(value);
             });
       },
@@ -530,8 +541,8 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             model.tempRecord.accountUid ?? model.userData.accounts.first.uid);
         _accId = account.index;
         return Column(children: <Widget>[
-          Expanded(child: _getDisplay(model), flex: 3),
-          Expanded(child: _getButtons(), flex: 4),
+          Expanded(child: _getDisplay(model), flex: 4),
+          Expanded(child: _getButtons(), flex: 5),
         ]);
       },
     );
@@ -589,6 +600,10 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             _calc.clear();
             acLabel = "AC";
             break;
+          case "00":
+            _calc.addDigit(0);
+            _calc.addDigit(0);
+            break;
           default:
             if (val == _calc.numberFormat.symbols.DECIMAL_SEP) {
               _calc.addPoint();
@@ -633,7 +648,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
-            flex: 8,
+            flex: 15,
             child: Container(
               color: widget.theme?.displayColor,
               child: Row(
@@ -672,18 +687,19 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             ),
           ),
           Expanded(
+            flex: 2,
             child: Visibility(
               visible: !widget.hideExpression,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
-                color: widget.theme?.displayColor.withOpacity(0.9),
+                color: widget.theme?.expressionColor,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
                       'Current Expression:',
                       style: widget.theme?.expressionStyle ??
-                          const TextStyle(color: Colors.grey),
+                          const TextStyle(color: Colors.grey, fontSize: 17),
                       maxLines: 1,
                     ),
                     Align(
@@ -694,7 +710,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                         child: Text(
                           _expression,
                           style: widget.theme?.expressionStyle ??
-                              const TextStyle(color: Colors.grey),
+                              const TextStyle(color: Colors.grey, fontSize: 17),
                           maxLines: 1,
                         ),
                       ),
@@ -705,30 +721,31 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 4,
             child: Container(
-              color: widget.theme?.displayColor.withOpacity(0.8),
+              color: Colors.black54,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.black38,
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: ToggleButtons(
                         constraints:
                             BoxConstraints.expand(width: 70, height: 50),
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(20.0),
                         fillColor: isSelected()[0]
                             ? Colors.red[600]
                             : Colors.green[600],
+                        color: Colors.grey.withOpacity(0.6),
                         selectedColor: Colors.white,
                         children: <Widget>[
-                          Text('EXPENSE'),
-                          Text('INCOME'),
+                          Text(' EXPENSE'),
+                          Text('INCOME '),
                         ],
                         isSelected: isSelected(),
                         onPressed: (value) {
@@ -857,7 +874,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
       [_nums[7], _nums[8], _nums[9], "×"],
       [_nums[4], _nums[5], _nums[6], "-"],
       [_nums[1], _nums[2], _nums[3], "+"],
-      [_calc.numberFormat.symbols.DECIMAL_SEP, _nums[0], "", "="],
+      [_calc.numberFormat.symbols.DECIMAL_SEP, _nums[0], "00", "="],
     ].map((items) {
       return items.map((title) {
         Color color =

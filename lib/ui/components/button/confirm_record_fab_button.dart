@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:snapsheetapp/ui/config/colors.dart';
 
 class ConfirmRecordFab extends StatelessWidget {
   final onPressed;
@@ -9,10 +10,10 @@ class ConfirmRecordFab extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       elevation: 0,
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       child: Icon(
-        Icons.add,
-        color: Colors.white,
+        Icons.check,
+        color: kDarkCyan,
       ),
       onPressed: onPressed,
     );

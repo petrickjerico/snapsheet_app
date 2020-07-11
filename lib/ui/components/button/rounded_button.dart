@@ -33,7 +33,9 @@ class RoundedButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               icon ?? SizedBox.shrink(),
-              SizedBox(width: 10),
+              icon == null || title == null
+                  ? SizedBox.shrink()
+                  : SizedBox(width: 10),
               title != null
                   ? Text(
                       title,

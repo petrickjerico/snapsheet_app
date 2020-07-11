@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:snapsheetapp/ui/config/colors.dart';
 
 class AddRecordFab extends StatelessWidget {
   final onPressed;
@@ -12,7 +13,7 @@ class AddRecordFab extends StatelessWidget {
       backgroundColor: Colors.white,
       child: Icon(
         Icons.add,
-        color: Colors.black,
+        color: kDarkCyan,
       ),
       onPressed: onPressed,
     );

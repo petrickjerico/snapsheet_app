@@ -43,7 +43,7 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
                   ),
                 ),
                 child: ReorderableListSimple(
-                  allowReordering: true,
+                  allowReordering: false,
                   handleSide: ReorderableListSimpleSide.Left,
                   handleIcon: Icon(
                     FontAwesomeIcons.bars,

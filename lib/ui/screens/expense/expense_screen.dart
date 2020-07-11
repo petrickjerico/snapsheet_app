@@ -3,7 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
-import 'package:snapsheetapp/ui/config/colors.dart';
+import 'package:snapsheetapp/ui/components/button/add_record_fab_button.dart';
+import 'package:snapsheetapp/ui/components/button/confirm_record_fab_button.dart';
 import 'package:snapsheetapp/ui/screens/expense/expense_calculator.dart';
 import 'package:flushbar/flushbar.dart';
 import 'edit_expense_info_screen.dart';
@@ -70,12 +71,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           ],
         ),
         body: ExpenseCalculator(),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.white,
-          child: Icon(
-            Icons.check,
-            color: kDarkCyan,
-          ),
+        floatingActionButton: ConfirmRecordFab(
           onPressed: () {
             final homepageModel = Provider.of<HomepageViewModel>(
               context,

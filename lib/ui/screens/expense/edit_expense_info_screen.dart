@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
+import 'package:snapsheetapp/ui/components/button/add_record_fab_button.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/components/date_time.dart';
 import 'package:snapsheetapp/ui/components/receipt_image_dialog.dart';
@@ -79,12 +80,7 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.white,
-          child: Icon(
-            Icons.check,
-            color: kDarkCyan,
-          ),
+        floatingActionButton: AddRecordFab(
           onPressed: () {
             final dashboardModel =
                 Provider.of<HomepageViewModel>(context, listen: false);

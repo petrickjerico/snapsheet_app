@@ -21,9 +21,9 @@ class AccountOrderTile extends StatefulWidget {
 class _AccountOrderTileState extends State<AccountOrderTile> {
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<HomepageViewModel>(context, listen: false);
     return ListTile(
       onTap: () {
-        final model = Provider.of<HomepageViewModel>(context, listen: false);
         model.selectAccount(widget.index);
         model.syncController();
         model.syncBarAndTabToBeginning();
@@ -45,50 +45,41 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
         style: TextStyle(color: Colors.white, fontSize: 20.0),
       ),
       trailing: Theme(
-        data: ThemeData.light(),
-        child: PopupMenuButton(
-          itemBuilder: (context) => [
-            PopupMenuItem(
-              child: Text('Edit'),
-              value: () {
-                final model =
-                    Provider.of<HomepageViewModel>(context, listen: false);
-                model.initEditAccount(widget.index);
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  builder: (context) => SingleChildScrollView(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: RenameAccountPopup(),
-                  ),
-                  shape: kBottomSheetShape,
-                );
-              },
+          data: ThemeData.light(),
+          child: Container(
+            width: 100,
+            child: Row(
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  color: Colors.white,
+                  onPressed: () {
+                    model.initEditAccount(widget.index);
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => SingleChildScrollView(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: RenameAccountPopup(),
+                      ),
+                      shape: kBottomSheetShape,
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.delete_forever),
+                  color: Colors.redAccent,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      child: DeleteDialog(widget: widget),
+                    );
+                  },
+                )
+              ],
             ),
-            PopupMenuItem(
-              child: Text('Delete'),
-              value: () {
-                showDialog(
-                  context: context,
-                  child: DeleteDialog(widget: widget),
-                );
-              },
-            ),
-          ],
-          icon: Icon(
-            Icons.more_vert,
-            color: Colors.white,
-          ),
-          onSelected: (Function value) {
-            final model =
-                Provider.of<HomepageViewModel>(context, listen: false);
-            model.selectAccount(widget.index);
-            model.syncController();
-            value.call();
-          },
-        ),
-      ),
+          )),
     );
   }
 }

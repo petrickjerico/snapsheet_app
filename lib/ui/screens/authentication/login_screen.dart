@@ -103,6 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         cursorColor: Colors.black,
                         textAlign: TextAlign.left,
+                        textAlignVertical: TextAlignVertical(y: 0),
                         obscureText: obscurePwd,
                         validator: (val) => val.length < 6
                             ? 'Enter a password 6+ chars long'

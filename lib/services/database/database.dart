@@ -14,7 +14,7 @@ abstract class DatabaseService {
   // READ
   Future<List<Record>> getRecords();
   Future<List<Account>> getAccounts();
-  Future<List<Recurring>> getRecurring();
+  Future<List<Recurring>> getRecurrings();
 //  Future<List<Category>> getCategories();
 
   // UPDATE

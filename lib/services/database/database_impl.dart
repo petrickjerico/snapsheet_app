@@ -11,12 +11,14 @@ class DatabaseServiceImpl implements DatabaseService {
   DocumentReference userDocument;
   CollectionReference recordCollection;
   CollectionReference accountCollection;
+  CollectionReference recurringCollection;
   CollectionReference categoryCollection;
 
   DatabaseServiceImpl({this.uid}) {
     userDocument = Firestore.instance.collection('users').document(uid);
     recordCollection = userDocument.collection('records');
     accountCollection = userDocument.collection('accounts');
+    recurringCollection = userDocument.collection('recurring');
   }
 
   Future<void> initialize() async {
@@ -52,6 +54,16 @@ class DatabaseServiceImpl implements DatabaseService {
     return uid;
   }
 
+  @override
+  Future<String> addRecurring(Recurring recurring) async {
+    final recurringDocument = recurringCollection.document();
+    final uid = recurringDocument.documentID;
+    Map<String, dynamic> json = recurring.toJson();
+    json['uid'] = uid;
+    recurringDocument.setData(json);
+    return uid;
+  }
+
   /// READ
   @override
   Future<List<Record>> getRecords() async {
@@ -67,6 +79,14 @@ class DatabaseServiceImpl implements DatabaseService {
     return snapshots.map((doc) => Account.fromFirestore(doc)).toList();
   }
 
+  @override
+  Future<List<Recurring>> getRecurrings() async {
+    List<DocumentSnapshot> snapshots = await recurringCollection
+        .getDocuments()
+        .then((value) => value.documents);
+    return snapshots.map((doc) => Recurring.fromFirestore(doc)).toList();
+  }
+
   /// UPDATE
   @override
   Future<void> updateRecord(Record record) async {
@@ -78,6 +98,11 @@ class DatabaseServiceImpl implements DatabaseService {
     accountCollection.document(account.uid).setData(account.toJson());
   }
 
+  @override
+  Future<void> updateRecurring(Recurring recurring) async {
+    recurringCollection.document(recurring.uid).setData(recurring.toJson());
+  }
+
   /// DELETE
   @override
   Future<void> deleteRecord(Record record) async {
@@ -87,5 +112,10 @@ class DatabaseServiceImpl implements DatabaseService {
   @override
   Future<void> deleteAccount(Account account) async {
     accountCollection.document(account.uid).delete();
+  }
+
+  @override
+  Future<void> deleteRecurring(Recurring recurring) async {
+    recurringCollection.document(recurring.uid).delete();
   }
 }

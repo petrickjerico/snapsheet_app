@@ -10,7 +10,9 @@ class Recurring {
   bool isIncome;
 
   DateTime nextRecurrence;
+
   Duration interval;
+  String intervalInString;
 
   Recurring({
     this.uid,
@@ -21,6 +23,7 @@ class Recurring {
     this.isIncome,
     this.nextRecurrence,
     this.interval,
+    this.intervalInString,
   });
 
   factory Recurring.fromFirestore(DocumentSnapshot doc) {
@@ -35,6 +38,7 @@ class Recurring {
       nextRecurrence:
           DateTime.fromMillisecondsSinceEpoch(json['nextRecurrence']),
       interval: json['interval'],
+      intervalInString: json['intervalInString'],
     );
   }
 
@@ -47,6 +51,7 @@ class Recurring {
       'isIncome': isIncome,
       'nextRecurrence': nextRecurrence.millisecondsSinceEpoch,
       'interval': interval.inMilliseconds,
+      'intervalInString': intervalInString,
     };
   }
 

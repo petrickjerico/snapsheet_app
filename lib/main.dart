@@ -6,9 +6,12 @@ import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_view
 import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/export/export_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/services/auth/auth_impl.dart';
 import 'package:snapsheetapp/ui/components/scanner/receipt_preview.dart';
+import 'package:snapsheetapp/ui/screens/recurring/add_recurring_screen.dart';
+import 'package:snapsheetapp/ui/screens/recurring/recurring_screen.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 import 'package:snapsheetapp/ui/screens/splash_screen.dart';
 import 'package:snapsheetapp/ui/shared/splash.dart';
@@ -34,9 +37,9 @@ class Snapsheet extends StatelessWidget {
             create: (context) => HomepageViewModel()),
         ChangeNotifierProvider<BulkScanViewModel>(
             create: (context) => BulkScanViewModel()),
-        ChangeNotifierProvider<UserData>(
-          create: (context) => UserData(),
-        )
+        ChangeNotifierProvider<RecurringViewModel>(
+            create: (context) => RecurringViewModel()),
+        ChangeNotifierProvider<UserData>(create: (context) => UserData())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -54,6 +57,8 @@ class Snapsheet extends StatelessWidget {
           EditProfileScreen.id: (context) => EditProfileScreen(),
           SettingsScreen.id: (context) => SettingsScreen(),
           BulkScanScreen.id: (context) => BulkScanScreen(),
+          RecurringScreen.id: (context) => RecurringScreen(),
+          AddRecurringScreen.id: (context) => AddRecurringScreen(),
           ReceiptPreviewScreen.id: (context) => ReceiptPreviewScreen(),
           EditAccountsOrder.id: (context) => EditAccountsOrder(),
         },

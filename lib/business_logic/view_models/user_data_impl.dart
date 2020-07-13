@@ -19,17 +19,22 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
       SortedList<Record>((r1, r2) => r2.dateTime.compareTo(r1.dateTime));
   List<Account> _accounts =
       SortedList<Account>((a1, a2) => a1.index.compareTo(a2.index));
+  List<Recurring> _recurrings = SortedList<Recurring>(
+      (r1, r2) => r1.nextRecurrence.compareTo(r2.nextRecurrence));
 
   Future init(User user, Function loadCallback) async {
     this.user = user;
     _records.clear();
     _accounts.clear();
+    _recurrings.clear();
     _db = DatabaseServiceImpl(uid: user.uid);
     _cloud = CloudStorageServiceImpl(uid: user.uid);
     List<Record> unorderedRecords = await _db.getRecords();
     List<Account> unorderedAccounts = await _db.getAccounts();
+    List<Recurring> unorderedRecurrings = await _db.getRecurrings();
     _records.addAll(unorderedRecords);
     _accounts.addAll(unorderedAccounts);
+    _recurrings.addAll(unorderedRecurrings);
     loadCallback();
   }
 
@@ -46,7 +51,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     }
   }
 
-  // CREATE
+  /// CREATE
   Future addRecord(Record record) async {
     _records.add(record);
     notifyListeners();
@@ -65,9 +70,17 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     account.uid = await uid;
   }
 
-  // READ
+  Future addRecurring(Recurring recurring) async {
+    _recurrings.add(recurring);
+    notifyListeners();
+    Future<String> uid = _db.addRecurring(recurring);
+    recurring.uid = await uid;
+  }
+
+  /// READ
   List<Record> get records => _records;
   List<Account> get accounts => _accounts;
+  List<Recurring> get recurrings => _recurrings;
 
   Account getThisAccount(String accountUid) {
     return accounts.firstWhere((acc) {
@@ -75,7 +88,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     });
   }
 
-  // UPDATE
+  /// UPDATE
   Future<void> updateRecord(Record record) async {
     await processImage(record);
     _db.updateRecord(record);
@@ -83,6 +96,10 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
 
   Future<void> updateAccount(Account account) async {
     _db.updateAccount(account);
+  }
+
+  Future<void> updateRecurring(Recurring recurring) async {
+    _db.updateRecurring(recurring);
   }
 
   // DELETE
@@ -95,5 +112,10 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   Future<void> deleteAccount(Account account) async {
     _accounts.removeWhere((acc) => acc.uid == account.uid);
     _db.deleteAccount(account);
+  }
+
+  Future<void> deleteRecurring(Recurring recurring) async {
+    _recurrings.removeWhere((rec) => rec.uid == recurring.uid);
+    _db.deleteRecurring(recurring);
   }
 }

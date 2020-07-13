@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/services/auth/auth_impl.dart';
+import 'package:snapsheetapp/ui/screens/recurring/recurring_screen.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 
 class SidebarMenu extends StatelessWidget {
@@ -35,6 +36,11 @@ class SidebarMenu extends StatelessWidget {
 //                onTap: () =>
 //                    {Navigator.pushNamed(context, AddCategoryScreen.id)},
 //              ),
+              ListTile(
+                  leading: Icon(Icons.replay),
+                  title: Text("Recurring Expense"),
+                  onTap: () =>
+                      Navigator.pushNamed(context, RecurringScreen.id)),
               ListTile(
                 leading: Icon(Icons.filter),
                 title: Text('Bulk-input receipts'),

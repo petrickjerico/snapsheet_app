@@ -80,7 +80,10 @@ class HomepageScreen extends StatelessWidget {
                         title: Text('Dashboard'),
                       ),
                       BottomNavigationBarItem(
-                        icon: FaIcon(FontAwesomeIcons.solidListAlt),
+                        icon: FaIcon(
+                          FontAwesomeIcons.stream,
+                          size: 18,
+                        ),
                         title: Text('Records'),
                       ),
                       BottomNavigationBarItem(

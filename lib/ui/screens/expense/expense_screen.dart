@@ -77,13 +77,14 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
               context,
               listen: false,
             );
+            bool isEditing = model.isEditing;
             model.addRecord();
             homepageModel.selectAccount(model.getAccountIndexFromTempRecord());
             homepageModel.syncController();
             Navigator.pop(context);
             String title = homepageModel.getSelectedAccount().title;
             String messageStatus =
-                model.isEditing ? 'updated' : 'added to account: $title';
+                isEditing ? 'updated' : 'added to account: $title';
             Flushbar(
               message: "Record successfully $messageStatus.",
               icon: Icon(

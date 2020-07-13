@@ -68,9 +68,10 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.delete_forever),
-                  color: Colors.redAccent,
+                  icon: Icon(Icons.delete),
+                  color: Colors.white,
                   onPressed: () {
+                    model.selectAccount(widget.index);
                     showDialog(
                       context: context,
                       child: DeleteDialog(widget: widget),

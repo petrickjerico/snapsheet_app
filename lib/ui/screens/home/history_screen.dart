@@ -7,6 +7,7 @@ import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewm
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
+import 'package:snapsheetapp/ui/components/empty_state.dart';
 import 'package:snapsheetapp/ui/components/history_tile.dart';
 import 'package:snapsheetapp/ui/config/colors.dart';
 import 'package:snapsheetapp/ui/config/decoration.dart';
@@ -16,37 +17,50 @@ import 'add_account_popup.dart';
 class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        FilterSection(),
-        SizedBox(
-          height: 10.0,
-        ),
-        Flexible(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Consumer<HomepageViewModel>(
-                builder: (context, model, child) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      final record = model.records[index];
-                      return HistoryTile(
-                        record: record,
-                        index: index,
-                        color: Colors.white.withOpacity(0.8),
-                      );
-                    },
-                    itemCount: model.records.length,
-                  );
-                },
-              ),
-            ),
-          ),
-        ),
-      ],
+    return Consumer<HomepageViewModel>(
+      builder: (context, model, child) {
+        int recordsCount = model.records.length;
+        print(recordsCount);
+        print(model.records);
+        return recordsCount < 1
+            ? EmptyState(
+                icon: Icon(
+                  FontAwesomeIcons.solidMeh,
+                  color: Colors.white24,
+                  size: 100.0,
+                ),
+                message: 'Nothing to show here yet. \n'
+                    'Create an account and start adding records!',
+              )
+            : Column(
+                children: <Widget>[
+                  FilterSection(),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            final record = model.records[index];
+                            return HistoryTile(
+                              record: record,
+                              index: index,
+                              color: Colors.white.withOpacity(0.8),
+                            );
+                          },
+                          itemCount: model.records.length,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+      },
     );
   }
 }

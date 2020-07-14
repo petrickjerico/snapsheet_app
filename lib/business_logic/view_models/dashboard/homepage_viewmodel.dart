@@ -7,7 +7,7 @@ import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_basemodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/screens/home/dashboard.dart';
-import 'package:snapsheetapp/ui/screens/home/edit_order_accounts.dart';
+import 'package:snapsheetapp/ui/screens/home/edit_accounts_order.dart';
 import 'package:snapsheetapp/ui/screens/home/history_screen.dart';
 import 'package:snapsheetapp/ui/screens/sidebar/editprofile_screen.dart';
 
@@ -165,16 +165,18 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   }
 
   bool selectedAccountIsEmpty() {
-    bool res =
-        !records.any((rec) => rec.accountUid == getSelectedAccountUid()) &&
-            selectedAccountIndex != -1;
-
-    return res;
+    return !records.any((rec) => rec.accountUid == getSelectedAccountUid()) &&
+        selectedAccountIndex != -1;
   }
 
   bool selectedAccountHasIncome() {
     return records.any(
         (rec) => rec.accountUid == getSelectedAccountUid() && rec.isIncome);
+  }
+
+  bool selectedAccountHasExpense() {
+    return records.any(
+        (rec) => rec.accountUid == getSelectedAccountUid() && !rec.isIncome);
   }
 
   bool recordMatchesStats(Record rec) {

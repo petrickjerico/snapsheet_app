@@ -97,6 +97,7 @@ class DeleteDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<HomepageViewModel>(
       builder: (context, model, child) {
+        int accountCount = model.accounts.length;
         return Theme(
           data: ThemeData.light(),
           child: AlertDialog(

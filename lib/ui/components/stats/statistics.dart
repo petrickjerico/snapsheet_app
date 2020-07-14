@@ -10,7 +10,7 @@ import 'package:snapsheetapp/ui/components/stats/stats_card.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/expense/expense_screen.dart';
 import '../history_tile.dart';
-import 'empty_stats.dart';
+import '../empty_state.dart';
 import 'indicator.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 
@@ -26,7 +26,22 @@ class _StatisticsState extends State<Statistics> {
     return Consumer<HomepageViewModel>(
       builder: (context, model, child) {
         if (model.selectedAccountIsEmpty()) {
-          return EmptyStats();
+          return EmptyState(
+            onTap: () {
+              final expenseModel =
+                  Provider.of<ExpenseViewModel>(context, listen: false);
+              expenseModel.newRecord();
+              expenseModel.changeAccount(model.getSelectedAccount().index);
+              Navigator.pushNamed(context, ExpenseScreen.id);
+            },
+            message: 'No records found for this account yet.\n'
+                'Tap to create one.',
+            icon: Icon(
+              Icons.add_circle,
+              color: Colors.white24,
+              size: 120.0,
+            ),
+          );
         } else {
           Color _contentColor = Colors.white54;
           return FadingEdgeScrollView.fromScrollView(

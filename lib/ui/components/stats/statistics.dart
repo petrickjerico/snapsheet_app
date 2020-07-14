@@ -161,102 +161,114 @@ class _StatisticsState extends State<Statistics> {
                         ],
                       )),
                 ),
-                StatsCard(
-                  title: 'Expenses Breakdown',
-                  colour: _contentColor,
-                  child: AspectRatio(
-                    aspectRatio: 1.3,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: RichText(
-                            text: TextSpan(
-                              text: 'Total: ',
-                              style: TextStyle(
-                                color: _contentColor,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: model
-                                      .currentExpensesTotal()
-                                      .toStringAsFixed(2),
-                                  style: kHistoryExpenseValue.copyWith(
-                                      fontSize: 14),
+                Visibility(
+                  visible: model.selectedAccountHasExpense(),
+                  child: StatsCard(
+                    title: 'Expenses Breakdown',
+                    colour: _contentColor,
+                    child: AspectRatio(
+                      aspectRatio: 1.3,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: RichText(
+                              text: TextSpan(
+                                text: 'Total: ',
+                                style: TextStyle(
+                                  color: _contentColor,
+                                  fontWeight: FontWeight.w400,
                                 ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: model
+                                        .currentExpensesTotal()
+                                        .toStringAsFixed(2),
+                                    style: kHistoryExpenseValue.copyWith(
+                                        fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Flexible(
+                            fit: FlexFit.loose,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: <Widget>[
+                                PieChart(
+                                  PieChartData(
+                                      pieTouchData: PieTouchData(
+                                          touchCallback: (pieTouchResponse) {
+                                        if (pieTouchResponse
+                                                .touchedSectionIndex !=
+                                            null) {
+                                          setState(() {
+                                            model.updateTouchedIndex(
+                                                pieTouchResponse
+                                                    .touchedSectionIndex);
+                                          });
+                                        }
+                                      }),
+                                      startDegreeOffset: -90,
+                                      borderData: FlBorderData(
+                                        show: false,
+                                      ),
+                                      sectionsSpace: 2,
+                                      centerSpaceRadius: 60,
+                                      sections:
+                                          model.showingCategorySections()),
+                                  swapAnimationDuration: Duration(seconds: 0),
+                                ),
+                                Visibility(
+                                  visible: categories
+                                              .where((category) =>
+                                                  model.getCategoryTotal(
+                                                      categories
+                                                          .indexOf(category)) >
+                                                  0)
+                                              .length >
+                                          1 &&
+                                      model.touchedIndex == null,
+                                  child: Center(
+                                      child: Text(
+                                    'Tap section for details.',
+                                    style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      fontSize: 10,
+                                      color: _contentColor,
+                                    ),
+                                  )),
+                                )
                               ],
                             ),
                           ),
-                        ),
-                        Flexible(
-                          fit: FlexFit.loose,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: <Widget>[
-                              PieChart(
-                                PieChartData(
-                                    pieTouchData: PieTouchData(
-                                        touchCallback: (pieTouchResponse) {
-                                      if (pieTouchResponse
-                                              .touchedSectionIndex !=
-                                          null) {
-                                        setState(() {
-                                          model.updateTouchedIndex(
-                                              pieTouchResponse
-                                                  .touchedSectionIndex);
-                                        });
-                                      }
-                                    }),
-                                    startDegreeOffset: -90,
-                                    borderData: FlBorderData(
-                                      show: false,
-                                    ),
-                                    sectionsSpace: 2,
-                                    centerSpaceRadius: 60,
-                                    sections: model.showingCategorySections()),
-                                swapAnimationDuration: Duration(seconds: 0),
-                              ),
-                              Visibility(
-                                visible: model.touchedIndex == null,
-                                child: Center(
-                                    child: Text(
-                                  'Tap section for details.',
-                                  style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    fontSize: 8,
-                                    color: _contentColor,
-                                  ),
-                                )),
-                              )
-                            ],
+                          SizedBox(
+                            height: 10.0,
                           ),
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Wrap(
-                          direction: Axis.horizontal,
-                          alignment: WrapAlignment.center,
-                          children: categories
-                              .where((category) =>
-                                  model.getCategoryTotal(
-                                      categories.indexOf(category)) >
-                                  0)
-                              .map(
-                            (category) {
-                              return Indicator(
-                                color: category.color,
-                                text: category.title,
-                                isSquare: false,
-                                size: 6,
-                                textColor: _contentColor,
-                              );
-                            },
-                          ).toList(),
-                        ),
-                      ],
+                          Wrap(
+                            direction: Axis.horizontal,
+                            alignment: WrapAlignment.center,
+                            children: categories
+                                .where((category) =>
+                                    model.getCategoryTotal(
+                                        categories.indexOf(category)) >
+                                    0)
+                                .map(
+                              (category) {
+                                return Indicator(
+                                  color: category.color,
+                                  text: category.title,
+                                  isSquare: false,
+                                  size: 6,
+                                  textColor: _contentColor,
+                                );
+                              },
+                            ).toList(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

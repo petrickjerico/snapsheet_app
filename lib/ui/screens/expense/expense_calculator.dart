@@ -21,6 +21,7 @@ class ExpenseCalculator extends StatefulWidget {
 }
 
 class _ExpenseCalculatorState extends State<ExpenseCalculator> {
+  final ExpressionEvaluator evaluator = const ExpressionEvaluator();
   double value;
 
   @override
@@ -52,7 +53,9 @@ class _ExpenseCalculatorState extends State<ExpenseCalculator> {
               operatorStyle: TextStyle(
                   color: kGrey, fontSize: 26, fontWeight: FontWeight.w300),
             ),
-            onChanged: (key, value, expression) {
+            onChanged: (key, value, expression, isOperated) {
+              model.setExpression(expression);
+              model.toggleOperated(isOperated);
               model.changeValue(value);
             });
       },
@@ -136,8 +139,11 @@ class CalcDisplay {
 
   /// Check the validity of the displayed value.
   bool validValue() {
-    return !(string == numberFormat.symbols.NAN ||
-        string == numberFormat.symbols.INFINITY);
+    return !(string == numberFormat.symbols.NAN || isInfinity());
+  }
+
+  bool isInfinity() {
+    return string == numberFormat.symbols.INFINITY;
   }
 
   void _reformat() {
@@ -282,6 +288,10 @@ class Calculator {
   /// Expression
   get expression => _expression.value;
 
+  get internalExpression => _expression.internal;
+
+  get isOperated => _operated;
+
   /// Set the value.
   void setValue(double val) {
     allClear();
@@ -396,7 +406,7 @@ class Calculator {
 
 /// Signature for callbacks that report that the [SimpleCalculator] value has changed.
 typedef CalcChanged = void Function(
-    String key, double value, String expression);
+    String key, double value, String expression, bool isOperated);
 
 /// Holds the color and typography values for the [SimpleCalculator].
 class CalculatorThemeData {
@@ -533,6 +543,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
     return Consumer<ExpenseViewModel>(
       builder: (context, model, child) {
         if (model.isScanned) {
+          _calc.allClear();
           _displayValue = model.tempRecord.value.toString();
           model.toggleScanned();
         }
@@ -618,7 +629,8 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             acLabel = "C";
         }
         if (widget.onChanged != null) {
-          widget.onChanged(val, _calc.displayValue, _calc.expression);
+          widget.onChanged(val, _calc.displayValue, _calc.internalExpression,
+              _calc.isOperated);
         }
         setState(() {
           _displayValue = _calc.displayString;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 const kTitleEditInfoInputDecoration = InputDecoration(
   border: OutlineInputBorder(),
@@ -38,16 +39,29 @@ const kAddAccountTextFieldDecoration = InputDecoration(
 const kEmailTextFieldDecoration = InputDecoration(
   hintStyle: TextStyle(color: Colors.grey),
   hintText: 'Email',
-  prefixIcon: Icon(Icons.email),
+  prefixIcon: Icon(
+    FontAwesomeIcons.solidEnvelope,
+    size: 20.0,
+  ),
+  prefixIconConstraints: BoxConstraints.tightFor(width: 50, height: 30),
 );
 
 const kPasswordTextFieldDecoration = InputDecoration(
   hintStyle: TextStyle(color: Colors.grey),
   hintText: 'Password',
-  prefixIcon: Icon(Icons.search),
+  prefixIcon: Icon(
+    FontAwesomeIcons.key,
+    size: 20.0,
+  ),
+  prefixIconConstraints: BoxConstraints.tightFor(width: 50, height: 30),
 );
 
 const kConfirmPasswordTextFieldDecoration = InputDecoration(
-    hintStyle: TextStyle(color: Colors.grey),
-    hintText: 'Confirm Password',
-    prefixIcon: Icon(Icons.youtube_searched_for));
+  hintStyle: TextStyle(color: Colors.grey),
+  hintText: 'Confirm Password',
+  prefixIcon: Icon(
+    FontAwesomeIcons.key,
+    color: Colors.transparent,
+  ),
+  prefixIconConstraints: BoxConstraints.tightFor(width: 50, height: 30),
+);

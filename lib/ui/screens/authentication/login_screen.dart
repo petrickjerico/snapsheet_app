@@ -103,6 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         cursorColor: Colors.black,
                         textAlign: TextAlign.left,
+                        textAlignVertical: TextAlignVertical(y: 0),
                         obscureText: obscurePwd,
                         validator: (val) => val.length < 6
                             ? 'Enter a password 6+ chars long'
@@ -125,8 +126,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         title: 'Login',
                         icon: Icon(
-                          Icons.mail,
+                          FontAwesomeIcons.solidEnvelope,
                           color: Colors.white,
+                          size: 20,
                         ),
                       ),
                       Divider(),
@@ -143,6 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         icon: Icon(
                           FontAwesomeIcons.google,
                           color: Colors.black,
+                          size: 20,
                         ),
                       ),
                       SignUp()
@@ -158,24 +161,27 @@ class _LoginScreenState extends State<LoginScreen> {
 class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          "Don't have an account? ",
-          style: TextStyle(fontSize: 12),
-        ),
-        FlatButton(
-            padding: EdgeInsets.all(0),
-            onPressed: () {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            "Don't have an account? ",
+            style: TextStyle(fontSize: 12),
+          ),
+          GestureDetector(
+            onTap: () {
               unfocus(context);
               return Navigator.pushNamed(context, SignupScreen.id);
             },
             child: Text(
-              "create account",
+              "Create account",
               style: kLoginSignupTextStyle,
-            ))
-      ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

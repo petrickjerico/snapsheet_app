@@ -14,6 +14,7 @@ import 'package:http/http.dart' show get;
 class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   UserData userData;
   List<Account> accounts;
+
   void init(UserData userData) {
     this.userData = userData;
     accounts = userData.accounts;
@@ -23,6 +24,8 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   Record editRecord;
   bool isEditing = false;
   bool isScanned = false;
+  bool isOperated = false;
+  String expression;
 
   File imageFile;
   ImagePicker _picker = ImagePicker();
@@ -48,6 +51,14 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   void toggleScanned() {
     isScanned = !isScanned;
     notifyListeners();
+  }
+
+  void toggleOperated(bool isOperated) {
+    this.isOperated = isOperated;
+  }
+
+  void setExpression(String expression) {
+    this.expression = expression;
   }
 
   void addRecord() {
@@ -93,6 +104,11 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     var picture = await _picker.getImage(
         source: ImageSource.gallery, maxHeight: 500, maxWidth: 500);
     imageFile = File(picture.path);
+    if (picture != null) {
+      changeValue(0);
+      print('changeValue(0) called.');
+      toggleScanned();
+    }
     Navigator.of(context).pop();
   }
 
@@ -100,6 +116,10 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     var picture = await _picker.getImage(
         source: ImageSource.camera, maxHeight: 500, maxWidth: 500);
     imageFile = File(picture.path);
+    if (picture != null) {
+      changeValue(0);
+      toggleScanned();
+    }
     Navigator.of(context).pop();
   }
 

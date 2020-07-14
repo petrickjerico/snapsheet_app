@@ -68,9 +68,10 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.delete_forever),
-                  color: Colors.redAccent,
+                  icon: Icon(Icons.delete),
+                  color: Colors.white,
                   onPressed: () {
+                    model.selectAccount(widget.index);
                     showDialog(
                       context: context,
                       child: DeleteDialog(widget: widget),
@@ -96,6 +97,7 @@ class DeleteDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<HomepageViewModel>(
       builder: (context, model, child) {
+        int accountCount = model.accounts.length;
         return Theme(
           data: ThemeData.light(),
           child: AlertDialog(

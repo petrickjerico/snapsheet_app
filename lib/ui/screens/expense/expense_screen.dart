@@ -5,6 +5,7 @@ import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewm
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/button/confirm_record_fab_button.dart';
 import 'package:snapsheetapp/ui/config/colors.dart';
+import 'package:expressions/expressions.dart';
 import 'package:snapsheetapp/ui/screens/expense/expense_calculator.dart';
 import 'package:flushbar/flushbar.dart';
 import 'edit_expense_info_screen.dart';
@@ -20,90 +21,152 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<ExpenseViewModel>(builder: (context, model, child) {
-      return Scaffold(
-        backgroundColor: kBlack,
-        appBar: AppBar(
+      return WillPopScope(
+        onWillPop: () async {
+          if (model.isEditing) {
+            model.undoEditRecord();
+          }
+          Navigator.pop(context);
+          Flushbar(
+            message: "Exited calculator. No changes done.",
+            icon: Icon(
+              Icons.info_outline,
+              size: 28.0,
+              color: Colors.blue[300],
+            ),
+            duration: Duration(seconds: 3),
+            leftBarIndicatorColor: Colors.blue[300],
+          )..show(context);
+          return true;
+        },
+        child: Scaffold(
           backgroundColor: kBlack,
-          elevation: 0,
-          leading: BackButton(
-            onPressed: () {
-              if (model.isEditing) {
-                model.undoEditRecord();
-              }
-              Navigator.pop(context);
-              Flushbar(
-                message: "Exited calculator. No changes done.",
+          appBar: AppBar(
+            backgroundColor: kBlack,
+            elevation: 0,
+            leading: BackButton(
+              onPressed: () {
+                if (model.isEditing) {
+                  model.undoEditRecord();
+                }
+                Navigator.pop(context);
+                Flushbar(
+                  message: "Exited calculator. No changes done.",
+                  icon: Icon(
+                    Icons.info_outline,
+                    size: 28.0,
+                    color: Colors.blue[300],
+                  ),
+                  duration: Duration(seconds: 3),
+                  leftBarIndicatorColor: Colors.blue[300],
+                )..show(context);
+              },
+            ),
+            title: Text('CALCULATOR'),
+            actions: <Widget>[
+              IconButton(
                 icon: Icon(
-                  Icons.info_outline,
-                  size: 28.0,
-                  color: Colors.blue[300],
+                  Icons.edit,
+                  color: Colors.white,
                 ),
-                duration: Duration(seconds: 3),
-                leftBarIndicatorColor: Colors.blue[300],
-              )..show(context);
+                onPressed: () {
+                  Navigator.pushNamed(context, EditExpenseInfoScreen.id);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.receipt),
+                onPressed: () async {
+                  await model.showChoiceDialog(context);
+                  await model.imageToTempRecord();
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  delete();
+                },
+              ),
+            ],
+          ),
+          body: ExpenseCalculator(),
+          floatingActionButton: ConfirmRecordFab(
+            onPressed: () {
+              final homepageModel = Provider.of<HomepageViewModel>(
+                context,
+                listen: false,
+              );
+              if (model.isOperated) {
+                bool isEditing = model.isEditing;
+                model.addRecord();
+                homepageModel
+                    .selectAccount(model.getAccountIndexFromTempRecord());
+                homepageModel.syncController();
+                Navigator.pop(context);
+                String title = homepageModel.getSelectedAccount().title;
+                String messageStatus =
+                    isEditing ? 'updated' : 'added to account: $title';
+                Flushbar(
+                  message: "Record successfully $messageStatus.",
+                  icon: Icon(
+                    Icons.info_outline,
+                    size: 28.0,
+                    color: Colors.blue[300],
+                  ),
+                  duration: Duration(seconds: 3),
+                  leftBarIndicatorColor: Colors.blue[300],
+                )..show(context);
+              } else {
+                try {
+                  bool isEditing = model.isEditing;
+                  final ExpressionEvaluator evaluator =
+                      const ExpressionEvaluator();
+                  model.changeValue(
+                      evaluator.eval(Expression.parse(model.expression), null));
+                  model.addRecord();
+                  homepageModel
+                      .selectAccount(model.getAccountIndexFromTempRecord());
+                  homepageModel.syncController();
+                  Navigator.pop(context);
+                  String title = homepageModel.getSelectedAccount().title;
+                  String messageStatus =
+                      isEditing ? 'updated' : 'added to account: $title';
+                  Flushbar(
+                    message: "Record successfully $messageStatus.",
+                    icon: Icon(
+                      Icons.info_outline,
+                      size: 28.0,
+                      color: Colors.blue[300],
+                    ),
+                    duration: Duration(seconds: 3),
+                    leftBarIndicatorColor: Colors.blue[300],
+                  )..show(context);
+                } catch (e) {
+                  print(e);
+                  Flushbar(
+                    message:
+                        "The calculator is experiencing issues.\nTap the equals '=' button and try again.",
+                    icon: Icon(
+                      Icons.info_outline,
+                      size: 28.0,
+                      color: Colors.blue[300],
+                    ),
+                    duration: Duration(seconds: 3),
+                    leftBarIndicatorColor: Colors.blue[300],
+                  )..show(context);
+                }
+              }
             },
           ),
-          title: Text('CALCULATOR'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.edit,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, EditExpenseInfoScreen.id);
-              },
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: BottomAppBar(
+            color: Colors.white,
+            notchMargin: 12,
+            shape: CircularNotchedRectangle(),
+            child: Container(
+              height: 56.0,
+              child: null,
             ),
-            IconButton(
-              icon: Icon(Icons.receipt),
-              onPressed: () async {
-                await model.showChoiceDialog(context);
-                await model.imageToTempRecord();
-                model.toggleScanned();
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                delete();
-              },
-            ),
-          ],
-        ),
-        body: ExpenseCalculator(),
-        floatingActionButton: ConfirmRecordFab(
-          onPressed: () {
-            final homepageModel = Provider.of<HomepageViewModel>(
-              context,
-              listen: false,
-            );
-            model.addRecord();
-            homepageModel.selectAccount(model.getAccountIndexFromTempRecord());
-            homepageModel.syncController();
-            Navigator.pop(context);
-            String title = homepageModel.getSelectedAccount().title;
-            String messageStatus =
-                model.isEditing ? 'updated' : 'added to account: $title';
-            Flushbar(
-              message: "Record successfully $messageStatus.",
-              icon: Icon(
-                Icons.info_outline,
-                size: 28.0,
-                color: Colors.blue[300],
-              ),
-              duration: Duration(seconds: 3),
-              leftBarIndicatorColor: Colors.blue[300],
-            )..show(context);
-          },
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.white,
-          notchMargin: 12,
-          shape: CircularNotchedRectangle(),
-          child: Container(
-            height: 56.0,
-            child: null,
           ),
         ),
       );

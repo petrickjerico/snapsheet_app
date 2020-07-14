@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -80,7 +81,10 @@ class HomepageScreen extends StatelessWidget {
                         title: Text('Dashboard'),
                       ),
                       BottomNavigationBarItem(
-                        icon: FaIcon(FontAwesomeIcons.solidListAlt),
+                        icon: FaIcon(
+                          FontAwesomeIcons.stream,
+                          size: 18,
+                        ),
                         title: Text('Records'),
                       ),
                       BottomNavigationBarItem(
@@ -110,12 +114,26 @@ class HomepageScreen extends StatelessWidget {
                     closedBuilder: (_, openContainer) {
                       return AddRecordFab(
                         onPressed: () {
-                          model.newRecord();
-                          int targetIndex =
-                              dashboardModel.getSelectedAccount()?.index ?? 0;
-                          model.changeAccount(
-                              targetIndex == -1 ? 0 : targetIndex);
-                          openContainer.call();
+                          int accountsCount = dashboardModel.accounts.length;
+                          if (accountsCount < 1) {
+                            Flushbar(
+                              message: "Cannot create record for no account.",
+                              icon: Icon(
+                                Icons.info_outline,
+                                size: 28.0,
+                                color: Colors.blue[300],
+                              ),
+                              duration: Duration(seconds: 3),
+                              leftBarIndicatorColor: Colors.blue[300],
+                            )..show(context);
+                          } else {
+                            model.newRecord();
+                            int targetIndex =
+                                dashboardModel.getSelectedAccount()?.index ?? 0;
+                            model.changeAccount(
+                                targetIndex == -1 ? 0 : targetIndex);
+                            openContainer.call();
+                          }
                         },
                       );
                     },

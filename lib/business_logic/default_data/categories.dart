@@ -3,20 +3,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:snapsheetapp/business_logic/models/category.dart';
 
 List<Category> categories = [
+  Category.unnamed('Food & Drinks', Icon(Icons.fastfood), Colors.redAccent),
   Category.unnamed(
-      'Food & Drinks', Icon(FontAwesomeIcons.utensils), Colors.red),
+      'Transportation', Icon(FontAwesomeIcons.car), Colors.orangeAccent),
+  Category.unnamed('Shopping', Icon(Icons.shopping_basket), Colors.amberAccent),
   Category.unnamed(
-      'Transportation', Icon(FontAwesomeIcons.shuttleVan), Colors.blueGrey),
+      'Entertainment', Icon(FontAwesomeIcons.gamepad), Colors.tealAccent),
   Category.unnamed(
-      'Shopping', Icon(FontAwesomeIcons.shoppingBag), Colors.lightBlueAccent),
-  Category.unnamed('Entertainment', Icon(FontAwesomeIcons.glassCheers),
-      Colors.deepPurpleAccent),
-  Category.unnamed('Health', Icon(FontAwesomeIcons.pills), Colors.indigoAccent),
+      'Health', Icon(FontAwesomeIcons.pills), Colors.lightBlueAccent),
   Category.unnamed(
-      'Education', Icon(FontAwesomeIcons.graduationCap), Colors.orange),
-  Category.unnamed('Electronics', Icon(FontAwesomeIcons.tv), Colors.teal),
-  Category.unnamed('Giving', Icon(FontAwesomeIcons.gift), Colors.pinkAccent),
+      'Education', Icon(FontAwesomeIcons.graduationCap), Colors.blueAccent),
   Category.unnamed(
-      'Income', Icon(FontAwesomeIcons.moneyBill), Colors.amberAccent, true),
-  Category.unnamed('Others', Icon(Icons.category), Colors.black),
+      'Electronics', Icon(FontAwesomeIcons.tv), Colors.indigoAccent),
+  Category.unnamed('Giving', Icon(FontAwesomeIcons.gifts), Colors.purpleAccent),
+  Category.unnamed(
+      'Income', Icon(FontAwesomeIcons.moneyBillWave), Colors.green, true),
+  Category.unnamed('Others', Icon(FontAwesomeIcons.shapes), Colors.grey),
 ];

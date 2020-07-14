@@ -24,6 +24,8 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   int currentPage = 0;
   int currentBar = 0;
 
+  // List<Account> get copyOfAccounts => List.from(accounts);
+
   void syncBarToPage(int index) {
     currentBar = index;
     if (index == 2) {

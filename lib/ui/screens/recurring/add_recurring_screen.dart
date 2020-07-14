@@ -19,31 +19,35 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBlack,
       appBar: AppBar(
         title: Text("Add recurring expense"),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                _TitleFormField(),
-                SizedBox(height: 10),
-                _ValueFormField(),
-                SizedBox(height: 10),
-                _CategoryFormField(),
-                SizedBox(height: 10),
-                _AccountFormField(),
-                SizedBox(height: 10),
-                Divider(),
-                SizedBox(height: 10),
-                _NextRecurrenceFormField(),
-                SizedBox(height: 10),
-              ],
+      body: Theme(
+        data: ThemeData.dark(),
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  _TitleFormField(),
+                  SizedBox(height: 10),
+                  _ValueFormField(),
+                  SizedBox(height: 10),
+                  _CategoryFormField(),
+                  SizedBox(height: 10),
+                  _AccountFormField(),
+                  SizedBox(height: 10),
+                  Divider(),
+                  SizedBox(height: 10),
+                  _NextRecurrenceFormField(),
+                  SizedBox(height: 10),
+                ],
+              ),
             ),
           ),
         ),

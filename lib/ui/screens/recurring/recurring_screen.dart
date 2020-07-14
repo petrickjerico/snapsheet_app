@@ -26,6 +26,13 @@ class RecurringScreen extends StatelessWidget {
                         return Navigator.pushNamed(
                             context, AddRecurringScreen.id);
                       },
+                      child: Center(
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.grey,
+                          size: 50,
+                        ),
+                      ),
                     )
                   : ListView.builder(
                       shrinkWrap: true,

@@ -32,7 +32,7 @@ class RecurringTile extends StatelessWidget {
             style: kHistoryRecordTitle,
           ),
           subtitle: Text(
-            model.userData.getThisAccount(recurring.accountUid).title,
+            recurring.recurrency,
             style: kHistoryRecordTitle,
           ),
           trailing: Column(
@@ -46,7 +46,8 @@ class RecurringTile extends StatelessWidget {
                     : kHistoryExpenseValue,
               ),
               Text(
-                recurring.intervalInString,
+                model.userData.getThisAccount(recurring.accountUid).title,
+                style: kHistoryRecordDate,
               )
             ],
           ),

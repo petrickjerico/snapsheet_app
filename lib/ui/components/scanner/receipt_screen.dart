@@ -63,12 +63,12 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                         children: <Widget>[
                           Flexible(
                             flex: 1,
-                            child: ValueFormField(recordId: recordId),
+                            child: _ValueFormField(recordId: recordId),
                           ),
                           SizedBox(width: 10),
                           Flexible(
                             flex: 4,
-                            child: TitleFormField(recordId: recordId),
+                            child: _TitleFormField(recordId: recordId),
                           ),
                         ],
                       ),
@@ -76,10 +76,10 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Expanded(child: DateFormField(recordId: recordId)),
+                          Expanded(child: _DateFormField(recordId: recordId)),
                           SizedBox(width: 10),
                           Expanded(
-                              child: CategoryFormField(recordId: recordId)),
+                              child: _CategoryFormField(recordId: recordId)),
                         ],
                       ),
                       DeleteConfirmButton(
@@ -114,17 +114,17 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
   }
 }
 
-class ValueFormField extends StatelessWidget {
+class _ValueFormField extends StatelessWidget {
   final int recordId;
 
-  ValueFormField({this.recordId});
+  _ValueFormField({this.recordId});
 
   @override
   Widget build(BuildContext context) {
     return Consumer<BulkScanViewModel>(
       builder: (context, model, child) {
         return TextFormField(
-            initialValue: model.records[recordId].value.toString(),
+            initialValue: model.records[recordId].value.toStringAsFixed(2),
             keyboardType: TextInputType.number,
             cursorColor: Colors.white,
             decoration:
@@ -137,10 +137,10 @@ class ValueFormField extends StatelessWidget {
   }
 }
 
-class TitleFormField extends StatelessWidget {
+class _TitleFormField extends StatelessWidget {
   final int recordId;
 
-  TitleFormField({this.recordId});
+  _TitleFormField({this.recordId});
 
   @override
   Widget build(BuildContext context) {
@@ -159,10 +159,10 @@ class TitleFormField extends StatelessWidget {
   }
 }
 
-class CategoryFormField extends StatelessWidget {
+class _CategoryFormField extends StatelessWidget {
   final int recordId;
 
-  CategoryFormField({this.recordId});
+  _CategoryFormField({this.recordId});
 
   @override
   Widget build(BuildContext context) {
@@ -201,10 +201,10 @@ class CategoryFormField extends StatelessWidget {
   }
 }
 
-class DateFormField extends StatelessWidget {
+class _DateFormField extends StatelessWidget {
   final int recordId;
 
-  DateFormField({this.recordId});
+  _DateFormField({this.recordId});
 
   @override
   Widget build(BuildContext context) {

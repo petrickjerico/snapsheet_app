@@ -42,4 +42,29 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
     tempRecurring.nextRecurrence = newDateTime;
     notifyListeners();
   }
+
+  changeFrequencyId(int newFrequencyId) {
+    tempRecurring.frequencyId = newFrequencyId;
+    notifyListeners();
+  }
+
+  changeTimeFrameId(int newTimeFrameId) {
+    tempRecurring.timeFrameId = newTimeFrameId;
+    notifyListeners();
+  }
+
+  changeInterval(int newInterval) {
+    tempRecurring.interval = newInterval;
+    notifyListeners();
+  }
+
+  changeUntilDate(DateTime newUntilDate) {
+    tempRecurring.untilDate = newUntilDate;
+    notifyListeners();
+  }
+
+  changeXTimes(int newXTimes) {
+    tempRecurring.xTimes = newXTimes;
+    notifyListeners();
+  }
 }

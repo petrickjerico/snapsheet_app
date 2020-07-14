@@ -34,6 +34,21 @@ class Recurring {
     this.xTimes,
   });
 
+  factory Recurring.newBlank() {
+    return Recurring(
+      title: "",
+      value: 0,
+      categoryId: 0,
+      isIncome: false,
+      nextRecurrence: DateTime.now(),
+      frequencyId: MONTHLY,
+      timeFrameId: FOREVER,
+      interval: 1,
+      untilDate: DateTime.now().add(Duration(days: 7)),
+      xTimes: 1,
+    );
+  }
+
   factory Recurring.fromFirestore(DocumentSnapshot doc) {
     Map json = doc.data;
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
@@ -40,7 +41,7 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
                 SizedBox(height: 10),
                 Divider(),
                 SizedBox(height: 10),
-                _NextRecurrenceFormField,
+                _NextRecurrenceFormField(),
                 SizedBox(height: 10),
               ],
             ),
@@ -132,22 +133,22 @@ class _AccountFormField extends StatelessWidget {
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
         String accountUid = model.tempRecurring.accountUid;
+        Account account = model.getAccountFromUid(accountUid);
         return OutlineButton(
             padding: EdgeInsets.all(10.0),
             child: PopupMenuButton(
-              initialValue: categoryId,
+              initialValue: account.index,
               onSelected: (input) {
-                model.changeCategory(input);
+                model.changeAccount(input);
               },
               itemBuilder: (context) {
-                List<String> categoryTitles =
-                    categories.map((category) => category.title).toList();
-                return categoryTitles
+                List<String> accountTitles =
+                    model.accounts.map((acc) => acc.title).toList();
+                return accountTitles
                     .map(
                       (e) => PopupMenuItem(
-                        value: categoryTitles.indexOf(e),
+                        value: accountTitles.indexOf(e),
                         child: ListTile(
-                          leading: categories[categoryTitles.indexOf(e)].icon,
                           title: Text(e),
                         ),
                       ),
@@ -155,10 +156,47 @@ class _AccountFormField extends StatelessWidget {
                     .toList();
               },
               child: Text(
-                categories[categoryId].title,
+                account.title,
                 style: TextStyle(color: Colors.white),
               ),
             ));
+      },
+    );
+  }
+}
+
+class _NextRecurrenceFormField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<RecurringViewModel>(
+      builder: (context, model, child) {
+        DateTime date = model.tempRecurring.nextRecurrence;
+        return OutlineButton(
+            padding: EdgeInsets.all(10.0),
+            child: Text(
+              DateFormat.yMMMd().format(date),
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              showDatePicker(
+                context: context,
+                initialDate: date,
+                firstDate: DateTime(date.year - 5),
+                lastDate: DateTime(date.year + 5),
+                builder: (context, child) {
+                  return Theme(
+                    data: ThemeData.dark(),
+                    child: child,
+                  );
+                },
+              ).then((value) {
+                model.changeNextRecurrence(DateTime(
+                  value.year,
+                  value.month,
+                  value.day,
+                ));
+              });
+            });
       },
     );
   }

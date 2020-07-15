@@ -10,6 +10,7 @@ import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmode
 import 'package:snapsheetapp/ui/components/button/confirm_record_fab_button.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/components/date_time.dart';
+import 'package:snapsheetapp/ui/components/dialog/delete_dialog.dart';
 import 'package:snapsheetapp/ui/components/receipt_image_dialog.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/shared/shared.dart';
@@ -137,7 +138,14 @@ class ReceiptButtons extends StatelessWidget {
                       ),
                       onPressed: () => showDialog(
                         context: context,
-                        child: DeleteDialog(),
+                        child: DeleteDialog(
+                            title: 'Delete image?',
+                            message:
+                                'Are you sure you want to delete the image?',
+                            onDelete: () {
+                              model.deleteImage();
+                              Navigator.pop(context);
+                            }),
                       ),
                     ),
                   )
@@ -174,59 +182,6 @@ class ReceiptButtons extends StatelessWidget {
                   )
                 : SizedBox.shrink()
           ],
-        );
-      },
-    );
-  }
-}
-
-class DeleteDialog extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<ExpenseViewModel>(
-      builder: (context, model, child) {
-        return Theme(
-          data: ThemeData.light(),
-          child: AlertDialog(
-            titlePadding: EdgeInsets.only(left: 20, right: 20, top: 20),
-            contentPadding:
-                EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
-            title: Text("Delete image?"),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text('Are you sure you want to delete the image?'),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    FlatButton(
-                      child: Text(
-                        'DELETE',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      color: Colors.black,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0)),
-                      onPressed: () {
-                        model.deleteImage();
-                        Navigator.pop(context);
-                      },
-                    ),
-                    OutlineButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0)),
-                      child: Text('NO'),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
         );
       },
     );

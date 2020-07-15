@@ -29,3 +29,10 @@ List<String> plural = [
   'months',
   'years',
 ];
+
+List<String> singularAndPlural = [
+  'day(s)',
+  'week(s)',
+  'month(s)',
+  'year(s)',
+];

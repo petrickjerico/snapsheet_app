@@ -190,11 +190,14 @@ class _AccountFormField extends StatelessWidget {
 }
 
 class _NextRecurrenceFormField extends StatelessWidget {
+  DateTime date;
   @override
   Widget build(BuildContext context) {
+    print("DATE REBUILD");
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
-        DateTime date = model.tempRecurring.nextRecurrence;
+        date = model.tempRecurring.nextRecurrence;
+        print(DateFormat.yMMMd().format(date));
         return TextFormField(
             initialValue: DateFormat.yMMMd().format(date),
             decoration:
@@ -213,11 +216,7 @@ class _NextRecurrenceFormField extends StatelessWidget {
                   );
                 },
               ).then((value) {
-                model.changeNextRecurrence(DateTime(
-                  value.year,
-                  value.month,
-                  value.day,
-                ));
+                model.changeNextRecurrence(value);
               });
             });
       },
@@ -311,7 +310,6 @@ class _FrequencyDialogFrequencyFormField extends StatelessWidget {
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
         int frequencyId = model.tempRecurring.frequencyId;
-        int interval = model.tempRecurring.interval;
         return PopupMenuButton(
           key: _menuKey,
           initialValue: frequencyId,
@@ -319,7 +317,7 @@ class _FrequencyDialogFrequencyFormField extends StatelessWidget {
             model.changeFrequencyId(input);
           },
           itemBuilder: (context) {
-            List<String> frequencyTitles = interval > 1 ? plural : singular;
+            List<String> frequencyTitles = singularAndPlural;
             return frequencyTitles
                 .map(
                   (e) => PopupMenuItem(
@@ -333,8 +331,7 @@ class _FrequencyDialogFrequencyFormField extends StatelessWidget {
           },
           child: TextFormField(
             textAlign: TextAlign.center,
-            initialValue:
-                interval > 1 ? plural[frequencyId] : singular[frequencyId],
+            initialValue: singularAndPlural[frequencyId],
             readOnly: true,
             onTap: () {
               dynamic state = _menuKey.currentState;

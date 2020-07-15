@@ -26,11 +26,13 @@ class RoundedButton extends StatelessWidget {
         color: color,
         borderRadius: BorderRadius.circular(15.0),
         child: MaterialButton(
+          visualDensity: VisualDensity.comfortable,
           onPressed: onPressed,
           minWidth: 200.0,
           height: 42.0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               icon ?? SizedBox.shrink(),
               icon == null || title == null

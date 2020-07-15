@@ -4,7 +4,7 @@ export 'expense/expense_screen.dart';
 export 'expense/edit_expense_info_screen.dart';
 export 'home/dashboard.dart';
 export 'home/add_account_popup.dart';
-export 'home/edit_order_accounts.dart';
+export 'home/edit_accounts_order.dart';
 export 'home/history_screen.dart';
 export 'home/homepage_screen.dart';
 export 'home/rename_account_popup.dart';

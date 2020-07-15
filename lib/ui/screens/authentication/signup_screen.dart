@@ -98,6 +98,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         cursorColor: Colors.black,
                         textAlign: TextAlign.left,
+                        textAlignVertical: TextAlignVertical(y: 0),
                         obscureText: obscurePwd,
                         validator: (val) => val.length < 6
                             ? 'Enter a password 6+ chars long'
@@ -136,8 +137,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         },
                         title: 'Sign up',
                         icon: Icon(
-                          Icons.mail,
+                          FontAwesomeIcons.solidEnvelope,
                           color: Colors.white,
+                          size: 20,
                         ),
                       ),
                       Divider(),
@@ -158,6 +160,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         icon: Icon(
                           FontAwesomeIcons.google,
                           color: Colors.black,
+                          size: 20,
                         ),
                       ),
                       Login()
@@ -173,26 +176,26 @@ class _SignupScreenState extends State<SignupScreen> {
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          "Already have an account? ",
-          style: TextStyle(fontSize: 12),
-        ),
-        Container(
-          width: 35,
-          child: FlatButton(
-              padding: EdgeInsets.all(0),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                "login",
-                style: kLoginSignupTextStyle,
-              )),
-        )
-      ],
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            "Already have an account? ",
+            style: TextStyle(fontSize: 12),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "Login",
+              style: kLoginSignupTextStyle,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

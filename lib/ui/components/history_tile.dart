@@ -95,7 +95,7 @@ class _HistoryTileState extends State<HistoryTile> {
               )..show(context);
             },
             child: ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 10),
+              contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
               dense: true,
               leading: CircleAvatar(
                 backgroundColor: category.color.withOpacity(0.2),

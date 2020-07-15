@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
+import 'package:snapsheetapp/business_logic/default_data/recurring.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_viewmodel.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
@@ -18,6 +19,7 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<RecurringViewModel>(context);
     return Scaffold(
       backgroundColor: kBlack,
       appBar: AppBar(
@@ -30,30 +32,28 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
             child: Form(
               key: _formKey,
-              child: Consumer<RecurringViewModel>(
-                builder: (context, model, child) {
-                  int timeFrameId = model.tempRecurring.timeFrameId;
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      _TitleFormField(),
-                      SizedBox(height: 10),
-                      _ValueFormField(),
-                      SizedBox(height: 10),
-                      _CategoryFormField(),
-                      SizedBox(height: 10),
-                      _AccountFormField(),
-                      SizedBox(height: 10),
-                      Divider(color: Colors.white54),
-                      SizedBox(height: 10),
-                      _NextRecurrenceFormField(),
-                      SizedBox(height: 10),
-                      _FrequencyFormField(),
-                      SizedBox(height: 10),
-                    ],
-                  );
-                },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  _TitleFormField(),
+                  SizedBox(height: 10),
+                  _ValueFormField(),
+                  SizedBox(height: 10),
+                  _CategoryFormField(),
+                  SizedBox(height: 10),
+                  _AccountFormField(),
+                  SizedBox(height: 10),
+                  Divider(color: Colors.white54),
+                  SizedBox(height: 10),
+                  _NextRecurrenceFormField(),
+                  SizedBox(height: 10),
+                  _FrequencyFormField(),
+                  SizedBox(height: 10),
+                  _TimeFrameFormField(),
+                  SizedBox(height: 10),
+                  _TimeFrameHelperFormField(),
+                ],
               ),
             ),
           ),
@@ -251,31 +251,215 @@ class _FrequencyFormField extends StatelessWidget {
 class _FrequencyDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<RecurringViewModel>(context);
+    print("REBUILD");
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Container(
-        padding: EdgeInsets.all(20),
+        height: 120,
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text("Repeat every"),
+            Text(
+              "Repeat every",
+              style: kFrequencyDialogTextStyle,
+            ),
+            SizedBox(height: 10),
             Row(
               children: <Widget>[
                 Flexible(
                   flex: 1,
-                  child: TextFormField(
-                    initialValue: 1.toString(),
-                    keyboardType: TextInputType.number,
-                  ),
+                  child: _FrequencyDialogIntervalFormField(),
                 ),
                 Flexible(
-                  flex: 2,
-                  child: PopupMenuButton(),
-                )
+                  flex: 3,
+                  child: _FrequencyDialogFrequencyFormField(),
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _FrequencyDialogIntervalFormField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<RecurringViewModel>(
+      builder: (context, model, child) {
+        return TextFormField(
+          textAlign: TextAlign.center,
+          initialValue: model.tempRecurring.interval.toString(),
+          keyboardType: TextInputType.number,
+          onChanged: (value) {
+            model.changeInterval(int.parse(value));
+          },
+        );
+      },
+    );
+  }
+}
+
+class _FrequencyDialogFrequencyFormField extends StatelessWidget {
+  final GlobalKey _menuKey = GlobalKey();
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<RecurringViewModel>(
+      builder: (context, model, child) {
+        int frequencyId = model.tempRecurring.frequencyId;
+        int interval = model.tempRecurring.interval;
+        return PopupMenuButton(
+          key: _menuKey,
+          initialValue: frequencyId,
+          onSelected: (input) {
+            model.changeFrequencyId(input);
+          },
+          itemBuilder: (context) {
+            List<String> frequencyTitles = interval > 1 ? plural : singular;
+            return frequencyTitles
+                .map(
+                  (e) => PopupMenuItem(
+                    value: frequencyTitles.indexOf(e),
+                    child: ListTile(
+                      title: Text(e),
+                    ),
+                  ),
+                )
+                .toList();
+          },
+          child: TextFormField(
+            textAlign: TextAlign.center,
+            initialValue:
+                interval > 1 ? plural[frequencyId] : singular[frequencyId],
+            readOnly: true,
+            onTap: () {
+              dynamic state = _menuKey.currentState;
+              state.showButtonMenu();
+            },
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _TimeFrameFormField extends StatelessWidget {
+  final GlobalKey _menuKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<RecurringViewModel>(
+      builder: (context, model, child) {
+        int timeFrameId = model.tempRecurring.timeFrameId;
+        return PopupMenuButton(
+          key: _menuKey,
+          initialValue: timeFrameId,
+          onSelected: (input) {
+            model.changeTimeFrameId(input);
+          },
+          itemBuilder: (context) {
+            return timeFrames
+                .map(
+                  (e) => PopupMenuItem(
+                    value: timeFrames.indexOf(e),
+                    child: ListTile(
+                      title: Text(e),
+                    ),
+                  ),
+                )
+                .toList();
+          },
+          child: TextFormField(
+            initialValue: timeFrames[timeFrameId],
+            decoration:
+                kTitleEditInfoInputDecoration.copyWith(labelText: 'Timeframe'),
+            readOnly: true,
+            onTap: () {
+              dynamic state = _menuKey.currentState;
+              state.showButtonMenu();
+            },
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _TimeFrameHelperFormField extends StatelessWidget {
+  final GlobalKey _menuKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<RecurringViewModel>(
+      builder: (context, model, child) {
+        int timeFrameId = model.tempRecurring.timeFrameId;
+        if (timeFrameId == FOREVER) {
+          return SizedBox.shrink();
+        } else if (timeFrameId == UNTILDATE) {
+          return _UntilDateFormField();
+        } else {
+          return _XTimesFormField();
+        }
+      },
+    );
+  }
+}
+
+class _UntilDateFormField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<RecurringViewModel>(
+      builder: (context, model, child) {
+        DateTime date = model.tempRecurring.untilDate;
+        return TextFormField(
+            initialValue: DateFormat.yMMMd().format(date),
+            decoration:
+                kTitleEditInfoInputDecoration.copyWith(labelText: 'Until Date'),
+            readOnly: true,
+            onTap: () {
+              showDatePicker(
+                context: context,
+                initialDate: date,
+                firstDate: DateTime(date.year - 5),
+                lastDate: DateTime(date.year + 5),
+                builder: (context, child) {
+                  return Theme(
+                    data: ThemeData.dark(),
+                    child: child,
+                  );
+                },
+              ).then((value) {
+                model.changeUntilDate(DateTime(
+                  value.year,
+                  value.month,
+                  value.day,
+                ));
+              });
+            });
+      },
+    );
+  }
+}
+
+class _XTimesFormField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<RecurringViewModel>(
+      builder: (context, model, child) {
+        return TextFormField(
+          decoration:
+              kTitleEditInfoInputDecoration.copyWith(labelText: "For X times"),
+          initialValue: model.tempRecurring.xTimes.toString(),
+          keyboardType: TextInputType.number,
+          onChanged: (value) {
+            model.changeXTimes(int.parse(value));
+          },
+        );
+      },
     );
   }
 }

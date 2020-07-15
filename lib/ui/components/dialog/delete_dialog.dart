@@ -10,40 +10,44 @@ class DeleteDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      titlePadding: EdgeInsets.only(left: 20, right: 20, top: 20),
-      contentPadding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
-      title: Text(title),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(message),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              FlatButton(
-                child: Text(
-                  'DELETE',
-                  style: TextStyle(color: Colors.white),
+    return Theme(
+      data: ThemeData.light(),
+      child: AlertDialog(
+        titlePadding: EdgeInsets.only(left: 20, right: 20, top: 20),
+        contentPadding:
+            EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+        title: Text(title),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(message),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                FlatButton(
+                  child: Text(
+                    'DELETE',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  color: Colors.black,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0)),
+                  onPressed: onDelete,
                 ),
-                color: Colors.black,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0)),
-                onPressed: onDelete,
-              ),
-              OutlineButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0)),
-                child: Text('NO'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          )
-        ],
+                OutlineButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0)),
+                  child: Text('NO'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

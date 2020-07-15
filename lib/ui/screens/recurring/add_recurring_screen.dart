@@ -160,7 +160,7 @@ class _CategoryFormField extends StatelessWidget {
             return categories
                 .map(
                   (category) => PopupMenuItem(
-                    value: category.index,
+                    value: categories.indexOf(category),
                     child: ListTile(
                       leading: category.icon,
                       title: Text(category.title),

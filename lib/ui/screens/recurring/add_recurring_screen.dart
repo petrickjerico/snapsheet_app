@@ -9,6 +9,7 @@ import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_view
 import 'package:snapsheetapp/ui/components/account/account_order_tile.dart';
 import 'package:snapsheetapp/ui/components/button/confirm_record_fab_button.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
+import 'package:snapsheetapp/ui/components/dialog/delete_dialog.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 
 class AddRecurringScreen extends StatefulWidget {
@@ -42,7 +43,17 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
           IconButton(
             icon: Icon(Icons.delete),
             onPressed: () {
-              showDialog(context: context, child: DeleteDialog());
+              showDialog(
+                  context: context,
+                  child: DeleteDialog(
+                    title: 'Delete Recurring Expense?',
+                    message:
+                        'Are you sure you want to delete this recurring expense?',
+                    onDelete: () {
+                      model.deleteRecurring();
+                      Navigator.pop(context);
+                    },
+                  ));
             },
           ),
         ],

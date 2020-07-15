@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:snapsheetapp/business_logic/default_data/recurring.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
 
 class Recurring {
   String uid;
@@ -97,6 +98,37 @@ class Recurring {
       'untilDate': untilDate.millisecondsSinceEpoch,
       'xTimes': xTimes,
     };
+  }
+
+  void update() {
+    if (nextRecurrence.isAfter(DateTime.now())) return null;
+    if (timeFrameId == FORXTIMES && xTimes < 1) return null;
+    if (timeFrameId == UNTILDATE && nextRecurrence.isAfter(untilDate))
+      return null;
+    if (frequencyId == DAILY) {
+      nextRecurrence.add(Duration(days: interval));
+    } else if (frequencyId == WEEKLY) {
+      nextRecurrence.add(Duration(days: interval * 7));
+    } else if (frequencyId == MONTHLY) {
+      DateTime d = nextRecurrence;
+      nextRecurrence = DateTime(d.year, d.month + interval, d.day);
+    } else {
+      DateTime d = nextRecurrence;
+      nextRecurrence = DateTime(d.year + interval, d.month, d.day);
+    }
+
+    if (timeFrameId == FORXTIMES) xTimes--;
+  }
+
+  Record get record {
+    return Record(
+      title: title,
+      value: value,
+      categoryId: categoryId,
+      accountUid: accountUid,
+      isIncome: isIncome,
+      dateTime: nextRecurrence,
+    );
   }
 
   @override

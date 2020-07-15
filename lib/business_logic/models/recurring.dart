@@ -89,6 +89,14 @@ class Recurring {
     return toJson().toString();
   }
 
+  String get frequency {
+    if (interval > 1) {
+      return "Repeat every $interval ${plural[frequencyId]}";
+    } else {
+      return "Repeat ${frequencies[frequencyId]}";
+    }
+  }
+
   String get recurrency {
     String timeFrame;
     if (timeFrameId == FOREVER) {
@@ -100,8 +108,6 @@ class Recurring {
     }
 
     String next = "Next: ${DateFormat.yMMMd().format(nextRecurrence)}";
-    return interval > 1
-        ? "Repeat every $interval ${plural[frequencyId]} | $next | $timeFrame"
-        : "Repeat ${frequencies[frequencyId]} | $next | $timeFrame";
+    return "$frequency | $next | $timeFrame";
   }
 }

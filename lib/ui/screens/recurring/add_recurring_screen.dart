@@ -30,23 +30,30 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
             child: Form(
               key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  _TitleFormField(),
-                  SizedBox(height: 10),
-                  _ValueFormField(),
-                  SizedBox(height: 10),
-                  _CategoryFormField(),
-                  SizedBox(height: 10),
-                  _AccountFormField(),
-                  SizedBox(height: 10),
-                  Divider(),
-                  SizedBox(height: 10),
-                  _NextRecurrenceFormField(),
-                  SizedBox(height: 10),
-                ],
+              child: Consumer<RecurringViewModel>(
+                builder: (context, model, child) {
+                  int timeFrameId = model.tempRecurring.timeFrameId;
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      _TitleFormField(),
+                      SizedBox(height: 10),
+                      _ValueFormField(),
+                      SizedBox(height: 10),
+                      _CategoryFormField(),
+                      SizedBox(height: 10),
+                      _AccountFormField(),
+                      SizedBox(height: 10),
+                      Divider(color: Colors.white54),
+                      SizedBox(height: 10),
+                      _NextRecurrenceFormField(),
+                      SizedBox(height: 10),
+                      _FrequencyFormField(),
+                      SizedBox(height: 10),
+                    ],
+                  );
+                },
               ),
             ),
           ),
@@ -94,76 +101,89 @@ class _ValueFormField extends StatelessWidget {
 }
 
 class _CategoryFormField extends StatelessWidget {
+  final GlobalKey _menuKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
         int categoryId = model.tempRecurring.categoryId;
-        return OutlineButton(
-            padding: EdgeInsets.all(10.0),
-            child: PopupMenuButton(
-              initialValue: categoryId,
-              onSelected: (input) {
-                model.changeCategory(input);
-              },
-              itemBuilder: (context) {
-                List<String> categoryTitles =
-                    categories.map((category) => category.title).toList();
-                return categoryTitles
-                    .map(
-                      (e) => PopupMenuItem(
-                        value: categoryTitles.indexOf(e),
-                        child: ListTile(
-                          leading: categories[categoryTitles.indexOf(e)].icon,
-                          title: Text(e),
-                        ),
-                      ),
-                    )
-                    .toList();
-              },
-              child: Text(
-                categories[categoryId].title,
-                style: TextStyle(color: Colors.white),
-              ),
-            ));
+        return PopupMenuButton(
+          key: _menuKey,
+          initialValue: categoryId,
+          onSelected: (input) {
+            model.changeCategory(input);
+          },
+          itemBuilder: (context) {
+            List<String> categoryTitles =
+                categories.map((category) => category.title).toList();
+            return categoryTitles
+                .map(
+                  (e) => PopupMenuItem(
+                    value: categoryTitles.indexOf(e),
+                    child: ListTile(
+                      leading: categories[categoryTitles.indexOf(e)].icon,
+                      title: Text(e),
+                    ),
+                  ),
+                )
+                .toList();
+          },
+          child: TextFormField(
+            initialValue: categories[categoryId].title,
+            decoration:
+                kTitleEditInfoInputDecoration.copyWith(labelText: 'Category'),
+            readOnly: true,
+            onTap: () {
+              dynamic state = _menuKey.currentState;
+              state.showButtonMenu();
+            },
+          ),
+        );
       },
     );
   }
 }
 
 class _AccountFormField extends StatelessWidget {
+  final GlobalKey _menuKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
         String accountUid = model.tempRecurring.accountUid;
         Account account = model.getAccountFromUid(accountUid);
-        return OutlineButton(
-            padding: EdgeInsets.all(10.0),
-            child: PopupMenuButton(
-              initialValue: account.index,
-              onSelected: (input) {
-                model.changeAccount(input);
-              },
-              itemBuilder: (context) {
-                List<String> accountTitles =
-                    model.accounts.map((acc) => acc.title).toList();
-                return accountTitles
-                    .map(
-                      (e) => PopupMenuItem(
-                        value: accountTitles.indexOf(e),
-                        child: ListTile(
-                          title: Text(e),
-                        ),
-                      ),
-                    )
-                    .toList();
-              },
-              child: Text(
-                account.title,
-                style: TextStyle(color: Colors.white),
-              ),
-            ));
+        return PopupMenuButton(
+          key: _menuKey,
+          initialValue: account.index,
+          onSelected: (input) {
+            model.changeAccount(input);
+          },
+          itemBuilder: (context) {
+            List<String> accountTitles =
+                model.accounts.map((acc) => acc.title).toList();
+            return accountTitles
+                .map(
+                  (e) => PopupMenuItem(
+                    value: accountTitles.indexOf(e),
+                    child: ListTile(
+                      title: Text(e),
+                    ),
+                  ),
+                )
+                .toList();
+          },
+          child: TextFormField(
+            initialValue: account.title,
+            decoration:
+                kTitleEditInfoInputDecoration.copyWith(labelText: 'Account'),
+            readOnly: true,
+            onTap: () {
+              dynamic state = _menuKey.currentState;
+              state.showButtonMenu();
+            },
+          ),
+        );
       },
     );
   }
@@ -175,13 +195,12 @@ class _NextRecurrenceFormField extends StatelessWidget {
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
         DateTime date = model.tempRecurring.nextRecurrence;
-        return OutlineButton(
-            padding: EdgeInsets.all(10.0),
-            child: Text(
-              DateFormat.yMMMd().format(date),
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
+        return TextFormField(
+            initialValue: DateFormat.yMMMd().format(date),
+            decoration:
+                kTitleEditInfoInputDecoration.copyWith(labelText: 'Start Date'),
+            readOnly: true,
+            onTap: () {
               showDatePicker(
                 context: context,
                 initialDate: date,
@@ -202,6 +221,61 @@ class _NextRecurrenceFormField extends StatelessWidget {
               });
             });
       },
+    );
+  }
+}
+
+class _FrequencyFormField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<RecurringViewModel>(
+      builder: (context, model, child) {
+        Recurring tempRecurring = model.tempRecurring;
+        return TextFormField(
+          initialValue: tempRecurring.frequency,
+          decoration:
+              kTitleEditInfoInputDecoration.copyWith(labelText: 'Frequency'),
+          readOnly: true,
+          onTap: () {
+            showDialog(
+              context: context,
+              child: _FrequencyDialog(),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+class _FrequencyDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          children: <Widget>[
+            Text("Repeat every"),
+            Row(
+              children: <Widget>[
+                Flexible(
+                  flex: 1,
+                  child: TextFormField(
+                    initialValue: 1.toString(),
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: PopupMenuButton(),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }

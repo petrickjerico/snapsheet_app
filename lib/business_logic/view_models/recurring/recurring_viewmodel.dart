@@ -46,6 +46,14 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
     notifyListeners();
   }
 
+  void editTempRecurring(int recurringIndex) {
+    tempRecurring = userData.recurrings[recurringIndex];
+    originalRecurring = Recurring.of(tempRecurring);
+    isEditing = true;
+    print(tempRecurring);
+    notifyListeners();
+  }
+
   void changeTitle(String newTitle) {
     tempRecurring.title = newTitle;
   }

@@ -49,6 +49,21 @@ class Recurring {
     );
   }
 
+  factory Recurring.of(Recurring recurring) {
+    return Recurring(
+      title: recurring.title,
+      value: recurring.value,
+      categoryId: recurring.categoryId,
+      isIncome: recurring.isIncome,
+      nextRecurrence: recurring.nextRecurrence,
+      frequencyId: recurring.frequencyId,
+      timeFrameId: recurring.timeFrameId,
+      interval: recurring.interval,
+      untilDate: recurring.untilDate,
+      xTimes: recurring.xTimes,
+    );
+  }
+
   factory Recurring.fromFirestore(DocumentSnapshot doc) {
     Map json = doc.data;
 

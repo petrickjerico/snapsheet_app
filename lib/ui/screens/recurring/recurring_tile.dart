@@ -5,6 +5,7 @@ import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_viewmodel.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/screens/recurring/add_recurring_screen.dart';
 
 class RecurringTile extends StatelessWidget {
   Recurring recurring;
@@ -51,6 +52,10 @@ class RecurringTile extends StatelessWidget {
               )
             ],
           ),
+          onTap: () {
+            model.editTempRecurring(index);
+            Navigator.pushNamed(context, AddRecurringScreen.id);
+          },
         );
       },
     );

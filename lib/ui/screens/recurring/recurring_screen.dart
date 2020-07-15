@@ -27,10 +27,18 @@ class RecurringScreen extends StatelessWidget {
                             context, AddRecurringScreen.id);
                       },
                       child: Center(
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.grey,
-                          size: 50,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              Icons.add_circle,
+                              color: Colors.grey,
+                              size: 120,
+                            ),
+                            SizedBox(height: 12),
+                            Text("Create your first recurring expense/income")
+                          ],
                         ),
                       ),
                     )
@@ -48,6 +56,8 @@ class RecurringScreen extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            backgroundColor: Colors.black,
             onPressed: () {
               model.newRecurring();
               return Navigator.pushNamed(context, AddRecurringScreen.id);

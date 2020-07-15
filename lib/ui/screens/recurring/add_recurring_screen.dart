@@ -6,8 +6,6 @@ import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/default_data/recurring.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_viewmodel.dart';
-import 'package:snapsheetapp/ui/components/account/account_order_tile.dart';
-import 'package:snapsheetapp/ui/components/button/confirm_record_fab_button.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/components/dialog/delete_dialog.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
@@ -51,6 +49,7 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
                         'Are you sure you want to delete this recurring expense?',
                     onDelete: () {
                       model.deleteRecurring();
+                      Navigator.pop(context);
                       Navigator.pop(context);
                     },
                   ));

@@ -34,11 +34,12 @@ class _StatisticsState extends State<Statistics> {
               expenseModel.changeAccount(model.getSelectedAccount().index);
               Navigator.pushNamed(context, ExpenseScreen.id);
             },
+            messageColor: Colors.white30,
             message: 'No records found for this account yet.\n'
                 'Tap to create one.',
             icon: Icon(
               Icons.add_circle,
-              color: Colors.white24,
+              color: Colors.white30,
               size: 120.0,
             ),
           );

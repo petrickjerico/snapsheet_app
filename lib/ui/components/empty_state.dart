@@ -5,9 +5,14 @@ import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmode
 import 'package:snapsheetapp/ui/screens/expense/expense_screen.dart';
 
 class EmptyState extends StatelessWidget {
-  EmptyState({this.onTap, @required this.message, @required this.icon});
+  EmptyState(
+      {this.onTap,
+      this.messageColor,
+      @required this.message,
+      @required this.icon});
 
   final Function onTap;
+  final Color messageColor;
   final String message;
   final Icon icon;
 
@@ -26,7 +31,7 @@ class EmptyState extends StatelessWidget {
           child: Text(
             message,
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white30, fontSize: 15),
+            style: TextStyle(color: messageColor, fontSize: 15),
           ),
         )
       ],

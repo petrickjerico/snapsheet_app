@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_viewmodel.dart';
+import 'package:snapsheetapp/ui/components/empty_state.dart';
 import 'package:snapsheetapp/ui/screens/recurring/add_recurring_screen.dart';
 import 'package:snapsheetapp/ui/screens/recurring/recurring_tile.dart';
 
@@ -20,27 +21,19 @@ class RecurringScreen extends StatelessWidget {
             child: Align(
               alignment: Alignment.topCenter,
               child: model.recurrings.isEmpty
-                  ? GestureDetector(
+                  ? EmptyState(
+                      message: "Create your first recurring record.",
+                      icon: Icon(
+                        Icons.add_circle,
+                        color: Colors.grey,
+                        size: 120,
+                      ),
+                      messageColor: Colors.grey,
                       onTap: () {
                         model.newRecurring();
                         return Navigator.pushNamed(
                             context, AddRecurringScreen.id);
                       },
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.add_circle,
-                              color: Colors.grey,
-                              size: 120,
-                            ),
-                            SizedBox(height: 12),
-                            Text("Create your first recurring expense/income")
-                          ],
-                        ),
-                      ),
                     )
                   : ListView.builder(
                       shrinkWrap: true,

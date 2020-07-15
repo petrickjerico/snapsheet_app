@@ -39,11 +39,12 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
                     shape: kBottomSheetShape,
                   );
                 },
+                messageColor: Colors.white30,
                 message: 'There is no account yet.\n'
                     'Tap to create one.',
                 icon: Icon(
                   Icons.add_circle,
-                  color: Colors.white24,
+                  color: Colors.white30,
                   size: 120.0,
                 ),
               )

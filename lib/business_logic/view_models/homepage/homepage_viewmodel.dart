@@ -4,12 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_basemodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/screens/home/dashboard.dart';
 import 'package:snapsheetapp/ui/screens/home/edit_accounts_order.dart';
 import 'package:snapsheetapp/ui/screens/home/history_screen.dart';
 import 'package:snapsheetapp/ui/screens/sidebar/editprofile_screen.dart';
+
+import 'homepage_basemodel.dart';
 
 class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   static final CarouselController controller = CarouselController();

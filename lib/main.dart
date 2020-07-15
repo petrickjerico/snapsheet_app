@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/export/export_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_viewmodel.dart';
@@ -15,6 +14,8 @@ import 'package:snapsheetapp/ui/screens/recurring/recurring_screen.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 import 'package:snapsheetapp/ui/screens/splash_screen.dart';
 import 'package:snapsheetapp/ui/shared/splash.dart';
+
+import 'business_logic/view_models/homepage/homepage_viewmodel.dart';
 
 void main() {
   //To lock orientation of the app.

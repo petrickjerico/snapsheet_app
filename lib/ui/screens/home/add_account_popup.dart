@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 

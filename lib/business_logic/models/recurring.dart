@@ -63,7 +63,7 @@ class Recurring {
       frequencyId: json['frequencyId'],
       timeFrameId: json['timeFrameId'],
       interval: json['interval'],
-      untilDate: json['untilDate'],
+      untilDate: DateTime.fromMillisecondsSinceEpoch(json['untilDate']),
       xTimes: json['xTimes'],
     );
   }
@@ -79,7 +79,7 @@ class Recurring {
       'frequencyId': frequencyId,
       'timeFrameId': timeFrameId,
       'interval': interval,
-      'untilDate': untilDate,
+      'untilDate': untilDate.millisecondsSinceEpoch,
       'xTimes': xTimes,
     };
   }
@@ -108,6 +108,6 @@ class Recurring {
     }
 
     String next = "Next: ${DateFormat.yMMMd().format(nextRecurrence)}";
-    return "$frequency | $next | $timeFrame";
+    return "$frequency\n$next\n$timeFrame";
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -5,6 +6,9 @@ import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/default_data/recurring.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_viewmodel.dart';
+import 'package:snapsheetapp/ui/components/account/account_order_tile.dart';
+import 'package:snapsheetapp/ui/components/button/confirm_record_fab_button.dart';
+import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 
 class AddRecurringScreen extends StatefulWidget {
@@ -23,7 +27,25 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
     return Scaffold(
       backgroundColor: kBlack,
       appBar: AppBar(
-        title: Text("Add recurring expense"),
+        backgroundColor: kBlack,
+        elevation: 0,
+        leading: BackButton(
+          onPressed: () {
+            if (model.isEditing) {
+              model.undo();
+            }
+            Navigator.pop(context);
+          },
+        ),
+        title: Text('Add Recurring Expense'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              showDialog(context: context, child: DeleteDialog());
+            },
+          ),
+        ],
       ),
       body: Theme(
         data: ThemeData.dark(),
@@ -53,6 +75,16 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
                   _TimeFrameFormField(),
                   SizedBox(height: 10),
                   _TimeFrameHelperFormField(),
+                  RoundedButton(
+                    color: Colors.white,
+                    textColor: Colors.black,
+                    icon: Icon(Icons.replay, color: Colors.black),
+                    title: "Confirm",
+                    onPressed: () {
+                      model.addRecurring();
+                      Navigator.pop(context);
+                    },
+                  )
                 ],
               ),
             ),
@@ -112,17 +144,16 @@ class _CategoryFormField extends StatelessWidget {
           initialValue: categoryId,
           onSelected: (input) {
             model.changeCategory(input);
+            print(model.tempRecurring.toString());
           },
           itemBuilder: (context) {
-            List<String> categoryTitles =
-                categories.map((category) => category.title).toList();
-            return categoryTitles
+            return categories
                 .map(
-                  (e) => PopupMenuItem(
-                    value: categoryTitles.indexOf(e),
+                  (category) => PopupMenuItem(
+                    value: category.index,
                     child: ListTile(
-                      leading: categories[categoryTitles.indexOf(e)].icon,
-                      title: Text(e),
+                      leading: category.icon,
+                      title: Text(category.title),
                     ),
                   ),
                 )
@@ -160,14 +191,12 @@ class _AccountFormField extends StatelessWidget {
             model.changeAccount(input);
           },
           itemBuilder: (context) {
-            List<String> accountTitles =
-                model.accounts.map((acc) => acc.title).toList();
-            return accountTitles
+            return model.accounts
                 .map(
-                  (e) => PopupMenuItem(
-                    value: accountTitles.indexOf(e),
+                  (account) => PopupMenuItem(
+                    value: model.accounts.indexOf(account),
                     child: ListTile(
-                      title: Text(e),
+                      title: Text(account.title),
                     ),
                   ),
                 )

@@ -10,6 +10,7 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
   List<Account> accounts;
   Recurring tempRecurring;
   Recurring originalRecurring;
+  bool isEditing = false;
 
   void init(UserData userData) {
     this.userData = userData;
@@ -24,6 +25,21 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
 
   void addDueExpenses() {}
 
+  void undo() {
+    tempRecurring = originalRecurring;
+    notifyListeners();
+  }
+
+  void addRecurring() {
+    if (!isEditing) {
+      userData.addRecurring(tempRecurring);
+    } else {
+      userData.updateRecurring(tempRecurring);
+      isEditing = false;
+    }
+    notifyListeners();
+  }
+
   void newRecurring() {
     tempRecurring = Recurring.newBlank();
     tempRecurring.accountUid = accounts.first.uid;
@@ -32,12 +48,10 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
 
   void changeTitle(String newTitle) {
     tempRecurring.title = newTitle;
-    notifyListeners();
   }
 
   void changeValue(double newValue) {
     tempRecurring.value = newValue;
-    notifyListeners();
   }
 
   void changeCategory(int newCategoryId) {
@@ -55,28 +69,36 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
     notifyListeners();
   }
 
-  changeFrequencyId(int newFrequencyId) {
+  void changeFrequencyId(int newFrequencyId) {
     tempRecurring.frequencyId = newFrequencyId;
     notifyListeners();
   }
 
-  changeTimeFrameId(int newTimeFrameId) {
+  void changeTimeFrameId(int newTimeFrameId) {
     tempRecurring.timeFrameId = newTimeFrameId;
     notifyListeners();
   }
 
-  changeInterval(int newInterval) {
+  void changeInterval(int newInterval) {
     tempRecurring.interval = newInterval;
     notifyListeners();
   }
 
-  changeUntilDate(DateTime newUntilDate) {
+  void changeUntilDate(DateTime newUntilDate) {
     tempRecurring.untilDate = newUntilDate;
     notifyListeners();
   }
 
-  changeXTimes(int newXTimes) {
+  void changeXTimes(int newXTimes) {
     tempRecurring.xTimes = newXTimes;
+    notifyListeners();
+  }
+
+  void deleteRecurring() {
+    if (isEditing) {
+      userData.deleteRecurring(tempRecurring);
+      isEditing = false;
+    }
     notifyListeners();
   }
 }

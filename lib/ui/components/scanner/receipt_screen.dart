@@ -65,19 +65,19 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                             flex: 1,
                             child: _ValueFormField(recordId: recordId),
                           ),
-                          SizedBox(width: 10),
+                          SizedBox(width: 15),
                           Flexible(
                             flex: 4,
                             child: _TitleFormField(recordId: recordId),
                           ),
                         ],
                       ),
-                      SizedBox(height: 5),
+                      SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Expanded(child: _DateFormField(recordId: recordId)),
-                          SizedBox(width: 10),
+                          SizedBox(width: 15),
                           Expanded(
                               child: _CategoryFormField(recordId: recordId)),
                         ],
@@ -161,6 +161,7 @@ class _TitleFormField extends StatelessWidget {
 
 class _CategoryFormField extends StatelessWidget {
   final int recordId;
+  final GlobalKey _menuKey = GlobalKey();
 
   _CategoryFormField({this.recordId});
 
@@ -169,33 +170,38 @@ class _CategoryFormField extends StatelessWidget {
     return Consumer<BulkScanViewModel>(
       builder: (context, model, child) {
         int categoryId = model.records[recordId].categoryId;
-        return OutlineButton(
-            padding: EdgeInsets.all(10.0),
-            child: PopupMenuButton(
-              initialValue: categoryId,
-              onSelected: (input) {
-                model.changeCategory(recordId, input);
-              },
-              itemBuilder: (context) {
-                List<String> categoryTitles =
-                    categories.map((category) => category.title).toList();
-                return categoryTitles
-                    .map(
-                      (e) => PopupMenuItem(
-                        value: categoryTitles.indexOf(e),
-                        child: ListTile(
-                          leading: categories[categoryTitles.indexOf(e)].icon,
-                          title: Text(e),
-                        ),
-                      ),
-                    )
-                    .toList();
-              },
-              child: Text(
-                categories[categoryId].title,
-                style: TextStyle(color: Colors.white),
-              ),
-            ));
+        return PopupMenuButton(
+          key: _menuKey,
+          initialValue: categoryId,
+          onSelected: (input) {
+            model.changeCategory(recordId, input);
+          },
+          itemBuilder: (context) {
+            List<String> categoryTitles =
+                categories.map((category) => category.title).toList();
+            return categoryTitles
+                .map(
+                  (e) => PopupMenuItem(
+                    value: categoryTitles.indexOf(e),
+                    child: ListTile(
+                      leading: categories[categoryTitles.indexOf(e)].icon,
+                      title: Text(e),
+                    ),
+                  ),
+                )
+                .toList();
+          },
+          child: TextFormField(
+            initialValue: categories[categoryId].title,
+            decoration:
+                kTitleEditInfoInputDecoration.copyWith(labelText: 'Category'),
+            readOnly: true,
+            onTap: () {
+              dynamic state = _menuKey.currentState;
+              state.showButtonMenu();
+            },
+          ),
+        );
       },
     );
   }
@@ -211,13 +217,12 @@ class _DateFormField extends StatelessWidget {
     return Consumer<BulkScanViewModel>(
       builder: (context, model, child) {
         DateTime date = model.records[recordId].dateTime;
-        return OutlineButton(
-            padding: EdgeInsets.all(10.0),
-            child: Text(
-              DateFormat.yMMMd().format(date),
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
+        return TextFormField(
+            initialValue: DateFormat.yMMMd().format(date),
+            decoration:
+                kTitleEditInfoInputDecoration.copyWith(labelText: 'Date'),
+            readOnly: true,
+            onTap: () {
               showDatePicker(
                 context: context,
                 initialDate: date,

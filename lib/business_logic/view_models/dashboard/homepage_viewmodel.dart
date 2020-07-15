@@ -13,16 +13,16 @@ import 'package:snapsheetapp/ui/screens/sidebar/editprofile_screen.dart';
 
 class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   static final CarouselController controller = CarouselController();
+  static int currentPage = 0;
+  static int currentBar = 0;
+  static int selectedAccountIndex = 0;
   UserData userData;
   List<Account> accounts;
   List<Record> records;
   List<bool> isSelected = [];
-  int selectedAccountIndex = 0;
   int touchedIndex;
   Account originalAccount;
   Account tempAccount;
-  int currentPage = 0;
-  int currentBar = 0;
 
   // List<Account> get copyOfAccounts => List.from(accounts);
 
@@ -38,12 +38,12 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     notifyListeners();
   }
 
-  void syncBarAndTabToBeginning() {
+  static void syncBarAndTabToBeginning() {
     currentPage = 0;
     currentBar = 0;
   }
 
-  void syncController() {
+  static void syncController() {
     if (selectedAccountIndex != -1) {
       controller.animateToPage(selectedAccountIndex);
     } else {

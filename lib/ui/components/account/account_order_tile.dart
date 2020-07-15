@@ -26,8 +26,8 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
     return ListTile(
       onTap: () {
         model.selectAccount(widget.index);
-        model.syncController();
-        model.syncBarAndTabToBeginning();
+        HomepageViewModel.syncController();
+        HomepageViewModel.syncBarAndTabToBeginning();
       },
       contentPadding: EdgeInsets.only(left: 20),
       dense: true,
@@ -81,7 +81,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
                               'Are you sure you want to delete ${widget.title}?',
                           onDelete: () {
                             model.deleteAccount();
-                            model.syncController();
+                            HomepageViewModel.syncController();
                             Navigator.pop(context);
                           }),
                     );

@@ -157,7 +157,7 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                     if (AddAccountPopup._formKey.currentState.validate()) {
                       model.selectAccount(model.accounts.length);
                       model.addAccount(accountTitle, _color);
-                      model.syncController();
+                      HomepageViewModel.syncController();
                       colorPointer++;
                       if (colorPointer == materialColors.length) {
                         colorPointer = 0;

@@ -83,15 +83,15 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
         ),
         floatingActionButton: ConfirmRecordFab(
           onPressed: () {
-            final dashboardModel =
+            final homepageModel =
                 Provider.of<HomepageViewModel>(context, listen: false);
             model.addRecord();
             bool isEditing = model.isEditing;
-            dashboardModel.selectAccount(model.getAccountIndexFromTempRecord());
-            dashboardModel.syncController();
+            homepageModel.selectAccount(model.getAccountIndexFromTempRecord());
+            HomepageViewModel.syncController();
             Navigator.pop(context);
             Navigator.pop(context);
-            String title = dashboardModel.getSelectedAccount().title;
+            String title = homepageModel.getSelectedAccount().title;
             String messageStatus =
                 isEditing ? 'updated' : 'added to account: $title';
             Flushbar(

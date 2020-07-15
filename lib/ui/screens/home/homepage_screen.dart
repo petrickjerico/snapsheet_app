@@ -43,7 +43,7 @@ class HomepageScreen extends StatelessWidget {
               appBar: AppBar(
                 elevation: 0,
                 backgroundColor: kHomepageBackgroundTransparency,
-                title: Text(_titles[homepageModel.currentPage]),
+                title: Text(_titles[HomepageViewModel.currentPage]),
               ),
               drawer: SidebarMenu(),
               body: Container(
@@ -61,7 +61,7 @@ class HomepageScreen extends StatelessWidget {
                       fillColor: Colors.transparent,
                     );
                   },
-                  child: _pageList[homepageModel.currentPage],
+                  child: _pageList[HomepageViewModel.currentPage],
                 ),
               ),
               bottomNavigationBar: BottomAppBar(
@@ -71,7 +71,7 @@ class HomepageScreen extends StatelessWidget {
                 notchMargin: 12,
                 clipBehavior: Clip.antiAlias,
                 child: BottomNavigationBar(
-                    currentIndex: homepageModel.currentBar,
+                    currentIndex: HomepageViewModel.currentBar,
                     type: BottomNavigationBarType.fixed,
                     showUnselectedLabels: false,
                     selectedItemColor: kBlack,

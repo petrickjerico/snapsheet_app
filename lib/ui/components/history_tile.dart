@@ -65,7 +65,7 @@ class _HistoryTileState extends State<HistoryTile> {
               model.deleteRecord();
               homepageModel
                   .selectAccount(model.getAccountIndexFromTempRecord());
-              homepageModel.syncController();
+              HomepageViewModel.syncController();
               Flushbar(
                 mainButton: FlatButton(
                   child: Text(
@@ -77,7 +77,7 @@ class _HistoryTileState extends State<HistoryTile> {
                       model.addRecord();
                       homepageModel
                           .selectAccount(model.getAccountIndexFromTempRecord());
-                      homepageModel.syncController();
+                      HomepageViewModel.syncController();
                       isAlreadyAdded = true;
                     } else {
                       return;

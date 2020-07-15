@@ -13,7 +13,8 @@ class SelectAllButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<HomepageViewModel>(
       builder: (context, model, child) => Visibility(
-        visible: model.accounts.length > 1 && model.selectedAccountIndex != -1,
+        visible: model.accounts.length > 1 &&
+            HomepageViewModel.selectedAccountIndex != -1,
         child: MaterialButton(
           visualDensity: VisualDensity.comfortable,
           shape: RoundedRectangleBorder(

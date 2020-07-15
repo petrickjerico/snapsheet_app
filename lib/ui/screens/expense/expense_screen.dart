@@ -91,16 +91,22 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           body: ExpenseCalculator(),
           floatingActionButton: ConfirmRecordFab(
             onPressed: () {
+              bool isEditing = model.isEditing;
               final homepageModel = Provider.of<HomepageViewModel>(
                 context,
                 listen: false,
               );
-              if (model.isOperated) {
-                bool isEditing = model.isEditing;
+              try {
+                if (!model.isOperated) {
+                  final ExpressionEvaluator evaluator =
+                      const ExpressionEvaluator();
+                  model.changeValue(
+                      evaluator.eval(Expression.parse(model.expression), null));
+                }
                 model.addRecord();
                 homepageModel
                     .selectAccount(model.getAccountIndexFromTempRecord());
-                homepageModel.syncController();
+                HomepageViewModel.syncController();
                 Navigator.pop(context);
                 String title = homepageModel.getSelectedAccount().title;
                 String messageStatus =
@@ -115,45 +121,19 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                   duration: Duration(seconds: 3),
                   leftBarIndicatorColor: Colors.blue[300],
                 )..show(context);
-              } else {
-                try {
-                  bool isEditing = model.isEditing;
-                  final ExpressionEvaluator evaluator =
-                      const ExpressionEvaluator();
-                  model.changeValue(
-                      evaluator.eval(Expression.parse(model.expression), null));
-                  model.addRecord();
-                  homepageModel
-                      .selectAccount(model.getAccountIndexFromTempRecord());
-                  homepageModel.syncController();
-                  Navigator.pop(context);
-                  String title = homepageModel.getSelectedAccount().title;
-                  String messageStatus =
-                      isEditing ? 'updated' : 'added to account: $title';
-                  Flushbar(
-                    message: "Record successfully $messageStatus.",
-                    icon: Icon(
-                      Icons.info_outline,
-                      size: 28.0,
-                      color: Colors.blue[300],
-                    ),
-                    duration: Duration(seconds: 3),
-                    leftBarIndicatorColor: Colors.blue[300],
-                  )..show(context);
-                } catch (e) {
-                  print(e);
-                  Flushbar(
-                    message:
-                        "The calculator is experiencing issues.\nTap the equals '=' button and try again.",
-                    icon: Icon(
-                      Icons.info_outline,
-                      size: 28.0,
-                      color: Colors.blue[300],
-                    ),
-                    duration: Duration(seconds: 3),
-                    leftBarIndicatorColor: Colors.blue[300],
-                  )..show(context);
-                }
+              } catch (e) {
+                print(e);
+                Flushbar(
+                  message: "The calculator is experiencing issues.\n"
+                      "Tap the equals '=' button and try again.",
+                  icon: Icon(
+                    Icons.info_outline,
+                    size: 28.0,
+                    color: Colors.blue[300],
+                  ),
+                  duration: Duration(seconds: 3),
+                  leftBarIndicatorColor: Colors.blue[300],
+                )..show(context);
               }
             },
           ),
@@ -213,7 +193,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                         model.deleteRecord();
                         homepageModel.selectAccount(
                             model.getAccountIndexFromTempRecord());
-                        homepageModel.syncController();
+                        HomepageViewModel.syncController();
                         Navigator.pop(context);
                         Navigator.pop(context);
                         Flushbar(

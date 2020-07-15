@@ -20,7 +20,7 @@ class AccountTile extends StatelessWidget {
         onTap: () {
           model.selectAccount(index);
           if (index != -1) {
-            model.syncController();
+            HomepageViewModel.syncController();
           }
         },
         child: Container(

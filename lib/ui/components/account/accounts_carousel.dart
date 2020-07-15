@@ -34,6 +34,7 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
           ),
           Consumer<HomepageViewModel>(
             builder: (context, model, child) {
+              int selectedIndex = HomepageViewModel.selectedAccountIndex;
               return Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
@@ -63,9 +64,8 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                     carouselController: HomepageViewModel.controller,
                     items: makeAccountTiles(model),
                     options: CarouselOptions(
-                      initialPage: model.selectedAccountIndex != -1 &&
-                              model.selectedAccountIndex != null
-                          ? model.selectedAccountIndex
+                      initialPage: selectedIndex != -1 && selectedIndex != null
+                          ? selectedIndex
                           : 0,
                       height: 55.0,
                       viewportFraction: 0.3,
@@ -84,7 +84,7 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                       color: Colors.black,
                       total: model.currentExpensesTotal(),
                     ),
-                    visible: model.selectedAccountIndex == -1,
+                    visible: selectedIndex == -1,
                   )
                 ],
               );

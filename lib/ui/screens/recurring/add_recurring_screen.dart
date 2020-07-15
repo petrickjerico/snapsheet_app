@@ -189,56 +189,82 @@ class _AccountFormField extends StatelessWidget {
   }
 }
 
-class _NextRecurrenceFormField extends StatelessWidget {
-  DateTime date;
+class _NextRecurrenceFormField extends StatefulWidget {
+  @override
+  __NextRecurrenceFormFieldState createState() =>
+      __NextRecurrenceFormFieldState();
+}
+
+class __NextRecurrenceFormFieldState extends State<_NextRecurrenceFormField> {
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     print("DATE REBUILD");
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
-        date = model.tempRecurring.nextRecurrence;
-        print(DateFormat.yMMMd().format(date));
+        DateTime date = model.tempRecurring.nextRecurrence;
+        controller.text = DateFormat.yMMMd().format(date);
         return TextFormField(
-            initialValue: DateFormat.yMMMd().format(date),
             decoration:
                 kTitleEditInfoInputDecoration.copyWith(labelText: 'Start Date'),
             readOnly: true,
-            onTap: () {
-              showDatePicker(
+            controller: controller,
+            onTap: () async {
+              DateTime picked = await showDatePicker(
                 context: context,
                 initialDate: date,
                 firstDate: DateTime(date.year - 5),
                 lastDate: DateTime(date.year + 5),
-                builder: (context, child) {
-                  return Theme(
-                    data: ThemeData.dark(),
-                    child: child,
-                  );
-                },
-              ).then((value) {
-                model.changeNextRecurrence(value);
-              });
+              );
+              if (picked != null) {
+                model.changeNextRecurrence(picked);
+              }
             });
       },
     );
   }
 }
 
-class _FrequencyFormField extends StatelessWidget {
+class _FrequencyFormField extends StatefulWidget {
+  @override
+  __FrequencyFormFieldState createState() => __FrequencyFormFieldState();
+}
+
+class __FrequencyFormFieldState extends State<_FrequencyFormField> {
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  void changeFrequency(String txt) {
+    controller.text = txt;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
         Recurring tempRecurring = model.tempRecurring;
+        controller.text = tempRecurring.frequency;
         return TextFormField(
-          initialValue: tempRecurring.frequency,
+          controller: controller,
           decoration:
               kTitleEditInfoInputDecoration.copyWith(labelText: 'Frequency'),
           readOnly: true,
           onTap: () {
             showDialog(
               context: context,
-              child: _FrequencyDialog(),
+              child: _FrequencyDialog(callBack: changeFrequency),
             );
           },
         );
@@ -248,10 +274,12 @@ class _FrequencyFormField extends StatelessWidget {
 }
 
 class _FrequencyDialog extends StatelessWidget {
+  Function callBack;
+
+  _FrequencyDialog({this.callBack});
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<RecurringViewModel>(context);
-    print("REBUILD");
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Container(
@@ -286,6 +314,10 @@ class _FrequencyDialog extends StatelessWidget {
 }
 
 class _FrequencyDialogIntervalFormField extends StatelessWidget {
+  Function callBack;
+
+  _FrequencyDialogIntervalFormField({this.callBack});
+
   @override
   Widget build(BuildContext context) {
     return Consumer<RecurringViewModel>(
@@ -296,6 +328,7 @@ class _FrequencyDialogIntervalFormField extends StatelessWidget {
           keyboardType: TextInputType.number,
           onChanged: (value) {
             model.changeInterval(int.parse(value));
+            callBack(model.tempRecurring.frequency);
           },
         );
       },
@@ -304,6 +337,10 @@ class _FrequencyDialogIntervalFormField extends StatelessWidget {
 }
 
 class _FrequencyDialogFrequencyFormField extends StatelessWidget {
+  Function callBack;
+
+  _FrequencyDialogFrequencyFormField({this.callBack});
+
   final GlobalKey _menuKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -315,6 +352,7 @@ class _FrequencyDialogFrequencyFormField extends StatelessWidget {
           initialValue: frequencyId,
           onSelected: (input) {
             model.changeFrequencyId(input);
+            callBack(model.tempRecurring.frequency);
           },
           itemBuilder: (context) {
             List<String> frequencyTitles = singularAndPlural;
@@ -406,39 +444,43 @@ class _TimeFrameHelperFormField extends StatelessWidget {
   }
 }
 
-class _UntilDateFormField extends StatelessWidget {
+class _UntilDateFormField extends StatefulWidget {
+  @override
+  __UntilDateFormFieldState createState() => __UntilDateFormFieldState();
+}
+
+class __UntilDateFormFieldState extends State<_UntilDateFormField> {
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<RecurringViewModel>(
-      builder: (context, model, child) {
-        DateTime date = model.tempRecurring.untilDate;
-        return TextFormField(
-            initialValue: DateFormat.yMMMd().format(date),
-            decoration:
-                kTitleEditInfoInputDecoration.copyWith(labelText: 'Until Date'),
-            readOnly: true,
-            onTap: () {
-              showDatePicker(
-                context: context,
-                initialDate: date,
-                firstDate: DateTime(date.year - 5),
-                lastDate: DateTime(date.year + 5),
-                builder: (context, child) {
-                  return Theme(
-                    data: ThemeData.dark(),
-                    child: child,
-                  );
-                },
-              ).then((value) {
-                model.changeUntilDate(DateTime(
-                  value.year,
-                  value.month,
-                  value.day,
-                ));
-              });
-            });
-      },
-    );
+    return Consumer<RecurringViewModel>(builder: (context, model, child) {
+      DateTime date = model.tempRecurring.untilDate;
+      controller.text = DateFormat.yMMMd().format(date);
+      return TextFormField(
+          decoration:
+              kTitleEditInfoInputDecoration.copyWith(labelText: 'Until Date'),
+          readOnly: true,
+          controller: controller,
+          onTap: () async {
+            DateTime picked = await showDatePicker(
+              context: context,
+              initialDate: date,
+              firstDate: DateTime(date.year - 5),
+              lastDate: DateTime(date.year + 5),
+            );
+            if (picked != null) {
+              model.changeUntilDate(picked);
+              print(model.tempRecurring.toString());
+            }
+          });
+    });
   }
 }
 

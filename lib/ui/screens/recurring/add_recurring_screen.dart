@@ -225,7 +225,6 @@ class __NextRecurrenceFormFieldState extends State<_NextRecurrenceFormField> {
               );
               if (picked != null) {
                 model.changeNextRecurrence(picked);
-                print(model.tempRecurring.toString());
               }
             });
       },
@@ -258,6 +257,7 @@ class __FrequencyFormFieldState extends State<_FrequencyFormField> {
         Recurring tempRecurring = model.tempRecurring;
         controller.text = tempRecurring.frequency;
         return TextFormField(
+          controller: controller,
           decoration:
               kTitleEditInfoInputDecoration.copyWith(labelText: 'Frequency'),
           readOnly: true,
@@ -467,6 +467,7 @@ class __UntilDateFormFieldState extends State<_UntilDateFormField> {
           decoration:
               kTitleEditInfoInputDecoration.copyWith(labelText: 'Until Date'),
           readOnly: true,
+          controller: controller,
           onTap: () async {
             DateTime picked = await showDatePicker(
               context: context,

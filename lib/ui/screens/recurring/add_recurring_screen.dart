@@ -88,7 +88,7 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
                   RoundedButton(
                     color: Colors.white,
                     textColor: Colors.black,
-                    icon: Icon(Icons.replay, color: Colors.black),
+                    icon: Icon(Icons.check, color: Colors.black),
                     title: "Confirm",
                     onPressed: () {
                       model.addRecurring();

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/button/confirm_record_fab_button.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/components/date_time.dart';
@@ -83,15 +83,15 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
         ),
         floatingActionButton: ConfirmRecordFab(
           onPressed: () {
-            final dashboardModel =
+            final homepageModel =
                 Provider.of<HomepageViewModel>(context, listen: false);
             model.addRecord();
             bool isEditing = model.isEditing;
-            dashboardModel.selectAccount(model.getAccountIndexFromTempRecord());
-            dashboardModel.syncController();
+            homepageModel.selectAccount(model.getAccountIndexFromTempRecord());
+            HomepageViewModel.syncController();
             Navigator.pop(context);
             Navigator.pop(context);
-            String title = dashboardModel.getSelectedAccount().title;
+            String title = homepageModel.getSelectedAccount().title;
             String messageStatus =
                 isEditing ? 'updated' : 'added to account: $title';
             Flushbar(

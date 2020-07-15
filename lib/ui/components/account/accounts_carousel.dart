@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/button/add_account_button.dart';
 import 'package:snapsheetapp/ui/components/button/edit_accounts_button.dart';
 import 'package:snapsheetapp/ui/components/button/select_all_button.dart';
@@ -34,6 +34,7 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
           ),
           Consumer<HomepageViewModel>(
             builder: (context, model, child) {
+              int selectedIndex = HomepageViewModel.selectedAccountIndex;
               return Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
@@ -63,9 +64,8 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                     carouselController: HomepageViewModel.controller,
                     items: makeAccountTiles(model),
                     options: CarouselOptions(
-                      initialPage: model.selectedAccountIndex != -1 &&
-                              model.selectedAccountIndex != null
-                          ? model.selectedAccountIndex
+                      initialPage: selectedIndex != -1 && selectedIndex != null
+                          ? selectedIndex
                           : 0,
                       height: 55.0,
                       viewportFraction: 0.3,
@@ -84,7 +84,7 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                       color: Colors.black,
                       total: model.currentExpensesTotal(),
                     ),
-                    visible: model.selectedAccountIndex == -1,
+                    visible: selectedIndex == -1,
                   )
                 ],
               );

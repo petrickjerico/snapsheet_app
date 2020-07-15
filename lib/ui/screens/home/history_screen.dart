@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/components/empty_state.dart';
@@ -26,11 +26,12 @@ class HistoryScreen extends StatelessWidget {
             ? EmptyState(
                 icon: Icon(
                   FontAwesomeIcons.solidMeh,
-                  color: Colors.white24,
+                  color: Colors.white30,
                   size: 100.0,
                 ),
+                messageColor: Colors.white30,
                 message: 'Nothing to show here yet. \n'
-                    'Create an account and start adding records!',
+                    'Create an account and start adding records.',
               )
             : Column(
                 children: <Widget>[

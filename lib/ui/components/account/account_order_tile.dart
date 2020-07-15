@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/dialog/delete_dialog.dart';
 import 'package:snapsheetapp/ui/config/decoration.dart';
 import 'package:snapsheetapp/ui/screens/home/rename_account_popup.dart';
@@ -26,8 +26,8 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
     return ListTile(
       onTap: () {
         model.selectAccount(widget.index);
-        model.syncController();
-        model.syncBarAndTabToBeginning();
+        HomepageViewModel.syncController();
+        HomepageViewModel.syncBarAndTabToBeginning();
       },
       contentPadding: EdgeInsets.only(left: 20),
       dense: true,
@@ -81,7 +81,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
                               'Are you sure you want to delete ${widget.title}?',
                           onDelete: () {
                             model.deleteAccount();
-                            model.syncController();
+                            HomepageViewModel.syncController();
                             Navigator.pop(context);
                           }),
                     );

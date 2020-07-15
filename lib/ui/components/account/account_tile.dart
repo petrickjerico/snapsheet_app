@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 
 class AccountTile extends StatelessWidget {
   AccountTile({Key key, this.index, this.color, this.title, this.total})
@@ -20,7 +20,7 @@ class AccountTile extends StatelessWidget {
         onTap: () {
           model.selectAccount(index);
           if (index != -1) {
-            model.syncController();
+            HomepageViewModel.syncController();
           }
         },
         child: Container(

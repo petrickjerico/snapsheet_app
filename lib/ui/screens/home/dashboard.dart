@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/account/accounts_carousel.dart';
 import 'package:snapsheetapp/ui/components/empty_state.dart';
 import 'package:snapsheetapp/ui/components/stats/statistics.dart';
@@ -32,11 +32,12 @@ class _DashboardState extends State<Dashboard> {
                 shape: kBottomSheetShape,
               );
             },
+            messageColor: Colors.white30,
             message: 'There is no account yet.\n'
                 'Tap to create one.',
             icon: Icon(
               Icons.add_circle,
-              color: Colors.white24,
+              color: Colors.white30,
               size: 120.0,
             ),
           )

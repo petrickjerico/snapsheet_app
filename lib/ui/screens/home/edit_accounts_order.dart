@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/account/account_order_tile.dart';
 import 'package:snapsheetapp/ui/components/button/add_account_button.dart';
 import 'package:snapsheetapp/ui/components/button/select_all_button.dart';
@@ -39,11 +39,12 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
                     shape: kBottomSheetShape,
                   );
                 },
+                messageColor: Colors.white30,
                 message: 'There is no account yet.\n'
                     'Tap to create one.',
                 icon: Icon(
                   Icons.add_circle,
-                  color: Colors.white24,
+                  color: Colors.white30,
                   size: 120.0,
                 ),
               )

@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
-import 'package:snapsheetapp/business_logic/view_models/dashboard/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/stats/stats_card.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/expense/expense_screen.dart';
@@ -34,11 +34,12 @@ class _StatisticsState extends State<Statistics> {
               expenseModel.changeAccount(model.getSelectedAccount().index);
               Navigator.pushNamed(context, ExpenseScreen.id);
             },
+            messageColor: Colors.white30,
             message: 'No records found for this account yet.\n'
                 'Tap to create one.',
             icon: Icon(
               Icons.add_circle,
-              color: Colors.white24,
+              color: Colors.white30,
               size: 120.0,
             ),
           );
@@ -126,37 +127,26 @@ class _StatisticsState extends State<Statistics> {
                           SizedBox(
                             height: 2.0,
                           ),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(5.0),
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
                                     color: Colors.green[600],
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(5.0),
-                                      bottomLeft: Radius.circular(5.0),
-                                    ),
+                                    height: 25,
                                   ),
-                                  alignment: AlignmentDirectional.centerStart,
-                                  height: 25,
+                                  flex: model.statsGetBalanceData()[0].round(),
                                 ),
-                                flex: model.statsGetBalanceData()[0].round(),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
+                                Expanded(
+                                  child: Container(
                                     color: Colors.red[600],
-                                    borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(5.0),
-                                      bottomRight: Radius.circular(5.0),
-                                    ),
+                                    height: 25,
                                   ),
-                                  alignment: AlignmentDirectional.centerEnd,
-                                  height: 25,
+                                  flex: model.statsGetBalanceData()[1].round(),
                                 ),
-                                flex: model.statsGetBalanceData()[1].round(),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ],
                       )),

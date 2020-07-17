@@ -150,7 +150,6 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     return List.generate(
       userData.categories.length,
       (i) {
-
         final Category category = userData.categories[i];
         final bool isTouched = i == donutTouchedIndex;
         final bool isIncome = category.isIncome;
@@ -193,6 +192,7 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   }
 
   double getCategoryTotal(int catId) {
+    print(catId);
     Category category = userData.categories[catId];
     if (category.isIncome) {
       return 0;

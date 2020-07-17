@@ -41,30 +41,7 @@ class HomepageScreen extends StatelessWidget {
               extendBody: true,
               resizeToAvoidBottomInset: false,
               backgroundColor: kBlack,
-              appBar: AppBar(
-                elevation: 0,
-                backgroundColor: kHomepageBackgroundTransparency,
-                title: Text(_titles[HomepageViewModel.currentPage]),
-              ),
-              drawer: SidebarMenu(),
-              body: Container(
-                color: kHomepageBackgroundTransparency,
-                child: PageTransitionSwitcher(
-                  transitionBuilder: (
-                    Widget child,
-                    Animation<double> animation,
-                    Animation<double> secondaryAnimation,
-                  ) {
-                    return FadeThroughTransition(
-                      animation: animation,
-                      secondaryAnimation: secondaryAnimation,
-                      child: child,
-                      fillColor: Colors.transparent,
-                    );
-                  },
-                  child: _pageList[HomepageViewModel.currentPage],
-                ),
-              ),
+              body: _pageList[HomepageViewModel.currentPage],
               bottomNavigationBar: BottomAppBar(
                 key: bottomKey,
                 elevation: 10.0,

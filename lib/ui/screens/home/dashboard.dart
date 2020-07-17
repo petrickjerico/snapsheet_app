@@ -18,7 +18,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     int accountsCount = Provider.of<HomepageViewModel>(context).accounts.length;
-    return accountsCount < 1
+    Widget body = accountsCount < 1
         ? EmptyState(
             onTap: () {
               showModalBottomSheet(
@@ -57,5 +57,15 @@ class _DashboardState extends State<Dashboard> {
               ),
             ],
           );
+
+    return Scaffold(
+      backgroundColor: kBlack,
+      body: body,
+      appBar: AppBar(
+        actions: <Widget>[
+          Icon(Icons.map),
+        ],
+      ),
+    );
   }
 }

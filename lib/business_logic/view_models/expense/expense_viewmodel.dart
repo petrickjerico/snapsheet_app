@@ -39,9 +39,9 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
       tempRecord.value = map['value'];
       tempRecord.dateTime = map['dateTime'];
       tempRecord.title = map['title'];
-      tempRecord.categoryUid = map['categoryUid'];
+      tempRecord.categoryUid = categories[map['categoryId']].uid;
       tempRecord.imagePath = map['imagePath'];
-      print(tempRecord);
+      print("IMAGETOTEMP: $tempRecord");
     }
     notifyListeners();
   }
@@ -142,7 +142,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     tempRecord = userData.records[recordIndex];
     editRecord = Record.of(tempRecord);
     isEditing = true;
-    print(tempRecord);
+    print("CHANGETEMP: $tempRecord");
     notifyListeners();
   }
 

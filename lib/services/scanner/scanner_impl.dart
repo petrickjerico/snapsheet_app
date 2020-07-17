@@ -42,14 +42,14 @@ class ScannerImpl implements Scanner {
     };
 
     String title = parser.findTitle(txt);
-    String categoryUid = parser.findCategoryUid();
+    int categoryId = parser.findCategoryId();
     double value = parser.findCost(txt.join(" "));
     DateTime date = parser.findDate(txt.join(" "));
 
     print('${value} ${date.toString()} ${title}');
 
     map['title'] = title;
-    map['categoryUid'] = categoryUid;
+    map['categoryId'] = categoryId;
     map['value'] = value;
     map['dateTime'] = date;
 

@@ -35,7 +35,7 @@ class HistoryScreen extends StatelessWidget {
               )
             : Column(
                 children: <Widget>[
-                  FilterSection(),
+                  Visibility(visible: false, child: FilterSection()),
                   SizedBox(
                     height: 10.0,
                   ),

@@ -8,7 +8,7 @@ class Recurring {
 
   String title;
   double value;
-  int categoryId;
+  String categoryUid;
   String accountUid;
   bool isIncome;
 
@@ -24,7 +24,7 @@ class Recurring {
     this.uid,
     this.title,
     this.value,
-    this.categoryId,
+    this.categoryUid,
     this.accountUid,
     this.isIncome,
     this.nextRecurrence,
@@ -39,7 +39,6 @@ class Recurring {
     return Recurring(
       title: "",
       value: 0,
-      categoryId: 0,
       isIncome: false,
       nextRecurrence: DateTime.now(),
       frequencyId: MONTHLY,
@@ -54,7 +53,7 @@ class Recurring {
     return Recurring(
       title: recurring.title,
       value: recurring.value,
-      categoryId: recurring.categoryId,
+      categoryUid: recurring.categoryUid,
       isIncome: recurring.isIncome,
       nextRecurrence: recurring.nextRecurrence,
       frequencyId: recurring.frequencyId,
@@ -71,7 +70,7 @@ class Recurring {
     return Recurring(
       title: json['title'],
       value: json['value'],
-      categoryId: json['categoryId'],
+      categoryUid: json['categoryUid'],
       accountUid: json['accountUid'],
       isIncome: json['isIncome'],
       nextRecurrence:
@@ -88,7 +87,7 @@ class Recurring {
     return {
       'title': title,
       'value': value,
-      'categoryId': categoryId,
+      'categoryUid': categoryUid,
       'accountUid': accountUid,
       'isIncome': isIncome,
       'nextRecurrence': nextRecurrence.millisecondsSinceEpoch,
@@ -124,7 +123,7 @@ class Recurring {
     return Record(
       title: title,
       value: value,
-      categoryId: categoryId,
+      categoryUid: categoryUid,
       accountUid: accountUid,
       isIncome: isIncome,
       dateTime: nextRecurrence,

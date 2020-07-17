@@ -16,6 +16,7 @@ const OTHERS = 9;
 List<Category> defaultCategories = [
   foodDrinks,
   transportation,
+  shopping,
   entertainment,
   health,
   education,
@@ -39,6 +40,14 @@ Category transportation = Category(
   color: Colors.orangeAccent,
   isIncome: false,
   index: TRANSPORTATION,
+);
+
+Category shopping = Category(
+  title: 'Shopping',
+  icon: Icon(FontAwesomeIcons.shoppingBag),
+  color: Colors.amberAccent,
+  isIncome: false,
+  index: SHOPPING,
 );
 
 Category entertainment = Category(

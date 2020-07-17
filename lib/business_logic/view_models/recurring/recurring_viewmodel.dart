@@ -8,6 +8,7 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
   UserData userData;
   List<Recurring> recurrings;
   List<Account> accounts;
+  List<Category> categories;
   Recurring tempRecurring;
   Recurring originalRecurring;
   bool isEditing = false;
@@ -16,6 +17,7 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
     this.userData = userData;
     this.recurrings = userData.recurrings;
     this.accounts = userData.accounts;
+    this.categories = userData.categories;
     addDueExpenses();
   }
 
@@ -49,6 +51,7 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
 
   void newRecurring() {
     tempRecurring = Recurring.newBlank();
+    tempRecurring.categoryUid = categories.first.uid;
     tempRecurring.accountUid = accounts.first.uid;
     notifyListeners();
   }
@@ -71,7 +74,7 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
 
   void changeCategory(int newCategoryId) {
     if (newCategoryId == INCOME) tempRecurring.isIncome = true;
-    tempRecurring.categoryId = newCategoryId;
+    tempRecurring.categoryUid = userData.categories[newCategoryId].uid;
     notifyListeners();
   }
 

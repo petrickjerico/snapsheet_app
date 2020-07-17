@@ -217,37 +217,35 @@ class _DateFormField extends StatefulWidget {
 }
 
 class __DateFormFieldState extends State<_DateFormField> {
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<BulkScanViewModel>(
       builder: (context, model, child) {
         DateTime date = model.records[widget.recordId].dateTime;
+        controller.text = DateFormat.yMMMd().format(date);
         return TextFormField(
-            initialValue: DateFormat.yMMMd().format(date),
             decoration:
                 kTitleEditInfoInputDecoration.copyWith(labelText: 'Date'),
             readOnly: true,
-            onTap: () {
-              showDatePicker(
+            controller: controller,
+            onTap: () async {
+              DateTime picked = await showDatePicker(
                 context: context,
                 initialDate: date,
                 firstDate: DateTime(date.year - 5),
                 lastDate: DateTime(date.year + 5),
-                builder: (context, child) {
-                  return Theme(
-                    data: ThemeData.dark(),
-                    child: child,
-                  );
-                },
-              ).then((value) {
-                model.changeDate(
-                    widget.recordId,
-                    DateTime(
-                      value.year,
-                      value.month,
-                      value.day,
-                    ));
-              });
+              );
+              if (picked != null) {
+                model.changeDate(widget.recordId, picked);
+              }
             });
       },
     );

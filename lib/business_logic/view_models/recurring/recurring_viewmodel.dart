@@ -51,6 +51,7 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
 
   void newRecurring() {
     tempRecurring = Recurring.newBlank();
+    tempRecurring.categoryUid = categories.first.uid;
     tempRecurring.accountUid = accounts.first.uid;
     notifyListeners();
   }

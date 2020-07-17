@@ -151,6 +151,7 @@ class _CategoryFormField extends StatelessWidget {
         String categoryUid = model.tempRecurring.categoryUid;
         Category category = model.userData.getThisCategory(categoryUid);
         return PopupMenuButton(
+          captureInheritedThemes: false,
           key: _menuKey,
           initialValue: category.index,
           onSelected: (input) {
@@ -196,6 +197,7 @@ class _AccountFormField extends StatelessWidget {
         String accountUid = model.tempRecurring.accountUid;
         Account account = model.getAccountFromUid(accountUid);
         return PopupMenuButton(
+          captureInheritedThemes: false,
           key: _menuKey,
           initialValue: account.index,
           onSelected: (input) {

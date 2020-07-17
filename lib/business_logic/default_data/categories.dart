@@ -32,6 +32,7 @@ Category foodDrinks = Category(
   color: Colors.redAccent,
   isIncome: false,
   index: FOODDRINKS,
+  isDefault: true,
 );
 
 Category transportation = Category(
@@ -40,6 +41,7 @@ Category transportation = Category(
   color: Colors.orangeAccent,
   isIncome: false,
   index: TRANSPORTATION,
+  isDefault: true,
 );
 
 Category shopping = Category(
@@ -48,6 +50,7 @@ Category shopping = Category(
   color: Colors.amberAccent,
   isIncome: false,
   index: SHOPPING,
+  isDefault: true,
 );
 
 Category entertainment = Category(
@@ -56,6 +59,7 @@ Category entertainment = Category(
   color: Colors.tealAccent,
   isIncome: false,
   index: ENTERTAINMENT,
+  isDefault: true,
 );
 
 Category health = Category(
@@ -64,6 +68,7 @@ Category health = Category(
   color: Colors.lightBlueAccent,
   isIncome: false,
   index: HEALTH,
+  isDefault: true,
 );
 
 Category education = Category(
@@ -72,6 +77,7 @@ Category education = Category(
   color: Colors.blueAccent,
   isIncome: false,
   index: EDUCATION,
+  isDefault: true,
 );
 
 Category electronics = Category(
@@ -80,6 +86,7 @@ Category electronics = Category(
   color: Colors.indigoAccent,
   isIncome: false,
   index: ELECTRONICS,
+  isDefault: true,
 );
 
 Category giving = Category(
@@ -88,6 +95,7 @@ Category giving = Category(
   color: Colors.purpleAccent,
   isIncome: false,
   index: GIVING,
+  isDefault: true,
 );
 
 Category income = Category(
@@ -96,11 +104,14 @@ Category income = Category(
   color: Colors.green,
   isIncome: true,
   index: INCOME,
+  isDefault: true,
 );
 
 Category others = Category(
-    title: 'Others',
-    icon: Icon(FontAwesomeIcons.shapes),
-    color: Colors.grey,
-    isIncome: false,
-    index: OTHERS);
+  title: 'Others',
+  icon: Icon(FontAwesomeIcons.shapes),
+  color: Colors.grey,
+  isIncome: false,
+  index: OTHERS,
+  isDefault: true,
+);

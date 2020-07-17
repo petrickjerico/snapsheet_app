@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/category/category_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/dialog/delete_dialog.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/config/decoration.dart';
 import 'package:snapsheetapp/ui/screens/categories/edit_category_popup.dart';
 
@@ -17,16 +18,20 @@ class CategoryTile extends StatelessWidget {
     return Consumer<CategoryViewModel>(
       builder: (context, model, child) {
         return ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+          contentPadding: EdgeInsets.symmetric(horizontal: 20),
           dense: true,
           leading: CircleAvatar(
+            radius: 25,
             backgroundColor: category.color.withOpacity(0.2),
             child: IconTheme(
-              data: IconThemeData(color: category.color, size: 15),
+              data: IconThemeData(color: category.color, size: 24),
               child: FaIcon(category.icon.icon),
             ),
           ),
-          title: Text(category.title),
+          title: Text(
+            category.title,
+            style: kHistoryRecordTitle.copyWith(color: category.color),
+          ),
           trailing: category.isDefault
               ? SizedBox.shrink()
               : Container(

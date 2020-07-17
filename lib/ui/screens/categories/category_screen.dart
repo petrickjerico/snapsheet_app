@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/category/category_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
+import 'package:snapsheetapp/ui/config/colors.dart';
 import 'package:snapsheetapp/ui/screens/categories/category_tile.dart';
 
 class CategoryScreen extends StatelessWidget {
@@ -14,7 +15,11 @@ class CategoryScreen extends StatelessWidget {
       create: (context) => CategoryViewModel(userData: userData),
       child: Consumer<CategoryViewModel>(builder: (context, model, child) {
         return Scaffold(
-          body: ListView.builder(
+          backgroundColor: kBlack,
+          body: ListView.separated(
+            separatorBuilder: (context, index) => Divider(
+              color: model.categories[index].color,
+            ),
             itemCount: model.categories.length,
             itemBuilder: (context, index) {
               return CategoryTile(category: model.categories[index]);

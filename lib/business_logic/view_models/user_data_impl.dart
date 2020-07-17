@@ -13,7 +13,7 @@ import 'package:sorted_list/sorted_list.dart';
 
 class UserData extends ChangeNotifier implements UserDataBaseModel {
   User user;
-  DatabaseService _db;
+  DatabaseServiceImpl _db;
   CloudStorageService _cloud;
 
   List<Record> _records =

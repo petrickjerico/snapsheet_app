@@ -18,7 +18,7 @@ class HomepageScreen extends StatelessWidget {
     'DASHBOARD',
     'RECORDS',
     'LIST OF ACCOUNTS',
-    'EDIT PROFILE',
+    'EDIT CATEGORIES',
   ];
 
   final List<Widget> _pageList = <Widget>[

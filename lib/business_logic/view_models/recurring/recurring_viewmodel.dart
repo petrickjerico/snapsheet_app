@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
-import 'package:snapsheetapp/business_logic/default_data/shops.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_basemodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';

@@ -1,16 +1,5 @@
+import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-
-const FOODDRINKS = 0;
-const TRANSPORTATION = 1;
-const SHOPPING = 2;
-const ENTERTAINMENT = 3;
-const HEALTH = 4;
-const EDUCATION = 5;
-const ELECTRONICS = 6;
-const GIVING = 7;
-const INCOME = 8;
-const OTHERS = 9;
-
 // Updated as of 3rd July
 
 Map<String, Shop> shops = {

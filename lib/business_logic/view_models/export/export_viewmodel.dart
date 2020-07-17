@@ -89,7 +89,7 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
       row.add(record.title);
       row.add(record.value);
       row.add(accounts[getAccountIndexFromUid(record.accountUid)].title);
-      row.add(default_categories[record.categoryId].title);
+      row.add(defaultCategories[record.categoryId].title);
       rows.add(row);
     }
 

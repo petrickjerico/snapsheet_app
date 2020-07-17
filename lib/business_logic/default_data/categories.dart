@@ -13,7 +13,7 @@ const GIVING = 7;
 const INCOME = 8;
 const OTHERS = 9;
 
-List<Category> default_categories = [
+List<Category> defaultCategories = [
   foodDrinks,
   transportation,
   entertainment,

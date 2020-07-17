@@ -789,13 +789,13 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                       },
                       itemBuilder: (context) {
                         List<String> categoryTitles =
-                            default_categories.map((e) => e.title).toList();
+                            defaultCategories.map((e) => e.title).toList();
                         return categoryTitles
                             .map(
                               (e) => PopupMenuItem(
                                 value: categoryTitles.indexOf(e),
                                 child: ListTile(
-                                  leading: default_categories[
+                                  leading: defaultCategories[
                                           categoryTitles.indexOf(e)]
                                       .icon,
                                   title: Text(e),
@@ -816,7 +816,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                             ),
                           ),
                           Text(
-                            default_categories[_catId].title,
+                            defaultCategories[_catId].title,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18.0,

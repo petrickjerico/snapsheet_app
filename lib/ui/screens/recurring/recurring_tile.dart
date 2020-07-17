@@ -15,7 +15,7 @@ class RecurringTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Category category = default_categories[recurring.categoryId];
+    Category category = defaultCategories[recurring.categoryId];
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
         return ListTile(

@@ -157,10 +157,10 @@ class _CategoryFormField extends StatelessWidget {
             print(model.tempRecurring.toString());
           },
           itemBuilder: (context) {
-            return default_categories
+            return defaultCategories
                 .map(
                   (category) => PopupMenuItem(
-                    value: default_categories.indexOf(category),
+                    value: defaultCategories.indexOf(category),
                     child: ListTile(
                       leading: category.icon,
                       title: Text(category.title),
@@ -170,7 +170,7 @@ class _CategoryFormField extends StatelessWidget {
                 .toList();
           },
           child: TextFormField(
-            initialValue: default_categories[categoryId].title,
+            initialValue: defaultCategories[categoryId].title,
             decoration:
                 kTitleEditInfoInputDecoration.copyWith(labelText: 'Category'),
             readOnly: true,

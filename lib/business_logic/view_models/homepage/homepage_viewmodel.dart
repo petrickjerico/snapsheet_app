@@ -142,9 +142,9 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
 
   List<PieChartSectionData> showingCategorySections() {
     return List.generate(
-      default_categories.length,
+      defaultCategories.length,
       (i) {
-        final Category category = default_categories[i];
+        final Category category = defaultCategories[i];
         final bool isTouched = i == touchedIndex;
         final bool isIncome = category.isIncome;
         final double opacity = isTouched ? 1 : 0.6;
@@ -186,7 +186,7 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   }
 
   double getCategoryTotal(int catId) {
-    if (default_categories[catId].isIncome) {
+    if (defaultCategories[catId].isIncome) {
       return 0;
     } else {
       double total = 0;

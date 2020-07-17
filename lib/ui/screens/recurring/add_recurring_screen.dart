@@ -148,19 +148,20 @@ class _CategoryFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
-        int categoryId = model.tempRecurring.categoryId;
+        String categoryUid = model.tempRecurring.categoryUid;
+        Category category = model.userData.getThisCategory(categoryUid);
         return PopupMenuButton(
           key: _menuKey,
-          initialValue: categoryId,
+          initialValue: category.index,
           onSelected: (input) {
             model.changeCategory(input);
             print(model.tempRecurring.toString());
           },
           itemBuilder: (context) {
-            return defaultCategories
+            return model.categories
                 .map(
                   (category) => PopupMenuItem(
-                    value: defaultCategories.indexOf(category),
+                    value: model.categories.indexOf(category),
                     child: ListTile(
                       leading: category.icon,
                       title: Text(category.title),
@@ -170,7 +171,7 @@ class _CategoryFormField extends StatelessWidget {
                 .toList();
           },
           child: TextFormField(
-            initialValue: defaultCategories[categoryId].title,
+            initialValue: category.title,
             decoration:
                 kTitleEditInfoInputDecoration.copyWith(labelText: 'Category'),
             readOnly: true,

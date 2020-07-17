@@ -14,10 +14,12 @@ import 'package:http/http.dart' show get;
 class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   UserData userData;
   List<Account> accounts;
+  List<Category> categories;
 
   void init(UserData userData) {
     this.userData = userData;
     accounts = userData.accounts;
+    categories = userData.categories;
   }
 
   Record tempRecord;
@@ -37,7 +39,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
       tempRecord.value = map['value'];
       tempRecord.dateTime = map['dateTime'];
       tempRecord.title = map['title'];
-      tempRecord.categoryId = map['categoryId'];
+      tempRecord.categoryUid = map['categoryUid'];
       tempRecord.imagePath = map['imagePath'];
       print(tempRecord);
     }
@@ -46,6 +48,12 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
 
   int getAccountIndexFromTempRecord() {
     return accounts.firstWhere((acc) => acc.uid == tempRecord.accountUid).index;
+  }
+
+  int getCategoryIndexFromTempRecord() {
+    return categories
+        .firstWhere((cat) => cat.uid == tempRecord.categoryUid)
+        .index;
   }
 
   void toggleScanned() {
@@ -126,6 +134,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   void newRecord() {
     tempRecord = Record.newBlankRecord();
     tempRecord.accountUid = accounts.first.uid;
+    tempRecord.categoryUid = categories.first.uid;
     notifyListeners();
   }
 
@@ -162,12 +171,12 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   }
 
   void changeCategory(int newCategoryId) {
-    tempRecord.categoryId = newCategoryId;
+    tempRecord.categoryUid = categories[newCategoryId].uid;
     notifyListeners();
   }
 
   void changeAccount(int newAccountIndex) {
-    tempRecord.accountUid = userData.accounts[newAccountIndex].uid;
+    tempRecord.accountUid = accounts[newAccountIndex].uid;
     notifyListeners();
   }
 

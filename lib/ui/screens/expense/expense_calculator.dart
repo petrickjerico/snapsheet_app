@@ -547,9 +547,11 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           _displayValue = model.tempRecord.value.toString();
           model.toggleScanned();
         }
-        _catId = model.tempRecord.categoryId;
-        Account account = model.userData.getThisAccount(
-            model.tempRecord.accountUid ?? model.userData.accounts.first.uid);
+        Category category =
+            model.userData.getThisCategory(model.tempRecord.categoryUid);
+        _catId = category.index;
+        Account account =
+            model.userData.getThisAccount(model.tempRecord.accountUid);
         _accId = account.index;
         return Column(children: <Widget>[
           Expanded(child: _getDisplay(model), flex: 4),

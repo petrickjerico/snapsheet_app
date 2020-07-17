@@ -86,6 +86,8 @@ class AuthServiceImpl implements AuthService {
       final FirebaseUser currentUser = await _auth.currentUser();
       assert(user.uid == currentUser.uid);
 
+      AdditionalUserInfo additionalUserInfo = result.additionalUserInfo;
+
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());

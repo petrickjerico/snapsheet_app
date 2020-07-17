@@ -6,6 +6,7 @@ class Record {
   String title;
   double value;
   DateTime dateTime;
+  String categoryUid;
   int categoryId;
   String accountUid;
   int accountId;

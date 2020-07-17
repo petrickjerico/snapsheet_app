@@ -4,7 +4,6 @@ import 'package:random_color/random_color.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 
 class Category {
-  static final _randomColor = RandomColor();
   String title;
   Icon icon;
   Color color;

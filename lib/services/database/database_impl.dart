@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:snapsheetapp/business_logic/default_data/accounts.dart';
+import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/default_data/records.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/services/database/database.dart';
@@ -23,13 +24,18 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   Future<void> initialize() async {
-    Map<int, String> map = {};
-    for (int i = 0; i < accounts.length; i++) {
-      String accountUid = await addAccount(accounts[i]);
-      map[i] = accountUid;
+    Map<int, String> accountMap = {};
+    Map<int, String> categoryMap = {};
+    for (int i = 0; i < demoAccounts.length; i++) {
+      String accountUid = await addAccount(demoAccounts[i]);
+      accountMap[i] = accountUid;
     }
-    for (Record record in records) {
-      record.accountUid = map[record.accountId];
+    for (int i = 0; i < defaultCategories.length; i++) {
+      String categoryUid = await addCategory(defaultCategories[i]);
+      categoryMap[i] = categoryUid;
+    }
+    for (Record record in demoRecords) {
+      record.accountUid = accountMap[record.accountId];
       await addRecord(record);
     }
   }

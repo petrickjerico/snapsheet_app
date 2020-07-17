@@ -4,16 +4,15 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/export/export_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/services/auth/auth_impl.dart';
 import 'package:snapsheetapp/ui/components/scanner/receipt_preview.dart';
+import 'package:snapsheetapp/ui/screens/categories/category_screen.dart';
 import 'package:snapsheetapp/ui/screens/recurring/add_recurring_screen.dart';
 import 'package:snapsheetapp/ui/screens/recurring/recurring_screen.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 import 'package:snapsheetapp/ui/screens/splash_screen.dart';
-import 'package:snapsheetapp/ui/shared/splash.dart';
 
 import 'business_logic/view_models/homepage/homepage_viewmodel.dart';
 
@@ -54,7 +53,7 @@ class Snapsheet extends StatelessWidget {
           ExpenseScreen.id: (context) => ExpenseScreen(),
           EditExpenseInfoScreen.id: (context) => EditExpenseInfoScreen(),
           ExportScreen.id: (context) => ExportScreen(),
-//          AddCategoryScreen.id: (context) => AddCategoryScreen(),
+          CategoryScreen.id: (context) => CategoryScreen(),
           EditProfileScreen.id: (context) => EditProfileScreen(),
           SettingsScreen.id: (context) => SettingsScreen(),
           BulkScanScreen.id: (context) => BulkScanScreen(),

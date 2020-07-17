@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:snapsheetapp/business_logic/default_data/accounts.dart';
+import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/default_data/records.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/services/database/database.dart';
@@ -19,16 +20,23 @@ class DatabaseServiceImpl implements DatabaseService {
     recordCollection = userDocument.collection('records');
     accountCollection = userDocument.collection('accounts');
     recurringCollection = userDocument.collection('recurring');
+    categoryCollection = userDocument.collection('category');
   }
 
   Future<void> initialize() async {
-    Map<int, String> map = {};
-    for (int i = 0; i < accounts.length; i++) {
-      String accountUid = await addAccount(accounts[i]);
-      map[i] = accountUid;
+    Map<int, String> accountMap = {};
+    Map<int, String> categoryMap = {};
+    for (int i = 0; i < demoAccounts.length; i++) {
+      String accountUid = await addAccount(demoAccounts[i]);
+      accountMap[i] = accountUid;
     }
-    for (Record record in records) {
-      record.accountUid = map[record.accountId];
+    for (int i = 0; i < defaultCategories.length; i++) {
+      String categoryUid = await addCategory(defaultCategories[i]);
+      categoryMap[i] = categoryUid;
+    }
+    for (Record record in demoRecords) {
+      record.accountUid = accountMap[record.accountId];
+      record.categoryUid = categoryMap[record.categoryId];
       await addRecord(record);
     }
   }
@@ -64,6 +72,16 @@ class DatabaseServiceImpl implements DatabaseService {
     return uid;
   }
 
+  @override
+  Future<String> addCategory(Category category) async {
+    final categoryDocument = categoryCollection.document();
+    final uid = categoryDocument.documentID;
+    Map<String, dynamic> json = category.toJson();
+    json['uid'] = uid;
+    categoryDocument.setData(json);
+    return uid;
+  }
+
   /// READ
   @override
   Future<List<Record>> getRecords() async {
@@ -87,6 +105,14 @@ class DatabaseServiceImpl implements DatabaseService {
     return snapshots.map((doc) => Recurring.fromFirestore(doc)).toList();
   }
 
+  @override
+  Future<List<Category>> getCategories() async {
+    List<DocumentSnapshot> snapshots = await categoryCollection
+        .getDocuments()
+        .then((value) => value.documents);
+    return snapshots.map((doc) => Category.fromFirestore(doc)).toList();
+  }
+
   /// UPDATE
   @override
   Future<void> updateRecord(Record record) async {
@@ -103,6 +129,11 @@ class DatabaseServiceImpl implements DatabaseService {
     recurringCollection.document(recurring.uid).setData(recurring.toJson());
   }
 
+  @override
+  Future<void> updateCategory(Category category) async {
+    categoryCollection.document(category.uid).setData(category.toJson());
+  }
+
   /// DELETE
   @override
   Future<void> deleteRecord(Record record) async {
@@ -117,5 +148,10 @@ class DatabaseServiceImpl implements DatabaseService {
   @override
   Future<void> deleteRecurring(Recurring recurring) async {
     recurringCollection.document(recurring.uid).delete();
+  }
+
+  @override
+  Future<void> deleteCategory(Category category) async {
+    categoryCollection.document(category.uid).delete();
   }
 }

@@ -4,20 +4,24 @@ abstract class UserDataBaseModel {
   // CREATE
   Future addRecord(Record record);
   Future addAccount(Account account);
-//  Future addCategory(Category category);
+  Future addRecurring(Recurring recurring);
+  Future addCategory(Category category);
 
   // READ
   List<Record> get records;
   List<Account> get accounts;
-//  List<Category> get categories;
+  List<Recurring> get recurrings;
+  List<Category> get categories;
 
   // UPDATE
   Future<void> updateRecord(Record record);
   Future<void> updateAccount(Account account);
-//  Future<void> updateCategory(int index, Category category);
+  Future<void> updateRecurring(Recurring recurring);
+  Future<void> updateCategory(Category category);
 
   // DELETE
   Future<void> deleteRecord(Record record);
   Future<void> deleteAccount(Account account);
-//  Future<void> deleteCategory(Category category);
+  Future<void> deleteRecurring(Recurring recurring);
+  Future<void> deleteCategory(Category category);
 }

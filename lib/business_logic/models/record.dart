@@ -6,8 +6,11 @@ class Record {
   String title;
   double value;
   DateTime dateTime;
+  String categoryUid;
+  // CategoryId only used for initialization of default categories
   int categoryId;
   String accountUid;
+  // AccountId only used for initialization of demo accounts
   int accountId;
   bool isIncome;
   String receiptURL;
@@ -20,7 +23,6 @@ class Record {
       title: "",
       value: 0,
       dateTime: DateTime.now(),
-      categoryId: 0,
       isIncome: false,
       hasCloudImage: false,
     );
@@ -30,7 +32,7 @@ class Record {
     this.title,
     this.value,
     this.dateTime,
-    this.categoryId,
+    this.categoryUid,
     this.accountUid,
     this.isIncome = false,
     this.imagePath,
@@ -44,7 +46,7 @@ class Record {
     this.title,
     this.value,
     this.dateTime,
-    this.categoryId,
+    this.categoryUid,
     this.accountUid,
     this.isIncome,
     this.receiptURL,
@@ -58,7 +60,7 @@ class Record {
       title: record.title,
       value: record.value,
       dateTime: record.dateTime,
-      categoryId: record.categoryId,
+      categoryUid: record.categoryUid,
       accountUid: record.accountUid,
       isIncome: record.isIncome,
       receiptURL: record.receiptURL,
@@ -75,7 +77,7 @@ class Record {
       title: json['title'],
       value: json['value'],
       dateTime: DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
-      categoryId: json['categoryId'],
+      categoryUid: json['categoryUid'],
       accountUid: json['accountUid'],
       isIncome: json['isIncome'],
       receiptURL: json['receiptURL'],
@@ -90,7 +92,7 @@ class Record {
       'title': title,
       'value': value,
       'dateTime': dateTime.millisecondsSinceEpoch,
-      'categoryId': categoryId,
+      'categoryUid': categoryUid,
       'accountUid': accountUid,
       'isIncome': isIncome,
       'receiptURL': receiptURL,
@@ -106,7 +108,7 @@ class Record {
       'title': title,
       'value': value,
       'dateTime': dateTime,
-      'categoryId': categoryId,
+      'categoryUid': categoryUid,
       'accountUid': accountUid,
       'isIncome': isIncome,
       'receiptURL': receiptURL,

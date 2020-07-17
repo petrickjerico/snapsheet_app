@@ -1,3 +1,4 @@
+import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/default_data/shops.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/services/parser/parser.dart';
@@ -101,9 +102,11 @@ class ParserImpl implements Parser {
   List<Function> dateFormats = [ddmmyy, yyyymmdd];
 
   static DateTime ddmmyy(String input) {
-    RegExp date = RegExp(r"(\d{2}/\d{2}/\d{2,4}|\d{2} \w{3} \d{2,4})");
+    RegExp date = RegExp(
+        r"(\d{2}/\d{2}/\d{2,4}|\d{2} (jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec) \d{2|4})");
     String match = date.stringMatch(input);
     if (match == null) return null;
+    print("DATE CAPTURED: $match");
     String strDate;
     if (match.length == 8) {
       // DDMMYY

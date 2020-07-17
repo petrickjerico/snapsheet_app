@@ -43,6 +43,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   }
 
   Future assetsToImages() async {
+    images.clear();
     final directory = await getApplicationDocumentsDirectory();
     String path;
     for (Asset asset in assets) {
@@ -56,16 +57,18 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   }
 
   Future imagesToRecords() async {
+    records.clear();
     for (File image in images) {
       Map<String, dynamic> map = await scanner.getDataFromImage(image);
       Record record = Record.fromReceipt(
         title: map['title'],
         value: map['value'],
         dateTime: map['dateTime'],
-        categoryId: map['categoryId'],
+        categoryUid: userData.categories[map['categoryId']].uid,
         accountUid: selectedAccountUid,
         imagePath: image.path,
       );
+      print(record.toString());
       records.add(record);
       isDelete.add(false);
     }
@@ -94,7 +97,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   }
 
   void changeCategory(int recordId, int newCategoryId) {
-    records[recordId].categoryId = newCategoryId;
+    records[recordId].categoryUid = userData.categories[newCategoryId].uid;
     notifyListeners();
   }
 }

@@ -17,6 +17,8 @@ class RecurringTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
+        Category category =
+            model.userData.getThisCategory(recurring.categoryUid);
         return ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 10),
           dense: true,

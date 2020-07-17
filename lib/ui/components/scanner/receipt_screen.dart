@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/button/delete_button.dart';
@@ -169,30 +168,30 @@ class _CategoryFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<BulkScanViewModel>(
       builder: (context, model, child) {
-        int categoryId = model.records[recordId].categoryId;
+        String categoryUid = model.records[recordId].categoryUid;
+        Category category = model.userData.getThisCategory(categoryUid);
         return PopupMenuButton(
+          captureInheritedThemes: false,
           key: _menuKey,
-          initialValue: categoryId,
+          initialValue: category.index,
           onSelected: (input) {
             model.changeCategory(recordId, input);
           },
           itemBuilder: (context) {
-            List<String> categoryTitles =
-                categories.map((category) => category.title).toList();
-            return categoryTitles
+            return model.userData.categories
                 .map(
-                  (e) => PopupMenuItem(
-                    value: categoryTitles.indexOf(e),
+                  (category) => PopupMenuItem(
+                    value: model.userData.categories.indexOf(category),
                     child: ListTile(
-                      leading: categories[categoryTitles.indexOf(e)].icon,
-                      title: Text(e),
+                      leading: category.icon,
+                      title: Text(category.title),
                     ),
                   ),
                 )
                 .toList();
           },
           child: TextFormField(
-            initialValue: categories[categoryId].title,
+            initialValue: category.title,
             decoration:
                 kTitleEditInfoInputDecoration.copyWith(labelText: 'Category'),
             readOnly: true,
@@ -207,42 +206,45 @@ class _CategoryFormField extends StatelessWidget {
   }
 }
 
-class _DateFormField extends StatelessWidget {
+class _DateFormField extends StatefulWidget {
   final int recordId;
 
   _DateFormField({this.recordId});
 
   @override
+  __DateFormFieldState createState() => __DateFormFieldState();
+}
+
+class __DateFormFieldState extends State<_DateFormField> {
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<BulkScanViewModel>(
       builder: (context, model, child) {
-        DateTime date = model.records[recordId].dateTime;
+        DateTime date = model.records[widget.recordId].dateTime;
+        controller.text = DateFormat.yMMMd().format(date);
         return TextFormField(
-            initialValue: DateFormat.yMMMd().format(date),
             decoration:
                 kTitleEditInfoInputDecoration.copyWith(labelText: 'Date'),
             readOnly: true,
-            onTap: () {
-              showDatePicker(
+            controller: controller,
+            onTap: () async {
+              DateTime picked = await showDatePicker(
                 context: context,
                 initialDate: date,
                 firstDate: DateTime(date.year - 5),
                 lastDate: DateTime(date.year + 5),
-                builder: (context, child) {
-                  return Theme(
-                    data: ThemeData.dark(),
-                    child: child,
-                  );
-                },
-              ).then((value) {
-                model.changeDate(
-                    recordId,
-                    DateTime(
-                      value.year,
-                      value.month,
-                      value.day,
-                    ));
-              });
+              );
+              if (picked != null) {
+                model.changeDate(widget.recordId, picked);
+              }
             });
       },
     );

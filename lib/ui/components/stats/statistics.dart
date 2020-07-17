@@ -224,10 +224,10 @@ class _StatisticsState extends State<Statistics>
                                   swapAnimationDuration: Duration(seconds: 0),
                                 ),
                                 Visibility(
-                                  visible: categories
+                                  visible: defaultCategories
                                               .where((category) =>
                                                   model.getCategoryTotal(
-                                                      categories
+                                                      defaultCategories
                                                           .indexOf(category)) >
                                                   0)
                                               .length >
@@ -253,10 +253,10 @@ class _StatisticsState extends State<Statistics>
                           Wrap(
                             direction: Axis.horizontal,
                             alignment: WrapAlignment.center,
-                            children: categories
+                            children: defaultCategories
                                 .where((category) =>
                                     model.getCategoryTotal(
-                                        categories.indexOf(category)) >
+                                        defaultCategories.indexOf(category)) >
                                     0)
                                 .map(
                               (category) {

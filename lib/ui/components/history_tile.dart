@@ -31,7 +31,8 @@ class _HistoryTileState extends State<HistoryTile> {
   Widget build(BuildContext context) {
     bool isAlreadyAdded = false;
     return Consumer<ExpenseViewModel>(builder: (context, model, child) {
-      Category category = categories[widget.record.categoryId];
+      Category category =
+          model.userData.getThisCategory(widget.record.categoryUid);
       return OpenContainer<bool>(
         closedBuilder: (_, openContainer) {
           return Dismissible(

@@ -182,7 +182,7 @@ class CategoryIcons extends StatelessWidget {
         alignment: WrapAlignment.start,
         runAlignment: WrapAlignment.start,
         direction: Axis.horizontal,
-        children: categories
+        children: defaultCategories
             .map(
               (category) => CircleAvatar(
                 radius: 15,

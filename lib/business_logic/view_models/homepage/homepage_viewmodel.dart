@@ -5,10 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
-import 'package:snapsheetapp/ui/screens/home/dashboard.dart';
-import 'package:snapsheetapp/ui/screens/home/edit_accounts_order.dart';
-import 'package:snapsheetapp/ui/screens/home/history_screen.dart';
-import 'package:snapsheetapp/ui/screens/sidebar/editprofile_screen.dart';
 
 import 'homepage_basemodel.dart';
 
@@ -152,9 +148,10 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
 
   List<PieChartSectionData> showingCategorySections() {
     return List.generate(
-      categories.length,
+      userData.categories.length,
       (i) {
-        final Category category = categories[i];
+
+        final Category category = userData.categories[i];
         final bool isTouched = i == donutTouchedIndex;
         final bool isIncome = category.isIncome;
         final double opacity = isTouched ? 1 : 0.6;
@@ -196,12 +193,13 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   }
 
   double getCategoryTotal(int catId) {
-    if (categories[catId].isIncome) {
+    Category category = userData.categories[catId];
+    if (category.isIncome) {
       return 0;
     } else {
       double total = 0;
       for (Record rec in records) {
-        if (recordMatchesStats(rec) && rec.categoryId == catId) {
+        if (recordMatchesStats(rec) && rec.categoryUid == category.uid) {
           total += rec.value;
         }
       }

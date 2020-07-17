@@ -780,7 +780,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                   ),
                   Expanded(
                     child: PopupMenuButton(
-                      initialValue: model.tempRecord.categoryId,
+                      initialValue: model.getCategoryIndexFromTempRecord(),
                       onSelected: (input) {
                         setState(() {
                           _catId = input;
@@ -790,17 +790,14 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                         });
                       },
                       itemBuilder: (context) {
-                        List<String> categoryTitles =
-                            defaultCategories.map((e) => e.title).toList();
-                        return categoryTitles
+                        print(model.categories);
+                        return model.categories
                             .map(
-                              (e) => PopupMenuItem(
-                                value: categoryTitles.indexOf(e),
+                              (category) => PopupMenuItem(
+                                value: category.index,
                                 child: ListTile(
-                                  leading: defaultCategories[
-                                          categoryTitles.indexOf(e)]
-                                      .icon,
-                                  title: Text(e),
+                                  leading: category.icon,
+                                  title: Text(category.title),
                                 ),
                               ),
                             )
@@ -818,7 +815,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                             ),
                           ),
                           Text(
-                            defaultCategories[_catId].title,
+                            model.categories[_catId].title,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18.0,
@@ -839,13 +836,12 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                         });
                       },
                       itemBuilder: (context) {
-                        List<Account> accounts = model.userData.accounts;
-                        return accounts
+                        return model.accounts
                             .map(
-                              (e) => PopupMenuItem(
-                                value: e.index,
+                              (account) => PopupMenuItem(
+                                value: account.index,
                                 child: ListTile(
-                                  title: Text(e.title),
+                                  title: Text(account.title),
                                 ),
                               ),
                             )
@@ -863,7 +859,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                             ),
                           ),
                           Text(
-                            model.userData.accounts[_accId].title,
+                            model.accounts[_accId].title,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18.0,

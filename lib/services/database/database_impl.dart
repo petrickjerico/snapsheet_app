@@ -36,6 +36,7 @@ class DatabaseServiceImpl implements DatabaseService {
     }
     for (Record record in demoRecords) {
       record.accountUid = accountMap[record.accountId];
+      record.categoryUid = categoryMap[record.categoryId];
       await addRecord(record);
     }
   }

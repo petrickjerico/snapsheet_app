@@ -10,6 +10,7 @@ import 'package:snapsheetapp/ui/components/empty_state.dart';
 import 'package:snapsheetapp/ui/components/reorderable_list.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/expense/expense_screen.dart';
+import 'package:snapsheetapp/ui/screens/sidebar/sidebar_menu.dart';
 
 import 'add_account_popup.dart';
 
@@ -25,7 +26,7 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
     return Consumer<HomepageViewModel>(
       builder: (context, model, child) {
         int accountsCount = model.accounts.length;
-        return accountsCount < 1
+        Widget body = accountsCount < 1
             ? EmptyState(
                 onTap: () {
                   showModalBottomSheet(
@@ -92,6 +93,25 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
                   ),
                 ],
               );
+        return Scaffold(
+          backgroundColor: kBlack,
+          drawer: SidebarMenu(),
+          body: body,
+          appBar: AppBar(
+            title: Text('LIST OF ACCOUNTS'),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.more_vert),
+                onPressed: () {
+                  print('pressed');
+                },
+                splashColor: Colors.transparent,
+              )
+            ],
+          ),
+        );
       },
     );
   }

@@ -40,7 +40,7 @@ class HomepageScreen extends StatelessWidget {
             return Scaffold(
               extendBody: true,
               resizeToAvoidBottomInset: false,
-              backgroundColor: kBlack,
+              drawer: SidebarMenu(),
               body: _pageList[HomepageViewModel.currentPage],
               bottomNavigationBar: BottomAppBar(
                 key: bottomKey,

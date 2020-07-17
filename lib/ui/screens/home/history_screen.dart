@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,6 +12,7 @@ import 'package:snapsheetapp/ui/components/empty_state.dart';
 import 'package:snapsheetapp/ui/components/history_tile.dart';
 import 'package:snapsheetapp/ui/config/colors.dart';
 import 'package:snapsheetapp/ui/config/decoration.dart';
+import 'package:snapsheetapp/ui/screens/sidebar/sidebar_menu.dart';
 
 import 'add_account_popup.dart';
 
@@ -22,7 +24,8 @@ class HistoryScreen extends StatelessWidget {
         int recordsCount = model.records.length;
         print(recordsCount);
         print(model.records);
-        return recordsCount < 1
+
+        Widget body = recordsCount < 1
             ? EmptyState(
                 icon: Icon(
                   FontAwesomeIcons.solidMeh,
@@ -61,6 +64,25 @@ class HistoryScreen extends StatelessWidget {
                   ),
                 ],
               );
+        return Scaffold(
+          backgroundColor: kBlack,
+          drawer: SidebarMenu(),
+          body: body,
+          appBar: AppBar(
+            title: Text('RECORDS'),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.more_vert),
+                onPressed: () {
+                  print('pressed');
+                },
+                splashColor: Colors.transparent,
+              )
+            ],
+          ),
+        );
       },
     );
   }

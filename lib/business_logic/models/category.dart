@@ -9,19 +9,28 @@ class Category {
   Color color;
   bool isIncome;
   int index;
+  bool isDefault;
   String uid;
 
-  Category.unnamed(int index, String title, Icon icon,
+  Category.unnamed(int index, String title, Icon icon, bool isDefault,
       [Color color, bool isIncome]) {
     this.index = index;
     this.title = title;
     this.icon = icon;
+    this.isDefault = isDefault;
     this.color = color;
     this.isIncome = isIncome ?? false;
   }
 
-  Category(
-      {this.title, this.icon, this.color, this.isIncome, this.index, this.uid});
+  Category({
+    this.title,
+    this.icon,
+    this.color,
+    this.isIncome,
+    this.index,
+    this.isDefault,
+    this.uid,
+  });
 
   factory Category.of(Category category) {
     return Category(
@@ -30,6 +39,7 @@ class Category {
       color: category.color,
       isIncome: category.isIncome,
       index: category.index,
+      isDefault: category.isDefault,
       uid: category.uid,
     );
   }
@@ -44,6 +54,7 @@ class Category {
       color: Color(json['color']),
       isIncome: json['isIncome'],
       index: json['index'],
+      isDefault: json['isDefault'],
       uid: json['uid'],
     );
   }
@@ -57,6 +68,7 @@ class Category {
       'color': color.value,
       'isIncome': isIncome,
       'index': index,
+      'isDefault': isDefault,
       'uid': uid
     };
   }

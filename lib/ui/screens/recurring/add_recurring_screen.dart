@@ -156,7 +156,6 @@ class _CategoryFormField extends StatelessWidget {
           initialValue: category.index,
           onSelected: (input) {
             model.changeCategory(input);
-            print(model.tempRecurring.toString());
           },
           itemBuilder: (context) {
             return model.categories

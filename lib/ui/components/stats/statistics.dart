@@ -4,11 +4,14 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
+import 'package:snapsheetapp/business_logic/models/account.dart';
+import 'package:snapsheetapp/business_logic/models/record.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/stats/stats_card.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/expense/expense_screen.dart';
+import 'package:sorted_list/sorted_list.dart';
 import '../history_tile.dart';
 import '../empty_state.dart';
 import 'indicator.dart';
@@ -19,10 +22,17 @@ class Statistics extends StatefulWidget {
   _StatisticsState createState() => _StatisticsState();
 }
 
-class _StatisticsState extends State<Statistics> {
+class _StatisticsState extends State<Statistics>
+    with AutomaticKeepAliveClientMixin {
   final _controller = ScrollController();
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Consumer<HomepageViewModel>(
       builder: (context, model, child) {
         if (model.selectedAccountIsEmpty()) {
@@ -45,8 +55,10 @@ class _StatisticsState extends State<Statistics> {
           );
         } else {
           Color _contentColor = Colors.white54;
+
           return FadingEdgeScrollView.fromScrollView(
             child: ListView(
+              addAutomaticKeepAlives: true,
               controller: _controller,
               children: <Widget>[
                 Visibility(
@@ -195,7 +207,7 @@ class _StatisticsState extends State<Statistics> {
                                                 .touchedSectionIndex !=
                                             null) {
                                           setState(() {
-                                            model.updateTouchedIndex(
+                                            model.updateDonutTouchedIndex(
                                                 pieTouchResponse
                                                     .touchedSectionIndex);
                                           });
@@ -220,16 +232,17 @@ class _StatisticsState extends State<Statistics> {
                                                   0)
                                               .length >
                                           1 &&
-                                      model.touchedIndex == null,
+                                      model.donutTouchedIndex == null,
                                   child: Center(
-                                      child: Text(
-                                    'Tap section for details.',
-                                    style: TextStyle(
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: 10,
-                                      color: _contentColor,
+                                    child: Text(
+                                      'Tap section for details.',
+                                      style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 10,
+                                        color: _contentColor,
+                                      ),
                                     ),
-                                  )),
+                                  ),
                                 )
                               ],
                             ),
@@ -260,6 +273,104 @@ class _StatisticsState extends State<Statistics> {
                         ],
                       ),
                     ),
+                  ),
+                ),
+                StatsCard(
+                  title: 'Amount Trend',
+                  colour: _contentColor,
+                  child: Column(
+                    children: <Widget>[
+                      AspectRatio(
+                        aspectRatio: 1.5,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(18)),
+                          ),
+                          child: Padding(
+                            padding:
+                                EdgeInsets.only(right: 20, top: 40, bottom: 10),
+                            child: LineChart(
+                              LineChartData(
+                                lineTouchData: LineTouchData(
+                                  touchTooltipData: LineTouchTooltipData(
+                                    tooltipBgColor:
+                                        Colors.white.withOpacity(0.3),
+                                  ),
+                                  touchCallback:
+                                      (LineTouchResponse touchResponse) {},
+                                  handleBuiltInTouches: true,
+                                ),
+                                gridData: FlGridData(
+                                  verticalInterval: model.getLimits()[5],
+                                  horizontalInterval: model.getLimits()[4],
+                                  show: true,
+                                ),
+                                titlesData: FlTitlesData(
+                                  bottomTitles: SideTitles(
+                                    showTitles: true,
+                                    reservedSize: 22,
+                                    textStyle: TextStyle(
+                                      color: _contentColor,
+                                      fontSize: 12,
+                                    ),
+                                    margin: 10,
+                                    interval: model.getLimits()[5],
+                                    getTitles: (value) {
+                                      var date = DateTime.now()
+                                          .add(Duration(days: value.toInt()));
+                                      return '${date.day}/${date.month}';
+                                    },
+                                  ),
+                                  leftTitles: SideTitles(
+                                    showTitles: true,
+                                    textStyle: TextStyle(
+                                      color: _contentColor,
+                                      fontSize: 12,
+                                    ),
+                                    interval: model.getLimits()[4],
+                                    margin: 8,
+                                    reservedSize: 30,
+                                  ),
+                                ),
+                                borderData: FlBorderData(
+                                  show: true,
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: _contentColor,
+                                      width: 2,
+                                    ),
+                                    left: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                    right: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                    top: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                ),
+                                minX: model.getLimits()[0],
+                                maxX: model.getLimits()[1],
+                                minY: model.getLimits()[2],
+                                maxY: model.getLimits()[3],
+                                lineBarsData: model.linesBarData1(),
+                              ),
+                              swapAnimationDuration:
+                                  Duration(milliseconds: 250),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'Tap and hold to see the balance at that time.',
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 10,
+                          color: _contentColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 StatsCard(

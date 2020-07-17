@@ -17,7 +17,7 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   List<Account> accounts;
   List<Record> records;
   List<bool> isSelected = [];
-  int touchedIndex;
+  int donutTouchedIndex;
   Account originalAccount;
   Account tempAccount;
 
@@ -68,6 +68,16 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     if (selectedAccountIndex != -1) return accounts[selectedAccountIndex];
   }
 
+  List<Account> getAccounts() {
+    return selectedAccountIndex == -1
+        ? accounts
+        : accounts
+            .where((account) =>
+                selectedAccountIndex == -1 ||
+                account.index == selectedAccountIndex)
+            .toList();
+  }
+
   void addAccount(String title, Color color) {
     userData.addAccount(
         Account(title: title, color: color, index: accounts.length));
@@ -105,7 +115,7 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
 
   void selectAccount(int newIndex) {
     selectedAccountIndex = newIndex;
-    touchedIndex = null;
+    donutTouchedIndex = null;
     if (newIndex == -1) isSelected.forEach((element) => element = true);
     notifyListeners();
   }
@@ -128,11 +138,11 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     return sum;
   }
 
-  void updateTouchedIndex(int i) {
-    if (touchedIndex == i) {
-      touchedIndex = null;
+  void updateDonutTouchedIndex(int i) {
+    if (donutTouchedIndex == i) {
+      donutTouchedIndex = null;
     } else {
-      touchedIndex = i;
+      donutTouchedIndex = i;
     }
   }
 
@@ -140,8 +150,9 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     return List.generate(
       userData.categories.length,
       (i) {
+
         final Category category = userData.categories[i];
-        final bool isTouched = i == touchedIndex;
+        final bool isTouched = i == donutTouchedIndex;
         final bool isIncome = category.isIncome;
         final double opacity = isTouched ? 1 : 0.6;
         final value = getCategoryTotal(i);
@@ -240,5 +251,129 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
 
   bool isAccountSelected(Account acc) {
     return acc.index == selectedAccountIndex;
+  }
+
+  ///
+
+  List<MapEntry<double, double>> getXYMapValues() {
+    DateTime now = DateTime.now();
+    double total = 0;
+    List<Record> recs =
+        records.where((rec) => recordMatchesStats(rec)).toList();
+
+    Map<double, double> spotsMap = {};
+
+    recs.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+
+    for (Record rec in recs) {
+      var val = rec.isIncome ? rec.value : -rec.value;
+      var dateDifference = rec.dateTime.difference(now).inDays.toDouble();
+      total += val;
+      spotsMap.update(
+        dateDifference,
+        (value) => value + val,
+        ifAbsent: () => total,
+      );
+    }
+
+    var copy = List.of(spotsMap.entries);
+
+    for (int i = 0; i < copy.length; i++) {
+      spotsMap.putIfAbsent(
+          copy[i].key - 1, () => i == 0 ? 0 : copy[i - 1].value);
+    }
+
+    var finalData = spotsMap.entries.toList();
+
+    finalData.sort((a, b) => a.key.compareTo(b.key));
+    finalData.add(MapEntry(0, finalData.last.value));
+
+    return finalData;
+  }
+
+  List<double> getLimits() {
+    var spotsMap = getXYMapValues();
+    double minDate;
+    double minValue;
+    double maxDate;
+    double maxValue;
+    bool first = true;
+
+    void syncLimits(double xVal, double yVal) {
+      if (first) {
+        minDate = xVal;
+        maxDate = xVal;
+        minValue = yVal;
+        maxValue = yVal;
+        first = false;
+      } else {
+        if (minDate > xVal) {
+          minDate = xVal;
+        }
+
+        if (maxDate < xVal) {
+          maxDate = xVal;
+        }
+
+        if (minValue > yVal) {
+          minValue = yVal;
+        }
+
+        if (maxValue < yVal) {
+          maxValue = yVal;
+        }
+      }
+    }
+
+    for (var entry in spotsMap) {
+      syncLimits(entry.key, entry.value);
+    }
+
+    print(minDate);
+    print(maxDate);
+    print(minValue);
+    print(maxValue);
+    print((maxDate - minDate).roundToDouble());
+    print((maxValue - minValue).roundToDouble());
+
+    return [
+      minDate,
+      maxDate,
+      minValue,
+      maxValue,
+      (maxDate - minDate).roundToDouble() / 4,
+      (maxValue - minValue).roundToDouble() / 3,
+    ];
+  }
+
+  List<FlSpot> getAccountSpots() {
+    List<MapEntry<double, double>> finalData = getXYMapValues();
+
+    print(finalData);
+
+    return finalData.map((pair) => FlSpot(pair.key, pair.value)).toList();
+  }
+
+  List<LineChartBarData> linesBarData1() {
+    return [
+      LineChartBarData(
+        spots: getAccountSpots(),
+        curveSmoothness: 0.01,
+        isCurved: true,
+        colors: [
+          selectedAccountIndex == -1
+              ? Colors.white
+              : getSelectedAccount().color,
+        ],
+        barWidth: 2,
+        isStrokeCapRound: true,
+        dotData: FlDotData(
+          show: false,
+        ),
+        belowBarData: BarAreaData(
+          show: false,
+        ),
+      )
+    ];
   }
 }

@@ -8,6 +8,7 @@ import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmo
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/components/button/add_record_fab_button.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/screens/categories/category_screen.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 
 class HomepageScreen extends StatelessWidget {
@@ -25,7 +26,7 @@ class HomepageScreen extends StatelessWidget {
     Dashboard(),
     HistoryScreen(),
     EditAccountsOrder(),
-    EditProfileScreen(),
+    CategoryScreen(),
   ];
 
   @override

@@ -19,6 +19,7 @@ class DatabaseServiceImpl implements DatabaseService {
     recordCollection = userDocument.collection('records');
     accountCollection = userDocument.collection('accounts');
     recurringCollection = userDocument.collection('recurring');
+    categoryCollection = userDocument.collection('category');
   }
 
   Future<void> initialize() async {
@@ -64,6 +65,16 @@ class DatabaseServiceImpl implements DatabaseService {
     return uid;
   }
 
+  @override
+  Future<String> addCategory(Category category) async {
+    final categoryDocument = categoryCollection.document();
+    final uid = categoryDocument.documentID;
+    Map<String, dynamic> json = category.toJson();
+    json['uid'] = uid;
+    categoryDocument.setData(json);
+    return uid;
+  }
+
   /// READ
   @override
   Future<List<Record>> getRecords() async {
@@ -87,6 +98,14 @@ class DatabaseServiceImpl implements DatabaseService {
     return snapshots.map((doc) => Recurring.fromFirestore(doc)).toList();
   }
 
+  @override
+  Future<List<Category>> getCategories() async {
+    List<DocumentSnapshot> snapshots = await categoryCollection
+        .getDocuments()
+        .then((value) => value.documents);
+    return snapshots.map((doc) => Category.fromFirestore(doc)).toList();
+  }
+
   /// UPDATE
   @override
   Future<void> updateRecord(Record record) async {
@@ -103,6 +122,11 @@ class DatabaseServiceImpl implements DatabaseService {
     recurringCollection.document(recurring.uid).setData(recurring.toJson());
   }
 
+  @override
+  Future<void> updateCategory(Category category) async {
+    categoryCollection.document(category.uid).setData(category.toJson());
+  }
+
   /// DELETE
   @override
   Future<void> deleteRecord(Record record) async {
@@ -117,5 +141,10 @@ class DatabaseServiceImpl implements DatabaseService {
   @override
   Future<void> deleteRecurring(Recurring recurring) async {
     recurringCollection.document(recurring.uid).delete();
+  }
+
+  @override
+  Future<void> deleteCategory(Category category) async {
+    categoryCollection.document(category.uid).delete();
   }
 }

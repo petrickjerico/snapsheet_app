@@ -39,7 +39,8 @@ class Category {
 
     return Category(
       title: json['title'],
-      icon: Icon(IconData(json['icon'])),
+      icon: Icon(IconData(json['codePoint'],
+          fontFamily: json['fontFamily'], fontPackage: json['fontPackage'])),
       color: Color(json['color']),
       isIncome: json['isIncome'],
       index: json['index'],
@@ -50,7 +51,9 @@ class Category {
   Map<String, dynamic> toJson() {
     return {
       'title': title,
-      'icon': icon.icon.codePoint,
+      'codePoint': icon.icon.codePoint,
+      'fontFamily': icon.icon.fontFamily,
+      'fontPackage': icon.icon.fontPackage,
       'color': color.value,
       'isIncome': isIncome,
       'index': index,

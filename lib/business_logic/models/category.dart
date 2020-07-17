@@ -12,10 +12,12 @@ class Category {
   int index;
   String uid;
 
-  Category.unnamed(String title, Icon icon, [Color color, bool isIncome]) {
+  Category.unnamed(int index, String title, Icon icon,
+      [Color color, bool isIncome]) {
+    this.index = index;
     this.title = title;
     this.icon = icon;
-    this.color = color ?? _randomColor.randomColor();
+    this.color = color;
     this.isIncome = isIncome ?? false;
   }
 

@@ -1,15 +1,5 @@
 import 'package:snapsheetapp/business_logic/models/models.dart';
 
-/// 0 - f&b
-/// 1 - transportation
-/// 2 - shopping
-/// 3 - entertainment
-/// 4 - health
-/// 5 - education
-/// 6 - electronic
-/// 7 - income
-/// 8 - giving
-/// 9 - others
 const FOODDRINKS = 0;
 const TRANSPORTATION = 1;
 const SHOPPING = 2;

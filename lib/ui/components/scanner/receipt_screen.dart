@@ -178,13 +178,14 @@ class _CategoryFormField extends StatelessWidget {
           },
           itemBuilder: (context) {
             List<String> categoryTitles =
-                categories.map((category) => category.title).toList();
+                default_categories.map((category) => category.title).toList();
             return categoryTitles
                 .map(
                   (e) => PopupMenuItem(
                     value: categoryTitles.indexOf(e),
                     child: ListTile(
-                      leading: categories[categoryTitles.indexOf(e)].icon,
+                      leading:
+                          default_categories[categoryTitles.indexOf(e)].icon,
                       title: Text(e),
                     ),
                   ),
@@ -192,7 +193,7 @@ class _CategoryFormField extends StatelessWidget {
                 .toList();
           },
           child: TextFormField(
-            initialValue: categories[categoryId].title,
+            initialValue: default_categories[categoryId].title,
             decoration:
                 kTitleEditInfoInputDecoration.copyWith(labelText: 'Category'),
             readOnly: true,

@@ -1,6 +1,6 @@
 abstract class Parser {
   String findTitle(List<String> input);
-  int findCategoryId();
+  String findCategoryUid();
   DateTime findDate(String input);
   double findCost(String input);
 }

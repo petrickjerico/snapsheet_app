@@ -71,7 +71,7 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
 
   void changeCategory(int newCategoryId) {
     if (newCategoryId == INCOME) tempRecurring.isIncome = true;
-    tempRecurring.categoryId = newCategoryId;
+    tempRecurring.categoryUid = userData.categories[newCategoryId].uid;
     notifyListeners();
   }
 

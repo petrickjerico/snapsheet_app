@@ -1,3 +1,4 @@
+import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/default_data/shops.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/services/parser/parser.dart';
@@ -64,8 +65,10 @@ class ParserImpl implements Parser {
     return "";
   }
 
-  int findCategoryId() {
-    return matchedName != null ? shops[matchedName].categoryId : 0;
+  String findCategoryUid() {
+    return matchedName != null
+        ? defaultCategories[shops[matchedName].categoryId].uid
+        : 0;
   }
 
   DateTime findDate(String input) {

@@ -62,7 +62,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
         title: map['title'],
         value: map['value'],
         dateTime: map['dateTime'],
-        categoryId: map['categoryId'],
+        categoryUid: map['categoryUid'],
         accountUid: selectedAccountUid,
         imagePath: image.path,
       );
@@ -94,7 +94,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   }
 
   void changeCategory(int recordId, int newCategoryId) {
-    records[recordId].categoryId = newCategoryId;
+    records[recordId].categoryUid = userData.categories[newCategoryId].uid;
     notifyListeners();
   }
 }

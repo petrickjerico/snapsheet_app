@@ -103,9 +103,11 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   List<Category> get categories => _categories;
 
   Account getThisAccount(String accountUid) {
-    return accounts.firstWhere((acc) {
-      return acc.uid == accountUid;
-    });
+    return accounts.firstWhere((acc) => acc.uid == accountUid);
+  }
+
+  Category getThisCategory(String categoryUid) {
+    return categories.firstWhere((cat) => cat.uid == categoryUid);
   }
 
   /// UPDATE

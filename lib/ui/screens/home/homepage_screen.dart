@@ -15,13 +15,6 @@ class HomepageScreen extends StatelessWidget {
   static GlobalKey bottomKey = GlobalKey();
   static final String id = 'homepage_screen';
 
-  final _titles = [
-    'DASHBOARD',
-    'RECORDS',
-    'LIST OF ACCOUNTS',
-    'EDIT CATEGORIES',
-  ];
-
   final List<Widget> _pageList = <Widget>[
     Dashboard(),
     HistoryScreen(),
@@ -41,11 +34,6 @@ class HomepageScreen extends StatelessWidget {
               extendBody: true,
               resizeToAvoidBottomInset: false,
               backgroundColor: kBlack,
-              appBar: AppBar(
-                elevation: 0,
-                backgroundColor: kHomepageBackgroundTransparency,
-                title: Text(_titles[HomepageViewModel.currentPage]),
-              ),
               drawer: SidebarMenu(),
               body: Container(
                 color: kHomepageBackgroundTransparency,

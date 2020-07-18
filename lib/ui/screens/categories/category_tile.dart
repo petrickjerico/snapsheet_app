@@ -6,7 +6,7 @@ import 'package:snapsheetapp/business_logic/view_models/category/category_viewmo
 import 'package:snapsheetapp/ui/components/dialog/delete_dialog.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/config/decoration.dart';
-import 'package:snapsheetapp/ui/screens/categories/edit_category_popup.dart';
+import 'package:snapsheetapp/ui/screens/categories/category_popup.dart';
 
 class CategoryTile extends StatelessWidget {
   final Category category;
@@ -50,7 +50,7 @@ class CategoryTile extends StatelessWidget {
                               padding: EdgeInsets.only(
                                   bottom:
                                       MediaQuery.of(context).viewInsets.bottom),
-                              child: EditCategoryPopUp(),
+                              child: CategoryPopUp(),
                             ),
                             shape: kBottomSheetShape,
                           );

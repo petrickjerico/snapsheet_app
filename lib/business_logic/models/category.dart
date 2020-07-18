@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:random_color/random_color.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 
@@ -31,6 +32,16 @@ class Category {
     this.isDefault,
     this.uid,
   });
+
+  factory Category.newBlankCategory() {
+    return Category(
+      title: "",
+      icon: Icon(FontAwesomeIcons.question),
+      color: Colors.black,
+      isIncome: false,
+      isDefault: false,
+    );
+  }
 
   factory Category.of(Category category) {
     return Category(

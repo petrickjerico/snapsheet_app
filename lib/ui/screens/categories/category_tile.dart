@@ -30,7 +30,7 @@ class CategoryTile extends StatelessWidget {
           ),
           title: Text(
             category.title,
-            style: kHistoryRecordTitle.copyWith(color: category.color),
+            style: kHistoryRecordTitle.copyWith(color: Colors.white),
           ),
           trailing: category.isDefault
               ? SizedBox.shrink()

@@ -27,7 +27,7 @@ class CategoryScreen extends StatelessWidget {
           ),
           body: ListView.separated(
             separatorBuilder: (context, index) => Divider(
-              color: model.categories[index].color,
+              color: Colors.white30,
             ),
             itemCount: model.categories.length,
             itemBuilder: (context, index) {

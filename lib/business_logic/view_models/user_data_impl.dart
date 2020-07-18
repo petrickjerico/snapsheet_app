@@ -46,11 +46,6 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     _recurrings.addAll(unorderedRecurrings);
     _categories.addAll(unorderedCategories);
 
-    for (int i = 0; i < categories.length; i++) {
-      print(categories[i].icon.icon.toString());
-      print(defaultCategories[i].icon.icon.toString());
-    }
-
     loadCallback();
   }
 

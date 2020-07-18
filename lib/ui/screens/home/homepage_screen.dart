@@ -85,8 +85,8 @@ class HomepageScreen extends StatelessWidget {
                         title: Text('Accounts'),
                       ),
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.person),
-                        title: Text('Profile'),
+                        icon: Icon(Icons.category),
+                        title: Text('Categories'),
                       ),
                     ],
                     onTap: (index) {

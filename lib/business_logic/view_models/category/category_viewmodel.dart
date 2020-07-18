@@ -6,7 +6,6 @@ import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 
 class CategoryViewModel extends ChangeNotifier implements CategoryBaseModel {
   UserData userData;
-  List<Category> customCategories = [];
   List<Category> categories;
   Category originalCategory;
   Category tempCategory;
@@ -16,10 +15,6 @@ class CategoryViewModel extends ChangeNotifier implements CategoryBaseModel {
   void init(UserData userData) {
     this.userData = userData;
     categories = userData.categories;
-    for (Category category in categories) {
-      if (category.isDefault) continue;
-      customCategories.add(category);
-    }
   }
 
   void toggleView() {
@@ -37,15 +32,20 @@ class CategoryViewModel extends ChangeNotifier implements CategoryBaseModel {
     tempCategory = Category.newBlankCategory();
   }
 
-  void addCategory(Category category) {
-    category.index = categories.length;
-    categories.add(category);
-    userData.addCategory(category);
+  void addCategory() {
+    if (isEditing) {
+      updateCategory();
+    } else {
+      tempCategory.index = categories.length;
+      userData.addCategory(tempCategory);
+    }
+    notifyListeners();
   }
 
   void updateCategory() {
     userData.updateCategory(tempCategory);
-    categories[tempCategory.index] = tempCategory;
+    categories.removeWhere((cat) => cat.uid == tempCategory.uid);
+    categories.add(tempCategory);
   }
 
   void changeColor(Color newColor) {

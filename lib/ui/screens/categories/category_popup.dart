@@ -128,7 +128,14 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                       ),
                     ),
                     FlatButton(
-                      child: tempCategory.icon,
+                      child: CircleAvatar(
+                        backgroundColor: tempCategory.color.withOpacity(0.2),
+                        child: IconTheme(
+                          data: IconThemeData(
+                              color: tempCategory.color, size: 18),
+                          child: tempCategory.icon,
+                        ),
+                      ),
                       onPressed: _pickIcon,
                     ),
                     FlatButton(
@@ -172,7 +179,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                   title: 'DONE',
                   onPressed: () {
                     if (CategoryPopUp._formKey.currentState.validate()) {
-                      model.updateCategory();
+                      model.addCategory();
                       Navigator.pop(context);
                     }
                   },

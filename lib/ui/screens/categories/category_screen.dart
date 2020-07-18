@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/category/category_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/config/colors.dart';
@@ -52,18 +53,15 @@ class CategoryScreen extends StatelessWidget {
             )
           ],
         ),
-        body: ListView.separated(
-          separatorBuilder: (context, index) => Divider(
-            color: Colors.white30,
-          ),
+        body: ListView.builder(
           itemCount: model.showDefault
               ? model.categories.length
-              : model.customCategories.length,
+              : model.categories.where((cat) => !cat.isDefault).length,
           itemBuilder: (context, index) {
-            return CategoryTile(
-                category: model.showDefault
-                    ? model.categories[index]
-                    : model.customCategories[index]);
+            List<Category> categories = model.showDefault
+                ? model.categories
+                : model.categories.where((cat) => !cat.isDefault).toList();
+            return CategoryTile(category: categories[index]);
           },
         ),
       );

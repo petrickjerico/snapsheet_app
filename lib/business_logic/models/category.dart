@@ -37,7 +37,7 @@ class Category {
     return Category(
       title: "",
       icon: Icon(FontAwesomeIcons.question),
-      color: Colors.black,
+      color: Colors.deepPurple,
       isIncome: false,
       isDefault: false,
     );

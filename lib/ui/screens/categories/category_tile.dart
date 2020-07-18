@@ -18,13 +18,13 @@ class CategoryTile extends StatelessWidget {
     return Consumer<CategoryViewModel>(
       builder: (context, model, child) {
         return ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 20),
+          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           dense: true,
           leading: CircleAvatar(
-            radius: 25,
+            radius: 24,
             backgroundColor: category.color.withOpacity(0.2),
             child: IconTheme(
-              data: IconThemeData(color: category.color, size: 24),
+              data: IconThemeData(color: category.color, size: 20),
               child: FaIcon(category.icon.icon),
             ),
           ),

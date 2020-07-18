@@ -10,6 +10,7 @@ import 'package:snapsheetapp/ui/components/empty_state.dart';
 import 'package:snapsheetapp/ui/components/reorderable_list.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/expense/expense_screen.dart';
+import 'package:snapsheetapp/ui/screens/sidebar/sidebar_menu.dart';
 
 import 'add_account_popup.dart';
 
@@ -25,73 +26,84 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
     return Consumer<HomepageViewModel>(
       builder: (context, model, child) {
         int accountsCount = model.accounts.length;
-        return accountsCount < 1
-            ? EmptyState(
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (context) => SingleChildScrollView(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: AddAccountPopup(),
-                    ),
-                    shape: kBottomSheetShape,
-                  );
-                },
-                messageColor: Colors.white30,
-                message: 'There is no account yet.\n'
-                    'Tap to create one.',
-                icon: Icon(
-                  Icons.add_circle,
-                  color: Colors.white30,
-                  size: 120.0,
-                ),
-              )
-            : Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(right: 20.0, bottom: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        AddAccountButton(),
-                      ],
-                    ),
+        return Scaffold(
+          extendBody: true,
+          resizeToAvoidBottomInset: false,
+          backgroundColor: kBlack,
+          drawer: SidebarMenu(),
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: kHomepageBackgroundTransparency,
+            title: Text('ACCOUNTS'),
+          ),
+          body: accountsCount < 1
+              ? EmptyState(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => SingleChildScrollView(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: AddAccountPopup(),
+                      ),
+                      shape: kBottomSheetShape,
+                    );
+                  },
+                  messageColor: Colors.white30,
+                  message: 'There is no account yet.\n'
+                      'Tap to create one.',
+                  icon: Icon(
+                    Icons.add_circle,
+                    color: Colors.white30,
+                    size: 120.0,
                   ),
-                  Flexible(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          top: Divider.createBorderSide(
-                            context,
-                            color: Colors.grey.withOpacity(0.3),
+                )
+              : Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(right: 20.0, bottom: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          AddAccountButton(),
+                        ],
+                      ),
+                    ),
+                    Flexible(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            top: Divider.createBorderSide(
+                              context,
+                              color: Colors.grey.withOpacity(0.3),
+                            ),
                           ),
                         ),
-                      ),
-                      child: ReorderableListSimple(
-                        allowReordering: false,
-                        handleSide: ReorderableListSimpleSide.Left,
-                        handleIcon: Icon(
-                          FontAwesomeIcons.bars,
-                          size: 30.0,
-                          color: Colors.white54,
+                        child: ReorderableListSimple(
+                          allowReordering: false,
+                          handleSide: ReorderableListSimpleSide.Left,
+                          handleIcon: Icon(
+                            FontAwesomeIcons.bars,
+                            size: 30.0,
+                            color: Colors.white54,
+                          ),
+                          children: model.accounts.map(
+                            (account) {
+                              return AccountOrderTile(
+                                index: account.index,
+                                color: account.color,
+                                title: account.title,
+                                total: model.getSumFromAccount(account),
+                              );
+                            },
+                          ).toList(),
                         ),
-                        children: model.accounts.map(
-                          (account) {
-                            return AccountOrderTile(
-                              index: account.index,
-                              color: account.color,
-                              title: account.title,
-                              total: model.getSumFromAccount(account),
-                            );
-                          },
-                        ).toList(),
                       ),
                     ),
-                  ),
-                ],
-              );
+                  ],
+                ),
+        );
       },
     );
   }

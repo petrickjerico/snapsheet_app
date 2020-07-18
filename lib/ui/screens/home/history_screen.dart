@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
@@ -19,203 +20,142 @@ import 'add_account_popup.dart';
 class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomepageViewModel>(
-      builder: (context, model, child) {
-        int recordsCount = model.records.length;
-        print(recordsCount);
-        print(model.records);
-
-        Widget body = recordsCount < 1
-            ? EmptyState(
-                icon: Icon(
-                  FontAwesomeIcons.solidMeh,
-                  color: Colors.white30,
-                  size: 100.0,
-                ),
-                messageColor: Colors.white30,
-                message: 'Nothing to show here yet. \n'
-                    'Create an account and start adding records.',
-              )
-            : Column(
-                children: <Widget>[
-                  Visibility(visible: false, child: FilterSection()),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Flexible(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15.0),
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            final record = model.records[index];
-                            return HistoryTile(
-                              record: record,
-                              index: index,
-                              color: Colors.white.withOpacity(0.8),
-                            );
-                          },
-                          itemCount: model.records.length,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-        return Scaffold(
-          backgroundColor: kBlack,
-          drawer: SidebarMenu(),
-          body: body,
-          appBar: AppBar(
-            title: Text('RECORDS'),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.more_vert),
-                onPressed: () {
-                  print('pressed');
-                },
-                splashColor: Colors.transparent,
-              )
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-class FilterSection extends StatefulWidget {
-  @override
-  _FilterSectionState createState() => _FilterSectionState();
-}
-
-class _FilterSectionState extends State<FilterSection> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      margin: EdgeInsets.symmetric(horizontal: 15.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.black.withOpacity(0.4),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                'Filters',
-                style: TextStyle(color: Colors.white),
-              ),
-              MaterialButton(
-                visualDensity: VisualDensity.comfortable,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  side: BorderSide(color: Colors.white),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    FaIcon(
-                      FontAwesomeIcons.filter,
-                      size: 15.0,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 8.0,
-                    ),
-                    Text(
-                      'APPLY FILTER',
-                      style: TextStyle(fontSize: 13.0, color: Colors.white),
-                    ),
-                  ],
-                ),
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (context) => SingleChildScrollView(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: AddAccountPopup(),
-                    ),
-                    shape: kBottomSheetShape,
-                  );
-                },
-              ),
-            ],
-          ),
-          Divider(
-            thickness: 1.0,
-            color: Colors.white54,
-          ),
-          Text(
-            'Categories: ',
-            style: TextStyle(color: Colors.white),
-          ),
-          CategoryIcons(),
-          Text(
-            'Accounts: ',
-            style: TextStyle(color: Colors.white),
-          ),
-          AccountIcons(),
-        ],
-      ),
-    );
-  }
-}
-
-class AccountIcons extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<HomepageViewModel>(builder: (context, model, child) {
-      return Wrap(
-        spacing: 5.0,
-        alignment: WrapAlignment.start,
-        runAlignment: WrapAlignment.start,
-        direction: Axis.horizontal,
-        children: model.accounts
-            .map((account) => Chip(
-                  visualDensity: VisualDensity.compact,
-                  label: Text(account.title),
-                  backgroundColor: account.color,
-                  labelStyle: TextStyle(color: Colors.white),
-                ))
-            .toList(),
+    return Consumer<UserData>(builder: (context, userData, child) {
+      return ChangeNotifierProvider<FilterData>(
+        create: (context) => FilterData(userData),
+        child: FilteredRecords(),
       );
     });
   }
 }
 
-class CategoryIcons extends StatelessWidget {
+class FilterData extends ChangeNotifier {
+  UserData userData;
+  List<Account> allAccounts;
+  List<Account> accountsToMatch;
+  List<Category> allCategories;
+  List<Category> categoriesToMatch;
+  List<Record> records;
+  double minValue;
+  double maxValue;
+  DateTime earliest;
+  DateTime latest;
+  Record tempRecord;
+
+  FilterData(UserData userData) {
+    this.userData = userData;
+    initData();
+  }
+
+  void initData() {
+    try {
+      allAccounts = userData.accounts;
+      allCategories = userData.categories;
+      records = List.of(userData.records);
+
+      // Initialise every toMatches to include all first
+      accountsToMatch = List.of(userData.accounts);
+      categoriesToMatch = List.of(userData.categories);
+
+      // Other data that are initialised without UserData.
+      minValue = double.negativeInfinity;
+      maxValue = double.infinity;
+      earliest = DateTime.now();
+      latest = DateTime.now().subtract(Duration(days: 1825)); // 5 years back
+    } catch (e) {
+      print(e);
+    }
+    notifyListeners();
+  }
+
+  void deleteRecord(Record rec) {
+    records.remove(rec);
+    tempRecord = rec;
+    notifyListeners();
+  }
+
+  void undoDelete() {
+    print("///// adding: " + tempRecord.toString());
+    records.add(tempRecord);
+    records.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+    tempRecord = null;
+    notifyListeners();
+  }
+}
+
+class FilteredRecords extends StatefulWidget {
+  @override
+  _FilteredRecordsState createState() => _FilteredRecordsState();
+}
+
+class _FilteredRecordsState extends State<FilteredRecords> {
+  List<Record> filteredRecords;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    final filterData = Provider.of<FilterData>(context);
+    filteredRecords = filterData.records;
+    print('didChangeDependencies() was called!');
+    print(filteredRecords.length);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
-      child: Wrap(
-        spacing: 5.0,
-        alignment: WrapAlignment.start,
-        runAlignment: WrapAlignment.start,
-        direction: Axis.horizontal,
-        children: defaultCategories
-            .map(
-              (category) => CircleAvatar(
-                radius: 15,
-                backgroundColor: category.color.withOpacity(0.2),
-                child: IconTheme(
-                  data: IconThemeData(color: category.color, size: 10),
-                  child: FaIcon(category.icon.icon),
-                ),
+    int recordsCount = filteredRecords.length;
+    return Scaffold(
+      backgroundColor: kBlack,
+      drawer: SidebarMenu(),
+      body: recordsCount < 1
+          ? EmptyState(
+              icon: Icon(
+                FontAwesomeIcons.solidMeh,
+                color: Colors.white30,
+                size: 100.0,
               ),
+              messageColor: Colors.white30,
+              message: 'Nothing to show here yet. \n'
+                  'Create an account and start adding records.',
             )
-            .toList(),
+          : Column(
+              children: <Widget>[
+                Flexible(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final record = filteredRecords[index];
+                          return HistoryTile(
+                            record: record,
+                            index: index,
+                            color: Colors.white.withOpacity(0.8),
+                            fromHistory: true,
+                          );
+                        },
+                        itemCount: recordsCount,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+      appBar: AppBar(
+        title: Text('RECORDS'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.more_vert),
+            onPressed: () {
+              print('pressed');
+            },
+            splashColor: Colors.transparent,
+          )
+        ],
       ),
     );
   }

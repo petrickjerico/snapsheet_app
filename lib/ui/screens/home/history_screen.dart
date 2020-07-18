@@ -41,6 +41,7 @@ class FilterData extends ChangeNotifier {
   DateTime earliest;
   DateTime latest;
   Record tempRecord;
+  bool isActive;
 
   FilterData(UserData userData) {
     this.userData = userData;
@@ -81,6 +82,11 @@ class FilterData extends ChangeNotifier {
     tempRecord = null;
     notifyListeners();
   }
+
+  void toggleActive() {
+    isActive = !isActive;
+    notifyListeners();
+  }
 }
 
 class FilteredRecords extends StatefulWidget {
@@ -90,6 +96,14 @@ class FilteredRecords extends StatefulWidget {
 
 class _FilteredRecordsState extends State<FilteredRecords> {
   List<Record> filteredRecords;
+  bool isActive;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    isActive = false;
+  }
 
   @override
   void didChangeDependencies() {
@@ -97,6 +111,7 @@ class _FilteredRecordsState extends State<FilteredRecords> {
     super.didChangeDependencies();
     final filterData = Provider.of<FilterData>(context);
     filteredRecords = filterData.records;
+    isActive = filterData.isActive;
     print('didChangeDependencies() was called!');
     print(filteredRecords.length);
   }
@@ -149,7 +164,8 @@ class _FilteredRecordsState extends State<FilteredRecords> {
         elevation: 0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.more_vert),
+            icon: Icon(FontAwesomeIcons.filter,
+                size: 20, color: isActive ? Colors.amber : Colors.white),
             onPressed: () {
               print('pressed');
             },

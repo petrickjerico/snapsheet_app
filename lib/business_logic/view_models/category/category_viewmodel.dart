@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/category/category_basemodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
@@ -12,7 +13,8 @@ class CategoryViewModel extends ChangeNotifier implements CategoryBaseModel {
   bool isEditing = false;
   bool showDefault = true;
 
-  CategoryViewModel({this.userData}) {
+  void init(UserData userData) {
+    this.userData = userData;
     categories = userData.categories;
     for (Category category in categories) {
       if (category.isDefault) continue;
@@ -46,8 +48,38 @@ class CategoryViewModel extends ChangeNotifier implements CategoryBaseModel {
     categories[tempCategory.index] = tempCategory;
   }
 
+  void changeColor(Color newColor) {
+    tempCategory.color = newColor;
+  }
+
+  void changeIsIncome() {
+    tempCategory.isIncome = !tempCategory.isIncome;
+  }
+
+  void changeIcon(Icon newIcon) {
+    tempCategory.icon = newIcon;
+  }
+
+  void changeTitle(String newTitle) {
+    tempCategory.title = newTitle;
+  }
+
   void deleteCategory(Category category) {
     userData.deleteCategory(category);
-    categories.removeWhere((element) => element.uid == category.uid);
+    List<Record> newRecords = List.from(userData.records);
+    for (Record record in newRecords) {
+      if (record.categoryUid == category.uid) {
+        record.categoryUid = categories[OTHERS].uid;
+        userData.updateRecord(record);
+      }
+    }
+    int deletedCategoryIndex = category.index;
+    for (Category category in categories) {
+      if (category.index > deletedCategoryIndex) {
+        category.index--;
+        userData.updateCategory(category);
+      }
+    }
+    notifyListeners();
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/category/category_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/config/decoration.dart';
@@ -13,7 +15,8 @@ class CategoryPopUp extends StatefulWidget {
 }
 
 class _CategoryPopUpState extends State<CategoryPopUp> {
-  Color tempColor;
+  Color _tempColor;
+  Icon _icon;
 
   void _openDialog(String title, Widget content) {
     showDialog(
@@ -34,13 +37,29 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                 final model =
                     Provider.of<CategoryViewModel>(context, listen: false);
                 Navigator.of(context).pop();
-                setState(() => model.tempCategory.color = tempColor);
+                setState(() => model.tempCategory.color = _tempColor);
               },
             ),
           ],
         );
       },
     );
+  }
+
+  void _pickIcon() async {
+    IconData pickedIcon = await FlutterIconPicker.showIconPicker(
+      context,
+      adaptiveDialog: true,
+      iconPickerShape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      iconPackMode: IconPack.fontAwesomeIcons,
+    );
+
+    if (pickedIcon != null) {
+      _icon = Icon(pickedIcon);
+      final model = Provider.of<CategoryViewModel>(context, listen: false);
+      setState(() => model.changeIcon(_icon));
+    }
   }
 
   @override
@@ -52,6 +71,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
             EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0, top: 15.0),
         child: Consumer<CategoryViewModel>(
           builder: (context, model, child) {
+            Category tempCategory = model.tempCategory;
             return Column(
               children: <Widget>[
                 Padding(
@@ -79,49 +99,68 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                     ],
                   ),
                 ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(right: 2.0),
-                  leading: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      color: model.tempCategory.color,
-                      borderRadius: BorderRadius.circular(5.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        color: model.tempCategory.color,
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      child: FlatButton(
+                        onPressed: () async {
+                          _openDialog(
+                            "Color your category",
+                            MaterialColorPicker(
+                              shrinkWrap: true,
+                              allowShades: false,
+                              onMainColorChange: (newColor) {
+                                setState(() {
+                                  _tempColor = newColor;
+                                });
+                              },
+                              selectedColor: tempCategory.color,
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                    child: FlatButton(
-                      onPressed: () async {
-                        _openDialog(
-                          "Color your account",
-                          MaterialColorPicker(
-                            shrinkWrap: true,
-                            allowShades: false,
-                            onMainColorChange: (newColor) {
-                              setState(() {
-                                tempColor = newColor;
-                              });
-                            },
-                            selectedColor: model.tempCategory.color,
-                          ),
-                        );
+                    FlatButton(
+                      child: tempCategory.icon,
+                      onPressed: _pickIcon,
+                    ),
+                    FlatButton(
+                      child: Text(tempCategory.isIncome ? 'INCOME' : 'EXPENSE'),
+                      color: tempCategory.isIncome
+                          ? Colors.teal.withOpacity(0.2)
+                          : Colors.redAccent.withOpacity(0.2),
+                      textColor: tempCategory.isIncome
+                          ? Colors.teal
+                          : Colors.redAccent,
+                      onPressed: () {
+                        model.changeIsIncome();
+                        setState(() {});
                       },
-                    ),
-                  ),
-                  title: TextFormField(
-                    initialValue: model.tempCategory.title,
-                    cursorColor: Colors.black,
-                    autofocus: true,
-                    onChanged: (value) {
-                      model.tempCategory.title = value;
-                    },
-                    decoration: kAddAccountTextFieldDecoration.copyWith(
-                        hintText: 'Rename your account'),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text.';
-                      }
-                      return null;
-                    },
-                  ),
+                    )
+                  ],
+                ),
+                TextFormField(
+                  initialValue: model.tempCategory.title,
+                  cursorColor: Colors.black,
+                  autofocus: true,
+                  onChanged: (value) {
+                    model.tempCategory.title = value;
+                  },
+                  decoration: kAddAccountTextFieldDecoration.copyWith(
+                      hintText: 'Category Name'),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text.';
+                    }
+                    return null;
+                  },
                 ),
                 RoundedButton(
                   icon: Icon(

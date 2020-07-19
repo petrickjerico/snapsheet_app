@@ -21,8 +21,9 @@ class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserData>(builder: (context, userData, child) {
+      FilterData filterData = FilterData(userData);
       return ChangeNotifierProvider<FilterData>(
-        create: (context) => FilterData(userData),
+        create: (context) => filterData,
         child: FilteredRecords(),
       );
     });
@@ -41,7 +42,7 @@ class FilterData extends ChangeNotifier {
   DateTime earliest;
   DateTime latest;
   Record tempRecord;
-  bool isActive;
+  bool isActive = false;
 
   FilterData(UserData userData) {
     this.userData = userData;
@@ -83,8 +84,9 @@ class FilterData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleActive() {
-    isActive = !isActive;
+  void toggleActivity(bool activity) {
+    print("toggleActivity: " + activity.toString());
+    isActive = activity;
     notifyListeners();
   }
 }
@@ -95,74 +97,105 @@ class FilteredRecords extends StatefulWidget {
 }
 
 class _FilteredRecordsState extends State<FilteredRecords> {
-  List<Record> filteredRecords;
-  bool isActive = false;
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    final filterData = Provider.of<FilterData>(context);
-    filteredRecords = filterData.records;
-    print('didChangeDependencies() was called!');
-    print(filteredRecords.length);
-  }
-
   @override
   Widget build(BuildContext context) {
-    int recordsCount = filteredRecords.length;
-    return Scaffold(
-      backgroundColor: kBlack,
-      drawer: SidebarMenu(),
-      body: recordsCount < 1
-          ? EmptyState(
-              icon: Icon(
-                FontAwesomeIcons.solidMeh,
-                color: Colors.white30,
-                size: 100.0,
-              ),
-              messageColor: Colors.white30,
-              message: 'Nothing to show here yet. \n'
-                  'Create an account and start adding records.',
-            )
-          : Column(
-              children: <Widget>[
-                Flexible(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          final record = filteredRecords[index];
-                          return HistoryTile(
-                            record: record,
-                            index: index,
-                            color: Colors.white.withOpacity(0.8),
-                            fromHistory: true,
-                          );
-                        },
-                        itemCount: recordsCount,
+    return Consumer<FilterData>(builder: (context, filterData, child) {
+      var filteredRecords = filterData.records;
+      var isActive = filterData.isActive;
+      print("isActive: " + isActive.toString());
+      var recordsCount = filteredRecords.length;
+      return Scaffold(
+        backgroundColor: kBlack,
+        drawer: SidebarMenu(),
+        body: recordsCount < 1
+            ? EmptyState(
+                icon: Icon(
+                  FontAwesomeIcons.solidMeh,
+                  color: Colors.white30,
+                  size: 100.0,
+                ),
+                messageColor: Colors.white30,
+                message: 'Nothing to show here yet. \n'
+                    'Create an account and start adding records.',
+              )
+            : Column(
+                children: <Widget>[
+                  Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            final record = filteredRecords[index];
+                            return HistoryTile(
+                              record: record,
+                              index: index,
+                              color: Colors.white.withOpacity(0.8),
+                              fromHistory: true,
+                            );
+                          },
+                          itemCount: recordsCount,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+        appBar: AppBar(
+          title: Text('RECORDS'),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(FontAwesomeIcons.filter,
+                  size: 20, color: isActive ? Colors.amber : Colors.white),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChangeNotifierProvider.value(
+                      value: filterData,
+                      builder: (context, child) => FilterScreen(),
+                    ),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+              splashColor: Colors.transparent,
+            )
+          ],
+        ),
+      );
+    });
+  }
+}
+
+class FilterScreen extends StatefulWidget {
+  @override
+  _FilterScreenState createState() => _FilterScreenState();
+}
+
+class _FilterScreenState extends State<FilterScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       appBar: AppBar(
-        title: Text('RECORDS'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        title: Text('Filter Screen'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(FontAwesomeIcons.filter,
-                size: 20, color: isActive ? Colors.amber : Colors.white),
-            onPressed: () {},
-            splashColor: Colors.transparent,
-          )
+            icon: Icon(Icons.check),
+            onPressed: () {
+              final filterData =
+                  Provider.of<FilterData>(context, listen: false);
+              filterData.toggleActivity(true);
+              Navigator.pop(context);
+            },
+          ),
         ],
       ),
+      backgroundColor: Colors.white,
     );
   }
 }

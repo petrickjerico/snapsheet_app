@@ -26,91 +26,83 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
     return Consumer<HomepageViewModel>(
       builder: (context, model, child) {
         int accountsCount = model.accounts.length;
-        Widget body = accountsCount < 1
-            ? EmptyState(
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (context) => SingleChildScrollView(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: AddAccountPopup(),
-                    ),
-                    shape: kBottomSheetShape,
-                  );
-                },
-                messageColor: Colors.white30,
-                message: 'There is no account yet.\n'
-                    'Tap to create one.',
-                icon: Icon(
-                  Icons.add_circle,
-                  color: Colors.white30,
-                  size: 120.0,
-                ),
-              )
-            : Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(right: 20.0, bottom: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        AddAccountButton(),
-                      ],
-                    ),
-                  ),
-                  Flexible(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          top: Divider.createBorderSide(
-                            context,
-                            color: Colors.grey.withOpacity(0.3),
-                          ),
-                        ),
-                      ),
-                      child: ReorderableListSimple(
-                        allowReordering: false,
-                        handleSide: ReorderableListSimpleSide.Left,
-                        handleIcon: Icon(
-                          FontAwesomeIcons.bars,
-                          size: 30.0,
-                          color: Colors.white54,
-                        ),
-                        children: model.accounts.map(
-                          (account) {
-                            return AccountOrderTile(
-                              index: account.index,
-                              color: account.color,
-                              title: account.title,
-                              total: model.getSumFromAccount(account),
-                            );
-                          },
-                        ).toList(),
-                      ),
-                    ),
-                  ),
-                ],
-              );
         return Scaffold(
+          extendBody: true,
+          resizeToAvoidBottomInset: false,
           backgroundColor: kBlack,
           drawer: SidebarMenu(),
-          body: body,
           appBar: AppBar(
-            title: Text('LIST OF ACCOUNTS'),
-            backgroundColor: Colors.transparent,
             elevation: 0,
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.more_vert),
-                onPressed: () {
-                  print('pressed');
-                },
-                splashColor: Colors.transparent,
-              )
-            ],
+            backgroundColor: kHomepageBackgroundTransparency,
+            title: Text('ACCOUNTS'),
           ),
+          body: accountsCount < 1
+              ? EmptyState(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => SingleChildScrollView(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: AddAccountPopup(),
+                      ),
+                      shape: kBottomSheetShape,
+                    );
+                  },
+                  messageColor: Colors.white30,
+                  message: 'There is no account yet.\n'
+                      'Tap to create one.',
+                  icon: Icon(
+                    Icons.add_circle,
+                    color: Colors.white30,
+                    size: 120.0,
+                  ),
+                )
+              : Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(right: 20.0, bottom: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          AddAccountButton(),
+                        ],
+                      ),
+                    ),
+                    Flexible(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            top: Divider.createBorderSide(
+                              context,
+                              color: Colors.grey.withOpacity(0.3),
+                            ),
+                          ),
+                        ),
+                        child: ReorderableListSimple(
+                          allowReordering: false,
+                          handleSide: ReorderableListSimpleSide.Left,
+                          handleIcon: Icon(
+                            FontAwesomeIcons.bars,
+                            size: 30.0,
+                            color: Colors.white54,
+                          ),
+                          children: model.accounts.map(
+                            (account) {
+                              return AccountOrderTile(
+                                index: account.index,
+                                color: account.color,
+                                title: account.title,
+                                total: model.getSumFromAccount(account),
+                              );
+                            },
+                          ).toList(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
         );
       },
     );

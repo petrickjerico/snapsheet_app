@@ -8,6 +8,8 @@ import 'package:snapsheetapp/ui/components/stats/statistics.dart';
 import 'package:snapsheetapp/ui/config/colors.dart';
 import 'package:snapsheetapp/ui/config/decoration.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
+import 'package:snapsheetapp/ui/screens/sidebar/sidebar_menu.dart';
+
 
 import 'add_account_popup.dart';
 
@@ -20,64 +22,55 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     int accountsCount = Provider.of<HomepageViewModel>(context).accounts.length;
-    Widget body = accountsCount < 1
-        ? EmptyState(
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                builder: (context) => SingleChildScrollView(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom),
-                  child: AddAccountPopup(),
-                ),
-                shape: kBottomSheetShape,
-              );
-            },
-            messageColor: Colors.white30,
-            message: 'There is no account yet.\n'
-                'Tap to create one.',
-            icon: Icon(
-              Icons.add_circle,
-              color: Colors.white30,
-              size: 120.0,
-            ),
-          )
-        : Column(
-            children: <Widget>[
-              AccountsCarousel(),
-              Flexible(
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  margin: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.black38,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Statistics(),
-                ),
-              ),
-            ],
-          );
-
     return Scaffold(
+      extendBody: true,
+      resizeToAvoidBottomInset: false,
       backgroundColor: kBlack,
       drawer: SidebarMenu(),
-      body: body,
       appBar: AppBar(
-        title: Text('DASHBOARD'),
-        backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () {
-              print('pressed');
-            },
-            splashColor: Colors.transparent,
-          )
-        ],
+        backgroundColor: kHomepageBackgroundTransparency,
+        title: Text("DASHBOARD"),
       ),
+      body: accountsCount < 1
+          ? EmptyState(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => SingleChildScrollView(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: AddAccountPopup(),
+                  ),
+                  shape: kBottomSheetShape,
+                );
+              },
+              messageColor: Colors.white30,
+              message: 'There is no account yet.\n'
+                  'Tap to create one.',
+              icon: Icon(
+                Icons.add_circle,
+                color: Colors.white30,
+                size: 120.0,
+              ),
+            )
+          : Column(
+              children: <Widget>[
+                AccountsCarousel(),
+                Flexible(
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    margin: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.black38,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Statistics(),
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }

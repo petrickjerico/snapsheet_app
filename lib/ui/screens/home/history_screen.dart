@@ -96,14 +96,7 @@ class FilteredRecords extends StatefulWidget {
 
 class _FilteredRecordsState extends State<FilteredRecords> {
   List<Record> filteredRecords;
-  bool isActive;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    isActive = false;
-  }
+  bool isActive = false;
 
   @override
   void didChangeDependencies() {
@@ -111,7 +104,6 @@ class _FilteredRecordsState extends State<FilteredRecords> {
     super.didChangeDependencies();
     final filterData = Provider.of<FilterData>(context);
     filteredRecords = filterData.records;
-    isActive = filterData.isActive;
     print('didChangeDependencies() was called!');
     print(filteredRecords.length);
   }
@@ -166,9 +158,7 @@ class _FilteredRecordsState extends State<FilteredRecords> {
           IconButton(
             icon: Icon(FontAwesomeIcons.filter,
                 size: 20, color: isActive ? Colors.amber : Colors.white),
-            onPressed: () {
-              print('pressed');
-            },
+            onPressed: () {},
             splashColor: Colors.transparent,
           )
         ],

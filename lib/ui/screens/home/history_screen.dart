@@ -119,7 +119,74 @@ class _FilteredRecordsState extends State<FilteredRecords> {
                     'Create an account and start adding records.',
               )
             : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+                  Visibility(
+                    visible: isActive,
+                    child: GestureDetector(
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        margin: EdgeInsets.symmetric(horizontal: 15.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: Colors.amberAccent,
+                        ),
+                        child: Text(
+                          "FILTER APPLIED - tap for details",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          child: SimpleDialog(
+                            title: Text("Filter Details"),
+                            contentPadding: EdgeInsets.fromLTRB(24, 16, 16, 12),
+                            children: <Widget>[
+                              Text("accounts"),
+                              Text("categories"),
+                              Text("amount"),
+                              Text("date"),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  FlatButton(
+                                    child: Text("RESET"),
+                                    onPressed: () {
+                                      filterData.toggleActivity(false);
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  FlatButton(
+                                    child: Text("NEW FILTER"),
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ChangeNotifierProvider.value(
+                                            value: filterData,
+                                            builder: (context, child) =>
+                                                FilterScreen(),
+                                          ),
+                                          fullscreenDialog: true,
+                                        ),
+                                      );
+                                    },
+                                    color: Colors.black,
+                                    textColor: Colors.white,
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                   Flexible(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15.0),
@@ -148,9 +215,24 @@ class _FilteredRecordsState extends State<FilteredRecords> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           actions: <Widget>[
+            Visibility(
+              visible: isActive,
+              child: IconButton(
+                icon: Icon(
+                  Icons.refresh,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  filterData.toggleActivity(false);
+                },
+              ),
+            ),
             IconButton(
-              icon: Icon(FontAwesomeIcons.filter,
-                  size: 20, color: isActive ? Colors.amber : Colors.white),
+              icon: Icon(
+                FontAwesomeIcons.filter,
+                size: 20,
+                color: isActive ? Colors.amberAccent : Colors.white,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -180,22 +262,24 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Filter Screen'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.check),
-            onPressed: () {
-              final filterData =
-                  Provider.of<FilterData>(context, listen: false);
-              filterData.toggleActivity(true);
-              Navigator.pop(context);
-            },
+    return Consumer<FilterData>(
+      builder: (context, filterData, child) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            title: Text('Filter Screen'),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.check),
+                onPressed: () {
+                  filterData.toggleActivity(true);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
           ),
-        ],
-      ),
-      backgroundColor: Colors.white,
+        );
+      },
     );
   }
 }

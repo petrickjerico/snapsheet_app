@@ -11,28 +11,28 @@ import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmo
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 
-class HistoryTile extends StatefulWidget {
+class HistoryTile extends StatelessWidget {
   final Record record;
   final int index;
   final Color color;
+  final bool fromHistory;
 
-  HistoryTile({@required this.record, this.index, this.color});
+  HistoryTile(
+      {@required this.record,
+      this.index,
+      this.color,
+      this.fromHistory = false});
   HistoryTile.from(HistoryTile other)
       : record = other.record,
         index = other.index,
-        color = other.color;
+        color = other.color,
+        fromHistory = other.fromHistory;
 
-  @override
-  _HistoryTileState createState() => _HistoryTileState();
-}
-
-class _HistoryTileState extends State<HistoryTile> {
   @override
   Widget build(BuildContext context) {
     bool isAlreadyAdded = false;
     return Consumer<ExpenseViewModel>(builder: (context, model, child) {
-      Category category =
-          model.userData.getThisCategory(widget.record.categoryUid);
+      Category category = model.userData.getThisCategory(record.categoryUid);
       return OpenContainer<bool>(
         closedBuilder: (_, openContainer) {
           return Dismissible(
@@ -58,17 +58,23 @@ class _HistoryTileState extends State<HistoryTile> {
               ),
               alignment: Alignment.centerRight,
             ),
-            key: Key(widget.record.uid),
+            key: Key(record.uid),
             onDismissed: (direction) {
               final homepageModel =
                   Provider.of<HomepageViewModel>(context, listen: false);
-              model.changeTempRecord(widget.index);
+              model.changeTempRecord(index);
               model.deleteRecord();
               homepageModel
                   .selectAccount(model.getAccountIndexFromTempRecord());
               HomepageViewModel.syncController();
+              if (fromHistory) {
+                final filterData =
+                    Provider.of<FilterData>(context, listen: false);
+                filterData.deleteRecord(record);
+              }
               Flushbar(
                 mainButton: FlatButton(
+                  disabledColor: Colors.grey,
                   child: Text(
                     'UNDO',
                     style: TextStyle(color: kDarkCyan),
@@ -80,6 +86,11 @@ class _HistoryTileState extends State<HistoryTile> {
                           .selectAccount(model.getAccountIndexFromTempRecord());
                       HomepageViewModel.syncController();
                       isAlreadyAdded = true;
+                      if (fromHistory) {
+                        final filterData =
+                            Provider.of<FilterData>(context, listen: false);
+                        filterData.undoDelete();
+                      }
                     } else {
                       return;
                     }
@@ -106,17 +117,14 @@ class _HistoryTileState extends State<HistoryTile> {
                 ),
               ),
               title: Text(
-                widget.record.title == ""
-                    ? category.title
-                    : widget.record.title,
+                record.title == "" ? category.title : record.title,
                 style: kHistoryRecordTitle.copyWith(
-                    color: widget.color ?? Colors.white,
-                    fontWeight: FontWeight.w500),
+                    color: color ?? Colors.white, fontWeight: FontWeight.w500),
               ),
               subtitle: Text(
-                model.userData.getThisAccount(widget.record.accountUid).title,
+                model.userData.getThisAccount(record.accountUid).title,
                 style: kHistoryRecordTitle.copyWith(
-                    color: widget.color?.withOpacity(0.5) ?? Colors.white,
+                    color: color?.withOpacity(0.5) ?? Colors.white,
                     fontWeight: FontWeight.normal),
               ),
               trailing: Column(
@@ -124,20 +132,20 @@ class _HistoryTileState extends State<HistoryTile> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Text(
-                    widget.record.value.toStringAsFixed(2),
-                    style: widget.record.isIncome
+                    record.value.toStringAsFixed(2),
+                    style: record.isIncome
                         ? kHistoryIncomeValue
                         : kHistoryExpenseValue,
                   ),
                   Text(
-                    DateFormat('d/M/y').format(widget.record.dateTime),
+                    DateFormat('d/M/y').format(record.dateTime),
                     style: kHistoryRecordDate.copyWith(
-                        color: widget.color ?? Colors.black),
+                        color: color ?? Colors.black),
                   ),
                 ],
               ),
               onTap: () {
-                model.changeTempRecord(widget.index);
+                model.changeTempRecord(index);
                 openContainer.call();
               },
             ),

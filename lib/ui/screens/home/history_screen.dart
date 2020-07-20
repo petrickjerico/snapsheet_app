@@ -1,6 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_iconpicker/Dialogs/DefaultDialog.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
@@ -42,6 +44,8 @@ class FilterData extends ChangeNotifier {
   DateTime earliest;
   DateTime latest;
   Record tempRecord;
+  bool showExpenses;
+  bool showIncomes;
   bool isActive = false;
 
   FilterData(UserData userData) {
@@ -87,6 +91,19 @@ class FilterData extends ChangeNotifier {
   void toggleActivity(bool activity) {
     print("toggleActivity: " + activity.toString());
     isActive = activity;
+    notifyListeners();
+  }
+
+  bool isVisible(Record record) {
+    bool matchesAcc =
+        accountsToMatch.any((acc) => record.accountUid == acc.uid);
+    // bool matchesCtg = categoriesToMatch.any((ctg) => record.categoryUid == ctg.uid);
+    return matchesAcc;
+  }
+
+  void undoFilter() {
+    accountsToMatch = List.of(allAccounts);
+    categoriesToMatch = List.of(allCategories);
     notifyListeners();
   }
 }
@@ -156,6 +173,7 @@ class _FilteredRecordsState extends State<FilteredRecords> {
                                   FlatButton(
                                     child: Text("RESET"),
                                     onPressed: () {
+                                      filterData.undoFilter();
                                       filterData.toggleActivity(false);
                                       Navigator.pop(context);
                                     },
@@ -196,11 +214,14 @@ class _FilteredRecordsState extends State<FilteredRecords> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             final record = filteredRecords[index];
-                            return HistoryTile(
-                              record: record,
-                              index: index,
-                              color: Colors.white.withOpacity(0.8),
-                              fromHistory: true,
+                            return Visibility(
+                              visible: filterData.isVisible(record),
+                              child: HistoryTile(
+                                record: record,
+                                index: index,
+                                color: Colors.white.withOpacity(0.8),
+                                fromHistory: true,
+                              ),
                             );
                           },
                           itemCount: recordsCount,
@@ -223,6 +244,7 @@ class _FilteredRecordsState extends State<FilteredRecords> {
                   color: Colors.white,
                 ),
                 onPressed: () {
+                  filterData.undoFilter();
                   filterData.toggleActivity(false);
                 },
               ),
@@ -260,6 +282,147 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
+  List<Account> filterAccounts = [];
+  List<Category> filterCategories = [];
+  double minValue = double.negativeInfinity;
+  double maxValue = double.infinity;
+  DateTime earliest =
+      DateTime.now().subtract(Duration(days: 1825)); // 5 years back
+  DateTime latest = DateTime.now();
+  bool showIncomes = true;
+  bool showExpenses = true;
+
+  Widget _getAccountsChips() {
+    return filterAccounts.isEmpty
+        ? Text(
+            "Tap to select accounts",
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey,
+              fontStyle: FontStyle.italic,
+            ),
+          )
+        : Wrap(
+            spacing: 5,
+            children: filterAccounts
+                .map(
+                  (acc) => InputChip(
+                    label: Text(acc.title),
+                    backgroundColor: acc.color,
+                    onDeleted: () {
+                      setState(() {
+                        filterAccounts.remove(acc);
+                      });
+                    },
+                  ),
+                )
+                .toList(),
+          );
+  }
+
+  Widget _accountsSelection() {
+    return GestureDetector(
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Filter by accounts:",
+              style: TextStyle(fontSize: 14),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            _getAccountsChips(),
+          ],
+        ),
+      ),
+      onTap: () {
+        final filterData = Provider.of<FilterData>(context, listen: false);
+        List<Account> tempAccs = List.of(filterAccounts);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return ChangeNotifierProvider(
+                create: (_) => filterData,
+                builder: (context, child) => AlertDialog(
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("CANCEL"),
+                      onPressed: () {},
+                    ),
+                    FlatButton(
+                      child: Text("SELECT ALL"),
+                      onPressed: () {},
+                    ),
+                    FlatButton(
+                      child: Text("APPLY"),
+                      onPressed: () {
+                        setState(() {
+                          filterAccounts = List.of(tempAccs);
+                        });
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                  title: Text("Select accounts"),
+                  content: ChangeNotifierProvider.value(
+                    value: filterData,
+                    builder: (context, child) {
+                      return Wrap(
+                          spacing: 5,
+                          children: filterData.allAccounts
+                              .map(
+                                (acc) => InputChip(
+                                    label: Text(acc.title),
+                                    backgroundColor: tempAccs.contains(acc)
+                                        ? acc.color
+                                        : Colors.grey,
+                                    showCheckmark: true,
+                                    onSelected: (value) {
+                                      setState(() {
+                                        if (!tempAccs.contains(acc)) {
+                                          tempAccs.add(acc);
+                                        } else {
+                                          tempAccs.remove(acc);
+                                        }
+                                        tempAccs.sort((a, b) =>
+                                            a.index.compareTo(b.index));
+                                      });
+                                    }),
+                              )
+                              .toList());
+                    },
+                  ),
+                ),
+              );
+            });
+      },
+    );
+  }
+
+  Widget _categorySelection() {
+    return Container(
+      color: Colors.white,
+      height: 25,
+    );
+  }
+
+  Widget _valueSelection() {
+    return Container(
+      color: Colors.white,
+      height: 25,
+    );
+  }
+
+  Widget _dateSelection() {
+    return Container(
+      color: Colors.white,
+      height: 25,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<FilterData>(
@@ -272,10 +435,20 @@ class _FilterScreenState extends State<FilterScreen> {
               IconButton(
                 icon: Icon(Icons.check),
                 onPressed: () {
+                  filterData.accountsToMatch = filterAccounts;
                   filterData.toggleActivity(true);
                   Navigator.pop(context);
                 },
               ),
+            ],
+          ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _accountsSelection(),
+              _categorySelection(),
+              _valueSelection(),
+              _dateSelection(),
             ],
           ),
         );

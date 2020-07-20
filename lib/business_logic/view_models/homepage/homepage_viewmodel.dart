@@ -61,11 +61,13 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   }
 
   String getSelectedAccountUid() {
-    if (selectedAccountIndex != -1) return accounts[selectedAccountIndex].uid;
+    return selectedAccountIndex != -1
+        ? accounts[selectedAccountIndex].uid
+        : null;
   }
 
   Account getSelectedAccount() {
-    if (selectedAccountIndex != -1) return accounts[selectedAccountIndex];
+    return selectedAccountIndex != -1 ? accounts[selectedAccountIndex] : null;
   }
 
   List<Account> getAccounts() {
@@ -234,19 +236,20 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     return [incomeSum, expenseSum, balanceSum, incomePercent, expensePercent];
   }
 
-  List<Record> getTop5Records() {
+  List<Record> getRecordsFromCurrentAccount() {
     List<Record> res = [];
-
     for (Record rec in records) {
-      if (res.length == 5) {
-        break;
-      }
       if (recordMatchesStats(rec)) {
         res.add(rec);
       }
     }
 
     return res;
+  }
+
+  List<Record> getTop5Records() {
+    List<Record> res = getRecordsFromCurrentAccount();
+    return res.take(5).toList();
   }
 
   bool isAccountSelected(Account acc) {

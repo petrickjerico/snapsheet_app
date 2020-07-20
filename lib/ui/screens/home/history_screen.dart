@@ -22,13 +22,7 @@ import 'add_account_popup.dart';
 class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserData>(builder: (context, userData, child) {
-      FilterData filterData = FilterData(userData);
-      return ChangeNotifierProvider<FilterData>(
-        create: (context) => filterData,
-        child: FilteredRecords(),
-      );
-    });
+    return FilteredRecords();
   }
 }
 
@@ -104,6 +98,7 @@ class FilterData extends ChangeNotifier {
   void undoFilter() {
     accountsToMatch = List.of(allAccounts);
     categoriesToMatch = List.of(allCategories);
+    toggleActivity(false);
     notifyListeners();
   }
 }
@@ -325,14 +320,14 @@ class _FilterScreenState extends State<FilterScreen> {
       child: Container(
         padding: EdgeInsets.all(10.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Text(
-              "Filter by accounts:",
-              style: TextStyle(fontSize: 14),
-            ),
-            SizedBox(
-              height: 5,
+            Padding(
+              padding: EdgeInsets.only(bottom: 5.0),
+              child: Text(
+                "Filter by accounts:",
+                style: TextStyle(fontSize: 14),
+              ),
             ),
             _getAccountsChips(),
           ],
@@ -443,7 +438,7 @@ class _FilterScreenState extends State<FilterScreen> {
             ],
           ),
           body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               _accountsSelection(),
               _categorySelection(),

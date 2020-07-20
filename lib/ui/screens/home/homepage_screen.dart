@@ -35,24 +35,7 @@ class HomepageScreen extends StatelessWidget {
               resizeToAvoidBottomInset: false,
               backgroundColor: kBlack,
               drawer: SidebarMenu(),
-              body: Container(
-                color: kHomepageBackgroundTransparency,
-                child: PageTransitionSwitcher(
-                  transitionBuilder: (
-                    Widget child,
-                    Animation<double> animation,
-                    Animation<double> secondaryAnimation,
-                  ) {
-                    return FadeThroughTransition(
-                      animation: animation,
-                      secondaryAnimation: secondaryAnimation,
-                      child: child,
-                      fillColor: Colors.transparent,
-                    );
-                  },
-                  child: _pageList[HomepageViewModel.currentPage],
-                ),
-              ),
+              body: _pageList[HomepageViewModel.currentPage],
               bottomNavigationBar: BottomAppBar(
                 key: bottomKey,
                 elevation: 10.0,

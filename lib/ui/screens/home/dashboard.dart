@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
@@ -6,7 +7,9 @@ import 'package:snapsheetapp/ui/components/empty_state.dart';
 import 'package:snapsheetapp/ui/components/stats/statistics.dart';
 import 'package:snapsheetapp/ui/config/colors.dart';
 import 'package:snapsheetapp/ui/config/decoration.dart';
+import 'package:snapsheetapp/ui/screens/screens.dart';
 import 'package:snapsheetapp/ui/screens/sidebar/sidebar_menu.dart';
+
 
 import 'add_account_popup.dart';
 

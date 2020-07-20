@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/empty_state.dart';
+import 'package:snapsheetapp/ui/config/colors.dart';
 import 'package:snapsheetapp/ui/screens/recurring/add_recurring_screen.dart';
 import 'package:snapsheetapp/ui/screens/recurring/recurring_tile.dart';
 
@@ -13,7 +14,11 @@ class RecurringScreen extends StatelessWidget {
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: kBlack,
           appBar: AppBar(
+            elevation: 0,
+            backgroundColor: kHomepageBackgroundTransparency,
             title: Text("Recurring Expenses"),
           ),
           body: Padding(

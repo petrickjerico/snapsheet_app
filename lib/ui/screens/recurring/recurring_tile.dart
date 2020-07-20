@@ -31,11 +31,11 @@ class RecurringTile extends StatelessWidget {
           ),
           title: Text(
             recurring.title,
-            style: kHistoryRecordTitle,
+            style: kHistoryRecordTitle.copyWith(color: Colors.white),
           ),
           subtitle: Text(
             recurring.recurrency,
-            style: kHistoryRecordTitle,
+            style: kHistoryRecordTitle.copyWith(color: Colors.white),
           ),
           trailing: Column(
             mainAxisAlignment: MainAxisAlignment.center,

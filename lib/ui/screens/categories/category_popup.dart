@@ -187,6 +187,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                   onPressed: () {
                     if (CategoryPopUp._formKey.currentState.validate()) {
                       model.addCategory();
+                      if (model.showDefault) model.toggleView();
                       Navigator.pop(context);
                     }
                   },

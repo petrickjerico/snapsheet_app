@@ -106,11 +106,18 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
               leading: Container(
                 height: 40,
                 width: 40,
-                decoration: BoxDecoration(
-                  color: _color,
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
                 child: FlatButton(
+                  padding: EdgeInsets.all(0),
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: _color,
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: Icon(Icons.edit),
+                  ),
                   onPressed: () async {
                     _openDialog(
                       "Color your account",

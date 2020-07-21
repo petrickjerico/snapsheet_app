@@ -15,53 +15,6 @@ class CategoryPopUp extends StatefulWidget {
 }
 
 class _CategoryPopUpState extends State<CategoryPopUp> {
-  Color _tempColor;
-  Icon _icon;
-
-  void _openDialog(String title, Widget content) {
-    showDialog(
-      context: context,
-      builder: (_) {
-        return AlertDialog(
-          contentPadding: EdgeInsets.all(6.0),
-          title: Text(title),
-          content: content,
-          actions: [
-            FlatButton(
-              child: Text('CANCEL'),
-              onPressed: Navigator.of(context).pop,
-            ),
-            FlatButton(
-              child: Text('SUBMIT'),
-              onPressed: () {
-                final model =
-                    Provider.of<CategoryViewModel>(context, listen: false);
-                Navigator.of(context).pop();
-                setState(() => model.tempCategory.color = _tempColor);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _pickIcon() async {
-    IconData pickedIcon = await FlutterIconPicker.showIconPicker(
-      context,
-      adaptiveDialog: true,
-      iconPickerShape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      iconPackMode: IconPack.fontAwesomeIcons,
-    );
-
-    if (pickedIcon != null) {
-      _icon = Icon(pickedIcon);
-      final model = Provider.of<CategoryViewModel>(context, listen: false);
-      setState(() => model.changeIcon(_icon));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -102,52 +55,8 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      height: 40,
-                      width: 40,
-                      child: FlatButton(
-                        padding: EdgeInsets.all(0),
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            color: model.tempCategory.color,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                          ),
-                        ),
-                        onPressed: () async {
-                          _openDialog(
-                            "Color your category",
-                            MaterialColorPicker(
-                              shrinkWrap: true,
-                              allowShades: false,
-                              onMainColorChange: (newColor) {
-                                setState(() {
-                                  _tempColor = newColor;
-                                });
-                              },
-                              selectedColor: tempCategory.color,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    FlatButton(
-                      child: CircleAvatar(
-                        backgroundColor: tempCategory.color.withOpacity(0.2),
-                        child: IconTheme(
-                          data: IconThemeData(
-                              color: tempCategory.color, size: 18),
-                          child: tempCategory.icon,
-                        ),
-                      ),
-                      onPressed: _pickIcon,
-                    ),
+                    ColorPicker(),
+                    IconPicker(),
                     FlatButton(
                       child: Text(tempCategory.isIncome ? 'INCOME' : 'EXPENSE'),
                       color: tempCategory.isIncome
@@ -199,6 +108,133 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class ColorPicker extends StatefulWidget {
+  @override
+  _ColorPickerState createState() => _ColorPickerState();
+}
+
+class _ColorPickerState extends State<ColorPicker> {
+  Color _tempColor;
+
+  void _openDialog(String title, Widget content) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(6.0),
+          title: Text(title),
+          content: content,
+          actions: [
+            FlatButton(
+              child: Text('CANCEL'),
+              onPressed: Navigator.of(context).pop,
+            ),
+            FlatButton(
+              child: Text('SUBMIT'),
+              onPressed: () {
+                final model =
+                    Provider.of<CategoryViewModel>(context, listen: false);
+                Navigator.of(context).pop();
+                setState(() => model.tempCategory.color = _tempColor);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final model = Provider.of<CategoryViewModel>(context);
+    return Container(
+      height: 40,
+      width: 40,
+      child: FlatButton(
+        padding: EdgeInsets.all(0),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        child: Container(
+          height: 40,
+          width: 40,
+          decoration: BoxDecoration(
+            color: model.tempCategory.color,
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          child: Icon(
+            Icons.edit,
+            color: Colors.white,
+          ),
+        ),
+        onPressed: () async {
+          _openDialog(
+            "Color your category",
+            MaterialColorPicker(
+              shrinkWrap: true,
+              allowShades: false,
+              onMainColorChange: (newColor) {
+                setState(() {
+                  _tempColor = newColor;
+                });
+              },
+              selectedColor: model.tempCategory.color,
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class IconPicker extends StatefulWidget {
+  @override
+  _IconPickerState createState() => _IconPickerState();
+}
+
+class _IconPickerState extends State<IconPicker> {
+  Icon _icon;
+
+  void _pickIcon() async {
+    IconData pickedIcon = await FlutterIconPicker.showIconPicker(
+      context,
+      adaptiveDialog: true,
+      iconPickerShape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      iconPackMode: IconPack.fontAwesomeIcons,
+    );
+
+    if (pickedIcon != null) {
+      _icon = Icon(pickedIcon);
+      final model = Provider.of<CategoryViewModel>(context, listen: false);
+      setState(() => model.changeIcon(_icon));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final model = Provider.of<CategoryViewModel>(context);
+    return Container(
+      width: 40,
+      height: 40,
+      child: FlatButton(
+        padding: EdgeInsets.all(0),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        child: Container(
+          width: 40,
+          height: 40,
+          child: CircleAvatar(
+            backgroundColor: model.tempCategory.color.withOpacity(0.2),
+            child: IconTheme(
+              data: IconThemeData(color: model.tempCategory.color, size: 18),
+              child: model.tempCategory.icon,
+            ),
+          ),
+        ),
+        onPressed: _pickIcon,
       ),
     );
   }

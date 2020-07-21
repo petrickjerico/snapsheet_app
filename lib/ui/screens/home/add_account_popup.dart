@@ -116,7 +116,10 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                       color: _color,
                       borderRadius: BorderRadius.circular(5.0),
                     ),
-                    child: Icon(Icons.edit),
+                    child: Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                    ),
                   ),
                   onPressed: () async {
                     _openDialog(

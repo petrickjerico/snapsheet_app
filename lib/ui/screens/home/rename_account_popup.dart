@@ -94,7 +94,10 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
                           color: model.tempAccount.color,
                           borderRadius: BorderRadius.circular(5.0),
                         ),
-                        child: Icon(Icons.edit),
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
                       ),
                       onPressed: () async {
                         _openDialog(

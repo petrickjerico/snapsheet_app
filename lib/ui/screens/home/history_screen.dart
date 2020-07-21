@@ -94,23 +94,31 @@ class FilterData extends ChangeNotifier {
         accountsToMatch.any((acc) => record.accountUid == acc.uid);
     bool matchesCtg =
         categoriesToMatch.any((ctg) => record.categoryUid == ctg.uid);
-    return matchesAcc && matchesCtg;
+    bool matchesVal = minValue <= record.value && record.value <= maxValue;
+    return matchesAcc && matchesCtg && matchesVal;
   }
 
   void resetFilter() {
     accountsToMatch = List.of(allAccounts);
     categoriesToMatch = List.of(allCategories);
+    minValue = double.negativeInfinity;
+    maxValue = double.infinity;
     toggleActivity(false);
     notifyListeners();
   }
 
   bool setMatches(
-      List<Account> filterAccounts, List<Category> filterCategories) {
-    if (filterAccounts.isEmpty && filterCategories.isEmpty) {
+      List<Account> accs, List<Category> ctgs, double min, double max) {
+    if (accs.isEmpty &&
+        ctgs.isEmpty &&
+        min == double.negativeInfinity &&
+        max == double.infinity) {
       return false;
     } else {
-      if (filterAccounts.isNotEmpty) accountsToMatch = filterAccounts;
-      if (filterCategories.isNotEmpty) categoriesToMatch = filterCategories;
+      if (accs.isNotEmpty) accountsToMatch = accs;
+      if (ctgs.isNotEmpty) categoriesToMatch = ctgs;
+      minValue = min;
+      maxValue = max;
       return true;
     }
   }
@@ -516,8 +524,40 @@ class _FilterScreenState extends State<FilterScreen> {
 
   Widget _valuesSelection() {
     return Container(
-      color: Colors.white,
-      height: 25,
+      padding: EdgeInsets.all(10.0),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: TextField(
+              textAlign: TextAlign.end,
+              decoration: InputDecoration(
+                labelText: 'Amount from:',
+                prefixText: '\$',
+              ),
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              onChanged: (value) {
+                minValue = double.parse(value);
+              },
+            ),
+          ),
+          SizedBox(
+            width: 10.0,
+          ),
+          Expanded(
+            child: TextField(
+              textAlign: TextAlign.end,
+              decoration: InputDecoration(
+                labelText: 'Amount to:',
+                prefixText: '\$',
+              ),
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              onChanged: (value) {
+                maxValue = double.parse(value);
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -540,8 +580,10 @@ class _FilterScreenState extends State<FilterScreen> {
               IconButton(
                 icon: Icon(Icons.check),
                 onPressed: () {
-                  bool filterIsSet =
-                      filterData.setMatches(filterAccounts, filterCategories);
+                  print(minValue.toString());
+                  print(maxValue.toString());
+                  bool filterIsSet = filterData.setMatches(
+                      filterAccounts, filterCategories, minValue, maxValue);
                   if (filterIsSet) {
                     filterData.toggleActivity(true);
                     Navigator.pop(context);

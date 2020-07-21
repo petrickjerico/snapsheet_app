@@ -92,8 +92,9 @@ class FilterData extends ChangeNotifier {
   bool isVisible(Record record) {
     bool matchesAcc =
         accountsToMatch.any((acc) => record.accountUid == acc.uid);
-    // bool matchesCtg = categoriesToMatch.any((ctg) => record.categoryUid == ctg.uid);
-    return matchesAcc;
+    bool matchesCtg =
+        categoriesToMatch.any((ctg) => record.categoryUid == ctg.uid);
+    return matchesAcc && matchesCtg;
   }
 
   void resetFilter() {
@@ -103,12 +104,15 @@ class FilterData extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool setAccountMatches(List<Account> accs) {
-    if (accs.isNotEmpty) {
-      accountsToMatch = accs;
+  bool setMatches(
+      List<Account> filterAccounts, List<Category> filterCategories) {
+    if (filterAccounts.isEmpty && filterCategories.isEmpty) {
+      return false;
+    } else {
+      if (filterAccounts.isNotEmpty) accountsToMatch = filterAccounts;
+      if (filterCategories.isNotEmpty) categoriesToMatch = filterCategories;
       return true;
     }
-    return false;
   }
 }
 
@@ -404,7 +408,7 @@ class _FilterScreenState extends State<FilterScreen> {
   }
 
   Widget _getCategoriesChips() {
-    return filterAccounts.isEmpty
+    return filterCategories.isEmpty
         ? Text(
             "Tap to select accounts",
             style: TextStyle(
@@ -415,14 +419,14 @@ class _FilterScreenState extends State<FilterScreen> {
           )
         : Wrap(
             spacing: 5,
-            children: filterAccounts
+            children: filterCategories
                 .map(
-                  (acc) => InputChip(
-                    label: Text(acc.title),
-                    backgroundColor: acc.color,
+                  (ctg) => InputChip(
+                    label: Text(ctg.title),
+                    backgroundColor: ctg.color,
                     onDeleted: () {
                       setState(() {
-                        filterAccounts.remove(acc);
+                        filterCategories.remove(ctg);
                       });
                     },
                   ),
@@ -441,11 +445,11 @@ class _FilterScreenState extends State<FilterScreen> {
             Padding(
               padding: EdgeInsets.only(bottom: 5.0),
               child: Text(
-                "Filter by accounts:",
+                "Filter by categories:",
                 style: TextStyle(fontSize: 14),
               ),
             ),
-            _getAccountsChips(),
+            _getCategoriesChips(),
           ],
         ),
       ),
@@ -454,7 +458,7 @@ class _FilterScreenState extends State<FilterScreen> {
         showDialog(
             context: context,
             builder: (context) {
-              List<Account> tempAccs = filterAccounts;
+              List<Category> tempCtgs = filterCategories;
               return AlertDialog(
                 actions: <Widget>[
                   FlatButton(
@@ -471,7 +475,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     child: Text("APPLY"),
                     onPressed: () {
                       setState(() {
-                        filterAccounts = List.of(tempAccs);
+                        filterCategories = List.of(tempCtgs);
                       });
                       Navigator.pop(context);
                     },
@@ -482,21 +486,21 @@ class _FilterScreenState extends State<FilterScreen> {
                   builder: (context, setState) {
                     return Wrap(
                         spacing: 5,
-                        children: filterData.allAccounts
+                        children: filterData.allCategories
                             .map(
-                              (acc) => InputChip(
-                                  label: Text(acc.title),
-                                  backgroundColor: tempAccs.contains(acc)
-                                      ? acc.color
+                              (ctg) => InputChip(
+                                  label: Text(ctg.title),
+                                  backgroundColor: tempCtgs.contains(ctg)
+                                      ? ctg.color
                                       : Colors.grey,
                                   onSelected: (value) {
                                     setState(() {
-                                      if (!tempAccs.contains(acc)) {
-                                        tempAccs.add(acc);
+                                      if (!tempCtgs.contains(ctg)) {
+                                        tempCtgs.add(ctg);
                                       } else {
-                                        tempAccs.remove(acc);
+                                        tempCtgs.remove(ctg);
                                       }
-                                      tempAccs.sort(
+                                      tempCtgs.sort(
                                           (a, b) => a.index.compareTo(b.index));
                                     });
                                   }),
@@ -537,7 +541,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 icon: Icon(Icons.check),
                 onPressed: () {
                   bool filterIsSet =
-                      filterData.setAccountMatches(filterAccounts);
+                      filterData.setMatches(filterAccounts, filterCategories);
                   if (filterIsSet) {
                     filterData.toggleActivity(true);
                     Navigator.pop(context);

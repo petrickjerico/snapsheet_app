@@ -81,7 +81,7 @@ class HomepageScreen extends StatelessWidget {
                               homepageModel.syncBarToPage(index);
                             }
                             if (index != 1) {
-                              filterData.undoFilter();
+                              filterData.resetFilter();
                             }
                           }),
                     ),

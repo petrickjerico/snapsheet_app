@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -95,11 +96,19 @@ class FilterData extends ChangeNotifier {
     return matchesAcc;
   }
 
-  void undoFilter() {
+  void resetFilter() {
     accountsToMatch = List.of(allAccounts);
     categoriesToMatch = List.of(allCategories);
     toggleActivity(false);
     notifyListeners();
+  }
+
+  bool setAccountMatches(List<Account> accs) {
+    if (accs.isNotEmpty) {
+      accountsToMatch = accs;
+      return true;
+    }
+    return false;
   }
 }
 
@@ -168,7 +177,7 @@ class _FilteredRecordsState extends State<FilteredRecords> {
                                   FlatButton(
                                     child: Text("RESET"),
                                     onPressed: () {
-                                      filterData.undoFilter();
+                                      filterData.resetFilter();
                                       filterData.toggleActivity(false);
                                       Navigator.pop(context);
                                     },
@@ -239,7 +248,7 @@ class _FilteredRecordsState extends State<FilteredRecords> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  filterData.undoFilter();
+                  filterData.resetFilter();
                   filterData.toggleActivity(false);
                 },
               ),
@@ -335,61 +344,58 @@ class _FilterScreenState extends State<FilterScreen> {
       ),
       onTap: () {
         final filterData = Provider.of<FilterData>(context, listen: false);
-        List<Account> tempAccs = List.of(filterAccounts);
         showDialog(
             context: context,
             builder: (context) {
-              return ChangeNotifierProvider(
-                create: (_) => filterData,
-                builder: (context, child) => AlertDialog(
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text("CANCEL"),
-                      onPressed: () {},
-                    ),
-                    FlatButton(
-                      child: Text("SELECT ALL"),
-                      onPressed: () {},
-                    ),
-                    FlatButton(
-                      child: Text("APPLY"),
-                      onPressed: () {
-                        setState(() {
-                          filterAccounts = List.of(tempAccs);
-                        });
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                  title: Text("Select accounts"),
-                  content: ChangeNotifierProvider.value(
-                    value: filterData,
-                    builder: (context, child) {
-                      return Wrap(
-                          spacing: 5,
-                          children: filterData.allAccounts
-                              .map(
-                                (acc) => InputChip(
-                                    label: Text(acc.title),
-                                    backgroundColor: tempAccs.contains(acc)
-                                        ? acc.color
-                                        : Colors.grey,
-                                    showCheckmark: true,
-                                    onSelected: (value) {
-                                      setState(() {
-                                        if (!tempAccs.contains(acc)) {
-                                          tempAccs.add(acc);
-                                        } else {
-                                          tempAccs.remove(acc);
-                                        }
-                                        tempAccs.sort((a, b) =>
-                                            a.index.compareTo(b.index));
-                                      });
-                                    }),
-                              )
-                              .toList());
+              List<Account> tempAccs = filterAccounts;
+              return AlertDialog(
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text("CANCEL"),
+                    onPressed: () {
+                      Navigator.pop(context);
                     },
                   ),
+                  FlatButton(
+                    child: Text("SELECT ALL"),
+                    onPressed: () {},
+                  ),
+                  FlatButton(
+                    child: Text("APPLY"),
+                    onPressed: () {
+                      setState(() {
+                        filterAccounts = List.of(tempAccs);
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+                title: Text("Select accounts"),
+                content: StatefulBuilder(
+                  builder: (context, setState) {
+                    return Wrap(
+                        spacing: 5,
+                        children: filterData.allAccounts
+                            .map(
+                              (acc) => InputChip(
+                                  label: Text(acc.title),
+                                  backgroundColor: tempAccs.contains(acc)
+                                      ? acc.color
+                                      : Colors.grey,
+                                  onSelected: (value) {
+                                    setState(() {
+                                      if (!tempAccs.contains(acc)) {
+                                        tempAccs.add(acc);
+                                      } else {
+                                        tempAccs.remove(acc);
+                                      }
+                                      tempAccs.sort(
+                                          (a, b) => a.index.compareTo(b.index));
+                                    });
+                                  }),
+                            )
+                            .toList());
+                  },
                 ),
               );
             });
@@ -397,21 +403,121 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  Widget _categorySelection() {
+  Widget _getCategoriesChips() {
+    return filterAccounts.isEmpty
+        ? Text(
+            "Tap to select accounts",
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey,
+              fontStyle: FontStyle.italic,
+            ),
+          )
+        : Wrap(
+            spacing: 5,
+            children: filterAccounts
+                .map(
+                  (acc) => InputChip(
+                    label: Text(acc.title),
+                    backgroundColor: acc.color,
+                    onDeleted: () {
+                      setState(() {
+                        filterAccounts.remove(acc);
+                      });
+                    },
+                  ),
+                )
+                .toList(),
+          );
+  }
+
+  Widget _categoriesSelection() {
+    return GestureDetector(
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(bottom: 5.0),
+              child: Text(
+                "Filter by accounts:",
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
+            _getAccountsChips(),
+          ],
+        ),
+      ),
+      onTap: () {
+        final filterData = Provider.of<FilterData>(context, listen: false);
+        showDialog(
+            context: context,
+            builder: (context) {
+              List<Account> tempAccs = filterAccounts;
+              return AlertDialog(
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text("CANCEL"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  FlatButton(
+                    child: Text("SELECT ALL"),
+                    onPressed: () {},
+                  ),
+                  FlatButton(
+                    child: Text("APPLY"),
+                    onPressed: () {
+                      setState(() {
+                        filterAccounts = List.of(tempAccs);
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+                title: Text("Select accounts"),
+                content: StatefulBuilder(
+                  builder: (context, setState) {
+                    return Wrap(
+                        spacing: 5,
+                        children: filterData.allAccounts
+                            .map(
+                              (acc) => InputChip(
+                                  label: Text(acc.title),
+                                  backgroundColor: tempAccs.contains(acc)
+                                      ? acc.color
+                                      : Colors.grey,
+                                  onSelected: (value) {
+                                    setState(() {
+                                      if (!tempAccs.contains(acc)) {
+                                        tempAccs.add(acc);
+                                      } else {
+                                        tempAccs.remove(acc);
+                                      }
+                                      tempAccs.sort(
+                                          (a, b) => a.index.compareTo(b.index));
+                                    });
+                                  }),
+                            )
+                            .toList());
+                  },
+                ),
+              );
+            });
+      },
+    );
+  }
+
+  Widget _valuesSelection() {
     return Container(
       color: Colors.white,
       height: 25,
     );
   }
 
-  Widget _valueSelection() {
-    return Container(
-      color: Colors.white,
-      height: 25,
-    );
-  }
-
-  Widget _dateSelection() {
+  Widget _datesSelection() {
     return Container(
       color: Colors.white,
       height: 25,
@@ -430,9 +536,25 @@ class _FilterScreenState extends State<FilterScreen> {
               IconButton(
                 icon: Icon(Icons.check),
                 onPressed: () {
-                  filterData.accountsToMatch = filterAccounts;
-                  filterData.toggleActivity(true);
-                  Navigator.pop(context);
+                  bool filterIsSet =
+                      filterData.setAccountMatches(filterAccounts);
+                  if (filterIsSet) {
+                    filterData.toggleActivity(true);
+                    Navigator.pop(context);
+                  } else {
+                    filterData.toggleActivity(false);
+                    Navigator.pop(context);
+                    Flushbar(
+                      message: "No filter was set.",
+                      icon: Icon(
+                        Icons.info_outline,
+                        size: 28.0,
+                        color: Colors.blue[300],
+                      ),
+                      duration: Duration(seconds: 3),
+                      leftBarIndicatorColor: Colors.blue[300],
+                    )..show(context);
+                  }
                 },
               ),
             ],
@@ -441,9 +563,9 @@ class _FilterScreenState extends State<FilterScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               _accountsSelection(),
-              _categorySelection(),
-              _valueSelection(),
-              _dateSelection(),
+              _categoriesSelection(),
+              _valuesSelection(),
+              _datesSelection(),
             ],
           ),
         );

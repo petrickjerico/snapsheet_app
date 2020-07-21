@@ -28,99 +28,111 @@ class HomepageScreen extends StatelessWidget {
     return Consumer<ExpenseViewModel>(
       builder: (context, model, child) {
         model.userData = userData;
+        FilterData filterData = FilterData(userData);
         return Consumer<HomepageViewModel>(
           builder: (context, homepageModel, child) {
-            return Scaffold(
-              extendBody: true,
-              resizeToAvoidBottomInset: false,
-              backgroundColor: kBlack,
-              drawer: SidebarMenu(),
-              body: _pageList[HomepageViewModel.currentPage],
-              bottomNavigationBar: BottomAppBar(
-                key: bottomKey,
-                elevation: 10.0,
-                shape: CircularNotchedRectangle(),
-                notchMargin: 12,
-                clipBehavior: Clip.antiAlias,
-                child: BottomNavigationBar(
-                    currentIndex: HomepageViewModel.currentBar,
-                    type: BottomNavigationBarType.fixed,
-                    showUnselectedLabels: false,
-                    selectedItemColor: kBlack,
-                    items: [
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.dashboard),
-                        title: Text('Dashboard'),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: FaIcon(
-                          FontAwesomeIcons.stream,
-                          size: 18,
-                        ),
-                        title: Text('Records'),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.add),
-                        title: Text(''),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.credit_card),
-                        title: Text('Accounts'),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.category),
-                        title: Text('Categories'),
-                      ),
-                    ],
-                    onTap: (index) {
-                      if (index != 2) {
-                        homepageModel.syncBarToPage(index);
-                      }
-                    }),
-              ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
-              floatingActionButton: Consumer<HomepageViewModel>(
-                builder: (context, dashboardModel, child) {
-                  return OpenContainer<bool>(
-                    closedBuilder: (_, openContainer) {
-                      return AddRecordFab(
-                        onPressed: () {
-                          int accountsCount = dashboardModel.accounts.length;
-                          if (accountsCount < 1) {
-                            Flushbar(
-                              message: "Cannot create record for no account.",
-                              icon: Icon(
-                                Icons.info_outline,
-                                size: 28.0,
-                                color: Colors.blue[300],
+            return ChangeNotifierProvider.value(
+                value: filterData,
+                builder: (context, child) {
+                  return Scaffold(
+                    extendBody: true,
+                    resizeToAvoidBottomInset: false,
+                    backgroundColor: kBlack,
+                    drawer: SidebarMenu(),
+                    body: _pageList[HomepageViewModel.currentPage],
+                    bottomNavigationBar: BottomAppBar(
+                      key: bottomKey,
+                      elevation: 10.0,
+                      shape: CircularNotchedRectangle(),
+                      notchMargin: 12,
+                      clipBehavior: Clip.antiAlias,
+                      child: BottomNavigationBar(
+                          currentIndex: HomepageViewModel.currentBar,
+                          type: BottomNavigationBarType.fixed,
+                          showUnselectedLabels: false,
+                          selectedItemColor: kBlack,
+                          items: [
+                            BottomNavigationBarItem(
+                              icon: Icon(Icons.dashboard),
+                              title: Text('Dashboard'),
+                            ),
+                            BottomNavigationBarItem(
+                              icon: FaIcon(
+                                FontAwesomeIcons.stream,
+                                size: 18,
                               ),
-                              duration: Duration(seconds: 3),
-                              leftBarIndicatorColor: Colors.blue[300],
-                            )..show(context);
-                          } else {
-                            model.newRecord();
-                            int targetIndex =
-                                dashboardModel.getSelectedAccount()?.index ?? 0;
-                            model.changeAccount(
-                                targetIndex == -1 ? 0 : targetIndex);
-                            openContainer.call();
-                          }
-                        },
-                      );
-                    },
-                    openBuilder: (_, openContainer) {
-                      return ExpenseScreen();
-                    },
-                    closedElevation: 8,
-                    closedColor: kBlack,
-                    closedShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50)),
-                    transitionType: ContainerTransitionType.fade,
+                              title: Text('Records'),
+                            ),
+                            BottomNavigationBarItem(
+                              icon: Icon(Icons.add),
+                              title: Text(''),
+                            ),
+                            BottomNavigationBarItem(
+                              icon: Icon(Icons.credit_card),
+                              title: Text('Accounts'),
+                            ),
+                            BottomNavigationBarItem(
+                              icon: Icon(Icons.category),
+                              title: Text('Categories'),
+                            ),
+                          ],
+                          onTap: (index) {
+                            if (index != 2) {
+                              homepageModel.syncBarToPage(index);
+                            }
+                            if (index != 1) {
+                              filterData.resetFilter();
+                            }
+                          }),
+                    ),
+                    floatingActionButtonLocation:
+                        FloatingActionButtonLocation.centerDocked,
+                    floatingActionButton: Consumer<HomepageViewModel>(
+                      builder: (context, dashboardModel, child) {
+                        return OpenContainer<bool>(
+                          closedBuilder: (_, openContainer) {
+                            return AddRecordFab(
+                              onPressed: () {
+                                int accountsCount =
+                                    dashboardModel.accounts.length;
+                                if (accountsCount < 1) {
+                                  Flushbar(
+                                    message:
+                                        "Cannot create record for no account.",
+                                    icon: Icon(
+                                      Icons.info_outline,
+                                      size: 28.0,
+                                      color: Colors.blue[300],
+                                    ),
+                                    duration: Duration(seconds: 3),
+                                    leftBarIndicatorColor: Colors.blue[300],
+                                  )..show(context);
+                                } else {
+                                  model.newRecord();
+                                  int targetIndex = dashboardModel
+                                          .getSelectedAccount()
+                                          ?.index ??
+                                      0;
+                                  model.changeAccount(
+                                      targetIndex == -1 ? 0 : targetIndex);
+                                  openContainer.call();
+                                }
+                              },
+                            );
+                          },
+                          openBuilder: (_, openContainer) {
+                            return ExpenseScreen();
+                          },
+                          closedElevation: 8,
+                          closedColor: kBlack,
+                          closedShape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50)),
+                          transitionType: ContainerTransitionType.fade,
+                        );
+                      },
+                    ),
                   );
-                },
-              ),
-            );
+                });
           },
         );
       },

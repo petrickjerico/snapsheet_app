@@ -52,6 +52,7 @@ dependencies:
   connectivity: ^0.4.9
   photo_view: ^0.9.2
   flutter_iconpicker: ^2.0.6
+  datetime_picker_formfield: ^1.0.0
 
 dev_dependencies:
   flutter_test:

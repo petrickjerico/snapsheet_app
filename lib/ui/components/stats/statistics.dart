@@ -8,9 +8,11 @@ import 'package:snapsheetapp/business_logic/models/account.dart';
 import 'package:snapsheetapp/business_logic/models/record.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
+import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/components/stats/stats_card.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/expense/expense_screen.dart';
+import 'package:snapsheetapp/ui/screens/home/history_screen.dart';
 import 'package:sorted_list/sorted_list.dart';
 import '../history_tile.dart';
 import '../empty_state.dart';
@@ -395,19 +397,35 @@ class _StatisticsState extends State<Statistics>
                           itemCount: model.getTop5Records().length,
                         ),
                       ),
-                      FlatButton(
-                        visualDensity: VisualDensity.compact,
-                        child: Text(
-                          'SEE MORE',
-                          style: TextStyle(color: kDarkCyan),
-                        ),
-                        onPressed: () {
-                          final homepageModel = Provider.of<HomepageViewModel>(
-                              context,
-                              listen: false);
-                          homepageModel.syncBarToPage(1);
+                      Consumer<FilterData>(
+                        builder: (context, filterData, child) {
+                          return Visibility(
+                            visible:
+                                model.getRecordsFromCurrentAccount().length > 5,
+                            child: FlatButton(
+                              visualDensity: VisualDensity.compact,
+                              child: Text(
+                                'SEE MORE',
+                                style: TextStyle(color: kDarkCyan),
+                              ),
+                              onPressed: () {
+                                final homepageModel =
+                                    Provider.of<HomepageViewModel>(context,
+                                        listen: false);
+                                Account selected =
+                                    homepageModel.getSelectedAccount();
+                                if (selected != null) {
+                                  filterData.accountsToMatch.clear();
+                                  filterData.accountsToMatch
+                                      .add(homepageModel.getSelectedAccount());
+                                  filterData.toggleActivity(true);
+                                }
+                                homepageModel.syncBarToPage(1);
+                              },
+                            ),
+                          );
                         },
-                      )
+                      ),
                     ],
                   ),
                 ),

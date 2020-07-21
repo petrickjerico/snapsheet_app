@@ -1,10 +1,12 @@
 import 'package:animations/animations.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_iconpicker/Dialogs/DefaultDialog.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
@@ -61,8 +63,8 @@ class FilterData extends ChangeNotifier {
       // Other data that are initialised without UserData.
       minValue = double.negativeInfinity;
       maxValue = double.infinity;
-      earliest = DateTime.now();
-      latest = DateTime.now().subtract(Duration(days: 1825)); // 5 years back
+      earliest = DateTime(DateTime.now().year - 5);
+      latest = DateTime(DateTime.now().year + 5);
     } catch (e) {
       print(e);
     }
@@ -95,7 +97,9 @@ class FilterData extends ChangeNotifier {
     bool matchesCtg =
         categoriesToMatch.any((ctg) => record.categoryUid == ctg.uid);
     bool matchesVal = minValue <= record.value && record.value <= maxValue;
-    return matchesAcc && matchesCtg && matchesVal;
+    bool matchesDat =
+        earliest.isBefore(record.dateTime) && record.dateTime.isBefore(latest);
+    return matchesAcc && matchesCtg && matchesVal && matchesDat;
   }
 
   void resetFilter() {
@@ -103,22 +107,42 @@ class FilterData extends ChangeNotifier {
     categoriesToMatch = List.of(allCategories);
     minValue = double.negativeInfinity;
     maxValue = double.infinity;
+    earliest = DateTime(DateTime.now().year - 5);
+    latest = DateTime(DateTime.now().year + 5);
     toggleActivity(false);
     notifyListeners();
   }
 
   bool setMatches(
-      List<Account> accs, List<Category> ctgs, double min, double max) {
+    List<Account> accs,
+    List<Category> ctgs,
+    double min,
+    double max,
+    DateTime early,
+    DateTime late,
+  ) {
     if (accs.isEmpty &&
         ctgs.isEmpty &&
         min == double.negativeInfinity &&
-        max == double.infinity) {
+        max == double.infinity &&
+        early == null &&
+        late == null) {
       return false;
     } else {
       if (accs.isNotEmpty) accountsToMatch = accs;
       if (ctgs.isNotEmpty) categoriesToMatch = ctgs;
       minValue = min;
       maxValue = max;
+      if (early != null) {
+        earliest = early;
+      } else {
+        earliest = DateTime(DateTime.now().year - 5);
+      }
+      if (late != null) {
+        latest = late;
+      } else {
+        latest = DateTime(DateTime.now().year + 5);
+      }
       return true;
     }
   }
@@ -302,9 +326,9 @@ class _FilterScreenState extends State<FilterScreen> {
   List<Category> filterCategories = [];
   double minValue = double.negativeInfinity;
   double maxValue = double.infinity;
-  DateTime earliest =
-      DateTime.now().subtract(Duration(days: 1825)); // 5 years back
-  DateTime latest = DateTime.now();
+  final format = DateFormat('d/M/y');
+  DateTime earliest;
+  DateTime latest;
   bool showIncomes = true;
   bool showExpenses = true;
 
@@ -418,7 +442,7 @@ class _FilterScreenState extends State<FilterScreen> {
   Widget _getCategoriesChips() {
     return filterCategories.isEmpty
         ? Text(
-            "Tap to select accounts",
+            "Tap to select categories",
             style: TextStyle(
               fontSize: 12,
               color: Colors.grey,
@@ -489,7 +513,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     },
                   ),
                 ],
-                title: Text("Select accounts"),
+                title: Text("Select categories"),
                 content: StatefulBuilder(
                   builder: (context, setState) {
                     return Wrap(
@@ -563,8 +587,56 @@ class _FilterScreenState extends State<FilterScreen> {
 
   Widget _datesSelection() {
     return Container(
-      color: Colors.white,
-      height: 25,
+      padding: EdgeInsets.all(10.0),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: DateTimeField(
+              format: format,
+              decoration: InputDecoration(
+                labelText: "Date from:",
+                suffixIcon: Icon(Icons.calendar_today),
+              ),
+              onShowPicker: (context, currentValue) async {
+                var date = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime(DateTime.now().year - 5),
+                  initialDate: currentValue ?? DateTime.now(),
+                  lastDate: DateTime(DateTime.now().year + 5),
+                );
+                if (date != null) {
+                  earliest = date;
+                }
+                return date;
+              },
+            ),
+          ),
+          SizedBox(
+            width: 10.0,
+          ),
+          Expanded(
+            child: DateTimeField(
+              format: format,
+              decoration: InputDecoration(
+                labelText: "Date to:",
+                suffixIcon: Icon(Icons.calendar_today),
+              ),
+              onShowPicker: (context, currentValue) async {
+                var date = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime(DateTime.now().year - 5),
+                  initialDate: currentValue ?? DateTime.now(),
+                  lastDate: DateTime(DateTime.now().year + 5),
+                );
+                if (date != null) {
+                  latest = date;
+                }
+                return date;
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -582,8 +654,8 @@ class _FilterScreenState extends State<FilterScreen> {
                 onPressed: () {
                   print(minValue.toString());
                   print(maxValue.toString());
-                  bool filterIsSet = filterData.setMatches(
-                      filterAccounts, filterCategories, minValue, maxValue);
+                  bool filterIsSet = filterData.setMatches(filterAccounts,
+                      filterCategories, minValue, maxValue, earliest, latest);
                   if (filterIsSet) {
                     filterData.toggleActivity(true);
                     Navigator.pop(context);

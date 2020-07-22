@@ -9,9 +9,6 @@ import 'package:snapsheetapp/ui/screens/categories/category_popup.dart';
 import 'package:snapsheetapp/ui/screens/categories/category_tile.dart';
 import 'package:snapsheetapp/ui/screens/sidebar/sidebar_menu.dart';
 
-const int TOGGLEDEFAULT = 1;
-const int ADDCATEGORY = 2;
-
 class CategoryScreen extends StatelessWidget {
   static const String id = 'category_screen';
 
@@ -61,7 +58,7 @@ class CategoryScreen extends StatelessWidget {
             List<Category> categories = model.showDefault
                 ? model.categories
                 : model.categories.where((cat) => !cat.isDefault).toList();
-            return CategoryTile(category: categories[index]);
+            return CategoryTile(category: categories[index], tappable: false);
           },
         ),
       );

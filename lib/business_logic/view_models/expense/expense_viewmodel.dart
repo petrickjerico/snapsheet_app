@@ -171,6 +171,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   }
 
   void changeCategory(int newCategoryId) {
+    tempRecord.isIncome = categories[newCategoryId].isIncome;
     tempRecord.categoryUid = categories[newCategoryId].uid;
     notifyListeners();
   }

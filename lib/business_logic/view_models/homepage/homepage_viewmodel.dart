@@ -203,7 +203,6 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   }
 
   double getCategoryTotal(int catId) {
-    print(catId);
     Category category = userData.categories[catId];
     if (category.isIncome) {
       return 0;
@@ -341,13 +340,6 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
       syncLimits(entry.key, entry.value);
     }
 
-    print(minDate);
-    print(maxDate);
-    print(minValue);
-    print(maxValue);
-    print((maxDate - minDate).roundToDouble());
-    print((maxValue - minValue).roundToDouble());
-
     return [
       minDate,
       maxDate,
@@ -360,9 +352,6 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
 
   List<FlSpot> getAccountSpots() {
     List<MapEntry<double, double>> finalData = getXYMapValues();
-
-    print(finalData);
-
     return finalData.map((pair) => FlSpot(pair.key, pair.value)).toList();
   }
 

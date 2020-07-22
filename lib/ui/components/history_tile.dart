@@ -127,22 +127,34 @@ class HistoryTile extends StatelessWidget {
                     color: color?.withOpacity(0.5) ?? Colors.white,
                     fontWeight: FontWeight.normal),
               ),
-              trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Text(
-                    record.value.toStringAsFixed(2),
-                    style: record.isIncome
-                        ? kHistoryIncomeValue
-                        : kHistoryExpenseValue,
-                  ),
-                  Text(
-                    DateFormat('d/M/y').format(record.dateTime),
-                    style: kHistoryRecordDate.copyWith(
-                        color: color ?? Colors.black),
-                  ),
-                ],
+              trailing: Container(
+                width: 100,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    record.receiptURL != null
+                        ? Icon(Icons.receipt, color: Colors.white)
+                        : SizedBox.shrink(),
+                    SizedBox(width: 12),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          record.value.toStringAsFixed(2),
+                          style: record.isIncome
+                              ? kHistoryIncomeValue
+                              : kHistoryExpenseValue,
+                        ),
+                        Text(
+                          DateFormat('d/M/y').format(record.dateTime),
+                          style: kHistoryRecordDate.copyWith(
+                              color: color ?? Colors.black),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               onTap: () {
                 model.changeTempRecord(index);

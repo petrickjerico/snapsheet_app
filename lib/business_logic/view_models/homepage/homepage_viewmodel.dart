@@ -10,6 +10,7 @@ import 'homepage_basemodel.dart';
 
 class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   static final CarouselController controller = CarouselController();
+  static final ScrollController statsScroller = ScrollController();
   static int currentPage = 0;
   static int currentBar = 0;
   static int selectedAccountIndex = 0;
@@ -125,6 +126,8 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     selectedAccountIndex = newIndex;
     donutTouchedIndex = null;
     if (newIndex == -1) isSelected.forEach((element) => element = true);
+    statsScroller.animateTo(0,
+        duration: Duration(milliseconds: 300), curve: Curves.ease);
     notifyListeners();
   }
 
@@ -190,13 +193,12 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   }
 
   bool selectedAccountHasExpense() {
-    return records.any(
-        (rec) => rec.accountUid == getSelectedAccountUid() && !rec.isIncome);
+    return records.any((rec) => recordMatchesStats(rec) && !rec.isIncome);
   }
 
   bool recordMatchesStats(Record rec) {
     return (selectedAccountIndex == -1 ||
-        rec.accountUid == getSelectedAccount().uid);
+        rec.accountUid == getSelectedAccountUid());
   }
 
   double getCategoryTotal(int catId) {

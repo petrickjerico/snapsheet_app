@@ -24,13 +24,9 @@ class Statistics extends StatefulWidget {
   _StatisticsState createState() => _StatisticsState();
 }
 
-class _StatisticsState extends State<Statistics>
-    with AutomaticKeepAliveClientMixin {
-  final _controller = ScrollController();
-
+class _StatisticsState extends State<Statistics> {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Consumer<HomepageViewModel>(
       builder: (context, model, child) {
         if (model.selectedAccountIsEmpty()) {
@@ -56,7 +52,7 @@ class _StatisticsState extends State<Statistics>
 
           return SingleChildScrollView(
             scrollDirection: Axis.vertical,
-            controller: _controller,
+            controller: HomepageViewModel.statsScroller,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[

@@ -6,28 +6,32 @@ import 'package:snapsheetapp/ui/components/dialog/delete_dialog.dart';
 import 'package:snapsheetapp/ui/config/decoration.dart';
 import 'package:snapsheetapp/ui/screens/home/rename_account_popup.dart';
 
-class AccountOrderTile extends StatefulWidget {
-  AccountOrderTile({Key key, this.index, this.color, this.title, this.total})
-      : super(key: key);
-
+class AccountOrderTile extends StatelessWidget {
   final int index;
   final Color color;
   final String title;
   final double total;
+  final bool isSelectAccountScreen;
 
-  @override
-  _AccountOrderTileState createState() => _AccountOrderTileState();
-}
+  AccountOrderTile(
+      {this.index,
+      this.color,
+      this.title,
+      this.total,
+      this.isSelectAccountScreen});
 
-class _AccountOrderTileState extends State<AccountOrderTile> {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<HomepageViewModel>(context, listen: false);
     return ListTile(
       onTap: () {
-        model.selectAccount(widget.index);
-        HomepageViewModel.syncController();
-        HomepageViewModel.syncBarAndTabToBeginning();
+        if (isSelectAccountScreen) {
+          Navigator.pop(context, index);
+        } else {
+          model.selectAccount(index);
+          HomepageViewModel.syncController();
+          HomepageViewModel.syncBarAndTabToBeginning();
+        }
       },
       contentPadding: EdgeInsets.only(left: 20),
       dense: true,
@@ -35,14 +39,14 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
         height: 40,
         width: 40,
         decoration: BoxDecoration(
-            color: widget.color, borderRadius: BorderRadius.circular(5.0)),
+            color: color, borderRadius: BorderRadius.circular(5.0)),
       ),
       title: Text(
-        widget.title,
+        title,
         style: TextStyle(color: Colors.white),
       ),
       subtitle: Text(
-        widget.total.toStringAsFixed(2),
+        total.toStringAsFixed(2),
         style: TextStyle(color: Colors.white, fontSize: 20.0),
       ),
       trailing: Theme(
@@ -55,7 +59,7 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
                   icon: Icon(Icons.edit),
                   color: Colors.white,
                   onPressed: () {
-                    model.initEditAccount(widget.index);
+                    model.initEditAccount(index);
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
@@ -72,13 +76,12 @@ class _AccountOrderTileState extends State<AccountOrderTile> {
                   icon: Icon(Icons.delete),
                   color: Colors.white,
                   onPressed: () {
-                    model.selectAccount(widget.index);
+                    model.selectAccount(index);
                     showDialog(
                       context: context,
                       child: DeleteDialog(
                           title: 'Delete Account?',
-                          message:
-                              'Are you sure you want to delete ${widget.title}?',
+                          message: 'Are you sure you want to delete ${title}?',
                           onDelete: () {
                             model.deleteAccount();
                             HomepageViewModel.syncController();

@@ -11,6 +11,8 @@ import 'package:snapsheetapp/business_logic/default_data/shops.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/screens/accounts/select_account.dart';
+import 'package:snapsheetapp/ui/screens/categories/select_category.dart';
 
 class ExpenseCalculator extends StatefulWidget {
   const ExpenseCalculator({
@@ -780,29 +782,13 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                     ),
                   ),
                   Expanded(
-                    child: PopupMenuButton(
-                      initialValue: model.getCategoryIndexFromTempRecord(),
-                      onSelected: (input) {
-                        setState(() {
-                          _catId = input;
-                          model.changeCategory(_catId);
-                          model.tempRecord.isIncome =
-                              _catId == INCOME ? true : false;
-                        });
-                      },
-                      itemBuilder: (context) {
-                        print(model.categories);
-                        return model.categories
-                            .map(
-                              (category) => PopupMenuItem(
-                                value: category.index,
-                                child: ListTile(
-                                  leading: category.icon,
-                                  title: Text(category.title),
-                                ),
-                              ),
-                            )
-                            .toList();
+                    child: GestureDetector(
+                      onTap: () async {
+                        final newCategoryId = await Navigator.pushNamed(
+                            context, SelectCategoryScreen.id);
+                        if (newCategoryId != null) {
+                          model.changeCategory(newCategoryId);
+                        }
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -828,25 +814,13 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                     ),
                   ),
                   Expanded(
-                    child: PopupMenuButton(
-                      initialValue: model.getAccountIndexFromTempRecord(),
-                      onSelected: (input) {
-                        setState(() {
-                          _accId = input;
-                          model.changeAccount(_accId);
-                        });
-                      },
-                      itemBuilder: (context) {
-                        return model.accounts
-                            .map(
-                              (account) => PopupMenuItem(
-                                value: account.index,
-                                child: ListTile(
-                                  title: Text(account.title),
-                                ),
-                              ),
-                            )
-                            .toList();
+                    child: GestureDetector(
+                      onTap: () async {
+                        final newAccountId = await Navigator.pushNamed(
+                            context, SelectAccountScreen.id);
+                        if (newAccountId != null) {
+                          model.changeAccount(newAccountId);
+                        }
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

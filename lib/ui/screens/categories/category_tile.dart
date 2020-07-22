@@ -10,8 +10,9 @@ import 'package:snapsheetapp/ui/screens/categories/category_popup.dart';
 
 class CategoryTile extends StatelessWidget {
   final Category category;
+  final bool tappable;
 
-  CategoryTile({this.category});
+  CategoryTile({this.category, this.tappable});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +21,7 @@ class CategoryTile extends StatelessWidget {
         return ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           dense: true,
+          onTap: tappable ? () => Navigator.pop(context, category.index) : null,
           leading: CircleAvatar(
             radius: 24,
             backgroundColor: category.color.withOpacity(0.2),

@@ -35,6 +35,23 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
             elevation: 0,
             backgroundColor: kHomepageBackgroundTransparency,
             title: Text('ACCOUNTS'),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => SingleChildScrollView(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: AddAccountPopup(),
+                    ),
+                    shape: kBottomSheetShape,
+                  );
+                },
+              )
+            ],
           ),
           body: accountsCount < 1
               ? EmptyState(
@@ -59,49 +76,25 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
                     size: 120.0,
                   ),
                 )
-              : Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(right: 20.0, bottom: 10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          AddAccountButton(),
-                        ],
-                      ),
-                    ),
-                    Flexible(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            top: Divider.createBorderSide(
-                              context,
-                              color: Colors.grey.withOpacity(0.3),
-                            ),
-                          ),
-                        ),
-                        child: ReorderableListSimple(
-                          allowReordering: false,
-                          handleSide: ReorderableListSimpleSide.Left,
-                          handleIcon: Icon(
-                            FontAwesomeIcons.bars,
-                            size: 30.0,
-                            color: Colors.white54,
-                          ),
-                          children: model.accounts.map(
-                            (account) {
-                              return AccountOrderTile(
-                                index: account.index,
-                                color: account.color,
-                                title: account.title,
-                                total: model.getSumFromAccount(account),
-                              );
-                            },
-                          ).toList(),
-                        ),
-                      ),
-                    ),
-                  ],
+              : ReorderableListSimple(
+                  allowReordering: false,
+                  handleSide: ReorderableListSimpleSide.Left,
+                  handleIcon: Icon(
+                    FontAwesomeIcons.bars,
+                    size: 30.0,
+                    color: Colors.white54,
+                  ),
+                  children: model.accounts.map(
+                    (account) {
+                      return AccountOrderTile(
+                        index: account.index,
+                        color: account.color,
+                        title: account.title,
+                        total: model.getSumFromAccount(account),
+                        isSelectAccountScreen: false,
+                      );
+                    },
+                  ).toList(),
                 ),
         );
       },

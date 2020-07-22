@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -25,8 +26,17 @@ class Statistics extends StatefulWidget {
 }
 
 class _StatisticsState extends State<Statistics> {
+  static final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
+    SchedulerBinding.instance.addPostFrameCallback(
+      (_) => _scrollController.animateTo(
+        0,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+      ),
+    );
     return Consumer<HomepageViewModel>(
       builder: (context, model, child) {
         if (model.selectedAccountIsEmpty()) {
@@ -52,7 +62,7 @@ class _StatisticsState extends State<Statistics> {
 
           return SingleChildScrollView(
             scrollDirection: Axis.vertical,
-            controller: HomepageViewModel.statsScroller,
+            controller: _scrollController,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[

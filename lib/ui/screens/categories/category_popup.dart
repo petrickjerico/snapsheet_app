@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/category/category_viewmodel.dart';
@@ -27,72 +28,52 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
             Category tempCategory = model.tempCategory;
             return Column(
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        model.isEditing ? 'Edit Category' : 'Add Category',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      GestureDetector(
-                        child: Icon(
-                          Icons.close,
-                          size: 25.0,
-                          color: Colors.grey,
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      )
-                    ],
-                  ),
-                ),
+                Header(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    ColorPicker(),
-                    IconPicker(),
-                    FlatButton(
-                      child: Text(tempCategory.isIncome ? 'INCOME' : 'EXPENSE'),
-                      color: tempCategory.isIncome
-                          ? Colors.teal.withOpacity(0.2)
-                          : Colors.redAccent.withOpacity(0.2),
-                      textColor: tempCategory.isIncome
-                          ? Colors.teal
-                          : Colors.redAccent,
-                      onPressed: () {
-                        model.changeIsIncome();
-                        setState(() {});
-                      },
-                    )
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundColor: tempCategory.color.withOpacity(0.2),
+                      child: IconTheme(
+                        data:
+                            IconThemeData(color: tempCategory.color, size: 36),
+                        child: FaIcon(tempCategory.icon.icon),
+                      ),
+                    ),
+                    SizedBox(width: 14),
+                    Flexible(
+                      flex: 1,
+                      child: TextFormField(
+                        initialValue: model.tempCategory.title,
+                        cursorColor: Colors.black,
+                        autofocus: true,
+                        onChanged: (value) {
+                          model.tempCategory.title = value;
+                        },
+                        decoration: kAddAccountTextFieldDecoration.copyWith(
+                            hintText: 'Category Name'),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text.';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
                   ],
                 ),
-                TextFormField(
-                  initialValue: model.tempCategory.title,
-                  cursorColor: Colors.black,
-                  autofocus: true,
-                  onChanged: (value) {
-                    model.tempCategory.title = value;
-                  },
-                  decoration: kAddAccountTextFieldDecoration.copyWith(
-                      hintText: 'Category Name'),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter some text.';
-                    }
-                    return null;
-                  },
+                SizedBox(height: 12),
+                Row(
+                  children: <Widget>[
+                    ColorPicker(),
+                    IconPicker(),
+                    SizedBox(width: 14),
+                    Expanded(child: IncomeExpenseToggle())
+                  ],
                 ),
                 RoundedButton(
-                  icon: Icon(
-                    Icons.check,
-                    color: Colors.white,
-                  ),
+                  icon: Icon(Icons.check, color: Colors.white),
                   color: Colors.black,
                   textColor: Colors.white,
                   title: 'DONE',
@@ -109,6 +90,33 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
           },
         ),
       ),
+    );
+  }
+}
+
+class IconMaker extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final model = Provider.of<CategoryViewModel>(context);
+    Category tempCategory = model.tempCategory;
+    return Column(
+      children: <Widget>[
+        CircleAvatar(
+          radius: 40,
+          backgroundColor: tempCategory.color.withOpacity(0.2),
+          child: IconTheme(
+            data: IconThemeData(color: tempCategory.color, size: 36),
+            child: FaIcon(tempCategory.icon.icon),
+          ),
+        ),
+        SizedBox(height: 10),
+        Row(
+          children: <Widget>[
+            ColorPicker(),
+            IconPicker(),
+          ],
+        )
+      ],
     );
   }
 }
@@ -226,15 +234,75 @@ class _IconPickerState extends State<IconPicker> {
         child: Container(
           width: 40,
           height: 40,
-          child: CircleAvatar(
-            backgroundColor: model.tempCategory.color.withOpacity(0.2),
-            child: IconTheme(
-              data: IconThemeData(color: model.tempCategory.color, size: 18),
-              child: model.tempCategory.icon,
-            ),
+          child: IconTheme(
+            data: IconThemeData(color: model.tempCategory.color, size: 18),
+            child: model.tempCategory.icon,
           ),
         ),
         onPressed: _pickIcon,
+      ),
+    );
+  }
+}
+
+class IncomeExpenseToggle extends StatefulWidget {
+  @override
+  _IncomeExpenseToggleState createState() => _IncomeExpenseToggleState();
+}
+
+class _IncomeExpenseToggleState extends State<IncomeExpenseToggle> {
+  @override
+  Widget build(BuildContext context) {
+    final model = Provider.of<CategoryViewModel>(context);
+    Category tempCategory = model.tempCategory;
+    return FlatButton(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(Icons.touch_app, size: 18),
+          SizedBox(width: 12),
+          Text(tempCategory.isIncome ? 'INCOME' : 'EXPENSE'),
+        ],
+      ),
+      color: tempCategory.isIncome
+          ? Colors.teal.withOpacity(0.2)
+          : Colors.redAccent.withOpacity(0.2),
+      textColor: tempCategory.isIncome ? Colors.teal : Colors.redAccent,
+      onPressed: () {
+        model.changeIsIncome();
+        setState(() {});
+      },
+    );
+  }
+}
+
+class Header extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final model = Provider.of<CategoryViewModel>(context, listen: false);
+    return Padding(
+      padding: EdgeInsets.only(bottom: 20.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            model.isEditing ? 'Edit Category' : 'Add Category',
+            style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          GestureDetector(
+            child: Icon(
+              Icons.close,
+              size: 25.0,
+              color: Colors.grey,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
       ),
     );
   }

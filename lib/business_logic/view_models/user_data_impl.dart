@@ -102,11 +102,21 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   List<Category> get categories => _categories;
 
   Account getThisAccount(String accountUid) {
-    return accounts.firstWhere((acc) => acc.uid == accountUid);
+    for (Account account in accounts) {
+      if (account.uid == accountUid) {
+        return account;
+      }
+    }
+    return accounts.first;
   }
 
   Category getThisCategory(String categoryUid) {
-    return categories.firstWhere((cat) => cat.uid == categoryUid);
+    for (Category category in categories) {
+      if (category.uid == categoryUid) {
+        return category;
+      }
+    }
+    return categories.first;
   }
 
   /// UPDATE
@@ -121,6 +131,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
 
   Future<void> updateRecurring(Recurring recurring) async {
     _db.updateRecurring(recurring);
+    notifyListeners();
   }
 
   Future<void> updateCategory(Category category) async {

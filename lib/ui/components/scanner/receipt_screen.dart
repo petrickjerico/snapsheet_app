@@ -38,71 +38,73 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
           child: Scaffold(
             resizeToAvoidBottomPadding: false,
             backgroundColor: kBlack,
-            body: SingleChildScrollView(
-              child: Theme(
-                data: ThemeData.dark(),
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.only(bottom: 10),
-                        child: Text(
-                          "${recordId + 1} / ${model.records.length}",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+            body: Theme(
+              data: ThemeData.dark(),
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Text(
+                            "${recordId + 1} / ${model.records.length}",
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
                         ),
-                      ),
-                      ReceiptImage(imagePath: record.imagePath),
-                      SizedBox(height: 30),
-                      // Value + Title
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Flexible(
-                            flex: 1,
-                            child: _ValueFormField(recordId: recordId),
-                          ),
-                          SizedBox(width: 15),
-                          Flexible(
-                            flex: 4,
-                            child: _TitleFormField(recordId: recordId),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Expanded(child: _DateFormField(recordId: recordId)),
-                          SizedBox(width: 15),
-                          Expanded(
-                              child: _CategoryFormField(recordId: recordId)),
-                        ],
-                      ),
-                      DeleteConfirmButton(
-                          isDelete: model.isDelete[recordId],
-                          callBack: () {
-                            setState(() {
-                              model.isDelete[recordId] =
-                                  !model.isDelete[recordId];
-                            });
-                          }),
-                      RoundedButton(
-                        color: Colors.white,
-                        textColor: kBlack,
-                        title: 'Confirm All Receipts',
-                        icon: Icon(Icons.done_all, color: kBlack),
-                        onPressed: () {
-                          model.addAll();
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        },
-                      )
-                    ],
-                  ),
+                        ReceiptImage(imagePath: record.imagePath),
+                        SizedBox(height: 30),
+                        // Value + Title
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Flexible(
+                              flex: 1,
+                              child: _ValueFormField(recordId: recordId),
+                            ),
+                            SizedBox(width: 15),
+                            Flexible(
+                              flex: 4,
+                              child: _TitleFormField(recordId: recordId),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Expanded(child: _DateFormField(recordId: recordId)),
+                            SizedBox(width: 15),
+                            Expanded(
+                                child: _CategoryFormField(recordId: recordId)),
+                          ],
+                        ),
+                        DeleteConfirmButton(
+                            isDelete: model.isDelete[recordId],
+                            callBack: () {
+                              setState(() {
+                                model.isDelete[recordId] =
+                                    !model.isDelete[recordId];
+                              });
+                            }),
+                      ],
+                    ),
+                    RoundedButton(
+                      color: Colors.white,
+                      textColor: kBlack,
+                      title: 'Confirm All Receipts',
+                      icon: Icon(Icons.done_all, color: kBlack),
+                      onPressed: () {
+                        model.addAll();
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
                 ),
               ),
             ),

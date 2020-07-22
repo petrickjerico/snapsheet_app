@@ -91,6 +91,7 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
                         color: account.color,
                         title: account.title,
                         total: model.getSumFromAccount(account),
+                        isSelectAccountScreen: false,
                       );
                     },
                   ).toList(),

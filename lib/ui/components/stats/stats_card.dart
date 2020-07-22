@@ -4,10 +4,11 @@ import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmo
 
 class StatsCard extends StatefulWidget {
   StatsCard({
+    Key key,
     @required this.title,
     @required this.colour,
     @required this.child,
-  });
+  }) : super(key: key);
 
   final String title;
   final Widget child;

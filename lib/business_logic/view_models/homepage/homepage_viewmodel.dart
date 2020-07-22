@@ -20,6 +20,9 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   int donutTouchedIndex;
   Account originalAccount;
   Account tempAccount;
+  bool balanceCustom = true;
+  bool expenseBreakdownCustom = true;
+  bool amountTrendCustom = true;
 
   // List<Account> get copyOfAccounts => List.from(accounts);
 
@@ -384,5 +387,22 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
         ),
       )
     ];
+  }
+
+  ///
+
+  void toggleBalanceCustom(bool value) {
+    balanceCustom = value;
+    notifyListeners();
+  }
+
+  void toggleExpenseBreakdownCustom(bool value) {
+    expenseBreakdownCustom = value;
+    notifyListeners();
+  }
+
+  void toggleAmountTrendCustom(bool value) {
+    amountTrendCustom = value;
+    notifyListeners();
   }
 }

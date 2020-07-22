@@ -63,9 +63,11 @@ class _StatisticsState extends State<Statistics> {
           );
         } else {
           Color _contentColor = Colors.white54;
-          final _showBalance = model.selectedAccountHasIncome();
-          final _showExpensesBreakdown = model.selectedAccountHasExpense();
-          final _showTrend = true;
+          final _showBalance =
+              model.selectedAccountHasIncome() && model.balanceCustom;
+          final _showExpensesBreakdown =
+              model.selectedAccountHasExpense() && model.expenseBreakdownCustom;
+          final _showTrend = model.amountTrendCustom;
           final _showRecents = true;
 
           Widget _makeDirectoryButton(
@@ -339,105 +341,111 @@ class _StatisticsState extends State<Statistics> {
                           ),
                         ),
                       ),
-                      StatsCard(
-                        key: _amountTrendKey,
-                        title: 'Amount Trend',
-                        colour: _contentColor,
-                        child: Column(
-                          children: <Widget>[
-                            AspectRatio(
-                              aspectRatio: 1.5,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(18)),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      right: 20, top: 40, bottom: 10),
-                                  child: LineChart(
-                                    LineChartData(
-                                      lineTouchData: LineTouchData(
-                                        touchTooltipData: LineTouchTooltipData(
-                                          tooltipBgColor:
-                                              Colors.white.withOpacity(0.3),
+                      Visibility(
+                        visible: _showTrend,
+                        child: StatsCard(
+                          key: _amountTrendKey,
+                          title: 'Amount Trend',
+                          colour: _contentColor,
+                          child: Column(
+                            children: <Widget>[
+                              AspectRatio(
+                                aspectRatio: 1.5,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(18)),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        right: 20, top: 40, bottom: 10),
+                                    child: LineChart(
+                                      LineChartData(
+                                        lineTouchData: LineTouchData(
+                                          touchTooltipData:
+                                              LineTouchTooltipData(
+                                            tooltipBgColor:
+                                                Colors.white.withOpacity(0.3),
+                                          ),
+                                          touchCallback: (LineTouchResponse
+                                              touchResponse) {},
+                                          handleBuiltInTouches: true,
                                         ),
-                                        touchCallback: (LineTouchResponse
-                                            touchResponse) {},
-                                        handleBuiltInTouches: true,
-                                      ),
-                                      gridData: FlGridData(
-                                        verticalInterval: model.getLimits()[5],
-                                        horizontalInterval:
-                                            model.getLimits()[4],
-                                        show: true,
-                                      ),
-                                      titlesData: FlTitlesData(
-                                        bottomTitles: SideTitles(
-                                          showTitles: true,
-                                          reservedSize: 22,
-                                          textStyle: TextStyle(
-                                            color: _contentColor,
-                                            fontSize: 12,
-                                          ),
-                                          margin: 10,
-                                          interval: model.getLimits()[5],
-                                          getTitles: (value) {
-                                            var date = DateTime.now().add(
-                                                Duration(days: value.toInt()));
-                                            return '${date.day}/${date.month}';
-                                          },
+                                        gridData: FlGridData(
+                                          verticalInterval:
+                                              model.getLimits()[5],
+                                          horizontalInterval:
+                                              model.getLimits()[4],
+                                          show: true,
                                         ),
-                                        leftTitles: SideTitles(
-                                          showTitles: true,
-                                          textStyle: TextStyle(
-                                            color: _contentColor,
-                                            fontSize: 12,
+                                        titlesData: FlTitlesData(
+                                          bottomTitles: SideTitles(
+                                            showTitles: true,
+                                            reservedSize: 22,
+                                            textStyle: TextStyle(
+                                              color: _contentColor,
+                                              fontSize: 12,
+                                            ),
+                                            margin: 10,
+                                            interval: model.getLimits()[5],
+                                            getTitles: (value) {
+                                              var date = DateTime.now().add(
+                                                  Duration(
+                                                      days: value.toInt()));
+                                              return '${date.day}/${date.month}';
+                                            },
                                           ),
-                                          interval: model.getLimits()[4],
-                                          margin: 8,
-                                          reservedSize: 30,
-                                        ),
-                                      ),
-                                      borderData: FlBorderData(
-                                        show: true,
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            color: _contentColor,
-                                            width: 2,
-                                          ),
-                                          left: BorderSide(
-                                            color: Colors.transparent,
-                                          ),
-                                          right: BorderSide(
-                                            color: Colors.transparent,
-                                          ),
-                                          top: BorderSide(
-                                            color: Colors.transparent,
+                                          leftTitles: SideTitles(
+                                            showTitles: true,
+                                            textStyle: TextStyle(
+                                              color: _contentColor,
+                                              fontSize: 12,
+                                            ),
+                                            interval: model.getLimits()[4],
+                                            margin: 8,
+                                            reservedSize: 30,
                                           ),
                                         ),
+                                        borderData: FlBorderData(
+                                          show: true,
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              color: _contentColor,
+                                              width: 2,
+                                            ),
+                                            left: BorderSide(
+                                              color: Colors.transparent,
+                                            ),
+                                            right: BorderSide(
+                                              color: Colors.transparent,
+                                            ),
+                                            top: BorderSide(
+                                              color: Colors.transparent,
+                                            ),
+                                          ),
+                                        ),
+                                        minX: model.getLimits()[0],
+                                        maxX: model.getLimits()[1],
+                                        minY: model.getLimits()[2],
+                                        maxY: model.getLimits()[3],
+                                        lineBarsData: model.linesBarData1(),
                                       ),
-                                      minX: model.getLimits()[0],
-                                      maxX: model.getLimits()[1],
-                                      minY: model.getLimits()[2],
-                                      maxY: model.getLimits()[3],
-                                      lineBarsData: model.linesBarData1(),
+                                      swapAnimationDuration:
+                                          Duration(milliseconds: 250),
                                     ),
-                                    swapAnimationDuration:
-                                        Duration(milliseconds: 250),
                                   ),
                                 ),
                               ),
-                            ),
-                            Text(
-                              'Tap and hold to see the balance at that time.',
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                fontSize: 10,
-                                color: _contentColor,
+                              Text(
+                                'Tap and hold to see the balance at that time.',
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 10,
+                                  color: _contentColor,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       StatsCard(

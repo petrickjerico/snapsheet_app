@@ -104,6 +104,12 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
         userData.deleteRecord(record);
       }
     }
+    List<Recurring> newRecurrings = List.from(userData.recurrings);
+    for (Recurring recurring in newRecurrings) {
+      if (recurring.accountUid == target.uid) {
+        userData.deleteRecurring(recurring);
+      }
+    }
     records = userData.records;
     selectedAccountIndex--;
     for (Account account in accounts) {

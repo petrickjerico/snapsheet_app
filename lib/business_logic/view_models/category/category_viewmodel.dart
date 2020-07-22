@@ -73,6 +73,13 @@ class CategoryViewModel extends ChangeNotifier implements CategoryBaseModel {
         userData.updateRecord(record);
       }
     }
+    List<Recurring> newRecurrings = List.from(userData.recurrings);
+    for (Recurring recurring in newRecurrings) {
+      if (recurring.categoryUid == category.uid) {
+        recurring.categoryUid = categories[OTHERS].uid;
+        userData.updateRecurring(recurring);
+      }
+    }
     int deletedCategoryIndex = category.index;
     for (Category category in categories) {
       if (category.index > deletedCategoryIndex) {

@@ -9,6 +9,7 @@ import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_view
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/services/auth/auth_impl.dart';
 import 'package:snapsheetapp/ui/components/scanner/receipt_preview.dart';
+import 'package:snapsheetapp/ui/screens/accounts/select_account.dart';
 import 'package:snapsheetapp/ui/screens/categories/category_popup.dart';
 import 'package:snapsheetapp/ui/screens/categories/category_screen.dart';
 import 'package:snapsheetapp/ui/screens/categories/select_category.dart';
@@ -61,6 +62,7 @@ class Snapsheet extends StatelessWidget {
           ExportScreen.id: (context) => ExportScreen(),
           CategoryScreen.id: (context) => CategoryScreen(),
           SelectCategoryScreen.id: (context) => SelectCategoryScreen(),
+          SelectAccountScreen.id: (context) => SelectAccountScreen(),
           EditProfileScreen.id: (context) => EditProfileScreen(),
           SettingsScreen.id: (context) => SettingsScreen(),
           BulkScanScreen.id: (context) => BulkScanScreen(),

@@ -13,13 +13,11 @@ class SelectCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserData>(context, listen: false);
     return Consumer<CategoryViewModel>(builder: (context, model, child) {
       return Scaffold(
         extendBody: true,
         resizeToAvoidBottomInset: false,
         backgroundColor: kBlack,
-        drawer: SidebarMenu(),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: kHomepageBackgroundTransparency,

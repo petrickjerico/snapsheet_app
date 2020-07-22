@@ -29,10 +29,6 @@ class _StatisticsState extends State<Statistics>
   final _controller = ScrollController();
 
   @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
     super.build(context);
     return Consumer<HomepageViewModel>(
@@ -58,112 +54,110 @@ class _StatisticsState extends State<Statistics>
         } else {
           Color _contentColor = Colors.white54;
 
-          return FadingEdgeScrollView.fromScrollView(
-            child: ListView(
-              addAutomaticKeepAlives: true,
-              controller: _controller,
+          return SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            controller: _controller,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Visibility(
                   visible: model.selectedAccountHasIncome(),
                   child: StatsCard(
-                      title: 'Balance',
-                      colour: _contentColor,
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                'Total Expense',
-                                style: TextStyle(color: _contentColor),
-                              ),
-                              Text(
-                                "-" +
-                                    model
-                                        .statsGetBalanceData()[1]
-                                        .toStringAsFixed(2),
-                                style: kHistoryExpenseValue,
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                'Total Income',
-                                style: TextStyle(color: _contentColor),
-                              ),
-                              Text(
-                                model
-                                    .statsGetBalanceData()[0]
-                                    .toStringAsFixed(2),
-                                style: kHistoryIncomeValue,
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                'Balance Amount',
-                                style: TextStyle(
-                                    color: _contentColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                model
-                                    .statsGetBalanceData()[2]
-                                    .toStringAsFixed(2),
-                                style: model.statsGetBalanceData()[2] < 0
-                                    ? kHistoryExpenseValue
-                                    : kHistoryIncomeValue,
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                'Income',
-                                style: TextStyle(
-                                    color: _contentColor, fontSize: 10.0),
-                              ),
-                              Text(
-                                'Expense',
-                                style: TextStyle(
-                                    color: _contentColor, fontSize: 10.0),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 2.0,
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(5.0),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Container(
-                                    color: Colors.green[600],
-                                    height: 25,
-                                  ),
-                                  flex: model.statsGetBalanceData()[0].round(),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    color: Colors.red[600],
-                                    height: 25,
-                                  ),
-                                  flex: model.statsGetBalanceData()[1].round(),
-                                ),
-                              ],
+                    title: 'Balance',
+                    colour: _contentColor,
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Total Expense',
+                              style: TextStyle(color: _contentColor),
                             ),
+                            Text(
+                              "-" +
+                                  model
+                                      .statsGetBalanceData()[1]
+                                      .toStringAsFixed(2),
+                              style: kHistoryExpenseValue,
+                            )
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Total Income',
+                              style: TextStyle(color: _contentColor),
+                            ),
+                            Text(
+                              model.statsGetBalanceData()[0].toStringAsFixed(2),
+                              style: kHistoryIncomeValue,
+                            )
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Balance Amount',
+                              style: TextStyle(
+                                  color: _contentColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              model.statsGetBalanceData()[2].toStringAsFixed(2),
+                              style: model.statsGetBalanceData()[2] < 0
+                                  ? kHistoryExpenseValue
+                                  : kHistoryIncomeValue,
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Income',
+                              style: TextStyle(
+                                  color: _contentColor, fontSize: 10.0),
+                            ),
+                            Text(
+                              'Expense',
+                              style: TextStyle(
+                                  color: _contentColor, fontSize: 10.0),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 2.0,
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5.0),
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                  color: Colors.green[600],
+                                  height: 25,
+                                ),
+                                flex: model.statsGetBalanceData()[0].round(),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  color: Colors.red[600],
+                                  height: 25,
+                                ),
+                                flex: model.statsGetBalanceData()[1].round(),
+                              ),
+                            ],
                           ),
-                        ],
-                      )),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Visibility(
                   visible: model.selectedAccountHasExpense(),
@@ -379,11 +373,11 @@ class _StatisticsState extends State<Statistics>
                   title: 'Recent Records',
                   colour: _contentColor,
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Align(
                         alignment: Alignment.topCenter,
                         child: ListView.builder(
+                          padding: EdgeInsets.all(0),
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
@@ -430,7 +424,7 @@ class _StatisticsState extends State<Statistics>
                   ),
                 ),
                 SizedBox(
-                  height: 20.0,
+                  height: 70.0,
                 ),
               ],
             ),
@@ -439,4 +433,7 @@ class _StatisticsState extends State<Statistics>
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

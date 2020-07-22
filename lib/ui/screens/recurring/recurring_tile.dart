@@ -20,7 +20,7 @@ class RecurringTile extends StatelessWidget {
         Category category =
             model.userData.getThisCategory(recurring.categoryUid);
         return ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
           dense: true,
           leading: CircleAvatar(
             backgroundColor: category.color.withOpacity(0.2),
@@ -48,7 +48,7 @@ class RecurringTile extends StatelessWidget {
                     : kHistoryExpenseValue,
               ),
               Text(
-                model.userData.getThisAccount(recurring.accountUid).title,
+                model.getAccountFromUid(recurring.accountUid).title ?? "",
                 style: kHistoryRecordDate,
               )
             ],

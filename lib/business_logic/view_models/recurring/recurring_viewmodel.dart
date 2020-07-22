@@ -22,7 +22,12 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
   }
 
   Account getAccountFromUid(String accountUid) {
-    return userData.getThisAccount(accountUid);
+    for (Account account in accounts) {
+      if (account.uid == accountUid) {
+        return account;
+      }
+    }
+    return accounts.first;
   }
 
   void addDueExpenses() {

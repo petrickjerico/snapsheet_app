@@ -13,6 +13,16 @@ class Account {
     this.index = accOrder;
   }
 
+  Account copyWith(
+      {String accTitle, Color accColor, int accOrder, String uid}) {
+    return Account(
+      title: accTitle ?? this.title,
+      color: accColor ?? this.color,
+      index: accOrder ?? this.index,
+      uid: uid ?? this.uid,
+    );
+  }
+
   Account({this.title, this.color, this.index, this.uid});
 
   factory Account.of(Account account) {

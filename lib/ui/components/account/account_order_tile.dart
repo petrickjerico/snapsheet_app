@@ -84,8 +84,8 @@ class AccountOrderTile extends StatelessWidget {
                           message: 'Are you sure you want to delete ${title}?',
                           onDelete: () {
                             model.deleteAccount();
+                            Navigator.of(context).pop();
                             HomepageViewModel.syncController();
-                            Navigator.pop(context);
                           }),
                     );
                   },

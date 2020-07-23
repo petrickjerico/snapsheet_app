@@ -71,7 +71,10 @@ class _StatisticsState extends State<Statistics> {
           final _showRecents = true;
 
           Widget _makeDirectoryButton(
-              String title, bool enabled, GlobalKey key) {
+            String title,
+            bool enabled,
+            GlobalKey key,
+          ) {
             return MaterialButton(
                 padding: EdgeInsets.symmetric(vertical: 0, horizontal: 5.0),
                 minWidth: 0,
@@ -89,18 +92,21 @@ class _StatisticsState extends State<Statistics> {
               Expanded(
                 child: Container(
                   color: Colors.black.withOpacity(0.25),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      _makeDirectoryButton(
-                          'Balance', _showBalance, _balanceKey),
-                      _makeDirectoryButton('Expenses Breakdown',
-                          _showExpensesBreakdown, _expensesBreakdownKey),
-                      _makeDirectoryButton(
-                          'Amount Trend', _showTrend, _amountTrendKey),
-                      _makeDirectoryButton(
-                          'Recent Records', _showRecents, _recentRecordsKey),
-                    ],
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _makeDirectoryButton(
+                            'Balance', _showBalance, _balanceKey),
+                        _makeDirectoryButton('Expenses Breakdown',
+                            _showExpensesBreakdown, _expensesBreakdownKey),
+                        _makeDirectoryButton(
+                            'Amount Trend', _showTrend, _amountTrendKey),
+                        _makeDirectoryButton(
+                            'Recent Records', _showRecents, _recentRecordsKey),
+                      ],
+                    ),
                   ),
                 ),
               ),

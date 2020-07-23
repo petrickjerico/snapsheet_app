@@ -23,6 +23,10 @@ class DatabaseServiceImpl implements DatabaseService {
     categoryCollection = userDocument.collection('category');
   }
 
+  Future<void> addCredential(Map<String, dynamic> credentials) async {
+    userDocument.setData(credentials);
+  }
+
   Future<void> initialize() async {
     Map<int, String> accountMap = {};
     Map<int, String> categoryMap = {};

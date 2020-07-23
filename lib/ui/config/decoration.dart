@@ -60,8 +60,8 @@ const kConfirmPasswordTextFieldDecoration = InputDecoration(
   hintStyle: TextStyle(color: Colors.grey),
   hintText: 'Confirm Password',
   prefixIcon: Icon(
-    FontAwesomeIcons.key,
-    color: Colors.transparent,
+    FontAwesomeIcons.lock,
+    size: 20,
   ),
   prefixIconConstraints: BoxConstraints.tightFor(width: 50, height: 30),
 );

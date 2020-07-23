@@ -57,6 +57,11 @@ class AuthServiceImpl implements AuthService {
 
       // Adding initial data
       DatabaseServiceImpl _db = DatabaseServiceImpl(uid: user.uid);
+      Map<String, dynamic> credentials = {
+        'uid': user.uid,
+        'email': email,
+      };
+      _db.addCredential(credentials);
       await _db.initialize();
 
       return _userFromFirebaseUser(user);
@@ -90,6 +95,13 @@ class AuthServiceImpl implements AuthService {
       if (additionalUserInfo.isNewUser) {
         print("NEW USER");
         DatabaseServiceImpl _db = DatabaseServiceImpl(uid: user.uid);
+        Map<String, dynamic> profile = additionalUserInfo.profile;
+        Map<String, dynamic> credentials = {
+          'uid': currentUser.uid,
+          'email': profile['email'],
+          'name': profile['name'],
+        };
+        _db.addCredential(credentials);
         await _db.initialize();
       }
 

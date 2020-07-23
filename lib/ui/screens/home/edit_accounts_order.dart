@@ -90,6 +90,7 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
                   children: model.accounts.map(
                     (account) {
                       return AccountOrderTile(
+                        context: context,
                         index: account.index,
                         color: account.color,
                         title: account.title,

@@ -128,14 +128,22 @@ class HistoryTile extends StatelessWidget {
                     fontWeight: FontWeight.normal),
               ),
               trailing: Container(
-                width: 100,
+                width: 125,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     record.receiptURL != null
-                        ? Icon(Icons.receipt, color: Colors.white)
+                        ? IconButton(
+                            icon: Icon(Icons.receipt),
+                            color: Colors.white,
+                            onPressed: () {
+                              model.changeTempRecord(index);
+                              Navigator.pushNamed(
+                                  context, EditExpenseInfoScreen.id);
+                            },
+                          )
                         : SizedBox.shrink(),
-                    SizedBox(width: 12),
+                    SizedBox(width: 8),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,

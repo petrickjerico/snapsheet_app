@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
+import 'package:sorted_list/sorted_list.dart';
 
 import 'homepage_basemodel.dart';
 
@@ -95,6 +96,38 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     originalAccount.color = tempAccount.color;
     userData.updateAccount(originalAccount);
     notifyListeners();
+  }
+
+  void updateAccountIndex(int oldIndex, int newIndex) {
+    Account temp = accounts.removeAt(oldIndex);
+    Account newAcc = temp.copyWith(accOrder: newIndex);
+    print("oldIndex = $oldIndex");
+    print("newIndex = $newIndex");
+    if (oldIndex < newIndex) {
+      print("oldIndex < newIndex");
+      for (int i = oldIndex; i < newIndex; i++) {
+        accounts[i].index = i;
+      }
+      accounts.add(newAcc);
+      notifyListeners();
+      for (int i = oldIndex; i <= newIndex; i++) {
+        userData.updateAccount(accounts[i]);
+      }
+    } else if (oldIndex > newIndex) {
+      print("oldIndex > newIndex");
+      for (int i = newIndex; i < oldIndex; i++) {
+        print("old: ${accounts[i].index}");
+        accounts[i].index = i + 1;
+        print("new: ${accounts[i].index}");
+      }
+      accounts.add(newAcc);
+      notifyListeners();
+      for (int i = newIndex; i <= oldIndex; i++) {
+        userData.updateAccount(accounts[i]);
+      }
+    } else {
+      return;
+    }
   }
 
   void deleteAccount() {
@@ -203,7 +236,6 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   }
 
   double getCategoryTotal(int catId) {
-    print(catId);
     Category category = userData.categories[catId];
     if (category.isIncome) {
       return 0;
@@ -341,13 +373,6 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
       syncLimits(entry.key, entry.value);
     }
 
-    print(minDate);
-    print(maxDate);
-    print(minValue);
-    print(maxValue);
-    print((maxDate - minDate).roundToDouble());
-    print((maxValue - minValue).roundToDouble());
-
     return [
       minDate,
       maxDate,
@@ -360,9 +385,6 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
 
   List<FlSpot> getAccountSpots() {
     List<MapEntry<double, double>> finalData = getXYMapValues();
-
-    print(finalData);
-
     return finalData.map((pair) => FlSpot(pair.key, pair.value)).toList();
   }
 

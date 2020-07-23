@@ -78,7 +78,6 @@ class FilterData extends ChangeNotifier {
   }
 
   void undoDelete() {
-    print("///// adding: " + tempRecord.toString());
     records.add(tempRecord);
     records.sort((a, b) => b.dateTime.compareTo(a.dateTime));
     tempRecord = null;
@@ -86,7 +85,6 @@ class FilterData extends ChangeNotifier {
   }
 
   void toggleActivity(bool activity) {
-    print("toggleActivity: " + activity.toString());
     isActive = activity;
     notifyListeners();
   }
@@ -159,7 +157,6 @@ class _FilteredRecordsState extends State<FilteredRecords> {
     return Consumer<FilterData>(builder: (context, filterData, child) {
       var filteredRecords = filterData.records;
       var isActive = filterData.isActive;
-      print("isActive: " + isActive.toString());
       var recordsCount = filteredRecords.length;
       return Scaffold(
         backgroundColor: kBlack,
@@ -652,8 +649,6 @@ class _FilterScreenState extends State<FilterScreen> {
               IconButton(
                 icon: Icon(Icons.check),
                 onPressed: () {
-                  print(minValue.toString());
-                  print(maxValue.toString());
                   bool filterIsSet = filterData.setMatches(filterAccounts,
                       filterCategories, minValue, maxValue, earliest, latest);
                   if (filterIsSet) {

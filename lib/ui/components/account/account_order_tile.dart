@@ -7,6 +7,7 @@ import 'package:snapsheetapp/ui/config/decoration.dart';
 import 'package:snapsheetapp/ui/screens/home/rename_account_popup.dart';
 
 class AccountOrderTile extends StatelessWidget {
+  final BuildContext context;
   final int index;
   final Color color;
   final String title;
@@ -14,7 +15,8 @@ class AccountOrderTile extends StatelessWidget {
   final bool isSelectAccountScreen;
 
   AccountOrderTile(
-      {this.index,
+      {this.context,
+      this.index,
       this.color,
       this.title,
       this.total,
@@ -78,14 +80,14 @@ class AccountOrderTile extends StatelessWidget {
                   onPressed: () {
                     model.selectAccount(index);
                     showDialog(
-                      context: context,
+                      context: this.context,
                       child: DeleteDialog(
                           title: 'Delete Account?',
                           message: 'Are you sure you want to delete ${title}?',
                           onDelete: () {
                             model.deleteAccount();
+                            Navigator.of(this.context).pop();
                             HomepageViewModel.syncController();
-                            Navigator.pop(context);
                           }),
                     );
                   },

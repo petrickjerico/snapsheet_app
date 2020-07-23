@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/account/account_order_tile.dart';
@@ -16,6 +17,7 @@ import 'add_account_popup.dart';
 
 class EditAccountsOrder extends StatefulWidget {
   static final String id = 'edit_order_accounts';
+
   @override
   _EditAccountsOrderState createState() => _EditAccountsOrderState();
 }
@@ -25,7 +27,8 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
   Widget build(BuildContext context) {
     return Consumer<HomepageViewModel>(
       builder: (context, model, child) {
-        int accountsCount = model.accounts.length;
+        List<Account> accounts = List.of(model.accounts);
+        int accountsCount = accounts.length;
         return Scaffold(
           extendBody: true,
           resizeToAvoidBottomInset: false,
@@ -77,16 +80,17 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
                   ),
                 )
               : ReorderableListSimple(
-                  allowReordering: false,
+                  allowReordering: true,
                   handleSide: ReorderableListSimpleSide.Left,
                   handleIcon: Icon(
-                    FontAwesomeIcons.bars,
+                    Icons.reorder,
                     size: 30.0,
                     color: Colors.white54,
                   ),
                   children: model.accounts.map(
                     (account) {
                       return AccountOrderTile(
+                        context: context,
                         index: account.index,
                         color: account.color,
                         title: account.title,
@@ -95,6 +99,8 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
                       );
                     },
                   ).toList(),
+                  onReorder: (oldIndex, newIndex) =>
+                      model.updateAccountIndex(oldIndex, newIndex),
                 ),
         );
       },

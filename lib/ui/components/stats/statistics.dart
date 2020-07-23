@@ -34,13 +34,6 @@ class _StatisticsState extends State<Statistics> {
 
   @override
   Widget build(BuildContext context) {
-    SchedulerBinding.instance.addPostFrameCallback(
-      (_) => _scrollController.animateTo(
-        0,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeIn,
-      ),
-    );
     return Consumer<HomepageViewModel>(
       builder: (context, model, child) {
         if (model.selectedAccountIsEmpty()) {
@@ -62,6 +55,13 @@ class _StatisticsState extends State<Statistics> {
             ),
           );
         } else {
+          SchedulerBinding.instance.addPostFrameCallback(
+            (_) => _scrollController.animateTo(
+              0,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeIn,
+            ),
+          );
           Color _contentColor = Colors.white54;
           final _showBalance =
               model.selectedAccountHasIncome() && model.balanceCustom;

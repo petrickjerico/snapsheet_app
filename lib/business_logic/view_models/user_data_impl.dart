@@ -15,6 +15,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   User user;
   DatabaseServiceImpl _db;
   CloudStorageService _cloud;
+  Map<String, dynamic> credentials;
 
   List<Record> _records =
       SortedList<Record>((r1, r2) => r2.dateTime.compareTo(r1.dateTime));
@@ -35,6 +36,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
 
     _db = DatabaseServiceImpl(uid: user.uid);
     _cloud = CloudStorageServiceImpl(uid: user.uid);
+    credentials = await _db.getCredentials();
 
     List<Record> unorderedRecords = await _db.getRecords();
     List<Account> unorderedAccounts = await _db.getAccounts();
@@ -136,6 +138,12 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
 
   Future<void> updateCategory(Category category) async {
     _db.updateCategory(category);
+  }
+
+  Future<void> demoDone() async {
+    credentials['isDemo'] = false;
+    notifyListeners();
+    _db.updateCredentials(credentials);
   }
 
   /// DELETE

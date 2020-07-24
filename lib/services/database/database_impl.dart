@@ -123,9 +123,7 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   /// UPDATE
-  Future<void> demoDone() async {
-    Map<String, dynamic> credentials = await getCredentials();
-    credentials['isDemo'] = false;
+  Future<void> updateCredentials(Map<String, dynamic> credentials) async {
     userDocument.setData(credentials);
   }
 

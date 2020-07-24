@@ -142,7 +142,18 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
 
   Future<void> demoDone() async {
     credentials['isDemo'] = false;
+    records.forEach((record) => _db.deleteRecord(record));
+    accounts.forEach((account) => _db.deleteAccount(account));
+    categories.forEach((category) =>
+        !category.isDefault ? _db.deleteCategory(category) : null);
+    recurrings.forEach((recurring) => _db.deleteRecurring(recurring));
+
+    records.clear();
+    accounts.clear();
+    categories.removeWhere((category) => !category.isDefault);
+    recurrings.clear();
     notifyListeners();
+
     _db.updateCredentials(credentials);
   }
 

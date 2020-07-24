@@ -10,7 +10,6 @@ import 'package:snapsheetapp/ui/config/decoration.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 import 'package:snapsheetapp/ui/screens/sidebar/sidebar_menu.dart';
 
-
 import 'add_account_popup.dart';
 
 class Dashboard extends StatefulWidget {
@@ -21,7 +20,8 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    int accountsCount = Provider.of<HomepageViewModel>(context).accounts.length;
+    final model = Provider.of<HomepageViewModel>(context);
+    int accountsCount = model.accounts.length;
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: false,
@@ -31,6 +31,18 @@ class _DashboardState extends State<Dashboard> {
         elevation: 0,
         backgroundColor: kHomepageBackgroundTransparency,
         title: Text("DASHBOARD"),
+        actions: <Widget>[
+          model.userData.credentials['isDemo']
+              ? FlatButton(
+                  textColor: Colors.white,
+                  child: Text('Exit Demo'),
+                  onPressed: () {
+                    model.userData.demoDone();
+                    setState(() {});
+                  },
+                )
+              : SizedBox.shrink()
+        ],
       ),
       body: accountsCount < 1
           ? EmptyState(

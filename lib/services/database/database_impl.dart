@@ -23,10 +23,6 @@ class DatabaseServiceImpl implements DatabaseService {
     categoryCollection = userDocument.collection('category');
   }
 
-  Future<void> addCredential(Map<String, dynamic> credentials) async {
-    userDocument.setData(credentials);
-  }
-
   Future<void> initialize() async {
     Map<int, String> accountMap = {};
     Map<int, String> categoryMap = {};
@@ -46,6 +42,10 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   /// CREATE
+  Future<void> addCredentials(Map<String, dynamic> credentials) async {
+    userDocument.setData(credentials);
+  }
+
   @override
   Future<String> addRecord(Record record) async {
     final recordDocument = recordCollection.document();
@@ -87,6 +87,11 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   /// READ
+  Future<Map<String, dynamic>> getCredentials() async {
+    DocumentSnapshot json = await userDocument.get();
+    return json.data;
+  }
+
   @override
   Future<List<Record>> getRecords() async {
     List<DocumentSnapshot> snapshots =
@@ -118,6 +123,10 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   /// UPDATE
+  Future<void> updateCredentials(Map<String, dynamic> credentials) async {
+    userDocument.setData(credentials);
+  }
+
   @override
   Future<void> updateRecord(Record record) async {
     recordCollection.document(record.uid).setData(record.toJson());

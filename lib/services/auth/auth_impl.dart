@@ -60,8 +60,9 @@ class AuthServiceImpl implements AuthService {
       Map<String, dynamic> credentials = {
         'uid': user.uid,
         'email': email,
+        'isDemo': true,
       };
-      _db.addCredential(credentials);
+      _db.addCredentials(credentials);
       await _db.initialize();
 
       return _userFromFirebaseUser(user);
@@ -100,8 +101,9 @@ class AuthServiceImpl implements AuthService {
           'uid': currentUser.uid,
           'email': profile['email'],
           'name': profile['name'],
+          'isDemo': true,
         };
-        _db.addCredential(credentials);
+        _db.addCredentials(credentials);
         await _db.initialize();
       }
 

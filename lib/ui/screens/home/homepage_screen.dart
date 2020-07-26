@@ -30,17 +30,24 @@ class _HomepageScreenState extends State<HomepageScreen>
 
   void showDemoWelcome() {
     showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-                content: Text(
-                    "Welcome to Snapsheet!\nTap on 'Exit Demo' at the top right to start afresh"),
-                actions: <Widget>[
-                  FlatButton(
-                    color: Colors.black,
-                    child: Text('OK', style: TextStyle(color: Colors.white)),
-                    onPressed: () => Navigator.of(context).pop(),
-                  )
-                ]));
+      context: context,
+      builder: (context) => AlertDialog(
+          titlePadding: EdgeInsets.only(left: 20, right: 20, top: 20),
+          contentPadding:
+              EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+          title: Text('Demo Mode'),
+          content: Text("'Exit Demo' at the top right to start afresh"),
+          actionsPadding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
+          actions: <Widget>[
+            FlatButton(
+              color: Colors.black,
+              child: Text('OK', style: TextStyle(color: Colors.white)),
+              onPressed: () => Navigator.of(context).pop(),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
+            ),
+          ]),
+    );
   }
 
   final List<Widget> _pageList = <Widget>[

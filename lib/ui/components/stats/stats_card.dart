@@ -23,12 +23,7 @@ class _StatsCardState extends State<StatsCard> {
   Widget build(BuildContext context) {
     var horizontalPadding = EdgeInsets.symmetric(horizontal: 15.0);
     return Consumer<HomepageViewModel>(builder: (context, model, child) {
-      return Container(
-        margin: EdgeInsets.symmetric(vertical: 5.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: Colors.white,
-        ),
+      return Card(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 15.0),
           child: Column(

@@ -10,10 +10,12 @@ class BulkScanScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         leading: BackButton(),
+        textTheme: Theme.of(context).textTheme,
+        iconTheme: Theme.of(context).iconTheme,
         title: Text('Select Account to Upload Receipts'),
       ),
       body: BulkScanAccountsList(),

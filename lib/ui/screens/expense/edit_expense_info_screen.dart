@@ -71,6 +71,7 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
                   labelText: "Title",
                   labelStyle: TextStyle(color: Colors.grey),
                 ),
+                cursorColor: Colors.white,
                 onChanged: (value) {
                   setState(() {
                     model.changeTitle(value);

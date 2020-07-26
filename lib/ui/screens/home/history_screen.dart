@@ -595,8 +595,11 @@ class _FilterScreenState extends State<FilterScreen> {
     return Consumer<FilterData>(
       builder: (context, filterData, child) {
         return Scaffold(
-          backgroundColor: Colors.white,
           appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            iconTheme: Theme.of(context).iconTheme,
+            textTheme: Theme.of(context).textTheme,
             title: Text('Filter Screen'),
             actions: <Widget>[
               IconButton(

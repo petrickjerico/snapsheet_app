@@ -15,10 +15,11 @@ class RecurringScreen extends StatelessWidget {
       builder: (context, model, child) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: kScaffoldBackgroundColour,
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: kHomepageBackgroundTransparency,
+            backgroundColor: Colors.transparent,
+            textTheme: Theme.of(context).textTheme,
+            iconTheme: Theme.of(context).iconTheme,
             title: Text("Recurring Expenses"),
           ),
           body: Padding(

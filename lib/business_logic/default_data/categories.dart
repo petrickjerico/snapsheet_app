@@ -110,7 +110,7 @@ Category income = Category(
 Category others = Category(
   title: 'Others',
   icon: Icon(FontAwesomeIcons.shapes),
-  color: Colors.grey,
+  color: Colors.blueGrey,
   isIncome: false,
   index: OTHERS,
   isDefault: true,

@@ -85,6 +85,10 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
               : ReorderableListSimple(
                   allowReordering: true,
                   handleSide: ReorderableListSimpleSide.Left,
+                  handleIcon: Icon(
+                    Icons.drag_handle,
+                    color: Colors.black,
+                  ),
                   children: model.accounts.map(
                     (account) {
                       return AccountOrderTile(

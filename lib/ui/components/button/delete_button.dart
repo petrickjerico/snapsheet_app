@@ -11,36 +11,70 @@ class DeleteConfirmButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: RoundedButton(
-            color: isDelete ? Colors.red.withOpacity(0.3) : kGrey,
-            textColor: isDelete ? Colors.red : kScaffoldBackgroundColour,
-            title: 'Delete',
-            icon: Icon(
-              FontAwesomeIcons.trashAlt,
-              color: isDelete ? Colors.red : kScaffoldBackgroundColour,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20.0),
+      child: Container(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: GestureDetector(
+                child: Container(
+                  height: 40,
+                  color: isDelete ? Colors.red.withOpacity(0.3) : kGrey,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      FaIcon(
+                        FontAwesomeIcons.trashAlt,
+                        color:
+                            isDelete ? Colors.red : kScaffoldBackgroundColour,
+                      ),
+                      SizedBox(
+                        width: 20.0,
+                      ),
+                      Text('Delete',
+                          style: TextStyle(
+                              color: isDelete
+                                  ? Colors.red
+                                  : kScaffoldBackgroundColour))
+                    ],
+                  ),
+                ),
+                onTap: isDelete ? () => {} : () => callBack(),
+              ),
             ),
-            onPressed: isDelete ? () => {} : () => callBack(),
-          ),
-        ),
-        SizedBox(
-          width: 20,
-        ),
-        Expanded(
-          child: RoundedButton(
-            color: isDelete ? kGrey : Colors.tealAccent.withOpacity(0.3),
-            textColor: isDelete ? kScaffoldBackgroundColour : Colors.tealAccent,
-            title: 'Add',
-            icon: Icon(
-              Icons.done,
-              color: isDelete ? kScaffoldBackgroundColour : Colors.tealAccent,
+            Expanded(
+              child: GestureDetector(
+                child: Container(
+                  height: 40,
+                  color: !isDelete ? Colors.tealAccent.withOpacity(0.3) : kGrey,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.check,
+                        color:
+                            !isDelete ? Colors.teal : kScaffoldBackgroundColour,
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text('Add',
+                          style: TextStyle(
+                              color: !isDelete
+                                  ? Colors.teal
+                                  : kScaffoldBackgroundColour))
+                    ],
+                  ),
+                ),
+                onTap: !isDelete ? () => {} : () => callBack(),
+              ),
             ),
-            onPressed: isDelete ? () => callBack() : () => {},
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

@@ -44,7 +44,7 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
               showDialog(
                   context: context,
                   child: DeleteDialog(
-                    title: 'Delete Recurring Expense?',
+                    title: 'Delete Recurring Expense',
                     message:
                         'Are you sure you want to delete this recurring expense?',
                     onDelete: () {

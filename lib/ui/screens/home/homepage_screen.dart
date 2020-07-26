@@ -1,3 +1,4 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:animations/animations.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +12,43 @@ import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/screens/categories/category_screen.dart';
 import 'package:snapsheetapp/ui/screens/screens.dart';
 
-class HomepageScreen extends StatelessWidget {
+class HomepageScreen extends StatefulWidget {
   static GlobalKey bottomKey = GlobalKey();
   static final String id = 'homepage_screen';
+
+  @override
+  _HomepageScreenState createState() => _HomepageScreenState();
+}
+
+class _HomepageScreenState extends State<HomepageScreen>
+    with AfterLayoutMixin<HomepageScreen> {
+  @override
+  void afterFirstLayout(BuildContext context) {
+    final userData = Provider.of<UserData>(context, listen: false);
+    if (userData.credentials['isDemo']) showDemoWelcome();
+  }
+
+  void showDemoWelcome() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+          titlePadding: EdgeInsets.only(left: 20, right: 20, top: 20),
+          contentPadding:
+              EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+          title: Text('Demo Mode'),
+          content: Text("'Exit Demo' at the top right to start afresh"),
+          actionsPadding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
+          actions: <Widget>[
+            FlatButton(
+              color: Colors.black,
+              child: Text('OK', style: TextStyle(color: Colors.white)),
+              onPressed: () => Navigator.of(context).pop(),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
+            ),
+          ]),
+    );
+  }
 
   final List<Widget> _pageList = <Widget>[
     Dashboard(),
@@ -41,7 +76,7 @@ class HomepageScreen extends StatelessWidget {
                     drawer: SidebarMenu(),
                     body: _pageList[HomepageViewModel.currentPage],
                     bottomNavigationBar: BottomAppBar(
-                      key: bottomKey,
+                      key: HomepageScreen.bottomKey,
                       elevation: 10.0,
                       shape: CircularNotchedRectangle(),
                       notchMargin: 12,

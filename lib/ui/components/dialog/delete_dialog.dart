@@ -28,7 +28,7 @@ class DeleteDialog extends StatelessWidget {
               children: <Widget>[
                 FlatButton(
                   child: Text(
-                    'DELETE',
+                    'YES',
                     style: TextStyle(color: Colors.white),
                   ),
                   color: Colors.black,

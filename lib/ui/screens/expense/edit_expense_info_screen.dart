@@ -139,7 +139,7 @@ class ReceiptButtons extends StatelessWidget {
                       onPressed: () => showDialog(
                         context: context,
                         child: DeleteDialog(
-                            title: 'Delete image?',
+                            title: 'Delete Image',
                             message:
                                 'Are you sure you want to delete the image?',
                             onDelete: () {

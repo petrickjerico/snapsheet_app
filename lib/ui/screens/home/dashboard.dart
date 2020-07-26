@@ -71,12 +71,12 @@ class _DashboardState extends State<Dashboard> {
                   shape: kBottomSheetShape,
                 );
               },
-              messageColor: Colors.white30,
+              messageColor: Colors.grey,
               message: 'There is no account yet.\n'
                   'Tap to create one.',
               icon: Icon(
                 Icons.add_circle,
-                color: Colors.white30,
+                color: Colors.grey,
                 size: 120.0,
               ),
             )

@@ -95,31 +95,46 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                 context,
                 listen: false,
               );
+              var value = model.tempRecord.value;
+              bool isValid = value > 0 && value != double.infinity;
               try {
-                if (!model.isOperated) {
-                  final ExpressionEvaluator evaluator =
-                      const ExpressionEvaluator();
-                  model.changeValue(
-                      evaluator.eval(Expression.parse(model.expression), null));
+                if (!isValid) {
+                  Flushbar(
+                    message: "Cannot make a valid record with this value.",
+                    icon: Icon(
+                      Icons.info_outline,
+                      size: 28.0,
+                      color: Colors.blue[300],
+                    ),
+                    duration: Duration(seconds: 3),
+                    leftBarIndicatorColor: Colors.blue[300],
+                  )..show(context);
+                } else {
+                  if (!model.isOperated) {
+                    final ExpressionEvaluator evaluator =
+                        const ExpressionEvaluator();
+                    model.changeValue(evaluator.eval(
+                        Expression.parse(model.expression), null));
+                  }
+                  model.addRecord();
+                  homepageModel
+                      .selectAccount(model.getAccountIndexFromTempRecord());
+                  HomepageViewModel.syncController();
+                  Navigator.pop(context);
+                  String title = homepageModel.getSelectedAccount().title;
+                  String messageStatus =
+                      isEditing ? 'updated' : 'added to account: $title';
+                  Flushbar(
+                    message: "Record successfully $messageStatus.",
+                    icon: Icon(
+                      Icons.info_outline,
+                      size: 28.0,
+                      color: Colors.blue[300],
+                    ),
+                    duration: Duration(seconds: 3),
+                    leftBarIndicatorColor: Colors.blue[300],
+                  )..show(context);
                 }
-                model.addRecord();
-                homepageModel
-                    .selectAccount(model.getAccountIndexFromTempRecord());
-                HomepageViewModel.syncController();
-                Navigator.pop(context);
-                String title = homepageModel.getSelectedAccount().title;
-                String messageStatus =
-                    isEditing ? 'updated' : 'added to account: $title';
-                Flushbar(
-                  message: "Record successfully $messageStatus.",
-                  icon: Icon(
-                    Icons.info_outline,
-                    size: 28.0,
-                    color: Colors.blue[300],
-                  ),
-                  duration: Duration(seconds: 3),
-                  leftBarIndicatorColor: Colors.blue[300],
-                )..show(context);
               } catch (e) {
                 print(e);
                 Flushbar(

@@ -208,10 +208,10 @@ class _FilteredRecordsState extends State<FilteredRecords> {
             ? EmptyState(
                 icon: Icon(
                   FontAwesomeIcons.solidMeh,
-                  color: Colors.white30,
+                  color: Colors.grey,
                   size: 100.0,
                 ),
-                messageColor: Colors.white30,
+                messageColor: Colors.grey,
                 message: 'Nothing to show here yet. \n'
                     'Create an account and start adding records.',
               )

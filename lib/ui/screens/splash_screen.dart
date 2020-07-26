@@ -14,8 +14,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with AfterLayoutMixin<SplashScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
   @override
   void afterFirstLayout(BuildContext context) async {
     Future.delayed(Duration(seconds: 1), _checkIfUserIsLoggedIn);

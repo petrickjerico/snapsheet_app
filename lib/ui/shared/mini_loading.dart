@@ -6,7 +6,7 @@ class MiniLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: kWhite,
+      color: kScaffoldBackgroundColour,
       child: Center(
         child: SpinKitChasingDots(
           color: Colors.white,

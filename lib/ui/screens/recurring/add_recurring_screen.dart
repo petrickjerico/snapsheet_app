@@ -24,9 +24,9 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
   Widget build(BuildContext context) {
     final model = Provider.of<RecurringViewModel>(context);
     return Scaffold(
-      backgroundColor: kWhite,
+      backgroundColor: kScaffoldBackgroundColour,
       appBar: AppBar(
-        backgroundColor: kWhite,
+        backgroundColor: kScaffoldBackgroundColour,
         elevation: 0,
         leading: BackButton(
           onPressed: () {

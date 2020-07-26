@@ -37,7 +37,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
           onTap: () => unfocus(context),
           child: Scaffold(
             resizeToAvoidBottomPadding: false,
-            backgroundColor: kWhite,
+            backgroundColor: kScaffoldBackgroundColour,
             body: Theme(
               data: ThemeData.dark(),
               child: Container(
@@ -94,9 +94,10 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     ),
                     RoundedButton(
                       color: Colors.white,
-                      textColor: kWhite,
+                      textColor: kScaffoldBackgroundColour,
                       title: 'Confirm All Receipts',
-                      icon: Icon(Icons.done_all, color: kWhite),
+                      icon: Icon(Icons.done_all,
+                          color: kScaffoldBackgroundColour),
                       onPressed: () {
                         model.addAll();
                         Navigator.pop(context);

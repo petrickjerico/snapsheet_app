@@ -15,10 +15,11 @@ class SelectCategoryScreen extends StatelessWidget {
       return Scaffold(
         extendBody: true,
         resizeToAvoidBottomInset: false,
-        backgroundColor: kWhite,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: kHomepageBackgroundTransparency,
+          textTheme: Theme.of(context).textTheme,
+          iconTheme: Theme.of(context).iconTheme,
+          backgroundColor: Colors.transparent,
           title: Text('CATEGORIES'),
           actions: <Widget>[
             IconButton(

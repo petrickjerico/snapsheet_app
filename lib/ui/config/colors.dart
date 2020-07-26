@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kWhite = Colors.white70;
+const kScaffoldBackgroundColour = Colors.white70;
 const kLightBlueGrey = Color(0xFFD8F1F5);
 const kCyan = Color(0xFF56CBDC);
 const kDarkCyan = Colors.blueAccent;

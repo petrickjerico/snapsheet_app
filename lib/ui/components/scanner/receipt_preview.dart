@@ -18,7 +18,7 @@ class _ReceiptPreviewScreenState extends State<ReceiptPreviewScreen> {
       builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: kWhite,
+            backgroundColor: kScaffoldBackgroundColour,
             elevation: 0,
             title: Text("Previews"),
           ),

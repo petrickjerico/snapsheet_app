@@ -40,10 +40,12 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           return true;
         },
         child: Scaffold(
-          backgroundColor: kWhite,
+          backgroundColor: kScaffoldBackgroundColour,
           appBar: AppBar(
-            backgroundColor: kWhite,
+            backgroundColor: Colors.transparent,
             elevation: 0,
+            textTheme: Theme.of(context).textTheme,
+            iconTheme: Theme.of(context).iconTheme,
             leading: BackButton(
               onPressed: () {
                 if (model.isEditing) {
@@ -65,19 +67,16 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
             title: Text('CALCULATOR'),
             actions: <Widget>[
               IconButton(
-                icon: Icon(
-                  Icons.edit,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, EditExpenseInfoScreen.id);
-                },
-              ),
-              IconButton(
                 icon: Icon(Icons.receipt),
                 onPressed: () async {
                   await model.showChoiceDialog(context);
                   await model.imageToTempRecord();
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  Navigator.pushNamed(context, EditExpenseInfoScreen.id);
                 },
               ),
               IconButton(
@@ -140,6 +139,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: BottomAppBar(
+            elevation: 10.0,
             color: Colors.white,
             notchMargin: 12,
             shape: CircularNotchedRectangle(),

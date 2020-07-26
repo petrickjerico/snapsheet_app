@@ -16,11 +16,11 @@ class DeleteConfirmButton extends StatelessWidget {
         Expanded(
           child: RoundedButton(
             color: isDelete ? Colors.red.withOpacity(0.3) : kGrey,
-            textColor: isDelete ? Colors.red : kWhite,
+            textColor: isDelete ? Colors.red : kScaffoldBackgroundColour,
             title: 'Delete',
             icon: Icon(
               FontAwesomeIcons.trashAlt,
-              color: isDelete ? Colors.red : kWhite,
+              color: isDelete ? Colors.red : kScaffoldBackgroundColour,
             ),
             onPressed: isDelete ? () => {} : () => callBack(),
           ),
@@ -31,11 +31,11 @@ class DeleteConfirmButton extends StatelessWidget {
         Expanded(
           child: RoundedButton(
             color: isDelete ? kGrey : Colors.tealAccent.withOpacity(0.3),
-            textColor: isDelete ? kWhite : Colors.tealAccent,
+            textColor: isDelete ? kScaffoldBackgroundColour : Colors.tealAccent,
             title: 'Add',
             icon: Icon(
               Icons.done,
-              color: isDelete ? kWhite : Colors.tealAccent,
+              color: isDelete ? kScaffoldBackgroundColour : Colors.tealAccent,
             ),
             onPressed: isDelete ? () => callBack() : () => {},
           ),

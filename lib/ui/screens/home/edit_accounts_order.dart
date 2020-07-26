@@ -32,7 +32,7 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
         return Scaffold(
           extendBody: true,
           resizeToAvoidBottomInset: false,
-          backgroundColor: kWhite,
+          backgroundColor: kScaffoldBackgroundColour,
           drawer: SidebarMenu(),
           appBar: AppBar(
             elevation: 0,

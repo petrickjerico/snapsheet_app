@@ -15,7 +15,7 @@ class RecurringScreen extends StatelessWidget {
       builder: (context, model, child) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: kWhite,
+          backgroundColor: kScaffoldBackgroundColour,
           appBar: AppBar(
             elevation: 0,
             backgroundColor: kHomepageBackgroundTransparency,

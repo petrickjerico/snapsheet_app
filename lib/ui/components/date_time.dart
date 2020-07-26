@@ -19,6 +19,7 @@ class _RecordDateTimeState extends State<RecordDateTime> {
           children: <Widget>[
             Expanded(
               child: OutlineButton(
+                  borderSide: BorderSide(color: Colors.grey),
                   padding: EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -28,22 +29,13 @@ class _RecordDateTimeState extends State<RecordDateTime> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            'Date',
-                            style: TextStyle(
-                              color: Colors.blueGrey[200],
-                              fontSize: 12.0,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                          Text(
-                            DateFormat('d/M/y').format(date),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 17.0,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
+                          Text('Date',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  .copyWith(color: Colors.grey)),
+                          Text(DateFormat('d/M/y').format(date),
+                              style: Theme.of(context).textTheme.bodyText1),
                         ],
                       ),
                     ],
@@ -76,6 +68,7 @@ class _RecordDateTimeState extends State<RecordDateTime> {
             SizedBox(width: 10.0),
             Expanded(
               child: OutlineButton(
+                  borderSide: BorderSide(color: Colors.grey, width: 1),
                   padding: EdgeInsets.all(10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -85,21 +78,13 @@ class _RecordDateTimeState extends State<RecordDateTime> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            'Time',
-                            style: TextStyle(
-                                color: Colors.blueGrey[200],
-                                fontSize: 12.0,
-                                fontStyle: FontStyle.italic),
-                          ),
-                          Text(
-                            DateFormat('Hm').format(date),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
+                          Text('Time',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  .copyWith(color: Colors.grey)),
+                          Text(DateFormat('Hm').format(date),
+                              style: Theme.of(context).textTheme.bodyText1),
                         ],
                       ),
                     ],

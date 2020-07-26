@@ -41,7 +41,7 @@ class _DashboardState extends State<Dashboard> {
                     showDialog(
                         context: context,
                         child: DeleteDialog(
-                          title: "Exit Demo?",
+                          title: "Exit Demo",
                           message: "Are you sure you want to exit demo?",
                           onDelete: () {
                             model.userData.demoDone();

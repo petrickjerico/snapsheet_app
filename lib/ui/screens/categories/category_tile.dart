@@ -65,7 +65,7 @@ class CategoryTile extends StatelessWidget {
                           showDialog(
                             context: context,
                             child: DeleteDialog(
-                                title: 'Delete Category?',
+                                title: 'Delete Category',
                                 message:
                                     'Are you sure you want to delete ${category.title}?',
                                 onDelete: () {

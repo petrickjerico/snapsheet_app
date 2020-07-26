@@ -36,7 +36,8 @@ class _HomepageScreenState extends State<HomepageScreen>
                     "Welcome to Snapsheet!\nTap on 'Exit Demo' at the top right to start afresh"),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('OK'),
+                    color: Colors.black,
+                    child: Text('OK', style: TextStyle(color: Colors.white)),
                     onPressed: () => Navigator.of(context).pop(),
                   )
                 ]));

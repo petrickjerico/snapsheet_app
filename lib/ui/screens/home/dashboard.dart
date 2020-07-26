@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/components/account/accounts_carousel.dart';
+import 'package:snapsheetapp/ui/components/dialog/delete_dialog.dart';
 import 'package:snapsheetapp/ui/components/empty_state.dart';
 import 'package:snapsheetapp/ui/components/stats/statistics.dart';
 import 'package:snapsheetapp/ui/config/colors.dart';
@@ -37,8 +38,16 @@ class _DashboardState extends State<Dashboard> {
                   textColor: Colors.white,
                   child: Text('Exit Demo'),
                   onPressed: () {
-                    model.userData.demoDone();
-                    setState(() {});
+                    showDialog(
+                        context: context,
+                        child: DeleteDialog(
+                          title: "Exit Demo?",
+                          message: "Are you sure you want to exit demo?",
+                          onDelete: () {
+                            model.userData.demoDone();
+                            setState(() {});
+                          },
+                        ));
                   },
                 )
               : SizedBox.shrink()

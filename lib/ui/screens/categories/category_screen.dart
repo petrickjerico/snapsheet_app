@@ -18,22 +18,27 @@ class CategoryScreen extends StatelessWidget {
       return Scaffold(
         extendBody: true,
         resizeToAvoidBottomInset: false,
-        backgroundColor: kBlack,
+        backgroundColor: kScaffoldBackgroundColour,
         drawer: SidebarMenu(),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: kHomepageBackgroundTransparency,
           title: Text('CATEGORIES'),
+          textTheme: Theme.of(context).textTheme,
+          iconTheme: Theme.of(context).iconTheme,
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                  model.showDefault ? Icons.visibility : Icons.visibility_off),
+                model.showDefault ? Icons.visibility : Icons.visibility_off,
+              ),
               onPressed: () {
                 model.toggleView();
               },
             ),
             IconButton(
-              icon: Icon(Icons.add),
+              icon: Icon(
+                Icons.add,
+              ),
               onPressed: () {
                 model.newCategory();
                 showModalBottomSheet(

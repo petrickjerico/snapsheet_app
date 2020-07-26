@@ -42,18 +42,22 @@ class _ExpenseCalculatorState extends State<ExpenseCalculator> {
             hideExpression: false,
             theme: CalculatorThemeData(
               borderWidth: 0,
-              displayColor: kBlack,
+              borderColor: Colors.transparent,
+              displayColor: Colors.transparent,
+              displayStyle: Theme.of(context).textTheme.headline2.copyWith(
+                  color: model.tempRecord.isIncome
+                      ? Colors.green[700]
+                      : Colors.redAccent[700]),
               expressionColor: Colors.transparent,
-              expressionStyle: TextStyle(color: kGrey, fontSize: 18),
-              commandColor: Colors.black38,
-              commandStyle: TextStyle(
-                  color: kGrey, fontSize: 26, fontWeight: FontWeight.w300),
-              numStyle: TextStyle(
-                  color: kGrey, fontSize: 26, fontWeight: FontWeight.w300),
+              expressionStyle: Theme.of(context).textTheme.bodyText2,
+              commandColor: Colors.transparent,
+              commandStyle: Theme.of(context).textTheme.headline5.copyWith(
+                  color: Theme.of(context).colorScheme.primaryVariant),
               numColor: Colors.transparent,
-              operatorColor: Colors.black38,
-              operatorStyle: TextStyle(
-                  color: kGrey, fontSize: 26, fontWeight: FontWeight.w300),
+              numStyle: Theme.of(context).textTheme.headline5,
+              operatorColor: Colors.transparent,
+              operatorStyle: Theme.of(context).textTheme.headline5.copyWith(
+                  color: Theme.of(context).colorScheme.secondaryVariant),
             ),
             onChanged: (key, value, expression, isOperated) {
               model.setExpression(expression);
@@ -740,7 +744,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           Expanded(
             flex: 4,
             child: Container(
-              color: Colors.black54,
+              color: kNavyBlue,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
@@ -748,7 +752,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                     padding: EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.black38,
+                        color: Colors.white10,
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: ToggleButtons(
@@ -758,7 +762,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                         fillColor: isSelected()[0]
                             ? Colors.red[600]
                             : Colors.green[600],
-                        color: Colors.grey.withOpacity(0.6),
+                        color: Colors.grey.withOpacity(0.8),
                         selectedColor: Colors.white,
                         children: <Widget>[
                           Text(' EXPENSE'),
@@ -771,9 +775,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                               model.changeCategory(INCOME);
                               model.tempRecord.isIncome = true;
                             } else {
-                              if (model.tempRecord.categoryId == INCOME) {
-                                model.changeCategory(0);
-                              }
+                              model.changeCategory(0);
                               model.tempRecord.isIncome = false;
                             }
                           });
@@ -785,7 +787,9 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                     child: GestureDetector(
                       onTap: () async {
                         final newCategoryId = await Navigator.pushNamed(
-                            context, SelectCategoryScreen.id);
+                          context,
+                          SelectCategoryScreen.id,
+                        );
                         if (newCategoryId != null) {
                           model.changeCategory(newCategoryId);
                         }

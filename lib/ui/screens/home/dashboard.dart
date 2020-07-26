@@ -26,16 +26,20 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: false,
-      backgroundColor: kBlack,
+      backgroundColor: kScaffoldBackgroundColour,
       drawer: SidebarMenu(),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: kHomepageBackgroundTransparency,
-        title: Text("DASHBOARD"),
+        title: Text(
+          "DASHBOARD",
+        ),
+        textTheme: Theme.of(context).textTheme,
+        iconTheme: Theme.of(context).iconTheme,
         actions: <Widget>[
           model.userData.credentials['isDemo']
               ? FlatButton(
-                  textColor: Colors.white,
+                  textColor: Colors.black,
                   child: Text('Exit Demo'),
                   onPressed: () {
                     showDialog(
@@ -67,12 +71,12 @@ class _DashboardState extends State<Dashboard> {
                   shape: kBottomSheetShape,
                 );
               },
-              messageColor: Colors.white30,
+              messageColor: Colors.grey,
               message: 'There is no account yet.\n'
                   'Tap to create one.',
               icon: Icon(
                 Icons.add_circle,
-                color: Colors.white30,
+                color: Colors.grey,
                 size: 120.0,
               ),
             )
@@ -83,10 +87,6 @@ class _DashboardState extends State<Dashboard> {
                   child: Container(
                     padding: EdgeInsets.all(8.0),
                     margin: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.black38,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
                     child: Statistics(),
                   ),
                 ),

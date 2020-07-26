@@ -32,15 +32,18 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
         return Scaffold(
           extendBody: true,
           resizeToAvoidBottomInset: false,
-          backgroundColor: kBlack,
+          backgroundColor: kScaffoldBackgroundColour,
           drawer: SidebarMenu(),
           appBar: AppBar(
             elevation: 0,
             backgroundColor: kHomepageBackgroundTransparency,
             title: Text('ACCOUNTS'),
+            textTheme: Theme.of(context).textTheme,
+            iconTheme: Theme.of(context).iconTheme,
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.add),
+                color: Theme.of(context).iconTheme.color,
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,
@@ -70,12 +73,12 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
                       shape: kBottomSheetShape,
                     );
                   },
-                  messageColor: Colors.white30,
+                  messageColor: Colors.grey,
                   message: 'There is no account yet.\n'
                       'Tap to create one.',
                   icon: Icon(
                     Icons.add_circle,
-                    color: Colors.white30,
+                    color: Colors.grey,
                     size: 120.0,
                   ),
                 )
@@ -83,9 +86,8 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
                   allowReordering: true,
                   handleSide: ReorderableListSimpleSide.Left,
                   handleIcon: Icon(
-                    Icons.reorder,
-                    size: 30.0,
-                    color: Colors.white54,
+                    Icons.drag_handle,
+                    color: Colors.black,
                   ),
                   children: model.accounts.map(
                     (account) {

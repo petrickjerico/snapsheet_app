@@ -14,10 +14,11 @@ class SelectAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<HomepageViewModel>(builder: (context, model, child) {
       return Scaffold(
-        backgroundColor: kBlack,
         appBar: AppBar(
+          textTheme: Theme.of(context).textTheme,
+          iconTheme: Theme.of(context).iconTheme,
           elevation: 0,
-          backgroundColor: kHomepageBackgroundTransparency,
+          backgroundColor: Colors.transparent,
           title: Text('ACCOUNTS'),
           actions: <Widget>[
             IconButton(

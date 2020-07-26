@@ -40,10 +40,12 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           return true;
         },
         child: Scaffold(
-          backgroundColor: kBlack,
+          backgroundColor: kScaffoldBackgroundColour,
           appBar: AppBar(
-            backgroundColor: kBlack,
+            backgroundColor: Colors.transparent,
             elevation: 0,
+            textTheme: Theme.of(context).textTheme,
+            iconTheme: Theme.of(context).iconTheme,
             leading: BackButton(
               onPressed: () {
                 if (model.isEditing) {
@@ -65,19 +67,16 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
             title: Text('CALCULATOR'),
             actions: <Widget>[
               IconButton(
-                icon: Icon(
-                  Icons.edit,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, EditExpenseInfoScreen.id);
-                },
-              ),
-              IconButton(
                 icon: Icon(Icons.receipt),
                 onPressed: () async {
                   await model.showChoiceDialog(context);
                   await model.imageToTempRecord();
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  Navigator.pushNamed(context, EditExpenseInfoScreen.id);
                 },
               ),
               IconButton(
@@ -96,31 +95,46 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                 context,
                 listen: false,
               );
+              var value = model.tempRecord.value;
+              bool isValid = value > 0 && value != double.infinity;
               try {
-                if (!model.isOperated) {
-                  final ExpressionEvaluator evaluator =
-                      const ExpressionEvaluator();
-                  model.changeValue(
-                      evaluator.eval(Expression.parse(model.expression), null));
+                if (!isValid) {
+                  Flushbar(
+                    message: "Cannot make a valid record with this value.",
+                    icon: Icon(
+                      Icons.info_outline,
+                      size: 28.0,
+                      color: Colors.blue[300],
+                    ),
+                    duration: Duration(seconds: 3),
+                    leftBarIndicatorColor: Colors.blue[300],
+                  )..show(context);
+                } else {
+                  if (!model.isOperated) {
+                    final ExpressionEvaluator evaluator =
+                        const ExpressionEvaluator();
+                    model.changeValue(evaluator.eval(
+                        Expression.parse(model.expression), null));
+                  }
+                  model.addRecord();
+                  homepageModel
+                      .selectAccount(model.getAccountIndexFromTempRecord());
+                  HomepageViewModel.syncController();
+                  Navigator.pop(context);
+                  String title = homepageModel.getSelectedAccount().title;
+                  String messageStatus =
+                      isEditing ? 'updated' : 'added to account: $title';
+                  Flushbar(
+                    message: "Record successfully $messageStatus.",
+                    icon: Icon(
+                      Icons.info_outline,
+                      size: 28.0,
+                      color: Colors.blue[300],
+                    ),
+                    duration: Duration(seconds: 3),
+                    leftBarIndicatorColor: Colors.blue[300],
+                  )..show(context);
                 }
-                model.addRecord();
-                homepageModel
-                    .selectAccount(model.getAccountIndexFromTempRecord());
-                HomepageViewModel.syncController();
-                Navigator.pop(context);
-                String title = homepageModel.getSelectedAccount().title;
-                String messageStatus =
-                    isEditing ? 'updated' : 'added to account: $title';
-                Flushbar(
-                  message: "Record successfully $messageStatus.",
-                  icon: Icon(
-                    Icons.info_outline,
-                    size: 28.0,
-                    color: Colors.blue[300],
-                  ),
-                  duration: Duration(seconds: 3),
-                  leftBarIndicatorColor: Colors.blue[300],
-                )..show(context);
               } catch (e) {
                 print(e);
                 Flushbar(
@@ -140,6 +154,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: BottomAppBar(
+            elevation: 10.0,
             color: Colors.white,
             notchMargin: 12,
             shape: CircularNotchedRectangle(),

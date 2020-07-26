@@ -71,7 +71,6 @@ class Snapsheet extends StatelessWidget {
           ReceiptPreviewScreen.id: (context) => ReceiptPreviewScreen(),
           EditAccountsOrder.id: (context) => EditAccountsOrder(),
         },
-        theme: ThemeData.light().copyWith(primaryColor: Colors.black),
       ),
     );
   }

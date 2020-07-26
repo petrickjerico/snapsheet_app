@@ -35,78 +35,73 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
         Record record = model.records[recordId];
         return GestureDetector(
           onTap: () => unfocus(context),
-          child: Scaffold(
-            resizeToAvoidBottomPadding: false,
-            backgroundColor: kBlack,
-            body: Theme(
-              data: ThemeData.dark(),
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Column(
                   children: <Widget>[
-                    Column(
+                    Container(
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        "${recordId + 1} / ${model.records.length}",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    ReceiptImage(imagePath: record.imagePath),
+                    SizedBox(height: 30),
+                    // Value + Title
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(bottom: 10),
-                          child: Text(
-                            "${recordId + 1} / ${model.records.length}",
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
+                        Flexible(
+                          flex: 1,
+                          child: _ValueFormField(recordId: recordId),
                         ),
-                        ReceiptImage(imagePath: record.imagePath),
-                        SizedBox(height: 30),
-                        // Value + Title
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Flexible(
-                              flex: 1,
-                              child: _ValueFormField(recordId: recordId),
-                            ),
-                            SizedBox(width: 15),
-                            Flexible(
-                              flex: 4,
-                              child: _TitleFormField(recordId: recordId),
-                            ),
-                          ],
+                        SizedBox(width: 15),
+                        Flexible(
+                          flex: 4,
+                          child: _TitleFormField(recordId: recordId),
                         ),
-                        SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Expanded(child: _DateFormField(recordId: recordId)),
-                            SizedBox(width: 15),
-                            Expanded(
-                                child: _CategoryFormField(recordId: recordId)),
-                          ],
-                        ),
-                        DeleteConfirmButton(
-                            isDelete: model.isDelete[recordId],
-                            callBack: () {
-                              setState(() {
-                                model.isDelete[recordId] =
-                                    !model.isDelete[recordId];
-                              });
-                            }),
                       ],
                     ),
-                    RoundedButton(
-                      color: Colors.white,
-                      textColor: kBlack,
-                      title: 'Confirm All Receipts',
-                      icon: Icon(Icons.done_all, color: kBlack),
-                      onPressed: () {
-                        model.addAll();
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      },
-                    )
+                    SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(child: _DateFormField(recordId: recordId)),
+                        SizedBox(width: 15),
+                        Expanded(child: _CategoryFormField(recordId: recordId)),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15.0),
+                      child: DeleteConfirmButton(
+                          isDelete: model.isDelete[recordId],
+                          callBack: () {
+                            setState(() {
+                              model.isDelete[recordId] =
+                                  !model.isDelete[recordId];
+                            });
+                          }),
+                    ),
                   ],
                 ),
-              ),
+                RoundedButton(
+                  color: kNavyBlue,
+                  textColor: Colors.white,
+                  title: 'Confirm All Receipts',
+                  icon: Icon(Icons.done_all, color: Colors.white),
+                  onPressed: () {
+                    model.addAll();
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                )
+              ],
             ),
           ),
         );
@@ -128,8 +123,16 @@ class _ValueFormField extends StatelessWidget {
             initialValue: model.records[recordId].value.toStringAsFixed(2),
             keyboardType: TextInputType.number,
             cursorColor: Colors.white,
-            decoration:
-                kTitleEditInfoInputDecoration.copyWith(labelText: 'Value'),
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              labelText: "Value",
+              labelStyle: TextStyle(color: Colors.grey),
+            ),
             onChanged: (value) {
               model.changeValue(recordId, double.parse(value));
             });
@@ -149,7 +152,16 @@ class _TitleFormField extends StatelessWidget {
       builder: (context, model, child) {
         return TextFormField(
           initialValue: model.records[recordId].title,
-          decoration: kTitleEditInfoInputDecoration,
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.circular(3.0)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black, width: 1),
+                borderRadius: BorderRadius.circular(3.0)),
+            labelText: "Title",
+            labelStyle: TextStyle(color: Colors.grey),
+          ),
           cursorColor: Colors.white,
           onChanged: (value) {
             model.changeTitle(recordId, value);
@@ -194,8 +206,16 @@ class _CategoryFormField extends StatelessWidget {
           },
           child: TextFormField(
             initialValue: category.title,
-            decoration:
-                kTitleEditInfoInputDecoration.copyWith(labelText: 'Category'),
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              labelText: "Category",
+              labelStyle: TextStyle(color: Colors.grey),
+            ),
             readOnly: true,
             onTap: () {
               dynamic state = _menuKey.currentState;
@@ -233,8 +253,16 @@ class __DateFormFieldState extends State<_DateFormField> {
         DateTime date = model.records[widget.recordId].dateTime;
         controller.text = DateFormat.yMMMd().format(date);
         return TextFormField(
-            decoration:
-                kTitleEditInfoInputDecoration.copyWith(labelText: 'Date'),
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              labelText: "Date",
+              labelStyle: TextStyle(color: Colors.grey),
+            ),
             readOnly: true,
             controller: controller,
             onTap: () async {

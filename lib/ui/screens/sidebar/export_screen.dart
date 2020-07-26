@@ -15,9 +15,11 @@ class ExportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserData>(context);
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        textTheme: Theme.of(context).textTheme,
+        iconTheme: Theme.of(context).iconTheme,
         leading: BackButton(),
         title: Text('Select Accounts to Export'),
       ),
@@ -26,7 +28,7 @@ class ExportScreen extends StatelessWidget {
         child: Consumer<ExportViewModel>(
           builder: (context, model, child) {
             return Container(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
@@ -41,7 +43,7 @@ class ExportScreen extends StatelessWidget {
                   ),
                   RoundedButton(
                     textColor: Colors.white,
-                    color: Colors.black,
+                    color: kNavyBlue,
                     title: 'Export',
                     icon: Icon(
                       Icons.import_export,

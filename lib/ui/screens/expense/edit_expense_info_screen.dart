@@ -44,41 +44,48 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
       onTap: () => unfocus(context),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: kBlack,
         appBar: AppBar(
-          elevation: 0,
-          backgroundColor: kBlack,
-          leading: BackButton(),
           title: Text('RECORD INFORMATION'),
+          backgroundColor: Colors.transparent,
+          textTheme: Theme.of(context).textTheme,
+          iconTheme: Theme.of(context).iconTheme,
+          elevation: 0,
+          leading: BackButton(),
         ),
-        body: Theme(
-          data: ThemeData.dark(),
-          child: Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                ReceiptImage(tempRecord: model.tempRecord),
-                SizedBox(height: 10),
-                TextFormField(
-                  initialValue: title,
-                  cursorColor: Colors.white,
-                  decoration: kTitleEditInfoInputDecoration,
-                  onChanged: (value) {
-                    setState(() {
-                      model.changeTitle(value);
-                    });
-                  },
+        body: Padding(
+          padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              ReceiptImage(tempRecord: model.tempRecord),
+              SizedBox(height: 10),
+              TextFormField(
+                initialValue: title,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 1),
+                      borderRadius: BorderRadius.circular(3.0)),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 1),
+                      borderRadius: BorderRadius.circular(3.0)),
+                  labelText: "Title",
+                  labelStyle: TextStyle(color: Colors.grey),
                 ),
-                SizedBox(height: 10.0),
-                RecordDateTime(),
-                SizedBox(height: 10.0),
-                ReceiptButtons(),
-                Padding(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom / 4)),
-              ],
-            ),
+                cursorColor: Colors.white,
+                onChanged: (value) {
+                  setState(() {
+                    model.changeTitle(value);
+                  });
+                },
+              ),
+              SizedBox(height: 10.0),
+              RecordDateTime(),
+              SizedBox(height: 10.0),
+              ReceiptButtons(),
+              Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom / 4)),
+            ],
           ),
         ),
         floatingActionButton: ConfirmRecordFab(
@@ -130,11 +137,11 @@ class ReceiptButtons extends StatelessWidget {
                 ? Expanded(
                     flex: 1,
                     child: RoundedButton(
-                      color: Colors.red.withOpacity(0.2),
+                      color: Colors.red,
                       textColor: Colors.white,
                       icon: Icon(
                         Icons.delete_forever,
-                        color: Colors.red,
+                        color: Colors.white,
                       ),
                       onPressed: () => showDialog(
                         context: context,
@@ -154,10 +161,13 @@ class ReceiptButtons extends StatelessWidget {
             Expanded(
               flex: 2,
               child: RoundedButton(
-                color: Colors.white,
-                textColor: kDarkCyan,
+                color: kNavyBlue,
                 title: model.hasImage() ? 'Retake Receipt' : 'Add Receipt',
-                icon: Icon(Icons.receipt, color: kDarkCyan),
+                textColor: Colors.white,
+                icon: Icon(
+                  Icons.receipt,
+                  color: Colors.white,
+                ),
                 onPressed: () async {
                   await model.showChoiceDialog(context);
                   model.imageToTempRecord();
@@ -169,11 +179,11 @@ class ReceiptButtons extends StatelessWidget {
                 ? Expanded(
                     flex: 1,
                     child: RoundedButton(
-                      color: Colors.tealAccent.withOpacity(0.2),
+                      color: Colors.teal,
                       textColor: Colors.white,
                       icon: Icon(
                         Icons.cloud_download,
-                        color: Colors.tealAccent,
+                        color: Colors.white,
                       ),
                       onPressed: () async {
                         await model.exportImage();
@@ -205,7 +215,7 @@ class ReceiptImage extends StatelessWidget {
                     ReceiptImageDialog(imagePath: tempRecord.imagePath));
           },
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(3),
             child: Image.file(
               File(tempRecord.imagePath),
               fit: BoxFit.cover,
@@ -218,24 +228,28 @@ class ReceiptImage extends StatelessWidget {
         child: GestureDetector(
           onTap: () async {
             await showDialog(
-                context: context,
-                builder: (_) => ReceiptImageDialog(
-                      receiptURL: tempRecord.receiptURL,
-                    ));
-          },
-          child: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              MiniLoading(),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: tempRecord.receiptURL,
-                  fit: BoxFit.cover,
-                ),
+              context: context,
+              builder: (_) => ReceiptImageDialog(
+                receiptURL: tempRecord.receiptURL,
               ),
-            ],
+            );
+          },
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(3),
+            clipBehavior: Clip.antiAlias,
+            child: Container(
+              child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  MiniLoading(),
+                  FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: tempRecord.receiptURL,
+                    fit: BoxFit.cover,
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       );

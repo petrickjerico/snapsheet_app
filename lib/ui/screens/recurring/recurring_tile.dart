@@ -31,25 +31,28 @@ class RecurringTile extends StatelessWidget {
           ),
           title: Text(
             recurring.title,
-            style: kHistoryRecordTitle.copyWith(color: Colors.white),
+            style:
+                Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 18.0),
           ),
           subtitle: Text(
             recurring.recurrency,
-            style: kHistoryRecordTitle.copyWith(color: Colors.white),
+            style:
+                Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 12.0),
           ),
           trailing: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               Text(
-                recurring.value.toStringAsFixed(2),
-                style: recurring.isIncome
-                    ? kHistoryIncomeValue
-                    : kHistoryExpenseValue,
+                (recurring.isIncome ? "" : "-") +
+                    recurring.value.toStringAsFixed(2),
+                style: Theme.of(context).textTheme.headline6.copyWith(
+                    color:
+                        recurring.isIncome ? Colors.green : Colors.redAccent),
               ),
               Text(
                 model.getAccountFromUid(recurring.accountUid).title ?? "",
-                style: kHistoryRecordDate,
+                style: Theme.of(context).textTheme.bodyText2,
               )
             ],
           ),

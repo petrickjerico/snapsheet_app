@@ -24,9 +24,10 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
   Widget build(BuildContext context) {
     final model = Provider.of<RecurringViewModel>(context);
     return Scaffold(
-      backgroundColor: kBlack,
       appBar: AppBar(
-        backgroundColor: kBlack,
+        backgroundColor: Colors.transparent,
+        textTheme: Theme.of(context).textTheme,
+        iconTheme: Theme.of(context).iconTheme,
         elevation: 0,
         leading: BackButton(
           onPressed: () {
@@ -57,46 +58,46 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
           ),
         ],
       ),
-      body: Theme(
-        data: ThemeData.dark(),
-        child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  _TitleFormField(),
-                  SizedBox(height: 10),
-                  _ValueFormField(),
-                  SizedBox(height: 10),
-                  _CategoryFormField(),
-                  SizedBox(height: 10),
-                  _AccountFormField(),
-                  SizedBox(height: 10),
-                  Divider(color: Colors.white54),
-                  SizedBox(height: 10),
-                  _NextRecurrenceFormField(),
-                  SizedBox(height: 10),
-                  _FrequencyFormField(),
-                  SizedBox(height: 10),
-                  _TimeFrameFormField(),
-                  SizedBox(height: 10),
-                  _TimeFrameHelperFormField(),
-                  RoundedButton(
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                _TitleFormField(),
+                SizedBox(height: 10),
+                _ValueFormField(),
+                SizedBox(height: 10),
+                _CategoryFormField(),
+                SizedBox(height: 10),
+                _AccountFormField(),
+                SizedBox(height: 10),
+                Divider(),
+                SizedBox(height: 10),
+                _NextRecurrenceFormField(),
+                SizedBox(height: 10),
+                _FrequencyFormField(),
+                SizedBox(height: 10),
+                _TimeFrameFormField(),
+                SizedBox(height: 10),
+                _TimeFrameHelperFormField(),
+                RoundedButton(
+                  textColor: Colors.white,
+                  color: kNavyBlue,
+                  icon: Icon(
+                    Icons.check,
                     color: Colors.white,
-                    textColor: Colors.black,
-                    icon: Icon(Icons.check, color: Colors.black),
-                    title: "Confirm",
-                    onPressed: () {
-                      model.addRecurring();
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
+                  ),
+                  title: "Confirm",
+                  onPressed: () {
+                    model.addRecurring();
+                    Navigator.pop(context);
+                  },
+                )
+              ],
             ),
           ),
         ),
@@ -112,7 +113,16 @@ class _TitleFormField extends StatelessWidget {
       builder: (context, model, child) {
         return TextFormField(
           initialValue: model.tempRecurring.title,
-          decoration: kTitleEditInfoInputDecoration,
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.circular(3.0)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black, width: 1),
+                borderRadius: BorderRadius.circular(3.0)),
+            labelText: "Title",
+            labelStyle: TextStyle(color: Colors.grey),
+          ),
           cursorColor: Colors.white,
           onChanged: (value) {
             model.changeTitle(value);
@@ -132,8 +142,16 @@ class _ValueFormField extends StatelessWidget {
             initialValue: model.tempRecurring.value.toStringAsFixed(2),
             keyboardType: TextInputType.number,
             cursorColor: Colors.white,
-            decoration:
-                kTitleEditInfoInputDecoration.copyWith(labelText: 'Value'),
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              labelText: "Amount",
+              labelStyle: TextStyle(color: Colors.grey),
+            ),
             onChanged: (value) {
               model.changeValue(double.parse(value));
             });
@@ -172,8 +190,16 @@ class _CategoryFormField extends StatelessWidget {
           },
           child: TextFormField(
             initialValue: category.title,
-            decoration:
-                kTitleEditInfoInputDecoration.copyWith(labelText: 'Category'),
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              labelText: "Category",
+              labelStyle: TextStyle(color: Colors.grey),
+            ),
             readOnly: true,
             onTap: () {
               dynamic state = _menuKey.currentState;
@@ -216,8 +242,16 @@ class _AccountFormField extends StatelessWidget {
           },
           child: TextFormField(
             initialValue: account.title,
-            decoration:
-                kTitleEditInfoInputDecoration.copyWith(labelText: 'Account'),
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              labelText: "Account",
+              labelStyle: TextStyle(color: Colors.grey),
+            ),
             readOnly: true,
             onTap: () {
               dynamic state = _menuKey.currentState;
@@ -253,8 +287,16 @@ class __NextRecurrenceFormFieldState extends State<_NextRecurrenceFormField> {
         DateTime date = model.tempRecurring.nextRecurrence;
         controller.text = DateFormat.yMMMd().format(date);
         return TextFormField(
-            decoration:
-                kTitleEditInfoInputDecoration.copyWith(labelText: 'Start Date'),
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              labelText: "Start Date",
+              labelStyle: TextStyle(color: Colors.grey),
+            ),
             readOnly: true,
             controller: controller,
             onTap: () async {
@@ -299,8 +341,16 @@ class __FrequencyFormFieldState extends State<_FrequencyFormField> {
         controller.text = tempRecurring.frequency;
         return TextFormField(
           controller: controller,
-          decoration:
-              kTitleEditInfoInputDecoration.copyWith(labelText: 'Frequency'),
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.circular(3.0)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black, width: 1),
+                borderRadius: BorderRadius.circular(3.0)),
+            labelText: "Frequency",
+            labelStyle: TextStyle(color: Colors.grey),
+          ),
           readOnly: true,
           onTap: () {
             showDialog(
@@ -340,6 +390,9 @@ class _FrequencyDialog extends StatelessWidget {
                 Flexible(
                   flex: 1,
                   child: _FrequencyDialogIntervalFormField(),
+                ),
+                SizedBox(
+                  width: 5.0,
                 ),
                 Flexible(
                   flex: 3,
@@ -451,8 +504,16 @@ class _TimeFrameFormField extends StatelessWidget {
           },
           child: TextFormField(
             initialValue: timeFrames[timeFrameId],
-            decoration:
-                kTitleEditInfoInputDecoration.copyWith(labelText: 'Timeframe'),
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.circular(3.0)),
+              labelText: "Timeframe",
+              labelStyle: TextStyle(color: Colors.grey),
+            ),
             readOnly: true,
             onTap: () {
               dynamic state = _menuKey.currentState;
@@ -505,8 +566,16 @@ class __UntilDateFormFieldState extends State<_UntilDateFormField> {
       DateTime date = model.tempRecurring.untilDate;
       controller.text = DateFormat.yMMMd().format(date);
       return TextFormField(
-          decoration:
-              kTitleEditInfoInputDecoration.copyWith(labelText: 'Until Date'),
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.circular(3.0)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black, width: 1),
+                borderRadius: BorderRadius.circular(3.0)),
+            labelText: "Until Date",
+            labelStyle: TextStyle(color: Colors.grey),
+          ),
           readOnly: true,
           controller: controller,
           onTap: () async {
@@ -531,8 +600,16 @@ class _XTimesFormField extends StatelessWidget {
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
         return TextFormField(
-          decoration:
-              kTitleEditInfoInputDecoration.copyWith(labelText: "For X times"),
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.circular(3.0)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black, width: 1),
+                borderRadius: BorderRadius.circular(3.0)),
+            labelText: "For X times",
+            labelStyle: TextStyle(color: Colors.grey),
+          ),
           initialValue: model.tempRecurring.xTimes.toString(),
           keyboardType: TextInputType.number,
           onChanged: (value) {

@@ -10,10 +10,10 @@ class AddRecordFab extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       elevation: 0,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
       child: Icon(
         Icons.add,
-        color: kDarkCyan,
+        color: Colors.white,
       ),
       onPressed: onPressed,
     );

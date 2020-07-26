@@ -159,117 +159,12 @@ class _FilteredRecordsState extends State<FilteredRecords> {
       var isActive = filterData.isActive;
       var recordsCount = filteredRecords.length;
       return Scaffold(
-        backgroundColor: kBlack,
+        backgroundColor: kScaffoldBackgroundColour,
         drawer: SidebarMenu(),
-        body: recordsCount < 1
-            ? EmptyState(
-                icon: Icon(
-                  FontAwesomeIcons.solidMeh,
-                  color: Colors.white30,
-                  size: 100.0,
-                ),
-                messageColor: Colors.white30,
-                message: 'Nothing to show here yet. \n'
-                    'Create an account and start adding records.',
-              )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Visibility(
-                    visible: isActive,
-                    child: GestureDetector(
-                      child: Container(
-                        padding: EdgeInsets.all(8),
-                        margin: EdgeInsets.symmetric(horizontal: 15.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          color: Colors.amberAccent,
-                        ),
-                        child: Text(
-                          "FILTER APPLIED - tap for details",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          child: SimpleDialog(
-                            title: Text("Filter Details"),
-                            contentPadding: EdgeInsets.fromLTRB(24, 16, 16, 12),
-                            children: <Widget>[
-                              Text("accounts"),
-                              Text("categories"),
-                              Text("amount"),
-                              Text("date"),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  FlatButton(
-                                    child: Text("RESET"),
-                                    onPressed: () {
-                                      filterData.resetFilter();
-                                      filterData.toggleActivity(false);
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  FlatButton(
-                                    child: Text("NEW FILTER"),
-                                    onPressed: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ChangeNotifierProvider.value(
-                                            value: filterData,
-                                            builder: (context, child) =>
-                                                FilterScreen(),
-                                          ),
-                                          fullscreenDialog: true,
-                                        ),
-                                      );
-                                    },
-                                    color: Colors.black,
-                                    textColor: Colors.white,
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  Flexible(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15.0),
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            final record = filteredRecords[index];
-                            return Visibility(
-                              visible: filterData.isVisible(record),
-                              child: HistoryTile(
-                                record: record,
-                                index: index,
-                                color: Colors.white.withOpacity(0.8),
-                                fromHistory: true,
-                              ),
-                            );
-                          },
-                          itemCount: recordsCount,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
         appBar: AppBar(
           title: Text('RECORDS'),
+          textTheme: Theme.of(context).textTheme,
+          iconTheme: Theme.of(context).iconTheme,
           backgroundColor: Colors.transparent,
           elevation: 0,
           actions: <Widget>[
@@ -278,7 +173,6 @@ class _FilteredRecordsState extends State<FilteredRecords> {
               child: IconButton(
                 icon: Icon(
                   Icons.refresh,
-                  color: Colors.white,
                 ),
                 onPressed: () {
                   filterData.resetFilter();
@@ -290,7 +184,9 @@ class _FilteredRecordsState extends State<FilteredRecords> {
               icon: Icon(
                 FontAwesomeIcons.filter,
                 size: 20,
-                color: isActive ? Colors.amberAccent : Colors.white,
+                color: isActive
+                    ? Colors.amberAccent
+                    : Theme.of(context).iconTheme.color,
               ),
               onPressed: () {
                 Navigator.push(
@@ -308,6 +204,63 @@ class _FilteredRecordsState extends State<FilteredRecords> {
             )
           ],
         ),
+        body: recordsCount < 1
+            ? EmptyState(
+                icon: Icon(
+                  FontAwesomeIcons.solidMeh,
+                  color: Colors.grey,
+                  size: 100.0,
+                ),
+                messageColor: Colors.grey,
+                message: 'Nothing to show here yet. \n'
+                    'Create an account and start adding records.',
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Visibility(
+                    visible: isActive,
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.symmetric(horizontal: 15.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        color: Colors.amberAccent,
+                      ),
+                      child: Text(
+                        "FILTER APPLIED",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            final record = filteredRecords[index];
+                            return Visibility(
+                              visible: filterData.isVisible(record),
+                              child: HistoryTile(
+                                record: record,
+                                index: index,
+                                fromHistory: true,
+                              ),
+                            );
+                          },
+                          itemCount: recordsCount,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
       );
     });
   }
@@ -642,8 +595,11 @@ class _FilterScreenState extends State<FilterScreen> {
     return Consumer<FilterData>(
       builder: (context, filterData, child) {
         return Scaffold(
-          backgroundColor: Colors.white,
           appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            iconTheme: Theme.of(context).iconTheme,
+            textTheme: Theme.of(context).textTheme,
             title: Text('Filter Screen'),
             actions: <Widget>[
               IconButton(

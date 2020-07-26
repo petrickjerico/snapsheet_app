@@ -38,7 +38,7 @@ Category foodDrinks = Category(
 Category transportation = Category(
   title: 'Transportation',
   icon: Icon(FontAwesomeIcons.car),
-  color: Colors.orangeAccent,
+  color: Colors.orange,
   isIncome: false,
   index: TRANSPORTATION,
   isDefault: true,
@@ -47,7 +47,7 @@ Category transportation = Category(
 Category shopping = Category(
   title: 'Shopping',
   icon: Icon(FontAwesomeIcons.shoppingBag),
-  color: Colors.amberAccent,
+  color: Colors.amber,
   isIncome: false,
   index: SHOPPING,
   isDefault: true,
@@ -56,7 +56,7 @@ Category shopping = Category(
 Category entertainment = Category(
   title: 'Entertainment',
   icon: Icon(FontAwesomeIcons.gamepad),
-  color: Colors.tealAccent,
+  color: Colors.teal,
   isIncome: false,
   index: ENTERTAINMENT,
   isDefault: true,
@@ -101,7 +101,7 @@ Category giving = Category(
 Category income = Category(
   title: 'Income',
   icon: Icon(FontAwesomeIcons.moneyBillWave),
-  color: Colors.green,
+  color: Colors.lightGreen,
   isIncome: true,
   index: INCOME,
   isDefault: true,
@@ -110,7 +110,7 @@ Category income = Category(
 Category others = Category(
   title: 'Others',
   icon: Icon(FontAwesomeIcons.shapes),
-  color: Colors.grey,
+  color: Colors.blueGrey,
   isIncome: false,
   index: OTHERS,
   isDefault: true,

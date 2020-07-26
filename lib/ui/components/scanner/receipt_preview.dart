@@ -17,8 +17,11 @@ class _ReceiptPreviewScreenState extends State<ReceiptPreviewScreen> {
     return Consumer<BulkScanViewModel>(
       builder: (context, model, child) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            backgroundColor: kBlack,
+            backgroundColor: Colors.transparent,
+            textTheme: Theme.of(context).textTheme,
+            iconTheme: Theme.of(context).iconTheme,
             elevation: 0,
             title: Text("Previews"),
           ),

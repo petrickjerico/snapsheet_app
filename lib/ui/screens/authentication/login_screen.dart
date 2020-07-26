@@ -54,107 +54,117 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return loading
-        ? Loading()
-        : GestureDetector(
-            onTap: () => unfocus(context),
-            child: Scaffold(
-              backgroundColor: Colors.white,
-              resizeToAvoidBottomPadding: false,
-              body: Container(
-                padding: EdgeInsets.symmetric(horizontal: 40.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      SnapSheetBanner(),
-                      SizedBox(height: 10.0),
-                      TextFormField(
-                        initialValue: email,
-                        decoration: kEmailTextFieldDecoration,
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.emailAddress,
-                        textAlign: TextAlign.left,
-                        validator: (val) =>
-                            val.isEmpty ? "Enter a valid email" : null,
-                        onChanged: (val) => setState(() => email = val),
-                        textInputAction: TextInputAction.next,
-                        onFieldSubmitted: (val) {
-                          FocusScope.of(context).requestFocus(pwdFocus);
-                        },
-                      ),
-                      SizedBox(height: 12),
-                      TextFormField(
-                        initialValue: pwd,
-                        decoration: kPasswordTextFieldDecoration.copyWith(
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              obscurePwd
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              setState(() => obscurePwd = !obscurePwd);
-                            },
-                          ),
-                        ),
-                        cursorColor: Colors.black,
-                        textAlign: TextAlign.left,
-                        textAlignVertical: TextAlignVertical(y: 0),
-                        obscureText: obscurePwd,
-                        validator: (val) => val.length < 6
-                            ? 'Enter a password 6+ chars long'
-                            : null,
-                        onChanged: (val) => setState(() => pwd = val),
-                        textInputAction: TextInputAction.done,
-                        focusNode: pwdFocus,
-                        onFieldSubmitted: (val) => login(),
-                      ),
-                      SizedBox(height: 12),
-                      Text(
-                        error,
-                        style: TextStyle(color: Colors.red, fontSize: 14),
-                      ),
-                      RoundedButton(
-                        textColor: Colors.white,
-                        color: Colors.black,
-                        onPressed: () {
-                          login();
-                        },
-                        title: 'Login',
-                        icon: Icon(
-                          FontAwesomeIcons.solidEnvelope,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
-                      Divider(),
-                      RoundedButton(
-                        textColor: Colors.black,
-                        color: Colors.white,
-                        onPressed: () async {
-                          //Go to login screen.
-                          setState(() => loading = true);
-                          dynamic result = await _auth.signInWithGoogle();
-                          setState(() => loading = false);
-                        },
-                        title: 'Login with Google',
-                        icon: Icon(
-                          FontAwesomeIcons.google,
-                          color: Colors.black,
-                          size: 20,
-                        ),
-                      ),
-                      SignUp()
-                    ],
+    if (loading) {
+      return Loading();
+    } else {
+      return GestureDetector(
+        onTap: () => unfocus(context),
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          resizeToAvoidBottomPadding: false,
+          body: Container(
+            padding: EdgeInsets.symmetric(horizontal: 40.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  SnapSheetBanner(),
+                  SizedBox(height: 10.0),
+                  Theme(
+                    data:
+                        Theme.of(context).copyWith(primaryColor: Colors.black),
+                    child: TextFormField(
+                      initialValue: email,
+                      decoration: kEmailTextFieldDecoration,
+                      cursorColor: Colors.black,
+                      keyboardType: TextInputType.emailAddress,
+                      textAlign: TextAlign.left,
+                      validator: (val) =>
+                          val.isEmpty ? "Enter a valid email" : null,
+                      onChanged: (val) => setState(() => email = val),
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (val) {
+                        FocusScope.of(context).requestFocus(pwdFocus);
+                      },
+                    ),
                   ),
-                ),
+                  SizedBox(height: 12),
+                  Theme(
+                    data:
+                        Theme.of(context).copyWith(primaryColor: Colors.black),
+                    child: TextFormField(
+                      initialValue: pwd,
+                      decoration: kPasswordTextFieldDecoration.copyWith(
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            obscurePwd
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            setState(() => obscurePwd = !obscurePwd);
+                          },
+                        ),
+                      ),
+                      cursorColor: Colors.black,
+                      textAlign: TextAlign.left,
+                      textAlignVertical: TextAlignVertical(y: 0),
+                      obscureText: obscurePwd,
+                      validator: (val) => val.length < 6
+                          ? 'Enter a password 6+ chars long'
+                          : null,
+                      onChanged: (val) => setState(() => pwd = val),
+                      textInputAction: TextInputAction.done,
+                      focusNode: pwdFocus,
+                      onFieldSubmitted: (val) => login(),
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  Text(
+                    error,
+                    style: TextStyle(color: Colors.red, fontSize: 14),
+                  ),
+                  RoundedButton(
+                    textColor: Colors.white,
+                    color: Colors.black,
+                    onPressed: () {
+                      login();
+                    },
+                    title: 'Login',
+                    icon: Icon(
+                      FontAwesomeIcons.solidEnvelope,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
+                  Divider(),
+                  RoundedButton(
+                    textColor: Colors.black,
+                    color: Colors.white,
+                    onPressed: () async {
+                      //Go to login screen.
+                      setState(() => loading = true);
+                      dynamic result = await _auth.signInWithGoogle();
+                      setState(() => loading = false);
+                    },
+                    title: 'Login with Google',
+                    icon: Icon(
+                      FontAwesomeIcons.google,
+                      color: Colors.black,
+                      size: 20,
+                    ),
+                  ),
+                  SignUp()
+                ],
               ),
             ),
-          );
+          ),
+        ),
+      );
+    }
   }
 }
 

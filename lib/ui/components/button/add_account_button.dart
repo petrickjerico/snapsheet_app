@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:snapsheetapp/ui/config/colors.dart';
 import 'package:snapsheetapp/ui/config/decoration.dart';
 import 'package:snapsheetapp/ui/screens/home/add_account_popup.dart';
 
@@ -6,25 +7,25 @@ class AddAccountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      visualDensity: VisualDensity.comfortable,
+      visualDensity: VisualDensity.compact,
+      padding: EdgeInsets.all(0),
+      color: kNavyBlue,
+      minWidth: 100,
+      elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
-        side: BorderSide(color: Colors.white),
       ),
+      textColor: Colors.white,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Icon(
             Icons.add,
-            size: 15.0,
-            color: Colors.white,
-          ),
-          SizedBox(
-            width: 2.0,
+            size: 17.0,
           ),
           Text(
             'ADD',
-            style: TextStyle(fontSize: 13.0, color: Colors.white),
           ),
         ],
       ),

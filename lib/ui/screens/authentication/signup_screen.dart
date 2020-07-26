@@ -62,67 +62,80 @@ class _SignupScreenState extends State<SignupScreen> {
                     children: <Widget>[
                       SnapSheetBanner(),
                       SizedBox(height: 10.0),
-                      TextFormField(
-                        initialValue: email,
-                        decoration: kEmailTextFieldDecoration,
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.emailAddress,
-                        textAlign: TextAlign.left,
-                        validator: (val) =>
-                            val.isEmpty ? "Enter a valid email" : null,
-                        onChanged: (val) => setState(() => email = val),
-                        textInputAction: TextInputAction.next,
-                        onFieldSubmitted: (val) {
-                          FocusScope.of(context).requestFocus(pwdFocus);
-                        },
-                      ),
-                      SizedBox(height: 12),
-                      TextFormField(
-                        initialValue: pwd,
-                        decoration: kPasswordTextFieldDecoration.copyWith(
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              // Based on passwordVisible state choose the icon
-                              obscurePwd
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              // Update the state i.e. toogle the state of passwordVisible variable
-                              setState(() {
-                                obscurePwd = !obscurePwd;
-                              });
-                            },
-                          ),
+                      Theme(
+                        data: Theme.of(context)
+                            .copyWith(primaryColor: Colors.black),
+                        child: TextFormField(
+                          initialValue: email,
+                          decoration: kEmailTextFieldDecoration,
+                          cursorColor: Colors.black,
+                          keyboardType: TextInputType.emailAddress,
+                          textAlign: TextAlign.left,
+                          validator: (val) =>
+                              val.isEmpty ? "Enter a valid email" : null,
+                          onChanged: (val) => setState(() => email = val),
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (val) {
+                            FocusScope.of(context).requestFocus(pwdFocus);
+                          },
                         ),
-                        cursorColor: Colors.black,
-                        textAlign: TextAlign.left,
-                        textAlignVertical: TextAlignVertical(y: 0),
-                        obscureText: obscurePwd,
-                        validator: (val) => val.length < 6
-                            ? 'Enter a password 6+ chars long'
-                            : null,
-                        onChanged: (val) => setState(() => pwd = val),
-                        textInputAction: TextInputAction.next,
-                        focusNode: pwdFocus,
-                        onFieldSubmitted: (val) {
-                          FocusScope.of(context).requestFocus(confirmPwdFocus);
-                        },
                       ),
                       SizedBox(height: 12),
-                      TextFormField(
-                        initialValue: confirmPwd,
-                        decoration: kConfirmPasswordTextFieldDecoration,
-                        cursorColor: Colors.black,
-                        textAlign: TextAlign.left,
-                        obscureText: true,
-                        validator: (val) =>
-                            val != pwd ? 'Password does not match' : null,
-                        onChanged: (val) => setState(() => confirmPwd = val),
-                        textInputAction: TextInputAction.done,
-                        focusNode: confirmPwdFocus,
-                        onFieldSubmitted: (val) => signUp(),
+                      Theme(
+                        data: Theme.of(context)
+                            .copyWith(primaryColor: Colors.black),
+                        child: TextFormField(
+                          initialValue: pwd,
+                          decoration: kPasswordTextFieldDecoration.copyWith(
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                // Based on passwordVisible state choose the icon
+                                obscurePwd
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.black,
+                              ),
+                              onPressed: () {
+                                // Update the state i.e. toogle the state of passwordVisible variable
+                                setState(() {
+                                  obscurePwd = !obscurePwd;
+                                });
+                              },
+                            ),
+                          ),
+                          cursorColor: Colors.black,
+                          textAlign: TextAlign.left,
+                          textAlignVertical: TextAlignVertical(y: 0),
+                          obscureText: obscurePwd,
+                          validator: (val) => val.length < 6
+                              ? 'Enter a password 6+ chars long'
+                              : null,
+                          onChanged: (val) => setState(() => pwd = val),
+                          textInputAction: TextInputAction.next,
+                          focusNode: pwdFocus,
+                          onFieldSubmitted: (val) {
+                            FocusScope.of(context)
+                                .requestFocus(confirmPwdFocus);
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 12),
+                      Theme(
+                        data: Theme.of(context)
+                            .copyWith(primaryColor: Colors.black),
+                        child: TextFormField(
+                          initialValue: confirmPwd,
+                          decoration: kConfirmPasswordTextFieldDecoration,
+                          cursorColor: Colors.black,
+                          textAlign: TextAlign.left,
+                          obscureText: true,
+                          validator: (val) =>
+                              val != pwd ? 'Password does not match' : null,
+                          onChanged: (val) => setState(() => confirmPwd = val),
+                          textInputAction: TextInputAction.done,
+                          focusNode: confirmPwdFocus,
+                          onFieldSubmitted: (val) => signUp(),
+                        ),
                       ),
                       SizedBox(height: 12),
                       Text(

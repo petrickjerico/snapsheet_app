@@ -16,17 +16,15 @@ class SelectAllButton extends StatelessWidget {
         visible: model.accounts.length > 1 &&
             HomepageViewModel.selectedAccountIndex != -1,
         child: MaterialButton(
-          visualDensity: VisualDensity.comfortable,
+          visualDensity: VisualDensity.compact,
+          minWidth: 100,
+          padding: EdgeInsets.all(0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
-            side: BorderSide(color: kDarkCyan),
+            side: BorderSide(color: kNavyBlue),
           ),
-          child: Text(
-            'SELECT ALL',
-            style: TextStyle(
-              color: kDarkCyan,
-            ),
-          ),
+          textColor: kNavyBlue,
+          child: Text('SELECT ALL'),
           onPressed: () {
             model.selectAccount(-1);
           },

@@ -3,5 +3,5 @@ import 'colors.dart';
 
 ThemeData kTheme = ThemeData.dark().copyWith(
     primaryColor: kCyan,
-    backgroundColor: kBlack,
-    scaffoldBackgroundColor: kBlack);
+    backgroundColor: kWhite,
+    scaffoldBackgroundColor: kWhite);

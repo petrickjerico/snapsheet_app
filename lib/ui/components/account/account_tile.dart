@@ -28,7 +28,7 @@ class AccountTile extends StatelessWidget {
             color: color,
             borderRadius: BorderRadius.circular(10.0),
           ),
-          height: 60.0,
+          height: 55.0,
           width: 100.0,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -40,14 +40,19 @@ class AccountTile extends StatelessWidget {
                   child: Text(
                     title,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.white),
+                    style: Theme.of(context).textTheme.bodyText2.copyWith(
+                          color: Colors.white,
+                        ),
                   ),
                 ),
                 Flexible(
                   child: Text(
                     total == 0 ? '0' : total.toStringAsFixed(2),
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                    style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
                   ),
                 ),
               ],

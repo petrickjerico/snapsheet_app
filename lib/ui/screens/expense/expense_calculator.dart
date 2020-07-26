@@ -42,7 +42,7 @@ class _ExpenseCalculatorState extends State<ExpenseCalculator> {
             hideExpression: false,
             theme: CalculatorThemeData(
               borderWidth: 0,
-              displayColor: kBlack,
+              displayColor: kWhite,
               expressionColor: Colors.transparent,
               expressionStyle: TextStyle(color: kGrey, fontSize: 18),
               commandColor: Colors.black38,

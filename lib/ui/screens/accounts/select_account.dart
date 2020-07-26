@@ -14,7 +14,7 @@ class SelectAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<HomepageViewModel>(builder: (context, model, child) {
       return Scaffold(
-        backgroundColor: kBlack,
+        backgroundColor: kWhite,
         appBar: AppBar(
           elevation: 0,
           backgroundColor: kHomepageBackgroundTransparency,

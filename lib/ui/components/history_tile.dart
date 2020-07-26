@@ -118,14 +118,11 @@ class HistoryTile extends StatelessWidget {
               ),
               title: Text(
                 record.title == "" ? category.title : record.title,
-                style: kHistoryRecordTitle.copyWith(
-                    color: color ?? Colors.white, fontWeight: FontWeight.w500),
+                style: Theme.of(context).textTheme.bodyText1,
               ),
               subtitle: Text(
                 model.userData.getThisAccount(record.accountUid).title,
-                style: kHistoryRecordTitle.copyWith(
-                    color: color?.withOpacity(0.5) ?? Colors.white,
-                    fontWeight: FontWeight.normal),
+                style: Theme.of(context).textTheme.bodyText2,
               ),
               trailing: Container(
                 width: 125,
@@ -135,7 +132,6 @@ class HistoryTile extends StatelessWidget {
                     record.receiptURL != null
                         ? IconButton(
                             icon: Icon(Icons.receipt),
-                            color: Colors.white,
                             onPressed: () {
                               model.changeTempRecord(index);
                               Navigator.pushNamed(
@@ -149,15 +145,16 @@ class HistoryTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
                         Text(
-                          record.value.toStringAsFixed(2),
-                          style: record.isIncome
-                              ? kHistoryIncomeValue
-                              : kHistoryExpenseValue,
+                          (record.isIncome ? "" : "-") +
+                              record.value.toStringAsFixed(2),
+                          style: Theme.of(context).textTheme.headline6.copyWith(
+                              color: record.isIncome
+                                  ? Colors.green
+                                  : Colors.redAccent),
                         ),
                         Text(
                           DateFormat('d/M/y').format(record.dateTime),
-                          style: kHistoryRecordDate.copyWith(
-                              color: color ?? Colors.black),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ],
                     ),

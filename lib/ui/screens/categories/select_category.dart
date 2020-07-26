@@ -15,7 +15,7 @@ class SelectCategoryScreen extends StatelessWidget {
       return Scaffold(
         extendBody: true,
         resizeToAvoidBottomInset: false,
-        backgroundColor: kBlack,
+        backgroundColor: kWhite,
         appBar: AppBar(
           elevation: 0,
           backgroundColor: kHomepageBackgroundTransparency,

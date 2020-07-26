@@ -208,7 +208,7 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
               showTitle: isTouched && value > 0 && !isIncome,
               title: '${category.title} \n ${value.toStringAsFixed(2)}',
               radius: isTouched ? 40 : 30,
-              titleStyle: TextStyle(fontSize: 15, color: Colors.white54),
+              titleStyle: TextStyle(fontSize: 15, color: Colors.black87),
               titlePositionPercentageOffset: -1.5,
             );
         }

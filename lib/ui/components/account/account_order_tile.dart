@@ -45,56 +45,60 @@ class AccountOrderTile extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: TextStyle(color: Colors.white),
+        style: Theme.of(context).textTheme.bodyText2,
       ),
       subtitle: Text(
         total.toStringAsFixed(2),
-        style: TextStyle(color: Colors.white, fontSize: 20.0),
-      ),
-      trailing: Theme(
-          data: ThemeData.light(),
-          child: Container(
-            width: 100,
-            child: Row(
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  color: Colors.white,
-                  onPressed: () {
-                    model.initEditAccount(index);
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (context) => SingleChildScrollView(
-                        padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: RenameAccountPopup(),
-                      ),
-                      shape: kBottomSheetShape,
-                    );
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  color: Colors.white,
-                  onPressed: () {
-                    model.selectAccount(index);
-                    showDialog(
-                      context: this.context,
-                      child: DeleteDialog(
-                          title: 'Delete Account',
-                          message: 'Are you sure you want to delete ${title}?',
-                          onDelete: () {
-                            model.deleteAccount();
-                            Navigator.of(this.context).pop();
-                            HomepageViewModel.syncController();
-                          }),
-                    );
-                  },
-                )
-              ],
+        style: Theme.of(context).textTheme.bodyText1.copyWith(
+              fontSize: 18,
             ),
-          )),
+      ),
+      trailing: Container(
+        width: 100,
+        child: Row(
+          children: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.edit,
+                color: Theme.of(context).iconTheme.color,
+              ),
+              onPressed: () {
+                model.initEditAccount(index);
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => SingleChildScrollView(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: RenameAccountPopup(),
+                  ),
+                  shape: kBottomSheetShape,
+                );
+              },
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.delete,
+                color: Theme.of(context).iconTheme.color,
+              ),
+              onPressed: () {
+                model.selectAccount(index);
+                showDialog(
+                  context: this.context,
+                  child: DeleteDialog(
+                      title: 'Delete Account',
+                      message: 'Are you sure you want to delete ${title}?',
+                      onDelete: () {
+                        model.deleteAccount();
+                        Navigator.of(this.context).pop();
+                        HomepageViewModel.syncController();
+                      }),
+                );
+              },
+            )
+          ],
+        ),
+      ),
     );
   }
 }

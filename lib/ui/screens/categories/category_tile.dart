@@ -19,7 +19,8 @@ class CategoryTile extends StatelessWidget {
     return Consumer<CategoryViewModel>(
       builder: (context, model, child) {
         return ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          contentPadding:
+              EdgeInsets.only(left: 20, right: 5, top: 5, bottom: 5),
           dense: true,
           onTap: tappable ? () => Navigator.pop(context, category.index) : null,
           leading: CircleAvatar(
@@ -32,17 +33,19 @@ class CategoryTile extends StatelessWidget {
           ),
           title: Text(
             category.title,
-            style: kHistoryRecordTitle.copyWith(color: Colors.white),
+            style: Theme.of(context).textTheme.bodyText1,
           ),
           trailing: category.isDefault
               ? SizedBox.shrink()
               : Container(
                   width: 100,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       IconButton(
+                        padding: EdgeInsets.all(0),
                         icon: Icon(Icons.edit),
-                        color: Colors.white,
+                        color: Theme.of(context).iconTheme.color,
                         onPressed: () {
                           model.editCategory(category);
                           showModalBottomSheet(
@@ -59,8 +62,9 @@ class CategoryTile extends StatelessWidget {
                         },
                       ),
                       IconButton(
+                        padding: EdgeInsets.all(0),
                         icon: Icon(Icons.delete),
-                        color: Colors.white,
+                        color: Theme.of(context).iconTheme.color,
                         onPressed: () {
                           showDialog(
                             context: context,

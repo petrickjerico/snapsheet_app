@@ -40,9 +40,9 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           return true;
         },
         child: Scaffold(
-          backgroundColor: kBlack,
+          backgroundColor: kWhite,
           appBar: AppBar(
-            backgroundColor: kBlack,
+            backgroundColor: kWhite,
             elevation: 0,
             leading: BackButton(
               onPressed: () {

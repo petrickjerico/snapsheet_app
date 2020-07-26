@@ -44,10 +44,10 @@ class _EditExpenseInfoScreenState extends State<EditExpenseInfoScreen> {
       onTap: () => unfocus(context),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: kBlack,
+        backgroundColor: kWhite,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: kBlack,
+          backgroundColor: kWhite,
           leading: BackButton(),
           title: Text('RECORD INFORMATION'),
         ),

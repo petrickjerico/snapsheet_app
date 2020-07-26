@@ -11,7 +11,7 @@ const kDateTextStyle = TextStyle(
 );
 
 const kLoginSignupTextStyle = TextStyle(
-  color: kBlack,
+  color: kWhite,
   fontSize: 12,
   fontWeight: FontWeight.bold,
 );

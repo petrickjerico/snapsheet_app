@@ -32,15 +32,18 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
         return Scaffold(
           extendBody: true,
           resizeToAvoidBottomInset: false,
-          backgroundColor: kBlack,
+          backgroundColor: kWhite,
           drawer: SidebarMenu(),
           appBar: AppBar(
             elevation: 0,
             backgroundColor: kHomepageBackgroundTransparency,
             title: Text('ACCOUNTS'),
+            textTheme: Theme.of(context).textTheme,
+            iconTheme: Theme.of(context).iconTheme,
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.add),
+                color: Theme.of(context).iconTheme.color,
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,
@@ -82,11 +85,6 @@ class _EditAccountsOrderState extends State<EditAccountsOrder> {
               : ReorderableListSimple(
                   allowReordering: true,
                   handleSide: ReorderableListSimpleSide.Left,
-                  handleIcon: Icon(
-                    Icons.reorder,
-                    size: 30.0,
-                    color: Colors.white54,
-                  ),
                   children: model.accounts.map(
                     (account) {
                       return AccountOrderTile(

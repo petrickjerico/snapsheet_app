@@ -33,15 +33,12 @@ class _HomepageScreenState extends State<HomepageScreen>
       context: context,
       builder: (context) => AlertDialog(
           titlePadding: EdgeInsets.only(left: 20, right: 20, top: 20),
-          contentPadding:
-              EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+          contentPadding: EdgeInsets.only(left: 20, right: 20, top: 20),
           title: Text('Demo Mode'),
           content: Text("'Exit Demo' at the top right to start afresh"),
-          actionsPadding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
           actions: <Widget>[
             FlatButton(
-              color: Colors.black,
-              child: Text('OK', style: TextStyle(color: Colors.white)),
+              child: Text('OK'),
               onPressed: () => Navigator.of(context).pop(),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0)),
@@ -72,7 +69,7 @@ class _HomepageScreenState extends State<HomepageScreen>
                   return Scaffold(
                     extendBody: true,
                     resizeToAvoidBottomInset: false,
-                    backgroundColor: kBlack,
+                    backgroundColor: kWhite,
                     drawer: SidebarMenu(),
                     body: _pageList[HomepageViewModel.currentPage],
                     bottomNavigationBar: BottomAppBar(
@@ -82,43 +79,46 @@ class _HomepageScreenState extends State<HomepageScreen>
                       notchMargin: 12,
                       clipBehavior: Clip.antiAlias,
                       child: BottomNavigationBar(
-                          currentIndex: HomepageViewModel.currentBar,
-                          type: BottomNavigationBarType.fixed,
-                          showUnselectedLabels: false,
-                          selectedItemColor: kBlack,
-                          items: [
-                            BottomNavigationBarItem(
-                              icon: Icon(Icons.dashboard),
-                              title: Text('Dashboard'),
+                        currentIndex: HomepageViewModel.currentBar,
+                        type: BottomNavigationBarType.fixed,
+                        showUnselectedLabels: false,
+                        backgroundColor: Colors.white,
+                        selectedItemColor: kNavyBlue,
+                        unselectedItemColor: Colors.grey.withOpacity(0.6),
+                        items: [
+                          BottomNavigationBarItem(
+                            icon: Icon(Icons.dashboard),
+                            title: Text('Dashboard'),
+                          ),
+                          BottomNavigationBarItem(
+                            icon: FaIcon(
+                              FontAwesomeIcons.stream,
+                              size: 18,
                             ),
-                            BottomNavigationBarItem(
-                              icon: FaIcon(
-                                FontAwesomeIcons.stream,
-                                size: 18,
-                              ),
-                              title: Text('Records'),
-                            ),
-                            BottomNavigationBarItem(
-                              icon: Icon(Icons.add),
-                              title: Text(''),
-                            ),
-                            BottomNavigationBarItem(
-                              icon: Icon(Icons.credit_card),
-                              title: Text('Accounts'),
-                            ),
-                            BottomNavigationBarItem(
-                              icon: Icon(Icons.category),
-                              title: Text('Categories'),
-                            ),
-                          ],
-                          onTap: (index) {
-                            if (index != 2) {
-                              homepageModel.syncBarToPage(index);
-                            }
-                            if (index != 1) {
-                              filterData.resetFilter();
-                            }
-                          }),
+                            title: Text('Records'),
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(Icons.add),
+                            title: Text(''),
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(Icons.credit_card),
+                            title: Text('Accounts'),
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(Icons.category),
+                            title: Text('Categories'),
+                          ),
+                        ],
+                        onTap: (index) {
+                          if (index != 2) {
+                            homepageModel.syncBarToPage(index);
+                          }
+                          if (index != 1) {
+                            filterData.resetFilter();
+                          }
+                        },
+                      ),
                     ),
                     floatingActionButtonLocation:
                         FloatingActionButtonLocation.centerDocked,
@@ -159,7 +159,7 @@ class _HomepageScreenState extends State<HomepageScreen>
                             return ExpenseScreen();
                           },
                           closedElevation: 8,
-                          closedColor: kBlack,
+                          closedColor: kWhite,
                           closedShape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50)),
                           transitionType: ContainerTransitionType.fade,

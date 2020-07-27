@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:snapsheetapp/business_logic/default_data/accounts.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/default_data/records.dart';
+import 'package:snapsheetapp/business_logic/default_data/recurring.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/services/database/database.dart';
 export 'database.dart';
@@ -30,14 +31,20 @@ class DatabaseServiceImpl implements DatabaseService {
       String accountUid = await addAccount(demoAccounts[i]);
       accountMap[i] = accountUid;
     }
-    for (int i = 0; i < defaultCategories.length; i++) {
-      String categoryUid = await addCategory(defaultCategories[i]);
+    for (int i = 0; i < demoCategories.length; i++) {
+      String categoryUid = await addCategory(demoCategories[i]);
       categoryMap[i] = categoryUid;
     }
     for (Record record in demoRecords) {
       record.accountUid = accountMap[record.accountId];
       record.categoryUid = categoryMap[record.categoryId];
       await addRecord(record);
+    }
+    for (Recurring recurring in demoRecurrings) {
+      print(recurring);
+      recurring.accountUid = accountMap[0];
+      recurring.categoryUid = categoryMap[recurring.categoryId];
+      await addRecurring(recurring);
     }
   }
 

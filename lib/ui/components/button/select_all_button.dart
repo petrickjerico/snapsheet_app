@@ -21,9 +21,9 @@ class SelectAllButton extends StatelessWidget {
           padding: EdgeInsets.all(0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
-            side: BorderSide(color: kNavyBlue),
+            side: BorderSide(color: kNavyBluePrimary),
           ),
-          textColor: kNavyBlue,
+          textColor: kNavyBluePrimary,
           child: Text('SELECT ALL'),
           onPressed: () {
             model.selectAccount(-1);

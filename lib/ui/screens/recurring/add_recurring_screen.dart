@@ -86,7 +86,7 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
                 _TimeFrameHelperFormField(),
                 RoundedButton(
                   textColor: Colors.white,
-                  color: kNavyBlue,
+                  color: kNavyBluePrimary,
                   icon: Icon(
                     Icons.check,
                     color: Colors.white,

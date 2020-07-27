@@ -37,24 +37,24 @@ class HistoryTile extends StatelessWidget {
         closedBuilder: (_, openContainer) {
           return Dismissible(
             background: Container(
-              color: Colors.black38,
+              color: Colors.redAccent.withOpacity(0.2),
               padding: EdgeInsets.only(left: 15.0),
               child: Row(
                 children: <Widget>[
                   Icon(
                     Icons.delete,
-                    color: Colors.white54,
+                    color: Colors.redAccent,
                   ),
                 ],
               ),
               alignment: Alignment.centerLeft,
             ),
             secondaryBackground: Container(
-              color: Colors.black38,
+              color: Colors.redAccent.withOpacity(0.2),
               padding: EdgeInsets.only(right: 15.0),
               child: Icon(
                 Icons.delete,
-                color: Colors.white54,
+                color: Colors.redAccent,
               ),
               alignment: Alignment.centerRight,
             ),
@@ -75,9 +75,9 @@ class HistoryTile extends StatelessWidget {
               Flushbar(
                 mainButton: FlatButton(
                   disabledColor: Colors.grey,
+                  textColor: Theme.of(context).colorScheme.secondary,
                   child: Text(
                     'UNDO',
-                    style: TextStyle(color: kDarkCyan),
                   ),
                   onPressed: () {
                     if (!isAlreadyAdded) {
@@ -100,10 +100,10 @@ class HistoryTile extends StatelessWidget {
                 icon: Icon(
                   Icons.info_outline,
                   size: 28.0,
-                  color: Colors.blue[300],
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
                 duration: Duration(seconds: 3),
-                leftBarIndicatorColor: Colors.blue[300],
+                leftBarIndicatorColor: Theme.of(context).colorScheme.secondary,
               )..show(context);
             },
             child: ListTile(
@@ -149,7 +149,7 @@ class HistoryTile extends StatelessWidget {
                               record.value.toStringAsFixed(2),
                           style: Theme.of(context).textTheme.headline6.copyWith(
                               color: record.isIncome
-                                  ? Colors.green
+                                  ? Colors.teal
                                   : Colors.redAccent),
                         ),
                         Text(

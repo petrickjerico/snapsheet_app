@@ -46,15 +46,23 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
       context: context,
       builder: (_) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.background,
           contentPadding: const EdgeInsets.all(6.0),
           title: Text(title),
           content: content,
           actions: [
-            FlatButton(
+            OutlineButton(
+              borderSide:
+                  BorderSide(color: Theme.of(context).colorScheme.primary),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
               child: Text('CANCEL'),
               onPressed: Navigator.of(context).pop,
             ),
             FlatButton(
+              color: Theme.of(context).colorScheme.primary,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
               child: Text('SUBMIT'),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -158,10 +166,10 @@ class _AddAccountPopupState extends State<AddAccountPopup> {
                 return RoundedButton(
                   icon: Icon(
                     Icons.add,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
-                  color: Colors.black,
-                  textColor: Colors.white,
+                  color: Theme.of(context).colorScheme.primary,
+                  textColor: Theme.of(context).colorScheme.onPrimary,
                   title: 'CREATE',
                   onPressed: () {
                     if (AddAccountPopup._formKey.currentState.validate()) {

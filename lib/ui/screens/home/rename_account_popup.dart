@@ -20,15 +20,23 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
       context: context,
       builder: (_) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.background,
           contentPadding: EdgeInsets.all(6.0),
           title: Text(title),
           content: content,
           actions: [
-            FlatButton(
+            OutlineButton(
+              borderSide:
+                  BorderSide(color: Theme.of(context).colorScheme.primary),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
               child: Text('CANCEL'),
               onPressed: Navigator.of(context).pop,
             ),
             FlatButton(
+              color: Theme.of(context).colorScheme.primary,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
               child: Text('SUBMIT'),
               onPressed: () {
                 final model =
@@ -136,10 +144,10 @@ class _RenameAccountPopupState extends State<RenameAccountPopup> {
                 RoundedButton(
                   icon: Icon(
                     Icons.check,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
-                  color: Colors.black,
-                  textColor: Colors.white,
+                  color: Theme.of(context).colorScheme.primary,
+                  textColor: Theme.of(context).colorScheme.onPrimary,
                   title: 'DONE',
                   onPressed: () {
                     if (RenameAccountPopup._formKey.currentState.validate()) {

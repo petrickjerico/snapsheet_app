@@ -19,6 +19,7 @@ import 'package:snapsheetapp/ui/screens/screens.dart';
 import 'package:snapsheetapp/ui/screens/splash_screen.dart';
 
 import 'business_logic/view_models/homepage/homepage_viewmodel.dart';
+import 'ui/config/theme.dart';
 
 void main() {
   //To lock orientation of the app.
@@ -49,6 +50,9 @@ class Snapsheet extends StatelessWidget {
         ChangeNotifierProvider<UserData>(create: (context) => UserData())
       ],
       child: MaterialApp(
+        theme: ThemeData(
+            colorScheme: kFirstColorScheme,
+            canvasColor: kFirstColorScheme.background),
         debugShowCheckedModeBanner: false,
         initialRoute: SplashScreen.id,
         routes: {

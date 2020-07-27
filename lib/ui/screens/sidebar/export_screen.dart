@@ -15,6 +15,7 @@ class ExportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserData>(context);
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -43,7 +44,7 @@ class ExportScreen extends StatelessWidget {
                   ),
                   RoundedButton(
                     textColor: Colors.white,
-                    color: kNavyBlue,
+                    color: kNavyBluePrimary,
                     title: 'Export',
                     icon: Icon(
                       Icons.import_export,

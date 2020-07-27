@@ -46,7 +46,7 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                   children: <Widget>[
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: kLightBlueBackground,
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       height: 65.0,
@@ -88,7 +88,7 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                       child: AccountTile(
                         index: -1,
                         title: "ALL",
-                        color: kNavyBlue,
+                        color: kNavyBluePrimary,
                         total: model.currentExpensesTotal(),
                       ),
                       visible: selectedIndex == -1,

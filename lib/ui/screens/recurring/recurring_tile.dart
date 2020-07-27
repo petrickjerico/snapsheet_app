@@ -47,8 +47,7 @@ class RecurringTile extends StatelessWidget {
                 (recurring.isIncome ? "" : "-") +
                     recurring.value.toStringAsFixed(2),
                 style: Theme.of(context).textTheme.headline6.copyWith(
-                    color:
-                        recurring.isIncome ? Colors.green : Colors.redAccent),
+                    color: recurring.isIncome ? Colors.teal : Colors.redAccent),
               ),
               Text(
                 model.getAccountFromUid(recurring.accountUid).title ?? "",

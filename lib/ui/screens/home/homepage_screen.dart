@@ -69,7 +69,6 @@ class _HomepageScreenState extends State<HomepageScreen>
                 return Scaffold(
                   extendBody: true,
                   resizeToAvoidBottomInset: false,
-                  backgroundColor: kScaffoldBackgroundColour,
                   drawer: SidebarMenu(),
                   body: _pageList[HomepageViewModel.currentPage],
                   bottomNavigationBar: BottomAppBar(
@@ -81,10 +80,15 @@ class _HomepageScreenState extends State<HomepageScreen>
                     child: BottomNavigationBar(
                       currentIndex: HomepageViewModel.currentBar,
                       type: BottomNavigationBarType.fixed,
+                      unselectedItemColor: Theme.of(context)
+                          .colorScheme
+                          .onPrimary
+                          .withOpacity(0.4),
+                      selectedItemColor:
+                          Theme.of(context).colorScheme.onPrimary,
+                      backgroundColor:
+                          Theme.of(context).colorScheme.primaryVariant,
                       showUnselectedLabels: false,
-                      backgroundColor: Colors.white,
-                      selectedItemColor: kNavyBlue,
-                      unselectedItemColor: Colors.grey.withOpacity(0.6),
                       items: [
                         BottomNavigationBarItem(
                           icon: Icon(Icons.dashboard),
@@ -137,10 +141,12 @@ class _HomepageScreenState extends State<HomepageScreen>
                                   icon: Icon(
                                     Icons.info_outline,
                                     size: 28.0,
-                                    color: Colors.blue[300],
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
                                   duration: Duration(seconds: 3),
-                                  leftBarIndicatorColor: Colors.blue[300],
+                                  leftBarIndicatorColor:
+                                      Theme.of(context).colorScheme.secondary,
                                 )..show(context);
                               } else {
                                 model.newRecord();
@@ -158,9 +164,9 @@ class _HomepageScreenState extends State<HomepageScreen>
                         openBuilder: (_, openContainer) {
                           return ExpenseScreen();
                         },
-                        openColor: kScaffoldBackgroundColour,
+                        openColor: Theme.of(context).colorScheme.background,
                         closedElevation: 10.0,
-                        closedColor: kNavyBlue,
+                        closedColor: Theme.of(context).colorScheme.primary,
                         closedShape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
                         transitionType: ContainerTransitionType.fade,

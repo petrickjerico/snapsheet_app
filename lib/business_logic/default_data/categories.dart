@@ -56,7 +56,7 @@ Category shopping = Category(
 Category entertainment = Category(
   title: 'Entertainment',
   icon: Icon(FontAwesomeIcons.gamepad),
-  color: Colors.teal,
+  color: Colors.green,
   isIncome: false,
   index: ENTERTAINMENT,
   isDefault: true,
@@ -101,7 +101,7 @@ Category giving = Category(
 Category income = Category(
   title: 'Income',
   icon: Icon(FontAwesomeIcons.moneyBillWave),
-  color: Colors.lightGreen,
+  color: Colors.teal,
   isIncome: true,
   index: INCOME,
   isDefault: true,

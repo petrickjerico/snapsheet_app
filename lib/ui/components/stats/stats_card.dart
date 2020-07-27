@@ -23,31 +23,35 @@ class _StatsCardState extends State<StatsCard> {
   Widget build(BuildContext context) {
     var horizontalPadding = EdgeInsets.symmetric(horizontal: 15.0);
     return Consumer<HomepageViewModel>(builder: (context, model, child) {
-      return Card(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 15.0),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: horizontalPadding,
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    widget.title,
-                    style: Theme.of(context).textTheme.headline6,
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        child: Card(
+          elevation: 3,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.0),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: horizontalPadding,
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      widget.title,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 5.0,
-              ),
-              Padding(
-                padding: horizontalPadding,
-                child: Container(
-                  child: widget.child,
+                SizedBox(
+                  height: 5.0,
                 ),
-              ),
-            ],
+                Padding(
+                  padding: horizontalPadding,
+                  child: Container(
+                    child: widget.child,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );

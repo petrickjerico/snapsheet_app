@@ -25,11 +25,10 @@ class DeleteConfirmButton extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      FaIcon(
-                        FontAwesomeIcons.trashAlt,
-                        color:
-                            isDelete ? Colors.red : kScaffoldBackgroundColour,
-                      ),
+                      FaIcon(FontAwesomeIcons.trashAlt,
+                          color: isDelete
+                              ? Colors.red
+                              : Theme.of(context).colorScheme.background),
                       SizedBox(
                         width: 20.0,
                       ),
@@ -37,7 +36,7 @@ class DeleteConfirmButton extends StatelessWidget {
                           style: TextStyle(
                               color: isDelete
                                   ? Colors.red
-                                  : kScaffoldBackgroundColour))
+                                  : Theme.of(context).colorScheme.background))
                     ],
                   ),
                 ),
@@ -55,8 +54,9 @@ class DeleteConfirmButton extends StatelessWidget {
                     children: <Widget>[
                       Icon(
                         Icons.check,
-                        color:
-                            !isDelete ? Colors.teal : kScaffoldBackgroundColour,
+                        color: !isDelete
+                            ? Colors.teal
+                            : Theme.of(context).colorScheme.background,
                       ),
                       SizedBox(
                         width: 20,
@@ -65,7 +65,7 @@ class DeleteConfirmButton extends StatelessWidget {
                           style: TextStyle(
                               color: !isDelete
                                   ? Colors.teal
-                                  : kScaffoldBackgroundColour))
+                                  : Theme.of(context).colorScheme.background))
                     ],
                   ),
                 ),

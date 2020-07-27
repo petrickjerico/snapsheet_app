@@ -73,9 +73,12 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                   ],
                 ),
                 RoundedButton(
-                  icon: Icon(Icons.check, color: Colors.white),
-                  color: Colors.black,
-                  textColor: Colors.white,
+                  icon: Icon(
+                    Icons.check,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                  color: Theme.of(context).colorScheme.primary,
+                  textColor: Theme.of(context).colorScheme.onPrimary,
                   title: 'DONE',
                   onPressed: () {
                     if (CategoryPopUp._formKey.currentState.validate()) {
@@ -134,15 +137,23 @@ class _ColorPickerState extends State<ColorPicker> {
       context: context,
       builder: (_) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.background,
           contentPadding: EdgeInsets.all(6.0),
           title: Text(title),
           content: content,
           actions: [
-            FlatButton(
+            OutlineButton(
+              borderSide:
+                  BorderSide(color: Theme.of(context).colorScheme.primary),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
               child: Text('CANCEL'),
               onPressed: Navigator.of(context).pop,
             ),
             FlatButton(
+              color: Theme.of(context).colorScheme.primary,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
               child: Text('SUBMIT'),
               onPressed: () {
                 final model =

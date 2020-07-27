@@ -343,10 +343,6 @@ class _FilterScreenState extends State<FilterScreen> {
                     },
                   ),
                   FlatButton(
-                    child: Text("SELECT ALL"),
-                    onPressed: () {},
-                  ),
-                  FlatButton(
                     child: Text("APPLY"),
                     onPressed: () {
                       setState(() {
@@ -448,10 +444,6 @@ class _FilterScreenState extends State<FilterScreen> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                  ),
-                  FlatButton(
-                    child: Text("SELECT ALL"),
-                    onPressed: () {},
                   ),
                   FlatButton(
                     child: Text("APPLY"),

@@ -5,6 +5,7 @@ import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/category/category_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/ui/config/colors.dart';
+import 'package:snapsheetapp/ui/config/decoration.dart';
 import 'package:snapsheetapp/ui/screens/categories/category_popup.dart';
 import 'package:snapsheetapp/ui/screens/categories/category_tile.dart';
 import 'package:snapsheetapp/ui/screens/sidebar/sidebar_menu.dart';
@@ -49,6 +50,7 @@ class CategoryScreen extends StatelessWidget {
                         bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: CategoryPopUp(),
                   ),
+                  shape: kBottomSheetShape,
                 );
               },
             )

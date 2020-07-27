@@ -9,6 +9,8 @@ class Recurring {
   String title;
   double value;
   String categoryUid;
+  // for demo data
+  int categoryId;
   String accountUid;
   bool isIncome;
 
@@ -25,6 +27,7 @@ class Recurring {
     this.title,
     this.value,
     this.categoryUid,
+    this.categoryId,
     this.accountUid,
     this.isIncome,
     this.nextRecurrence,

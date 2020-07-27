@@ -9,7 +9,7 @@ class MiniLoading extends StatelessWidget {
       color: kScaffoldBackgroundColour,
       child: Center(
         child: SpinKitChasingDots(
-          color: Colors.white,
+          color: kNavyBluePrimary,
           size: 80,
         ),
       ),

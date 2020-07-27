@@ -238,6 +238,7 @@ class ReceiptImage extends StatelessWidget {
             borderRadius: BorderRadius.circular(3),
             clipBehavior: Clip.antiAlias,
             child: Container(
+              color: kLightBlueBackground,
               child: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[

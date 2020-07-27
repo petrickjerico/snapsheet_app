@@ -34,12 +34,12 @@ const kHistoryRecordTitle = TextStyle(
 );
 
 const kHistoryExpenseValue = TextStyle(
-  color: Colors.red,
+  color: Colors.redAccent,
   fontWeight: FontWeight.w700,
 );
 
 const kHistoryIncomeValue = TextStyle(
-  color: Colors.green,
+  color: Colors.teal,
   fontWeight: FontWeight.w700,
 );
 

@@ -46,8 +46,8 @@ class _ExpenseCalculatorState extends State<ExpenseCalculator> {
               displayColor: Colors.transparent,
               displayStyle: Theme.of(context).textTheme.headline2.copyWith(
                   color: model.tempRecord.isIncome
-                      ? Colors.green[700]
-                      : Colors.redAccent[700]),
+                      ? Colors.teal
+                      : Colors.redAccent),
               expressionColor: Colors.transparent,
               expressionStyle: Theme.of(context).textTheme.bodyText2,
               commandColor: Colors.transparent,
@@ -759,9 +759,8 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                         constraints:
                             BoxConstraints.expand(width: 70, height: 50),
                         borderRadius: BorderRadius.circular(20.0),
-                        fillColor: isSelected()[0]
-                            ? Colors.red[600]
-                            : Colors.green[600],
+                        fillColor:
+                            isSelected()[0] ? Colors.redAccent : Colors.teal,
                         color: Colors.grey.withOpacity(0.8),
                         selectedColor: Colors.white,
                         children: <Widget>[

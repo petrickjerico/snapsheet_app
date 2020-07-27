@@ -149,7 +149,7 @@ class HistoryTile extends StatelessWidget {
                               record.value.toStringAsFixed(2),
                           style: Theme.of(context).textTheme.headline6.copyWith(
                               color: record.isIncome
-                                  ? Colors.green
+                                  ? Colors.teal
                                   : Colors.redAccent),
                         ),
                         Text(

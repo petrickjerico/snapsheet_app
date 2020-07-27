@@ -225,7 +225,7 @@ class _StatisticsState extends State<Statistics> {
                                     children: <Widget>[
                                       Expanded(
                                         child: Container(
-                                          color: Colors.green[600],
+                                          color: Colors.teal,
                                           height: 25,
                                         ),
                                         flex: model
@@ -234,7 +234,7 @@ class _StatisticsState extends State<Statistics> {
                                       ),
                                       Expanded(
                                         child: Container(
-                                          color: Colors.red[600],
+                                          color: Colors.redAccent,
                                           height: 25,
                                         ),
                                         flex: model

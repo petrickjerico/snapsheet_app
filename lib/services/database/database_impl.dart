@@ -30,8 +30,8 @@ class DatabaseServiceImpl implements DatabaseService {
       String accountUid = await addAccount(demoAccounts[i]);
       accountMap[i] = accountUid;
     }
-    for (int i = 0; i < defaultCategories.length; i++) {
-      String categoryUid = await addCategory(defaultCategories[i]);
+    for (int i = 0; i < demoCategories.length; i++) {
+      String categoryUid = await addCategory(demoCategories[i]);
       categoryMap[i] = categoryUid;
     }
     for (Record record in demoRecords) {

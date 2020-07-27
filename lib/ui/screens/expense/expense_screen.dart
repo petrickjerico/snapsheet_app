@@ -40,7 +40,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           return true;
         },
         child: Scaffold(
-          backgroundColor: kScaffoldBackgroundColour,
+          backgroundColor: Theme.of(context).colorScheme.background,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -105,10 +105,11 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                     icon: Icon(
                       Icons.info_outline,
                       size: 28.0,
-                      color: Colors.blue[300],
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                     duration: Duration(seconds: 3),
-                    leftBarIndicatorColor: Colors.blue[300],
+                    leftBarIndicatorColor:
+                        Theme.of(context).colorScheme.secondary,
                   )..show(context);
                 } else {
                   if (!model.isOperated) {
@@ -130,10 +131,11 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                     icon: Icon(
                       Icons.info_outline,
                       size: 28.0,
-                      color: Colors.blue[300],
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                     duration: Duration(seconds: 3),
-                    leftBarIndicatorColor: Colors.blue[300],
+                    leftBarIndicatorColor:
+                        Theme.of(context).colorScheme.secondary,
                   )..show(context);
                 }
               } catch (e) {
@@ -157,7 +159,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: BottomAppBar(
             elevation: 10.0,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.primaryVariant,
             notchMargin: 12,
             shape: CircularNotchedRectangle(),
             child: Container(
@@ -174,70 +176,67 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
     showDialog(
       context: context,
       builder: (context) => Consumer<ExpenseViewModel>(
-        builder: (context, model, child) => Theme(
-          data: ThemeData.light(),
-          child: AlertDialog(
-            titlePadding: EdgeInsets.only(left: 20, right: 20, top: 20),
-            contentPadding:
-                EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
-            title: Text("Delete record?"),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Are you sure you want to delete this record?',
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    FlatButton(
-                      child: Text(
-                        'DELETE',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      color: Colors.black,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0)),
-                      onPressed: () {
-                        final homepageModel = Provider.of<HomepageViewModel>(
-                          context,
-                          listen: false,
-                        );
-                        model.deleteRecord();
-                        homepageModel.selectAccount(
-                            model.getAccountIndexFromTempRecord());
-                        HomepageViewModel.syncController();
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                        Flushbar(
-                          message: "Record successfully deleted.",
-                          icon: Icon(
-                            Icons.info_outline,
-                            size: 28.0,
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                          duration: Duration(seconds: 3),
-                          leftBarIndicatorColor:
-                              Theme.of(context).colorScheme.secondary,
-                        )..show(context);
-                      },
+        builder: (context, model, child) => AlertDialog(
+          titlePadding: EdgeInsets.only(left: 20, right: 20, top: 20),
+          contentPadding:
+              EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+          title: Text("Delete record?"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Are you sure you want to delete this record?',
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      'DELETE',
+                      style: TextStyle(color: Colors.white),
                     ),
-                    OutlineButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0)),
-                      child: Text('NO'),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                )
-              ],
-            ),
+                    color: Colors.black,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                    onPressed: () {
+                      final homepageModel = Provider.of<HomepageViewModel>(
+                        context,
+                        listen: false,
+                      );
+                      model.deleteRecord();
+                      homepageModel
+                          .selectAccount(model.getAccountIndexFromTempRecord());
+                      HomepageViewModel.syncController();
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      Flushbar(
+                        message: "Record successfully deleted.",
+                        icon: Icon(
+                          Icons.info_outline,
+                          size: 28.0,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                        duration: Duration(seconds: 3),
+                        leftBarIndicatorColor:
+                            Theme.of(context).colorScheme.secondary,
+                      )..show(context);
+                    },
+                  ),
+                  OutlineButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                    child: Text('NO'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              )
+            ],
           ),
         ),
       ),

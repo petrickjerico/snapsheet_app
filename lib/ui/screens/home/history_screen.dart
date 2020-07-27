@@ -595,9 +595,10 @@ class _FilterScreenState extends State<FilterScreen> {
     return Consumer<FilterData>(
       builder: (context, filterData, child) {
         return Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: Colors.transparent,
+            backgroundColor: Theme.of(context).colorScheme.background,
             iconTheme: Theme.of(context).iconTheme,
             textTheme: Theme.of(context).textTheme,
             title: Text('Filter Screen'),
@@ -618,10 +619,11 @@ class _FilterScreenState extends State<FilterScreen> {
                       icon: Icon(
                         Icons.info_outline,
                         size: 28.0,
-                        color: Colors.blue[300],
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                       duration: Duration(seconds: 3),
-                      leftBarIndicatorColor: Colors.blue[300],
+                      leftBarIndicatorColor:
+                          Theme.of(context).colorScheme.secondary,
                     )..show(context);
                   }
                 },

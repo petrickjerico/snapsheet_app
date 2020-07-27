@@ -80,7 +80,14 @@ class _HomepageScreenState extends State<HomepageScreen>
                     child: BottomNavigationBar(
                       currentIndex: HomepageViewModel.currentBar,
                       type: BottomNavigationBarType.fixed,
-                      selectedItemColor: Theme.of(context).colorScheme.primary,
+                      unselectedItemColor: Theme.of(context)
+                          .colorScheme
+                          .onPrimary
+                          .withOpacity(0.4),
+                      selectedItemColor:
+                          Theme.of(context).colorScheme.onPrimary,
+                      backgroundColor:
+                          Theme.of(context).colorScheme.primaryVariant,
                       showUnselectedLabels: false,
                       items: [
                         BottomNavigationBarItem(

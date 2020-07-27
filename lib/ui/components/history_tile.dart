@@ -75,9 +75,9 @@ class HistoryTile extends StatelessWidget {
               Flushbar(
                 mainButton: FlatButton(
                   disabledColor: Colors.grey,
+                  textColor: Theme.of(context).colorScheme.secondary,
                   child: Text(
                     'UNDO',
-                    style: TextStyle(color: kDarkCyan),
                   ),
                   onPressed: () {
                     if (!isAlreadyAdded) {
@@ -100,10 +100,10 @@ class HistoryTile extends StatelessWidget {
                 icon: Icon(
                   Icons.info_outline,
                   size: 28.0,
-                  color: Colors.blue[300],
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
                 duration: Duration(seconds: 3),
-                leftBarIndicatorColor: Colors.blue[300],
+                leftBarIndicatorColor: Theme.of(context).colorScheme.secondary,
               )..show(context);
             },
             child: ListTile(

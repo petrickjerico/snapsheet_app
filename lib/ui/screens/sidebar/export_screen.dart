@@ -15,6 +15,7 @@ class ExportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserData>(context);
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

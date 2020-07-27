@@ -50,7 +50,9 @@ class Snapsheet extends StatelessWidget {
         ChangeNotifierProvider<UserData>(create: (context) => UserData())
       ],
       child: MaterialApp(
-        theme: ThemeData(colorScheme: kFirstColorScheme),
+        theme: ThemeData(
+            colorScheme: kFirstColorScheme,
+            canvasColor: kFirstColorScheme.background),
         debugShowCheckedModeBanner: false,
         initialRoute: SplashScreen.id,
         routes: {

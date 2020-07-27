@@ -22,13 +22,10 @@ List<Record> demoRecords = [
       false, hachiTech, true),
   Record.unnamed("Golden Village", 19, DateTime(2019, 4, 24), ENTERTAINMENT, 1,
       false, goldenVillage, true),
-  Record.unnamed("Pepper Lunch", 22.9, DateTime(2020, 6, 8), FOODDRINKS, 0,
-      false, pepperLunch, true),
+  Record.unnamed("Pepper Lunch", 22.9, DateTime(2020, 6, 8), FOODDRINKS, 0),
 ];
 
 String hachiTech =
     "https://firebasestorage.googleapis.com/v0/b/snapsheet-e7f7b.appspot.com/o/demo-receipts%2Fhachi-tech.jpg?alt=media&token=90803d65-edd6-4d85-aca0-28fc36ae2126";
 String goldenVillage =
     "https://firebasestorage.googleapis.com/v0/b/snapsheet-e7f7b.appspot.com/o/demo-receipts%2Fgolden-village.jpg?alt=media&token=d8b0fa0f-1699-4009-aff5-dd53d940d28f";
-String pepperLunch =
-    "https://firebasestorage.googleapis.com/v0/b/snapshee  t-e7f7b.appspot.com/o/demo-receipts%2Fpepper-lunch.jpg?alt=media&token=7d49262b-747b-4b8e-9f45-cde6ad4f0f84";

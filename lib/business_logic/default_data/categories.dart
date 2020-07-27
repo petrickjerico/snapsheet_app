@@ -56,7 +56,7 @@ Category shopping = Category(
 Category entertainment = Category(
   title: 'Entertainment',
   icon: Icon(FontAwesomeIcons.gamepad),
-  color: Colors.lightGreenAccent,
+  color: Colors.green,
   isIncome: false,
   index: ENTERTAINMENT,
   isDefault: true,

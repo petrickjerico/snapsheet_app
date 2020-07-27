@@ -98,27 +98,22 @@ class _StatisticsState extends State<Statistics> {
 
           return Column(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                child: Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(5.0),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          _makeDirectoryButton(
-                              'Balance', _showBalance, _balanceKey),
-                          _makeDirectoryButton('Expenses Breakdown',
-                              _showExpensesBreakdown, _expensesBreakdownKey),
-                          _makeDirectoryButton(
-                              'Amount Trend', _showTrend, _amountTrendKey),
-                          _makeDirectoryButton('Recent Records', _showRecents,
-                              _recentRecordsKey),
-                        ],
-                      ),
-                    ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(5.0),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      _makeDirectoryButton(
+                          'Balance', _showBalance, _balanceKey),
+                      _makeDirectoryButton('Expenses Breakdown',
+                          _showExpensesBreakdown, _expensesBreakdownKey),
+                      _makeDirectoryButton(
+                          'Amount Trend', _showTrend, _amountTrendKey),
+                      _makeDirectoryButton(
+                          'Recent Records', _showRecents, _recentRecordsKey),
+                    ],
                   ),
                 ),
               ),

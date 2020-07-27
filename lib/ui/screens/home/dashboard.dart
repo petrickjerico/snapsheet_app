@@ -30,12 +30,12 @@ class _DashboardState extends State<Dashboard> {
       drawer: SidebarMenu(),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: kHomepageBackgroundTransparency,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        textTheme: Theme.of(context).textTheme,
+        iconTheme: Theme.of(context).iconTheme,
         title: Text(
           "DASHBOARD",
         ),
-        textTheme: Theme.of(context).textTheme,
-        iconTheme: Theme.of(context).iconTheme,
         actions: <Widget>[
           model.userData.credentials['isDemo']
               ? FlatButton(

@@ -17,6 +17,7 @@ ColorScheme kFirstColorScheme = ColorScheme(
   onPrimary: Colors.white,
   onSecondary: Colors.black,
   onBackground: Colors.black,
+  onError: Colors.white,
   onSurface: Colors.black,
   brightness: Brightness.light,
 );

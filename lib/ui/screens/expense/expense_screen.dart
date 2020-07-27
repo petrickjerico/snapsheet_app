@@ -32,10 +32,10 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
             icon: Icon(
               Icons.info_outline,
               size: 28.0,
-              color: Colors.blue[300],
+              color: Theme.of(context).colorScheme.secondary,
             ),
             duration: Duration(seconds: 3),
-            leftBarIndicatorColor: Colors.blue[300],
+            leftBarIndicatorColor: Theme.of(context).colorScheme.secondary,
           )..show(context);
           return true;
         },
@@ -57,10 +57,11 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                   icon: Icon(
                     Icons.info_outline,
                     size: 28.0,
-                    color: Colors.blue[300],
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                   duration: Duration(seconds: 3),
-                  leftBarIndicatorColor: Colors.blue[300],
+                  leftBarIndicatorColor:
+                      Theme.of(context).colorScheme.secondary,
                 )..show(context);
               },
             ),
@@ -143,10 +144,11 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                   icon: Icon(
                     Icons.info_outline,
                     size: 28.0,
-                    color: Colors.blue[300],
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                   duration: Duration(seconds: 3),
-                  leftBarIndicatorColor: Colors.blue[300],
+                  leftBarIndicatorColor:
+                      Theme.of(context).colorScheme.secondary,
                 )..show(context);
               }
             },
@@ -216,10 +218,11 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                           icon: Icon(
                             Icons.info_outline,
                             size: 28.0,
-                            color: Colors.blue[300],
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
                           duration: Duration(seconds: 3),
-                          leftBarIndicatorColor: Colors.blue[300],
+                          leftBarIndicatorColor:
+                              Theme.of(context).colorScheme.secondary,
                         )..show(context);
                       },
                     ),

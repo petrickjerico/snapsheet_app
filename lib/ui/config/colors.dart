@@ -10,3 +10,4 @@ var kHomepageBackgroundTransparency = Colors.transparent;
 const kNavyBlue = Color(0xFF152238);
 const kStatsFontColour = Colors.black;
 const kGold = Color(0xFFAD974F);
+const kLightBlue = Color(0xFFECF3FB);

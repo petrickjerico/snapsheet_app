@@ -18,7 +18,7 @@ class CategoryScreen extends StatelessWidget {
       return Scaffold(
         extendBody: true,
         resizeToAvoidBottomInset: false,
-        backgroundColor: kScaffoldBackgroundColour,
+        backgroundColor: kLightBlue,
         drawer: SidebarMenu(),
         appBar: AppBar(
           elevation: 0,

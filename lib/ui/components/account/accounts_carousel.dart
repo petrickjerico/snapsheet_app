@@ -46,7 +46,7 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                   children: <Widget>[
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: kLightBlue,
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       height: 65.0,

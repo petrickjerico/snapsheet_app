@@ -37,24 +37,24 @@ class HistoryTile extends StatelessWidget {
         closedBuilder: (_, openContainer) {
           return Dismissible(
             background: Container(
-              color: Colors.black38,
+              color: Colors.redAccent.withOpacity(0.2),
               padding: EdgeInsets.only(left: 15.0),
               child: Row(
                 children: <Widget>[
                   Icon(
                     Icons.delete,
-                    color: Colors.white54,
+                    color: Colors.redAccent,
                   ),
                 ],
               ),
               alignment: Alignment.centerLeft,
             ),
             secondaryBackground: Container(
-              color: Colors.black38,
+              color: Colors.redAccent.withOpacity(0.2),
               padding: EdgeInsets.only(right: 15.0),
               child: Icon(
                 Icons.delete,
-                color: Colors.white54,
+                color: Colors.redAccent,
               ),
               alignment: Alignment.centerRight,
             ),

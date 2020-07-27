@@ -43,7 +43,7 @@ class ExportScreen extends StatelessWidget {
                   ),
                   RoundedButton(
                     textColor: Colors.white,
-                    color: kNavyBlue,
+                    color: kNavyBluePrimary,
                     title: 'Export',
                     icon: Icon(
                       Icons.import_export,

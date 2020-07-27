@@ -26,7 +26,7 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: false,
-      backgroundColor: kLightBlue,
+      backgroundColor: kLightBlueBackground,
       drawer: SidebarMenu(),
       appBar: AppBar(
         elevation: 0,

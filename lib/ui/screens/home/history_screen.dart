@@ -159,7 +159,7 @@ class _FilteredRecordsState extends State<FilteredRecords> {
       var isActive = filterData.isActive;
       var recordsCount = filteredRecords.length;
       return Scaffold(
-        backgroundColor: kLightBlue,
+        backgroundColor: kLightBlueBackground,
         drawer: SidebarMenu(),
         appBar: AppBar(
           title: Text('RECORDS'),

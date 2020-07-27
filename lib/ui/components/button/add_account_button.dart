@@ -9,7 +9,7 @@ class AddAccountButton extends StatelessWidget {
     return MaterialButton(
       visualDensity: VisualDensity.compact,
       padding: EdgeInsets.all(0),
-      color: kNavyBlue,
+      color: kNavyBluePrimary,
       minWidth: 100,
       elevation: 0,
       shape: RoundedRectangleBorder(

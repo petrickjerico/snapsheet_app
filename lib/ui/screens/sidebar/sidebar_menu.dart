@@ -22,7 +22,7 @@ class SidebarMenu extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 decoration: BoxDecoration(
-                  color: kNavyBlue,
+                  color: kNavyBluePrimary,
                 ),
               ),
               ListTile(

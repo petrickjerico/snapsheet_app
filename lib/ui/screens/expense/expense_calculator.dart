@@ -744,7 +744,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
           Expanded(
             flex: 4,
             child: Container(
-              color: kNavyBlue,
+              color: kNavyBluePrimary,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[

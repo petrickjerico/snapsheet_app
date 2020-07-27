@@ -83,7 +83,7 @@ class _HomepageScreenState extends State<HomepageScreen>
                       type: BottomNavigationBarType.fixed,
                       showUnselectedLabels: false,
                       backgroundColor: Colors.white,
-                      selectedItemColor: kNavyBlue,
+                      selectedItemColor: kNavyBluePrimary,
                       unselectedItemColor: Colors.grey.withOpacity(0.6),
                       items: [
                         BottomNavigationBarItem(
@@ -160,7 +160,7 @@ class _HomepageScreenState extends State<HomepageScreen>
                         },
                         openColor: kScaffoldBackgroundColour,
                         closedElevation: 10.0,
-                        closedColor: kNavyBlue,
+                        closedColor: kNavyBluePrimary,
                         closedShape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
                         transitionType: ContainerTransitionType.fade,

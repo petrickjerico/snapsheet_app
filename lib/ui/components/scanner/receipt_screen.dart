@@ -90,7 +90,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                   ],
                 ),
                 RoundedButton(
-                  color: kNavyBlue,
+                  color: kNavyBluePrimary,
                   textColor: Colors.white,
                   title: 'Confirm All Receipts',
                   icon: Icon(Icons.done_all, color: Colors.white),

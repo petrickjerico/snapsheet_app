@@ -161,7 +161,7 @@ class ReceiptButtons extends StatelessWidget {
             Expanded(
               flex: 2,
               child: RoundedButton(
-                color: kNavyBlue,
+                color: kNavyBluePrimary,
                 title: model.hasImage() ? 'Retake Receipt' : 'Add Receipt',
                 textColor: Colors.white,
                 icon: Icon(

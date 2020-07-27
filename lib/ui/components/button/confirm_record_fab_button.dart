@@ -10,7 +10,7 @@ class ConfirmRecordFab extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       elevation: 10.0,
-      backgroundColor: kNavyBlue,
+      backgroundColor: kNavyBluePrimary,
       child: Icon(
         Icons.check,
       ),

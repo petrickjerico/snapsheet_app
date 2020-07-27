@@ -185,7 +185,7 @@ class _FilteredRecordsState extends State<FilteredRecords> {
                 FontAwesomeIcons.filter,
                 size: 20,
                 color: isActive
-                    ? Colors.amberAccent
+                    ? Theme.of(context).colorScheme.secondary
                     : Theme.of(context).iconTheme.color,
               ),
               onPressed: () {
@@ -225,7 +225,7 @@ class _FilteredRecordsState extends State<FilteredRecords> {
                       margin: EdgeInsets.symmetric(horizontal: 15.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5.0),
-                        color: Colors.amberAccent,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                       child: Text(
                         "FILTER APPLIED",

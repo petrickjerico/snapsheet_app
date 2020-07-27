@@ -32,7 +32,7 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
 
   void addDueExpenses() {
     for (Recurring recurring in recurrings) {
-      if (recurring.nextRecurrence.isAfter(DateTime.now())) {
+      if (recurring.nextRecurrence.isBefore(DateTime.now())) {
         userData.addRecord(recurring.record);
         recurring.update();
       }

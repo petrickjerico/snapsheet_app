@@ -49,6 +49,7 @@ class _DashboardState extends State<Dashboard> {
                           message: "Are you sure you want to exit demo?",
                           onDelete: () {
                             model.userData.demoDone();
+                            Navigator.of(this.context).pop();
                             setState(() {});
                           },
                         ));

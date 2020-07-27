@@ -204,7 +204,6 @@ class ReceiptImage extends StatelessWidget {
   ReceiptImage({this.tempRecord});
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<ExpenseViewModel>(context, listen: false);
     if (tempRecord.imagePath != null) {
       return Expanded(
         child: GestureDetector(

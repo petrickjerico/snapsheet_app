@@ -56,7 +56,7 @@ Category shopping = Category(
 Category entertainment = Category(
   title: 'Entertainment',
   icon: Icon(FontAwesomeIcons.gamepad),
-  color: Colors.lightGreenAccent,
+  color: Colors.green,
   isIncome: false,
   index: ENTERTAINMENT,
   isDefault: true,
@@ -114,4 +114,37 @@ Category others = Category(
   isIncome: false,
   index: OTHERS,
   isDefault: true,
+);
+
+List<Category> demoCategories = [
+  foodDrinks,
+  transportation,
+  shopping,
+  entertainment,
+  health,
+  education,
+  electronics,
+  giving,
+  income,
+  others,
+  pets,
+  youtube
+];
+
+Category pets = Category(
+  title: 'Pets',
+  icon: Icon(FontAwesomeIcons.dog),
+  color: Colors.deepPurple,
+  isIncome: false,
+  index: 10,
+  isDefault: false,
+);
+
+Category youtube = Category(
+  title: 'YouTube Channel',
+  icon: Icon(FontAwesomeIcons.youtube),
+  color: Colors.red,
+  isIncome: true,
+  index: 11,
+  isDefault: false,
 );

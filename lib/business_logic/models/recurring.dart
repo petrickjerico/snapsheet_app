@@ -108,9 +108,11 @@ class Recurring {
     if (timeFrameId == UNTILDATE && nextRecurrence.isAfter(untilDate))
       return null;
     if (frequencyId == DAILY) {
-      nextRecurrence.add(Duration(days: interval));
+      print(nextRecurrence.toString());
+      nextRecurrence = nextRecurrence.add(Duration(days: interval));
+      print(nextRecurrence.toString());
     } else if (frequencyId == WEEKLY) {
-      nextRecurrence.add(Duration(days: interval * 7));
+      nextRecurrence = nextRecurrence.add(Duration(days: interval * 7));
     } else if (frequencyId == MONTHLY) {
       DateTime d = nextRecurrence;
       nextRecurrence = DateTime(d.year, d.month + interval, d.day);
@@ -120,6 +122,7 @@ class Recurring {
     }
 
     if (timeFrameId == FORXTIMES) xTimes--;
+    return null;
   }
 
   Record get record {

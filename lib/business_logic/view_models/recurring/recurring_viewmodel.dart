@@ -18,7 +18,7 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
     this.recurrings = userData.recurrings;
     this.accounts = userData.accounts;
     this.categories = userData.categories;
-    addDueExpenses();
+    userData.addDueExpenses();
   }
 
   Account getAccountFromUid(String accountUid) {
@@ -28,15 +28,6 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
       }
     }
     return accounts.first;
-  }
-
-  void addDueExpenses() {
-    for (Recurring recurring in recurrings) {
-      while (recurring.nextRecurrence.isBefore(DateTime.now())) {
-        userData.addRecord(recurring.record);
-        recurring.update();
-      }
-    }
   }
 
   void undo() {

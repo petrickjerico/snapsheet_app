@@ -123,7 +123,7 @@ class _TitleFormField extends StatelessWidget {
             labelText: "Title",
             labelStyle: TextStyle(color: Colors.grey),
           ),
-          cursorColor: Colors.white,
+          cursorColor: kNavyBluePrimary,
           onChanged: (value) {
             model.changeTitle(value);
           },
@@ -141,7 +141,6 @@ class _ValueFormField extends StatelessWidget {
         return TextFormField(
             initialValue: model.tempRecurring.value.toStringAsFixed(2),
             keyboardType: TextInputType.number,
-            cursorColor: Colors.white,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey, width: 1),

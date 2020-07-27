@@ -131,27 +131,27 @@ class DatabaseServiceImpl implements DatabaseService {
 
   /// UPDATE
   Future<void> updateCredentials(Map<String, dynamic> credentials) async {
-    userDocument.setData(credentials);
+    userDocument.updateData(credentials);
   }
 
   @override
   Future<void> updateRecord(Record record) async {
-    recordCollection.document(record.uid).setData(record.toJson());
+    recordCollection.document(record.uid).updateData(record.toJson());
   }
 
   @override
   Future<void> updateAccount(Account account) async {
-    accountCollection.document(account.uid).setData(account.toJson());
+    accountCollection.document(account.uid).updateData(account.toJson());
   }
 
   @override
   Future<void> updateRecurring(Recurring recurring) async {
-    recurringCollection.document(recurring.uid).setData(recurring.toJson());
+    recurringCollection.document(recurring.uid).updateData(recurring.toJson());
   }
 
   @override
   Future<void> updateCategory(Category category) async {
-    categoryCollection.document(category.uid).setData(category.toJson());
+    categoryCollection.document(category.uid).updateData(category.toJson());
   }
 
   /// DELETE

@@ -51,6 +51,23 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     loadCallback();
   }
 
+  void addDueExpenses() {
+    for (Recurring recurring in recurrings) {
+      int count = 0;
+      while (recurring.nextRecurrence.isBefore(DateTime.now())) {
+        print("BEFORE UPDATE");
+        print(recurring);
+        addRecord(recurring.record);
+        recurring.update();
+        print("AFTER UPDATE");
+        print(recurring);
+        updateRecurring(recurring);
+        count++;
+        if (count > 5) break;
+      }
+    }
+  }
+
   Future processImage(Record record) async {
     if (record.imagePath != null) {
       record.receiptURL = await _cloud.addReceiptURL(record);

@@ -2,8 +2,7 @@ import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/record.dart';
 
 List<Record> demoRecords = [
-  Record.unnamed(
-      "Carousel sales", 1200, DateTime(2020, 4, 12), INCOME, 0, true),
+  Record.unnamed("Carousel sales", 500, DateTime(2020, 4, 12), INCOME, 0, true),
   Record.unnamed("Steam Dota", 12, DateTime(2020, 4, 12), ENTERTAINMENT, 0),
   Record.unnamed("UNIQLO", 30, DateTime(2020, 5, 12), SHOPPING, 0),
   Record.unnamed("Mother's Day", 20, DateTime(2020, 5, 10), SHOPPING, 0),
@@ -19,11 +18,11 @@ List<Record> demoRecords = [
   Record.unnamed("CCA book", 16.75, DateTime(2020, 5, 3), EDUCATION, 2),
   Record.unnamed("Online course", 5.75, DateTime(2020, 5, 20), EDUCATION, 2),
   Record.unnamed("Teacher's Birthday Gift", 4, DateTime(2020, 4, 3), GIVING, 2),
-  Record.unnamed("Hachi Tech", 498, DateTime(2020, 5, 17), ELECTRONICS, 0,
+  Record.unnamed("Hachi Tech", 49.8, DateTime(2020, 5, 17), ELECTRONICS, 0,
       false, hachiTech, true),
   Record.unnamed("Golden Village", 19, DateTime(2019, 4, 24), ENTERTAINMENT, 1,
       false, goldenVillage, true),
-  Record.unnamed("Pepper Lunch", 22.9, DateTime(2013, 3, 8), FOODDRINKS, 0,
+  Record.unnamed("Pepper Lunch", 22.9, DateTime(2020, 6, 8), FOODDRINKS, 0,
       false, pepperLunch, true),
 ];
 

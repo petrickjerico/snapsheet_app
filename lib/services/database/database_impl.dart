@@ -41,6 +41,7 @@ class DatabaseServiceImpl implements DatabaseService {
       await addRecord(record);
     }
     for (Recurring recurring in demoRecurrings) {
+      print(recurring);
       recurring.accountUid = accountMap[0];
       recurring.categoryUid = categoryMap[recurring.categoryId];
       await addRecurring(recurring);

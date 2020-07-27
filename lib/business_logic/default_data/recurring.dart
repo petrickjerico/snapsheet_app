@@ -43,16 +43,16 @@ List<String> singularAndPlural = [
 List<Recurring> demoRecurrings = [universityFee, mobileData, scholarship];
 
 Recurring universityFee = Recurring(
-  title: "University Fee",
-  value: 9100,
-  categoryId: EDUCATION,
-  isIncome: false,
-  nextRecurrence: DateTime(2021, 1, 1),
-  frequencyId: MONTHLY,
-  interval: 6,
-  timeFrameId: FORXTIMES,
-  xTimes: 8,
-);
+    title: "University Fee",
+    value: 9100,
+    categoryId: EDUCATION,
+    isIncome: false,
+    nextRecurrence: DateTime(2021, 1, 1),
+    frequencyId: MONTHLY,
+    interval: 6,
+    timeFrameId: FORXTIMES,
+    xTimes: 8,
+    untilDate: DateTime(2050, 1, 1));
 
 Recurring mobileData = Recurring(
   title: "Mobile Data",
@@ -63,6 +63,8 @@ Recurring mobileData = Recurring(
   frequencyId: MONTHLY,
   interval: 1,
   timeFrameId: FOREVER,
+  xTimes: 1,
+  untilDate: DateTime(2050, 1, 1),
 );
 
 Recurring scholarship = Recurring(
@@ -73,6 +75,7 @@ Recurring scholarship = Recurring(
   nextRecurrence: DateTime(2020, 9, 1),
   frequencyId: MONTHLY,
   interval: 6,
-  timeFrameId: FORXTIMES,
-  xTimes: 7,
+  timeFrameId: UNTILDATE,
+  xTimes: 1,
+  untilDate: DateTime(2023, 7, 1),
 );

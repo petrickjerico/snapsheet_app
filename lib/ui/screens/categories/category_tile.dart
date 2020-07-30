@@ -71,7 +71,7 @@ class CategoryTile extends StatelessWidget {
                             child: DeleteDialog(
                                 title: 'Delete Category',
                                 message:
-                                    'Are you sure you want to delete ${category.title}?',
+                                    'This will change all records with category ${category.title} to Others\nAre you sure you want to delete ${category.title}?',
                                 onDelete: () {
                                   model.deleteCategory(category);
                                   Navigator.pop(context);

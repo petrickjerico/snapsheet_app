@@ -35,7 +35,7 @@ class ParserImpl implements Parser {
     for (String word in filtered) {
       BestMatch match = StringSimilarity.findBestMatch(word, shopNames);
       Rating best = match.bestMatch;
-      if (best.rating > 0.7) {
+      if (best.rating > 0.77) {
         matchedName = best.target;
         return shops[matchedName].title;
       }

@@ -35,7 +35,7 @@ class ParserImpl implements Parser {
     for (String word in filtered) {
       BestMatch match = StringSimilarity.findBestMatch(word, shopNames);
       Rating best = match.bestMatch;
-      if (best.rating > 0.7) {
+      if (best.rating > 0.77) {
         matchedName = best.target;
         return shops[matchedName].title;
       }
@@ -80,7 +80,7 @@ class ParserImpl implements Parser {
   }
 
   double findCost(String input) {
-    RegExp alertWords = RegExp(r"(discount|change|coupon|cash)");
+    RegExp alertWords = RegExp(r"(discount|change|coupon)");
     RegExp money = RegExp(r"\d+\.\d{2}");
 
     Iterable<RegExpMatch> matches = money.allMatches(input);
@@ -99,43 +99,54 @@ class ParserImpl implements Parser {
     return alertWords.hasMatch(input) ? reversed[1] : reversed[0];
   }
 
-  List<Function> dateFormats = [ddmmyy, yyyymmdd];
+  List<Function> dateFormats = [ddmmyy, ddmmyyyy, ddmonyy, ddmonyyyy, yyyymmdd];
 
   static DateTime ddmmyy(String input) {
-    RegExp date = RegExp(
-        r"(\d{2}/\d{2}/\d{2,4}|\d{2} (jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec) \d{2|4})");
+    RegExp date = RegExp(r"[0-3][0-9]/[0-1][0-9]/\d{2}");
     String match = date.stringMatch(input);
     if (match == null) return null;
-    print("DATE CAPTURED: $match");
-    String strDate;
-    if (match.length == 8) {
-      // DDMMYY
-      strDate = "20" +
-          match.substring(6, 8) +
-          match.substring(3, 5) +
-          match.substring(0, 2);
-    } else if (match.length == 10) {
-      // DDMMYYYY
-      strDate = match.substring(6, 10) +
-          match.substring(3, 5) +
-          match.substring(0, 2);
-    } else if (match.length == 9) {
-      // DDMMYY
-      strDate = "20" +
-          match.substring(7, 9) +
-          mthToMM[match.substring(3, 6)] +
-          match.substring(0, 2);
-    } else {
-      // DDMMYYYY
-      strDate = match.substring(7, 11) +
-          mthToMM[match.substring(3, 6)] +
-          match.substring(0, 2);
-    }
+    String strDate = "20" +
+        match.substring(6, 8) +
+        match.substring(3, 5) +
+        match.substring(0, 2);
+    return DateTime.parse(strDate);
+  }
+
+  static DateTime ddmmyyyy(String input) {
+    RegExp date = RegExp(r"[0-3][0-9]/[0-1][0-9]/\d{4}");
+    String match = date.stringMatch(input);
+    if (match == null) return null;
+    String strDate =
+        match.substring(6, 10) + match.substring(3, 5) + match.substring(0, 2);
+    return DateTime.parse(strDate);
+  }
+
+  static DateTime ddmonyy(String input) {
+    RegExp date = RegExp(
+        r"[0-3][0-9] (jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec) \d{2}");
+    String match = date.stringMatch(input);
+    if (match == null) return null;
+    String strDate = "20" +
+        match.substring(7, 9) +
+        mthToMM[match.substring(3, 6)] +
+        match.substring(0, 2);
+    return DateTime.parse(strDate);
+  }
+
+  static DateTime ddmonyyyy(String input) {
+    RegExp date = RegExp(
+        r"[0-3][0-9] (jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec) \d{4}");
+    String match = date.stringMatch(input);
+    if (match == null) return null;
+    String strDate = "20" +
+        match.substring(7, 9) +
+        mthToMM[match.substring(3, 6)] +
+        match.substring(0, 2);
     return DateTime.parse(strDate);
   }
 
   static DateTime yyyymmdd(String input) {
-    RegExp date = RegExp(r"\d{4}-\d{2}-\d{2}");
+    RegExp date = RegExp(r"\d{4}-[0-1][0-9]-[0-3][0-9]");
     String match = date.stringMatch(input);
     if (match == null) return null;
     return DateTime.parse(match.replaceAll(RegExp(r"/"), ""));

@@ -80,7 +80,7 @@ class ParserImpl implements Parser {
   }
 
   double findCost(String input) {
-    RegExp alertWords = RegExp(r"(discount|change|coupon|cash)");
+    RegExp alertWords = RegExp(r"(discount|change|coupon)");
     RegExp money = RegExp(r"\d+\.\d{2}");
 
     Iterable<RegExpMatch> matches = money.allMatches(input);

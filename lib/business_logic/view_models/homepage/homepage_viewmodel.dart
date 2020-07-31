@@ -26,6 +26,7 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   bool balanceCustom = true;
   bool expenseBreakdownCustom = true;
   bool amountTrendCustom = true;
+  bool accountTileHasChanged = false;
 
   // List<Account> get copyOfAccounts => List.from(accounts);
 
@@ -164,6 +165,7 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   }
 
   void selectAccount(int newIndex) {
+    if (selectedAccountIndex != newIndex) accountTileHasChanged = true;
     selectedAccountIndex = newIndex;
     if (newIndex != -1) overlaidAccountIndex = newIndex;
     donutTouchedIndex = null;
@@ -179,6 +181,11 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     print("electedAccountIndex == -1 = " +
         (selectedAccountIndex == -1).toString());
     return ans;
+  }
+
+  void toggleTileHasChanged() {
+    accountTileHasChanged = !accountTileHasChanged;
+    notifyListeners();
   }
 
   ///

@@ -55,15 +55,6 @@ class _StatisticsState extends State<Statistics> {
             ),
           );
         } else {
-          SchedulerBinding.instance.addPostFrameCallback((_) {
-            if (_scrollController.hasClients) {
-              _scrollController.animateTo(
-                0,
-                duration: Duration(milliseconds: 300),
-                curve: Curves.easeIn,
-              );
-            }
-          });
           Color _contentColor = kStatsFontColour;
           final _showBalance =
               model.selectedAccountHasIncome() && model.balanceCustom;
@@ -71,6 +62,19 @@ class _StatisticsState extends State<Statistics> {
               model.selectedAccountHasExpense() && model.expenseBreakdownCustom;
           final _showTrend = model.amountTrendCustom;
           final _showRecents = true;
+
+          if (model.accountTileHasChanged) {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              if (_scrollController.hasClients) {
+                _scrollController.animateTo(
+                  0,
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeIn,
+                );
+              }
+            });
+            model.accountTileHasChanged = false;
+          }
 
           Widget _makeDirectoryButton(
             String title,

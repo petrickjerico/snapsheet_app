@@ -55,13 +55,15 @@ class _StatisticsState extends State<Statistics> {
             ),
           );
         } else {
-          SchedulerBinding.instance.addPostFrameCallback(
-            (_) => _scrollController.animateTo(
-              0,
-              duration: Duration(milliseconds: 300),
-              curve: Curves.easeIn,
-            ),
-          );
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            if (_scrollController.hasClients) {
+              _scrollController.animateTo(
+                0,
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeIn,
+              );
+            }
+          });
           Color _contentColor = kStatsFontColour;
           final _showBalance =
               model.selectedAccountHasIncome() && model.balanceCustom;

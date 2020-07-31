@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
@@ -44,12 +45,16 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     currentBar = 0;
   }
 
-  static void syncController() {
-    if (selectedAccountIndex != -1) {
-      controller.animateToPage(selectedAccountIndex);
-    } else {
-      controller.animateToPage(0);
-    }
+  static void syncController() async {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      controller.onReady.whenComplete(() {
+        if (selectedAccountIndex != -1) {
+          controller.animateToPage(selectedAccountIndex);
+        } else {
+          controller.animateToPage(0);
+        }
+      });
+    });
   }
 
   void init(UserData userData) {

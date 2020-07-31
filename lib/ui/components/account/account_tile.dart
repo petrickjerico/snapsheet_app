@@ -23,41 +23,89 @@ class AccountTile extends StatelessWidget {
             HomepageViewModel.syncController();
           }
         },
-        child: Container(
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          height: 55.0,
-          width: 100.0,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Flexible(
-                  child: Text(
-                    title,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
-                          color: Colors.white,
+        child: Stack(
+          children: <Widget>[
+            Opacity(
+              opacity: model.isAccountSelected(index) ? 1.0 : 0.5,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                height: 55.0,
+                width: 100.0,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Flexible(
+                        child: Text(
+                          title,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyText2.copyWith(
+                                color: Colors.white,
+                              ),
                         ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          total == 0 ? '0' : total.toStringAsFixed(2),
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Flexible(
-                  child: Text(
-                    total == 0 ? '0' : total.toStringAsFixed(2),
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+            Visibility(
+              visible: model.isOverlaid(index),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                height: 55.0,
+                width: 100.0,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Flexible(
+                        child: Text(
+                          "ALL",
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyText2.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          model.currentExpensesTotal() == 0
+                              ? '0'
+                              : model.currentExpensesTotal().toStringAsFixed(2),
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                                fontSize: 18,
+                              ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       );
     });

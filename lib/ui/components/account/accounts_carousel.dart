@@ -84,15 +84,6 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
                         },
                       ),
                     ),
-                    Visibility(
-                      child: AccountTile(
-                        index: -1,
-                        title: "ALL",
-                        color: kNavyBluePrimary,
-                        total: model.currentExpensesTotal(),
-                      ),
-                      visible: selectedIndex == -1,
-                    )
                   ],
                 );
               },
@@ -109,14 +100,11 @@ class _AccountsCarouselState extends State<AccountsCarousel> {
   List<Widget> makeAccountTiles(HomepageViewModel model) {
     return model.accounts.map(
       (acc) {
-        return Opacity(
-          opacity: model.isAccountSelected(acc) ? 1.0 : 0.5,
-          child: AccountTile(
-            index: acc.index,
-            color: acc.color,
-            title: acc.title,
-            total: model.getSumFromAccount(acc),
-          ),
+        return AccountTile(
+          index: acc.index,
+          color: acc.color,
+          title: acc.title,
+          total: model.getSumFromAccount(acc),
         );
       },
     ).toList();

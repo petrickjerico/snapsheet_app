@@ -15,6 +15,7 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   static int currentPage = 0;
   static int currentBar = 0;
   static int selectedAccountIndex = 0;
+  static int overlaidAccountIndex = 0;
   UserData userData;
   List<Account> accounts;
   List<Record> records;
@@ -164,10 +165,20 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
 
   void selectAccount(int newIndex) {
     selectedAccountIndex = newIndex;
+    if (newIndex != -1) overlaidAccountIndex = newIndex;
     donutTouchedIndex = null;
     if (newIndex == -1) isSelected.forEach((element) => element = true);
 
     notifyListeners();
+  }
+
+  bool isOverlaid(int index) {
+    var ans = index == overlaidAccountIndex && selectedAccountIndex == -1;
+    print("index == overlaidAccountIndex = " +
+        (index == overlaidAccountIndex).toString());
+    print("electedAccountIndex == -1 = " +
+        (selectedAccountIndex == -1).toString());
+    return ans;
   }
 
   ///
@@ -298,8 +309,8 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     return res.take(5).toList();
   }
 
-  bool isAccountSelected(Account acc) {
-    return acc.index == selectedAccountIndex;
+  bool isAccountSelected(int index) {
+    return index == selectedAccountIndex;
   }
 
   ///

@@ -42,8 +42,8 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
       tempRecord.categoryUid = categories[map['categoryId']].uid;
       tempRecord.imagePath = map['imagePath'];
       print("IMAGETOTEMP: $tempRecord");
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   int getAccountIndexFromTempRecord() {
@@ -113,9 +113,9 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
         source: ImageSource.gallery, maxHeight: 500, maxWidth: 500);
     imageFile = File(picture.path);
     if (picture != null) {
-      changeValue(0);
+      tempRecord.value = 0;
       print('changeValue(0) called.');
-      toggleScanned();
+      isScanned = true;
     }
     Navigator.of(context).pop();
   }
@@ -125,8 +125,8 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
         source: ImageSource.camera, maxHeight: 500, maxWidth: 500);
     imageFile = File(picture.path);
     if (picture != null) {
-      changeValue(0);
-      toggleScanned();
+      tempRecord.value = 0;
+      isScanned = true;
     }
     Navigator.of(context).pop();
   }
@@ -135,6 +135,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     tempRecord = Record.newBlankRecord();
     tempRecord.accountUid = accounts.first.uid;
     tempRecord.categoryUid = categories.first.uid;
+    isEditing = false;
     notifyListeners();
   }
 
@@ -152,6 +153,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     tempRecord.isIncome = editRecord.isIncome;
     tempRecord.dateTime = editRecord.dateTime;
     tempRecord.imagePath = editRecord.imagePath;
+    isEditing = false;
     notifyListeners();
   }
 

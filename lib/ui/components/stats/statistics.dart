@@ -103,14 +103,22 @@ class _StatisticsState extends State<Statistics> {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      _makeDirectoryButton(
-                          'Balance', _showBalance, _balanceKey),
-                      _makeDirectoryButton('Expenses Breakdown',
-                          _showExpensesBreakdown, _expensesBreakdownKey),
-                      _makeDirectoryButton(
-                          'Amount Trend', _showTrend, _amountTrendKey),
+                      Visibility(
+                        visible: model.balanceCustom,
+                        child: _makeDirectoryButton(
+                            'Balance', _showBalance, _balanceKey),
+                      ),
+                      Visibility(
+                        visible: model.expenseBreakdownCustom,
+                        child: _makeDirectoryButton('Expenses Breakdown',
+                            _showExpensesBreakdown, _expensesBreakdownKey),
+                      ),
+                      Visibility(
+                        visible: model.amountTrendCustom,
+                        child: _makeDirectoryButton(
+                            'Amount Trend', _showTrend, _amountTrendKey),
+                      ),
                       _makeDirectoryButton(
                           'Recent Records', _showRecents, _recentRecordsKey),
                     ],

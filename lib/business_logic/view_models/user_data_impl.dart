@@ -150,7 +150,6 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
 
   Future<void> updateRecurring(Recurring recurring) async {
     _db.updateRecurring(recurring);
-    notifyListeners();
   }
 
   Future<void> updateCategory(Category category) async {

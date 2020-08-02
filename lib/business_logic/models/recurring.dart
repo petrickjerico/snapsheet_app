@@ -54,6 +54,7 @@ class Recurring {
 
   factory Recurring.of(Recurring recurring) {
     return Recurring(
+      uid: recurring.uid,
       title: recurring.title,
       value: recurring.value,
       categoryUid: recurring.categoryUid,
@@ -83,6 +84,7 @@ class Recurring {
       interval: json['interval'],
       untilDate: DateTime.fromMillisecondsSinceEpoch(json['untilDate']),
       xTimes: json['xTimes'],
+      uid: json['uid'],
     );
   }
 
@@ -99,6 +101,7 @@ class Recurring {
       'interval': interval,
       'untilDate': untilDate.millisecondsSinceEpoch,
       'xTimes': xTimes,
+      'uid': uid,
     };
   }
 
@@ -133,6 +136,7 @@ class Recurring {
       accountUid: accountUid,
       isIncome: isIncome,
       dateTime: nextRecurrence,
+      hasCloudImage: false,
     );
   }
 

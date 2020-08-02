@@ -40,7 +40,7 @@ class Record {
 
   Record.unnamed(
       this.title, this.value, this.dateTime, this.categoryId, this.accountId,
-      [this.isIncome = false, this.receiptURL, this.hasCloudImage]);
+      [this.isIncome = false, this.receiptURL, this.hasCloudImage = false]);
 
   Record({
     this.title,

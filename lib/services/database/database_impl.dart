@@ -146,6 +146,7 @@ class DatabaseServiceImpl implements DatabaseService {
 
   @override
   Future<void> updateRecurring(Recurring recurring) async {
+    print(recurring);
     recurringCollection.document(recurring.uid).updateData(recurring.toJson());
   }
 

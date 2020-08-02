@@ -55,8 +55,11 @@ class RecurringScreen extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            backgroundColor: Colors.black,
+            child: Icon(
+              Icons.add,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+            backgroundColor: Theme.of(context).colorScheme.primary,
             onPressed: () {
               model.newRecurring();
               return Navigator.pushNamed(context, AddRecurringScreen.id);

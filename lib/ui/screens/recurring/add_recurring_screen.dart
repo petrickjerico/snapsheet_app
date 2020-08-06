@@ -12,6 +12,8 @@ import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_view
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/components/dialog/delete_dialog.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/screens/accounts/select_account.dart';
+import 'package:snapsheetapp/ui/screens/categories/select_category.dart';
 
 class AddRecurringScreen extends StatefulWidget {
   static const String id = "add_recurring_screen";
@@ -151,51 +153,59 @@ class _ValueFormField extends StatelessWidget {
   }
 }
 
-class _CategoryFormField extends StatelessWidget {
-  final GlobalKey _menuKey = GlobalKey();
+class _CategoryFormField extends StatefulWidget {
+  @override
+  __CategoryFormFieldState createState() => __CategoryFormFieldState();
+}
+
+class __CategoryFormFieldState extends State<_CategoryFormField> {
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
         String categoryUid = model.tempRecurring.categoryUid;
         Category category = model.userData.getThisCategory(categoryUid);
-        return PopupMenuButton(
-          captureInheritedThemes: false,
-          key: _menuKey,
-          initialValue: category.index,
-          onSelected: (input) {
-            model.changeCategory(input);
+        controller.text = category.title;
+        return TextFormField(
+          controller: controller,
+          decoration: kFormInputDecoration.copyWith(labelText: 'Category'),
+          readOnly: true,
+          onTap: () async {
+            final newCategoryId = await Navigator.pushNamed(
+              context,
+              SelectCategoryScreen.id,
+            );
+            if (newCategoryId != null) {
+              model.changeCategory(newCategoryId);
+            }
           },
-          itemBuilder: (context) {
-            return model.categories
-                .map(
-                  (category) => PopupMenuItem(
-                    value: model.categories.indexOf(category),
-                    child: ListTile(
-                      leading: category.icon,
-                      title: Text(category.title),
-                    ),
-                  ),
-                )
-                .toList();
-          },
-          child: TextFormField(
-            initialValue: category.title,
-            decoration: kFormInputDecoration.copyWith(labelText: 'Category'),
-            readOnly: true,
-            onTap: () {
-              dynamic state = _menuKey.currentState;
-              state.showButtonMenu();
-            },
-          ),
         );
       },
     );
   }
 }
 
-class _AccountFormField extends StatelessWidget {
-  final GlobalKey _menuKey = GlobalKey();
+class _AccountFormField extends StatefulWidget {
+  @override
+  __AccountFormFieldState createState() => __AccountFormFieldState();
+}
+
+class __AccountFormFieldState extends State<_AccountFormField> {
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -203,34 +213,18 @@ class _AccountFormField extends StatelessWidget {
       builder: (context, model, child) {
         String accountUid = model.tempRecurring.accountUid;
         Account account = model.getAccountFromUid(accountUid);
-        return PopupMenuButton(
-          captureInheritedThemes: false,
-          key: _menuKey,
-          initialValue: account.index,
-          onSelected: (input) {
-            model.changeAccount(input);
+        controller.text = account.title;
+        return TextFormField(
+          controller: controller,
+          decoration: kFormInputDecoration.copyWith(labelText: 'Account'),
+          readOnly: true,
+          onTap: () async {
+            final newAccountId =
+                await Navigator.pushNamed(context, SelectAccountScreen.id);
+            if (newAccountId != null) {
+              model.changeAccount(newAccountId);
+            }
           },
-          itemBuilder: (context) {
-            return model.accounts
-                .map(
-                  (account) => PopupMenuItem(
-                    value: model.accounts.indexOf(account),
-                    child: ListTile(
-                      title: Text(account.title),
-                    ),
-                  ),
-                )
-                .toList();
-          },
-          child: TextFormField(
-            initialValue: account.title,
-            decoration: kFormInputDecoration.copyWith(labelText: 'Account'),
-            readOnly: true,
-            onTap: () {
-              dynamic state = _menuKey.currentState;
-              state.showButtonMenu();
-            },
-          ),
         );
       },
     );

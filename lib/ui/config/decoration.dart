@@ -53,3 +53,19 @@ const kConfirmPasswordTextFieldDecoration = InputDecoration(
   ),
   prefixIconConstraints: BoxConstraints.tightFor(width: 50, height: 30),
 );
+
+InputDecoration kFormInputDecoration = InputDecoration(
+    enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey, width: 1),
+        borderRadius: BorderRadius.circular(3.0)),
+    focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.black, width: 1),
+        borderRadius: BorderRadius.circular(3.0)),
+    errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.redAccent, width: 1),
+        borderRadius: BorderRadius.circular(3.0)),
+    focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.black, width: 1),
+        borderRadius: BorderRadius.circular(3.0)),
+    labelText: "Label",
+    labelStyle: TextStyle(color: Colors.grey));

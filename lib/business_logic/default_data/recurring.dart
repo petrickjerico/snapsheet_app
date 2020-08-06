@@ -12,6 +12,40 @@ const WEEKLY = 1;
 const MONTHLY = 2;
 const YEARLY = 3;
 
+List<int> frequencyIntervals = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31
+];
+
 List<String> frequencies = [
   'daily',
   'weekly',
@@ -79,3 +113,47 @@ Recurring scholarship = Recurring(
   xTimes: 1,
   untilDate: DateTime(2023, 7, 1),
 );
+
+const frequencyPickerData = '''
+[
+  [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
+  ],
+  [
+    "day(s)",
+    "week(s)",
+    "month(s)",
+    "year(s)"
+  ]
+]
+''';

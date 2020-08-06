@@ -79,12 +79,12 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 15.0),
-                      child: DeleteConfirmButton(
-                          isDelete: model.isDelete[recordId],
+                      child: ReceiptConfirmationTile(
+                          isConfirmed: model.isConfirmed[recordId],
                           callBack: () {
                             setState(() {
-                              model.isDelete[recordId] =
-                                  !model.isDelete[recordId];
+                              model.isConfirmed[recordId] =
+                                  !model.isConfirmed[recordId];
                             });
                           }),
                     ),
@@ -93,7 +93,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                 RoundedButton(
                   color: kNavyBluePrimary,
                   textColor: Colors.white,
-                  title: 'Confirm All Receipts',
+                  title: 'All Receipts Reviewed',
                   icon: Icon(Icons.done_all, color: Colors.white),
                   onPressed: () {
                     model.addAll();

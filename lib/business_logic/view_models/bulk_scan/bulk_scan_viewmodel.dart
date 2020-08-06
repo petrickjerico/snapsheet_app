@@ -15,7 +15,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   List<Account> accounts;
   List<File> images = [];
   List<Record> records = [];
-  List<bool> isDelete = [];
+  List<bool> isConfirmed = [];
   int counter = 0;
   Scanner scanner;
   String selectedAccountUid;
@@ -70,13 +70,13 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
       );
       print(record.toString());
       records.add(record);
-      isDelete.add(false);
+      isConfirmed.add(false);
     }
   }
 
   void addAll() {
     for (int i = 0; i < records.length; i++) {
-      if (isDelete[i]) continue;
+      if (isConfirmed[i]) continue;
       userData.addRecord(records[i]);
     }
   }

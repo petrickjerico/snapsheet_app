@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_picker/flutter_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
@@ -294,6 +297,21 @@ class __FrequencyFormFieldState extends State<_FrequencyFormField> {
     controller.text = txt;
   }
 
+  showPickerArray(BuildContext context) {
+    final model = Provider.of<RecurringViewModel>(context, listen: false);
+    new Picker(
+        adapter: PickerDataAdapter<String>(
+            pickerdata: new JsonDecoder().convert(frequencyPickerData),
+            isArray: true),
+        hideHeader: true,
+        title: new Text("Select Frequency"),
+        onConfirm: (Picker picker, List value) {
+          print(value.toString());
+          model.changeInterval(value[0] + 1);
+          model.changeFrequencyId(value[1]);
+        }).showDialog(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<RecurringViewModel>(
@@ -305,126 +323,8 @@ class __FrequencyFormFieldState extends State<_FrequencyFormField> {
           decoration: kFormInputDecoration.copyWith(labelText: "Frequency"),
           readOnly: true,
           onTap: () {
-            showDialog(
-              context: context,
-              child: _FrequencyDialog(callBack: changeFrequency),
-            );
+            showPickerArray(context);
           },
-        );
-      },
-    );
-  }
-}
-
-class _FrequencyDialog extends StatelessWidget {
-  Function callBack;
-
-  _FrequencyDialog({this.callBack});
-  @override
-  Widget build(BuildContext context) {
-    final model = Provider.of<RecurringViewModel>(context);
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: Container(
-        height: 120,
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "Repeat every",
-              style: kFrequencyDialogTextStyle,
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: <Widget>[
-                Flexible(
-                  flex: 1,
-                  child: _FrequencyDialogIntervalFormField(),
-                ),
-                SizedBox(
-                  width: 5.0,
-                ),
-                Flexible(
-                  flex: 3,
-                  child: _FrequencyDialogFrequencyFormField(),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _FrequencyDialogIntervalFormField extends StatelessWidget {
-  Function callBack;
-
-  _FrequencyDialogIntervalFormField({this.callBack});
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<RecurringViewModel>(
-      builder: (context, model, child) {
-        return TextFormField(
-          textAlign: TextAlign.center,
-          initialValue: model.tempRecurring.interval.toString(),
-          validator: (value) => double.parse(value) <= 0
-              ? "Please input a positive number"
-              : null,
-          keyboardType: TextInputType.number,
-          onChanged: (value) {
-            model.changeInterval(int.parse(value));
-            callBack(model.tempRecurring.frequency);
-          },
-        );
-      },
-    );
-  }
-}
-
-class _FrequencyDialogFrequencyFormField extends StatelessWidget {
-  Function callBack;
-
-  _FrequencyDialogFrequencyFormField({this.callBack});
-
-  final GlobalKey _menuKey = GlobalKey();
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<RecurringViewModel>(
-      builder: (context, model, child) {
-        int frequencyId = model.tempRecurring.frequencyId;
-        return PopupMenuButton(
-          key: _menuKey,
-          initialValue: frequencyId,
-          onSelected: (input) {
-            model.changeFrequencyId(input);
-            callBack(model.tempRecurring.frequency);
-          },
-          itemBuilder: (context) {
-            List<String> frequencyTitles = singularAndPlural;
-            return frequencyTitles
-                .map(
-                  (e) => PopupMenuItem(
-                    value: frequencyTitles.indexOf(e),
-                    child: ListTile(
-                      title: Text(e),
-                    ),
-                  ),
-                )
-                .toList();
-          },
-          child: TextFormField(
-            textAlign: TextAlign.center,
-            initialValue: singularAndPlural[frequencyId],
-            readOnly: true,
-            onTap: () {
-              dynamic state = _menuKey.currentState;
-              state.showButtonMenu();
-            },
-          ),
         );
       },
     );

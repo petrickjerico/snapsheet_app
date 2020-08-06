@@ -123,16 +123,7 @@ class _ValueFormField extends StatelessWidget {
             initialValue: model.records[recordId].value.toStringAsFixed(2),
             keyboardType: TextInputType.number,
             cursorColor: Colors.white,
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(3.0)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(3.0)),
-              labelText: "Value",
-              labelStyle: TextStyle(color: Colors.grey),
-            ),
+            decoration: kFormInputDecoration.copyWith(labelText: "Value"),
             onChanged: (value) {
               model.changeValue(recordId, double.parse(value));
             });
@@ -152,16 +143,7 @@ class _TitleFormField extends StatelessWidget {
       builder: (context, model, child) {
         return TextFormField(
           initialValue: model.records[recordId].title,
-          decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1),
-                borderRadius: BorderRadius.circular(3.0)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black, width: 1),
-                borderRadius: BorderRadius.circular(3.0)),
-            labelText: "Title",
-            labelStyle: TextStyle(color: Colors.grey),
-          ),
+          decoration: kFormInputDecoration.copyWith(labelText: "Title"),
           cursorColor: Colors.white,
           onChanged: (value) {
             model.changeTitle(recordId, value);
@@ -206,16 +188,7 @@ class _CategoryFormField extends StatelessWidget {
           },
           child: TextFormField(
             initialValue: category.title,
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(3.0)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(3.0)),
-              labelText: "Category",
-              labelStyle: TextStyle(color: Colors.grey),
-            ),
+            decoration: kFormInputDecoration.copyWith(labelText: "Category"),
             readOnly: true,
             onTap: () {
               dynamic state = _menuKey.currentState;
@@ -253,16 +226,7 @@ class __DateFormFieldState extends State<_DateFormField> {
         DateTime date = model.records[widget.recordId].dateTime;
         controller.text = DateFormat.yMMMd().format(date);
         return TextFormField(
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(3.0)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(3.0)),
-              labelText: "Date",
-              labelStyle: TextStyle(color: Colors.grey),
-            ),
+            decoration: kFormInputDecoration.copyWith(labelText: "Date"),
             readOnly: true,
             controller: controller,
             onTap: () async {

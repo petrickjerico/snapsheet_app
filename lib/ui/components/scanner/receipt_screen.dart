@@ -9,6 +9,7 @@ import 'package:snapsheetapp/ui/components/button/delete_button.dart';
 import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/components/receipt_image_dialog.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/screens/categories/select_category.dart';
 
 class ReceiptScreen extends StatefulWidget {
   final int recordId;
@@ -123,16 +124,7 @@ class _ValueFormField extends StatelessWidget {
             initialValue: model.records[recordId].value.toStringAsFixed(2),
             keyboardType: TextInputType.number,
             cursorColor: Colors.white,
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(3.0)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(3.0)),
-              labelText: "Value",
-              labelStyle: TextStyle(color: Colors.grey),
-            ),
+            decoration: kFormInputDecoration.copyWith(labelText: "Value"),
             onChanged: (value) {
               model.changeValue(recordId, double.parse(value));
             });
@@ -152,16 +144,7 @@ class _TitleFormField extends StatelessWidget {
       builder: (context, model, child) {
         return TextFormField(
           initialValue: model.records[recordId].title,
-          decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1),
-                borderRadius: BorderRadius.circular(3.0)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black, width: 1),
-                borderRadius: BorderRadius.circular(3.0)),
-            labelText: "Title",
-            labelStyle: TextStyle(color: Colors.grey),
-          ),
+          decoration: kFormInputDecoration.copyWith(labelText: "Title"),
           cursorColor: Colors.white,
           onChanged: (value) {
             model.changeTitle(recordId, value);
@@ -172,56 +155,44 @@ class _TitleFormField extends StatelessWidget {
   }
 }
 
-class _CategoryFormField extends StatelessWidget {
+class _CategoryFormField extends StatefulWidget {
   final int recordId;
-  final GlobalKey _menuKey = GlobalKey();
 
   _CategoryFormField({this.recordId});
+
+  @override
+  __CategoryFormFieldState createState() => __CategoryFormFieldState();
+}
+
+class __CategoryFormFieldState extends State<_CategoryFormField> {
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<BulkScanViewModel>(
       builder: (context, model, child) {
-        String categoryUid = model.records[recordId].categoryUid;
+        String categoryUid = model.records[widget.recordId].categoryUid;
         Category category = model.userData.getThisCategory(categoryUid);
-        return PopupMenuButton(
-          captureInheritedThemes: false,
-          key: _menuKey,
-          initialValue: category.index,
-          onSelected: (input) {
-            model.changeCategory(recordId, input);
+        controller.text = category.title;
+        return TextFormField(
+          controller: controller,
+          decoration: kFormInputDecoration.copyWith(labelText: "Category"),
+          readOnly: true,
+          onTap: () async {
+            final newCategoryId = await Navigator.pushNamed(
+              context,
+              SelectCategoryScreen.id,
+            );
+            if (newCategoryId != null) {
+              model.changeCategory(widget.recordId, newCategoryId);
+            }
           },
-          itemBuilder: (context) {
-            return model.userData.categories
-                .map(
-                  (category) => PopupMenuItem(
-                    value: model.userData.categories.indexOf(category),
-                    child: ListTile(
-                      leading: category.icon,
-                      title: Text(category.title),
-                    ),
-                  ),
-                )
-                .toList();
-          },
-          child: TextFormField(
-            initialValue: category.title,
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(3.0)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(3.0)),
-              labelText: "Category",
-              labelStyle: TextStyle(color: Colors.grey),
-            ),
-            readOnly: true,
-            onTap: () {
-              dynamic state = _menuKey.currentState;
-              state.showButtonMenu();
-            },
-          ),
         );
       },
     );
@@ -253,16 +224,7 @@ class __DateFormFieldState extends State<_DateFormField> {
         DateTime date = model.records[widget.recordId].dateTime;
         controller.text = DateFormat.yMMMd().format(date);
         return TextFormField(
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(3.0)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(3.0)),
-              labelText: "Date",
-              labelStyle: TextStyle(color: Colors.grey),
-            ),
+            decoration: kFormInputDecoration.copyWith(labelText: "Date"),
             readOnly: true,
             controller: controller,
             onTap: () async {

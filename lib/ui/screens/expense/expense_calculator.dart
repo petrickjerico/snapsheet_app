@@ -551,7 +551,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         if (model.isScanned) {
           _calc.allClear();
           _displayValue = model.tempRecord.value.toString();
-          print(_displayValue);
+          print("displayValue: " + _displayValue);
           model.toggleScanned();
         }
         Category category =

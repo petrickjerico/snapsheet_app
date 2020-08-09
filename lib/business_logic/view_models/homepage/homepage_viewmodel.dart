@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
@@ -14,6 +15,7 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   static int currentPage = 0;
   static int currentBar = 0;
   static int selectedAccountIndex = 0;
+  static int overlaidAccountIndex = 0;
   UserData userData;
   List<Account> accounts;
   List<Record> records;
@@ -24,6 +26,7 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   bool balanceCustom = true;
   bool expenseBreakdownCustom = true;
   bool amountTrendCustom = true;
+  bool accountTileHasChanged = false;
 
   // List<Account> get copyOfAccounts => List.from(accounts);
 
@@ -44,12 +47,16 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     currentBar = 0;
   }
 
-  static void syncController() {
-    if (selectedAccountIndex != -1) {
-      controller.animateToPage(selectedAccountIndex);
-    } else {
-      controller.animateToPage(0);
-    }
+  static void syncController() async {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      controller.onReady.whenComplete(() {
+        if (selectedAccountIndex != -1) {
+          controller.animateToPage(selectedAccountIndex);
+        } else {
+          controller.animateToPage(0);
+        }
+      });
+    });
   }
 
   void init(UserData userData) {
@@ -158,10 +165,26 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   }
 
   void selectAccount(int newIndex) {
+    if (selectedAccountIndex != newIndex) accountTileHasChanged = true;
     selectedAccountIndex = newIndex;
+    if (newIndex != -1) overlaidAccountIndex = newIndex;
     donutTouchedIndex = null;
     if (newIndex == -1) isSelected.forEach((element) => element = true);
 
+    notifyListeners();
+  }
+
+  bool isOverlaid(int index) {
+    var ans = index == overlaidAccountIndex && selectedAccountIndex == -1;
+    print("index == overlaidAccountIndex = " +
+        (index == overlaidAccountIndex).toString());
+    print("electedAccountIndex == -1 = " +
+        (selectedAccountIndex == -1).toString());
+    return ans;
+  }
+
+  void toggleTileHasChanged() {
+    accountTileHasChanged = !accountTileHasChanged;
     notifyListeners();
   }
 
@@ -293,8 +316,8 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
     return res.take(5).toList();
   }
 
-  bool isAccountSelected(Account acc) {
-    return acc.index == selectedAccountIndex;
+  bool isAccountSelected(int index) {
+    return index == selectedAccountIndex;
   }
 
   ///

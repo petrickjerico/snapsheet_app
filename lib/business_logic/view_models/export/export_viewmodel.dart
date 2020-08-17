@@ -45,8 +45,8 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
     notifyListeners();
   }
 
-  void toggleExport(index) {
-    isExport[index] = !isExport[index];
+  void toggleExport(accountIndex) {
+    isExport[accountIndex] = !isExport[accountIndex];
     notifyListeners();
   }
 

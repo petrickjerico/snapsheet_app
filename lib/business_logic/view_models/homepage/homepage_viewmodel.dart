@@ -166,10 +166,6 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
 
   bool isOverlaid(int index) {
     var ans = index == overlaidAccountIndex && selectedAccountIndex == -1;
-    print("index == overlaidAccountIndex = " +
-        (index == overlaidAccountIndex).toString());
-    print("electedAccountIndex == -1 = " +
-        (selectedAccountIndex == -1).toString());
     return ans;
   }
 

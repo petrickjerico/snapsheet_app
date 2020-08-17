@@ -4,7 +4,7 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
 import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/business_logic/view_models/user_data/user_data_impl.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/bulk_scan/receipt_preview.dart';
+import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/bulk_scan/receipt_preview_screen.dart';
 
 class BulkScanAccountsList extends StatefulWidget {
   @override

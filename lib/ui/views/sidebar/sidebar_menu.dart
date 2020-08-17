@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/business_logic/view_models/user_data/user_data_impl.dart';
+import 'package:snapsheetapp/business_logic/view_models/view_models.dart';
 import 'package:snapsheetapp/services/auth/auth_impl.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
-import 'package:snapsheetapp/ui/screens/recurring/recurring_screen.dart';
-import 'package:snapsheetapp/ui/screens/screens.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
 
 class SidebarMenu extends StatelessWidget {
   @override

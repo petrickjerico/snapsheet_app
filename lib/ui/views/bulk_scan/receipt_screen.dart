@@ -5,11 +5,10 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
-import 'package:snapsheetapp/ui/components/button/receipt_confirmation_button.dart';
-import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
-import 'package:snapsheetapp/ui/components/receipt_image_dialog.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
-import 'package:snapsheetapp/ui/screens/categories/select_category_screen.dart';
+import 'package:snapsheetapp/ui/shared/shared.dart';
+import 'package:snapsheetapp/ui/views/bulk_scan/receipt_confirmation_button.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
 
 class ReceiptScreen extends StatefulWidget {
   final int recordId;
@@ -79,7 +78,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 15.0),
-                      child: ReceiptConfirmationTile(
+                      child: ReceiptConfirmationButton(
                           isConfirmed: model.isConfirmed[recordId],
                           callBack: () {
                             setState(() {

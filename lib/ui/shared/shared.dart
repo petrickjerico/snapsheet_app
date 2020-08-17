@@ -5,7 +5,6 @@ export 'mini_loading.dart';
 export 'reorderable_list.dart';
 export 'empty_state.dart';
 export 'components/button/back_button.dart';
-export 'components/button/receipt_confirmation_button.dart';
 export 'components/button/rounded_button.dart';
 export 'components/dialog/delete_dialog.dart';
 export 'components/dialog/receipt_image_dialog.dart';

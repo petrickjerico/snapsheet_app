@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/ui/config/colors.dart';
 
 class EditProfileScreen extends StatelessWidget {
   static const String id = 'editprofile_screen';

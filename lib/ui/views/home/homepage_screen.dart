@@ -4,13 +4,9 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/business_logic/view_models/user_data/user_data_impl.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/expense/add_record_fab_button.dart';
-import 'package:snapsheetapp/ui/config/config.dart';
-import 'package:snapsheetapp/ui/screens/categories/category_screen.dart';
-import 'package:snapsheetapp/ui/screens/screens.dart';
+import 'package:snapsheetapp/business_logic/view_models/view_models.dart';
+import 'package:snapsheetapp/ui/views/expense/add_record_fab_button.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
 
 class HomepageScreen extends StatefulWidget {
   static GlobalKey bottomKey = GlobalKey();

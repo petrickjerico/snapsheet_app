@@ -5,8 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/category/category_viewmodel.dart';
-import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
-import 'package:snapsheetapp/ui/config/decoration.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/shared/shared.dart';
 
 class CategoryPopUp extends StatefulWidget {
   static final _formKey = GlobalKey<FormState>();

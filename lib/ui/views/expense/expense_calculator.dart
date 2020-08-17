@@ -4,15 +4,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_grid_button/flutter_grid_button.dart';
 import 'package:expressions/expressions.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:snapsheetapp/business_logic/default_data/categories.dart';
-import 'package:snapsheetapp/business_logic/default_data/shops.dart';
+import 'package:snapsheetapp/business_logic/default_data/default_data.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
-import 'package:snapsheetapp/ui/screens/accounts/select_account_screen.dart';
-import 'package:snapsheetapp/ui/screens/categories/select_category_screen.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
 
 class ExpenseCalculator extends StatefulWidget {
   const ExpenseCalculator({
@@ -77,7 +74,7 @@ class CalcDisplay {
   double value;
 
   /// The [NumberFormat] used for display
-  final NumberFormat numberFormat;
+  final intl.NumberFormat numberFormat;
 
   /// Maximum number of digits on display.
   final int maximumDigits;
@@ -269,7 +266,7 @@ class Calculator {
   bool _operated = false;
 
   /// The [NumberFormat] used for display
-  final NumberFormat numberFormat;
+  final intl.NumberFormat numberFormat;
 
   /// Maximum number of digits on display.
   final int maximumDigits;
@@ -277,7 +274,7 @@ class Calculator {
   /// Create a [Calculator] with [maximumDigits] is 10 and maximumFractionDigits of [numberFormat] is 6.
   Calculator({maximumDigits = 10})
       : this.numberFormat(
-            NumberFormat()..maximumFractionDigits = 6, maximumDigits);
+            intl.NumberFormat()..maximumFractionDigits = 6, maximumDigits);
 
   /// Create a [Calculator].
   Calculator.numberFormat(this.numberFormat, this.maximumDigits)

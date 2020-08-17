@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_viewmodel.dart';
-import 'package:snapsheetapp/ui/components/empty_state.dart';
-import 'package:snapsheetapp/ui/config/colors.dart';
-import 'package:snapsheetapp/ui/screens/recurring/add_recurring_screen.dart';
-import 'package:snapsheetapp/ui/screens/recurring/recurring_tile.dart';
+import 'package:snapsheetapp/ui/shared/shared.dart';
+import 'package:snapsheetapp/ui/views/recurring/recurring_tile.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
 
 class RecurringScreen extends StatelessWidget {
   static const String id = "recurring_screen";

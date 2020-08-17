@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/category/category_viewmodel.dart';
-import 'package:snapsheetapp/ui/config/colors.dart';
-import 'package:snapsheetapp/ui/screens/categories/category_popup.dart';
-import 'package:snapsheetapp/ui/screens/categories/category_tile.dart';
+import 'package:snapsheetapp/ui/views/categories/category_popup.dart';
+import 'package:snapsheetapp/ui/views/categories/category_tile.dart';
 
 class SelectCategoryScreen extends StatelessWidget {
   static const String id = 'select_category_screen';

@@ -1,14 +1,11 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/category/category_viewmodel.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/business_logic/view_models/user_data/user_data_impl.dart';
-import 'package:snapsheetapp/ui/config/colors.dart';
-import 'package:snapsheetapp/ui/config/decoration.dart';
-import 'package:snapsheetapp/ui/screens/categories/category_popup.dart';
-import 'package:snapsheetapp/ui/screens/categories/category_tile.dart';
-import 'package:snapsheetapp/ui/screens/sidebar/sidebar_menu.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/views/categories/category_popup.dart';
+import 'package:snapsheetapp/ui/views/categories/category_tile.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
 
 class CategoryScreen extends StatelessWidget {
   static const String id = 'category_screen';

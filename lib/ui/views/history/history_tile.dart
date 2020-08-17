@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
-import 'package:snapsheetapp/ui/config/config.dart';
-import 'package:snapsheetapp/ui/screens/screens.dart';
+import 'package:snapsheetapp/business_logic/view_models/view_models.dart';
+import 'package:snapsheetapp/ui/views/expense/edit_expense_info_screen.dart';
+import 'package:snapsheetapp/ui/views/history/history_screen.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
 
 class HistoryTile extends StatelessWidget {
   final Record record;

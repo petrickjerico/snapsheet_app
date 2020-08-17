@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/ui/config/colors.dart';
 
 class ConfirmRecordFab extends StatelessWidget {
   final onPressed;

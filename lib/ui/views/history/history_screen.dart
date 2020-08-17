@@ -1,26 +1,16 @@
-import 'package:animations/animations.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flushbar/flushbar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_iconpicker/Dialogs/DefaultDialog.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/business_logic/view_models/user_data/user_data_impl.dart';
-import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
-import 'package:snapsheetapp/ui/components/empty_state.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/history/history_tile.dart';
-import 'package:snapsheetapp/ui/config/colors.dart';
-import 'package:snapsheetapp/ui/config/decoration.dart';
-import 'package:snapsheetapp/ui/screens/sidebar/sidebar_menu.dart';
-
-import '../accounts/add_account_popup.dart';
+import 'package:snapsheetapp/business_logic/view_models/view_models.dart';
+import 'package:snapsheetapp/ui/config/config.dart';
+import 'package:snapsheetapp/ui/shared/shared.dart';
+import 'package:snapsheetapp/ui/views/history/history_tile.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
 
 class HistoryScreen extends StatelessWidget {
   @override

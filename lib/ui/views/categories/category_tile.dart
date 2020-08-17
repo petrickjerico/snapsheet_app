@@ -3,10 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/category/category_viewmodel.dart';
-import 'package:snapsheetapp/ui/components/dialog/delete_dialog.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
-import 'package:snapsheetapp/ui/config/decoration.dart';
-import 'package:snapsheetapp/ui/screens/categories/category_popup.dart';
+import 'package:snapsheetapp/ui/shared/shared.dart';
+import 'package:snapsheetapp/ui/views/categories/category_popup.dart';
 
 class CategoryTile extends StatelessWidget {
   final Category category;

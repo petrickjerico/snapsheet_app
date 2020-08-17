@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_viewmodel.dart';
-import 'package:snapsheetapp/ui/config/config.dart';
-import 'package:snapsheetapp/ui/screens/recurring/add_recurring_screen.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
 
 class RecurringTile extends StatelessWidget {
   Recurring recurring;

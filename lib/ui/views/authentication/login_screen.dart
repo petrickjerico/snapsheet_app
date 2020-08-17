@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:snapsheetapp/services/auth/auth_impl.dart';
-import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
-import 'package:snapsheetapp/ui/screens/authentication/signup_screen.dart';
 import 'package:snapsheetapp/ui/shared/shared.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
 
 class LoginScreen extends StatefulWidget {
   static final String id = 'login_screen';

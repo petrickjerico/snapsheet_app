@@ -5,15 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/expense/confirm_record_fab_button.dart';
-import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
-import 'package:snapsheetapp/ui/components/date_time.dart';
-import 'package:snapsheetapp/ui/components/dialog/delete_dialog.dart';
-import 'package:snapsheetapp/ui/components/receipt_image_dialog.dart';
+import 'package:snapsheetapp/business_logic/view_models/view_models.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/shared/shared.dart';
+import 'package:snapsheetapp/ui/views/expense/confirm_record_fab_button.dart';
+import 'package:snapsheetapp/ui/views/expense/date_time.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class EditExpenseInfoScreen extends StatefulWidget {

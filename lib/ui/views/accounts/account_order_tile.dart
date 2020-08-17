@@ -1,10 +1,9 @@
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
-import 'package:snapsheetapp/ui/components/dialog/delete_dialog.dart';
 import 'package:snapsheetapp/ui/config/decoration.dart';
-import 'package:snapsheetapp/ui/screens/home/rename_account_popup.dart';
+import 'package:snapsheetapp/ui/shared/shared.dart';
+import 'package:snapsheetapp/ui/views/accounts/rename_account_popup.dart';
 
 class AccountOrderTile extends StatelessWidget {
   final BuildContext context;

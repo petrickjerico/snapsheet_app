@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/user.dart';
-import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/category/category_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_viewmodel.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/business_logic/view_models/user_data/user_data_impl.dart';
-import 'package:snapsheetapp/ui/screens/screens.dart';
+import 'package:snapsheetapp/business_logic/view_models/view_models.dart';
 import 'package:snapsheetapp/ui/shared/loading.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
 
 class Wrapper extends StatefulWidget {
   static final String id = 'wrapper';

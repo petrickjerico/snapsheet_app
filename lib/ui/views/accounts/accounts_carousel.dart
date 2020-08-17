@@ -1,12 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/accounts/add_account_button.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/accounts/edit_accounts_button.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/home/select_all_button.dart';
 import 'package:snapsheetapp/ui/config/colors.dart';
+import 'package:snapsheetapp/ui/views/accounts/add_account_button.dart';
+import 'package:snapsheetapp/ui/views/accounts/select_all_button.dart';
 import 'account_tile.dart';
 
 class AccountsCarousel extends StatefulWidget {

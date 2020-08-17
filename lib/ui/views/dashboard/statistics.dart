@@ -4,21 +4,14 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:snapsheetapp/business_logic/default_data/categories.dart';
-import 'package:snapsheetapp/business_logic/models/account.dart';
-import 'package:snapsheetapp/business_logic/models/record.dart';
-import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/business_logic/view_models/user_data/user_data_impl.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/dashboard/stats_card.dart';
+import 'package:snapsheetapp/business_logic/default_data/default_data.dart';
+import 'package:snapsheetapp/business_logic/models/models.dart';
+import 'package:snapsheetapp/business_logic/view_models/view_models.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
-import 'package:snapsheetapp/ui/screens/expense/expense_screen.dart';
-import 'package:snapsheetapp/ui/screens/home/history_screen.dart';
-import 'package:sorted_list/sorted_list.dart';
-import '../history/history_tile.dart';
-import '../../components/empty_state.dart';
+import 'package:snapsheetapp/ui/shared/shared.dart';
+import 'package:snapsheetapp/ui/views/dashboard/stats_card.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
 import 'indicator.dart';
-import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 
 class Statistics extends StatefulWidget {
   @override

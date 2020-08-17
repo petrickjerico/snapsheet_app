@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
-import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/expense/confirm_record_fab_button.dart';
-import 'package:snapsheetapp/ui/config/colors.dart';
 import 'package:expressions/expressions.dart';
-import 'package:snapsheetapp/ui/screens/expense/expense_calculator.dart';
 import 'package:flushbar/flushbar.dart';
+import 'package:snapsheetapp/business_logic/view_models/view_models.dart';
+import 'package:snapsheetapp/ui/views/expense/confirm_record_fab_button.dart';
+import 'package:snapsheetapp/ui/views/expense/expense_calculator.dart';
 import 'edit_expense_info_screen.dart';
 
 class ExpenseScreen extends StatefulWidget {

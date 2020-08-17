@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
 import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/accounts/account_order_tile.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/accounts/add_account_button.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/home/select_all_button.dart';
-import 'package:snapsheetapp/ui/components/empty_state.dart';
-import 'package:snapsheetapp/ui/components/reorderable_list.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
-import 'package:snapsheetapp/ui/screens/expense/expense_screen.dart';
-import 'package:snapsheetapp/ui/screens/sidebar/sidebar_menu.dart';
+import 'package:snapsheetapp/ui/shared/shared.dart';
+import 'package:snapsheetapp/ui/views/accounts/account_order_tile.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
 
 import 'add_account_popup.dart';
 

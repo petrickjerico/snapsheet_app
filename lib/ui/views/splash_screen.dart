@@ -2,8 +2,8 @@ import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:snapsheetapp/services/auth/auth_impl.dart';
-import 'package:snapsheetapp/ui/screens/screens.dart';
 import 'package:snapsheetapp/ui/shared/splash.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
 
 class SplashScreen extends StatefulWidget {
   static final String id = 'splash';

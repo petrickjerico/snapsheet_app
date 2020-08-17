@@ -1,8 +1,6 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/ui/screens/home/edit_accounts_order.dart';
-import 'package:snapsheetapp/ui/screens/screens.dart';
+import 'package:snapsheetapp/ui/views/accounts/edit_accounts_order.dart';
 
 class EditAccountsButton extends StatelessWidget {
   const EditAccountsButton({

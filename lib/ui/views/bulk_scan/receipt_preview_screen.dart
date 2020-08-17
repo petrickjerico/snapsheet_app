@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/bulk_scan/receipt_screen.dart';
-import 'package:snapsheetapp/ui/config/colors.dart';
+import 'package:snapsheetapp/ui/views/bulk_scan/receipt_screen.dart';
 
 class ReceiptPreviewScreen extends StatefulWidget {
   static const String id = 'receipt_preview_screen';

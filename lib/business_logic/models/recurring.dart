@@ -9,8 +9,7 @@ class Recurring {
   String title;
   double value;
   String categoryUid;
-  // for demo data
-  int categoryId;
+
   String accountUid;
   bool isIncome;
 
@@ -21,6 +20,9 @@ class Recurring {
 
   DateTime untilDate;
   int xTimes;
+
+  /// CategoryId only used for initialization using demo categories
+  int categoryId;
 
   Recurring({
     this.uid,

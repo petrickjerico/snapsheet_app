@@ -24,7 +24,7 @@ List<Record> demoRecords = [
   Record.demo("Pepper Lunch", 22.9, DateTime(2020, 6, 8), FOODDRINKS, 0),
 ];
 
-/// Demo Receipt Images url
+/// Demo Receipt Images url.
 String hachiTech =
     "https://firebasestorage.googleapis.com/v0/b/snapsheet-e7f7b.appspot.com/o/demo-receipts%2Fhachi-tech.jpg?alt=media&token=90803d65-edd6-4d85-aca0-28fc36ae2126";
 String goldenVillage =

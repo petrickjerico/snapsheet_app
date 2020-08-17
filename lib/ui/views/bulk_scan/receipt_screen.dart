@@ -95,7 +95,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                   title: 'All Receipts Reviewed',
                   icon: Icon(Icons.done_all, color: Colors.white),
                   onPressed: () {
-                    model.addAll();
+                    model.addConfirmedReceipts();
                     Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.pop(context);

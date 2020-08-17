@@ -21,7 +21,7 @@ class Recurring {
   DateTime untilDate;
   int xTimes;
 
-  /// CategoryId only used for initialization using demo categories
+  /// CategoryId only used for initialization using demo categories.
   int categoryId;
 
   Recurring({

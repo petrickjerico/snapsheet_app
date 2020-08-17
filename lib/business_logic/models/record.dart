@@ -12,8 +12,8 @@ class Record {
   String imagePath;
   bool hasCloudImage;
 
-  /// CategoryId only used for initialization of demo categories
-  /// AccountId only used for initialization of demo accounts
+  /// CategoryId only used for initialization of demo categories.
+  /// AccountId only used for initialization of demo accounts.
   int categoryId;
   int accountId;
 

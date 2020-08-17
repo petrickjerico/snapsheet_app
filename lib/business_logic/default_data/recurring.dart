@@ -1,14 +1,14 @@
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 
-/// Timeframe ID
+/// Timeframe ID.
 const FOREVER = 0;
 const UNTILDATE = 1;
 const FORXTIMES = 2;
 
 List<String> timeFrames = ['Forever', 'Until a date', 'For x times'];
 
-/// Frequency ID
+/// Frequency ID.
 const DAILY = 0;
 const WEEKLY = 1;
 const MONTHLY = 2;
@@ -70,7 +70,7 @@ Recurring scholarship = Recurring(
   untilDate: DateTime(2023, 7, 1),
 );
 
-/// For number scroll picker
+/// For number scroll picker.
 const frequencyPickerData = '''
 [
   [

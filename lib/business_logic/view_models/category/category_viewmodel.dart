@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/category/category_basemodel.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/business_logic/view_models/user_data/user_data_impl.dart';
+import 'package:snapsheetapp/business_logic/view_models/user_data/user_data_impl.dart';
 
 class CategoryViewModel extends ChangeNotifier implements CategoryBaseModel {
   UserData userData;

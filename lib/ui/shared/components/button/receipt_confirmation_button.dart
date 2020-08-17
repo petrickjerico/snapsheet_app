@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:snapsheetapp/ui/components/button/rounded_button.dart';
-import 'package:snapsheetapp/ui/config/config.dart';
 
 class ReceiptConfirmationButton extends StatelessWidget {
   final bool isConfirmed;

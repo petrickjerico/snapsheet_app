@@ -3,10 +3,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/business_logic/view_models/user_data/user_data_impl.dart';
-import 'package:sorted_list/sorted_list.dart';
+import 'package:snapsheetapp/business_logic/view_models/user_data/user_data_impl.dart';
 
 import 'homepage_basemodel.dart';
 

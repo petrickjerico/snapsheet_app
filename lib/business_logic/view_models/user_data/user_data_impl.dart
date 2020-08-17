@@ -1,12 +1,7 @@
-import 'dart:io';
-
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/business_logic/view_models/user_data/user_data_basemodel.dart';
-import 'package:snapsheetapp/services/cloud_storage/cloud_storage.dart';
+import 'package:snapsheetapp/business_logic/view_models/user_data/user_data_basemodel.dart';
 import 'package:snapsheetapp/services/cloud_storage/cloud_storage_impl.dart';
 import 'package:snapsheetapp/services/database/database_impl.dart';
 import 'package:sorted_list/sorted_list.dart';

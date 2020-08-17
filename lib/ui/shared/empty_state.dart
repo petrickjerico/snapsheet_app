@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
-import 'package:snapsheetapp/ui/screens/expense/expense_screen.dart';
 
 class EmptyState extends StatelessWidget {
   EmptyState(

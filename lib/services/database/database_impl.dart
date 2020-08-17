@@ -5,7 +5,6 @@ import 'package:snapsheetapp/services/database/database.dart';
 export 'database.dart';
 
 class DatabaseServiceImpl implements DatabaseService {
-  final Firestore _db = Firestore.instance;
   final String uid;
   DocumentReference userDocument;
   CollectionReference recordCollection;
@@ -21,6 +20,7 @@ class DatabaseServiceImpl implements DatabaseService {
     categoryCollection = userDocument.collection('category');
   }
 
+  /// Initialize the account with demo data when a user sign up.
   Future<void> initialize() async {
     Map<int, String> accountMap = {};
     Map<int, String> categoryMap = {};

@@ -1,10 +1,7 @@
 export 'cloud_storage.dart';
-
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-
 import 'cloud_storage.dart';
 
 class CloudStorageServiceImpl implements CloudStorageService {
@@ -14,6 +11,8 @@ class CloudStorageServiceImpl implements CloudStorageService {
 
   CloudStorageServiceImpl({this.uid});
 
+  /// Upload the image in the record to Cloud Firestore and
+  /// return the url to fetch the image.
   Future<String> addReceiptURL(Record record) async {
     File image = File(record.imagePath);
 
@@ -32,6 +31,8 @@ class CloudStorageServiceImpl implements CloudStorageService {
     return downloadURL;
   }
 
+  /// Clear the image from Cloud Firestore when the user
+  /// delete the image or delete the record.
   Future<void> deleteCloudImage(Record record) async {
     if (record.hasCloudImage) {
       String cloudFilePath = 'receipts/$uid/${record.uid}.png';

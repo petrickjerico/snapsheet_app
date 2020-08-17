@@ -9,6 +9,7 @@ class ScannerImpl implements Scanner {
   final textRecognizer = FirebaseVision.instance.textRecognizer();
   final parser = ParserImpl();
 
+  /// Return the data captured from a receipt image in JSON format
   Future<Map<String, dynamic>> getDataFromImage(File imageFile) async {
     List<String> txt = await _txtListFromImage(imageFile);
     Map<String, dynamic> map = _extractDataFromTxt(txt);
@@ -16,6 +17,7 @@ class ScannerImpl implements Scanner {
     return map;
   }
 
+  /// Capture all text on the receipt image
   Future<List<String>> _txtListFromImage(File imageFile) async {
     FirebaseVisionImage image = FirebaseVisionImage.fromFile(imageFile);
     VisionText visionText = await textRecognizer.processImage(image);
@@ -33,6 +35,7 @@ class ScannerImpl implements Scanner {
     return txt;
   }
 
+  /// Extract data from the captured text and return it in JSON format
   Map<String, dynamic> _extractDataFromTxt(List<String> txt) {
     Map<String, dynamic> map = {
       'title': "",
@@ -56,6 +59,7 @@ class ScannerImpl implements Scanner {
     return map;
   }
 
+  /// Clear resources after using the scanner
   void clearResources() {
     textRecognizer.close();
   }

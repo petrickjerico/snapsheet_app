@@ -9,33 +9,21 @@ class AuthServiceImpl implements AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  // create user ob based on FirebaseUser
+  /// Create User object from FirebaseUser
   User _userFromFirebaseUser(FirebaseUser user) {
     return user != null ? User(uid: user.uid) : null;
   }
 
+  /// Get the currently logged in user
   Future currentUser() async {
     return await _auth.currentUser().then(_userFromFirebaseUser);
   }
 
-  // auth change user stream
+  /// Stream of user to let the app know when a user logs in / out
   Stream<User> get user {
     return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
-  // sign in anon
-  Future signInAnon() async {
-    try {
-      AuthResult result = await _auth.signInAnonymously();
-      FirebaseUser user = result.user;
-      return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
-
-  // sign in with email & pwd
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(
@@ -47,7 +35,6 @@ class AuthServiceImpl implements AuthService {
     }
   }
 
-  // register with email & pwd
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
@@ -71,7 +58,6 @@ class AuthServiceImpl implements AuthService {
     }
   }
 
-  // sign in / sign up with google
   Future signInWithGoogle() async {
     try {
       final GoogleSignInAccount googleSignInAccount =
@@ -86,11 +72,7 @@ class AuthServiceImpl implements AuthService {
 
       final AuthResult result = await _auth.signInWithCredential(credential);
       final FirebaseUser user = result.user;
-      assert(!user.isAnonymous);
-      assert(await user.getIdToken() != null);
-
       final FirebaseUser currentUser = await _auth.currentUser();
-      assert(user.uid == currentUser.uid);
 
       AdditionalUserInfo additionalUserInfo = result.additionalUserInfo;
       if (additionalUserInfo.isNewUser) {
@@ -113,7 +95,6 @@ class AuthServiceImpl implements AuthService {
     }
   }
 
-  // sign out
   Future signOut() async {
     try {
       googleSignIn.signOut();

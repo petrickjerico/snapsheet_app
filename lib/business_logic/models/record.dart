@@ -36,7 +36,7 @@ class Record {
     this.imagePath,
   });
 
-  Record.unnamed(
+  Record.demo(
       this.title, this.value, this.dateTime, this.categoryId, this.accountId,
       [this.isIncome = false, this.receiptURL, this.hasCloudImage = false]);
 

@@ -7,7 +7,7 @@ class Account {
   int index;
   String uid;
 
-  Account.unnamed(String accTitle, Color accColor, int accOrder) {
+  Account.demo(String accTitle, Color accColor, int accOrder) {
     this.title = accTitle;
     this.color = accColor;
     this.index = accOrder;

@@ -39,7 +39,6 @@ class AuthServiceImpl implements AuthService {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      print('registered');
       FirebaseUser user = result.user;
 
       // Adding initial data
@@ -76,7 +75,6 @@ class AuthServiceImpl implements AuthService {
 
       AdditionalUserInfo additionalUserInfo = result.additionalUserInfo;
       if (additionalUserInfo.isNewUser) {
-        print("NEW USER");
         DatabaseServiceImpl _db = DatabaseServiceImpl(uid: user.uid);
         Map<String, dynamic> profile = additionalUserInfo.profile;
         Map<String, dynamic> credentials = {

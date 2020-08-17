@@ -41,7 +41,6 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
       tempRecord.title = map['title'];
       tempRecord.categoryUid = categories[map['categoryId']].uid;
       tempRecord.imagePath = map['imagePath'];
-      print("IMAGETOTEMP: $tempRecord");
       notifyListeners();
     }
   }
@@ -114,7 +113,6 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     imageFile = File(picture.path);
     if (picture != null) {
       tempRecord.value = 0;
-      print('changeValue(0) called.');
       isScanned = true;
     }
     Navigator.of(context).pop();
@@ -143,7 +141,6 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     tempRecord = userData.records[recordIndex];
     editRecord = Record.of(tempRecord);
     isEditing = true;
-    print("CHANGETEMP: $tempRecord");
     notifyListeners();
   }
 

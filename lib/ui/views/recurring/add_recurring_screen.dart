@@ -95,7 +95,6 @@ class _AddRecurringScreenState extends State<AddRecurringScreen> {
                   title: "Confirm",
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
-                      print("FORM PASS");
                       model.addRecurring();
                       Navigator.pop(context);
                     }
@@ -244,7 +243,6 @@ class __NextRecurrenceFormFieldState extends State<_NextRecurrenceFormField> {
 
   @override
   Widget build(BuildContext context) {
-    print("DATE REBUILD");
     return Consumer<RecurringViewModel>(
       builder: (context, model, child) {
         DateTime date = model.tempRecurring.nextRecurrence;
@@ -296,7 +294,6 @@ class __FrequencyFormFieldState extends State<_FrequencyFormField> {
         hideHeader: true,
         title: new Text("Select Frequency"),
         onConfirm: (Picker picker, List value) {
-          print(value.toString());
           model.changeInterval(value[0] + 1);
           model.changeFrequencyId(value[1]);
         }).showDialog(context);
@@ -418,7 +415,6 @@ class __UntilDateFormFieldState extends State<_UntilDateFormField> {
             );
             if (picked != null) {
               model.changeUntilDate(picked);
-              print(model.tempRecurring.toString());
             }
           });
     });

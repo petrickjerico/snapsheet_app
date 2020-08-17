@@ -104,10 +104,7 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   void updateAccountIndex(int oldIndex, int newIndex) {
     Account temp = accounts.removeAt(oldIndex);
     Account newAcc = temp.copyWith(accOrder: newIndex);
-    print("oldIndex = $oldIndex");
-    print("newIndex = $newIndex");
     if (oldIndex < newIndex) {
-      print("oldIndex < newIndex");
       for (int i = oldIndex; i < newIndex; i++) {
         accounts[i].index = i;
       }
@@ -117,11 +114,8 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
         userData.updateAccount(accounts[i]);
       }
     } else if (oldIndex > newIndex) {
-      print("oldIndex > newIndex");
       for (int i = newIndex; i < oldIndex; i++) {
-        print("old: ${accounts[i].index}");
         accounts[i].index = i + 1;
-        print("new: ${accounts[i].index}");
       }
       accounts.add(newAcc);
       notifyListeners();

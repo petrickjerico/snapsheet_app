@@ -21,7 +21,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   List<Category> _categories =
       SortedList<Category>((c1, c2) => c1.index.compareTo(c2.index));
 
-  Future init(User user, Function loadCallback) async {
+  Future<void> init(User user, Function loadCallback) async {
     this.user = user;
 
     _records.clear();
@@ -63,7 +63,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     }
   }
 
-  Future processImage(Record record) async {
+  Future<void> _processImage(Record record) async {
     if (record.imagePath != null) {
       record.receiptURL = await _cloud.addReceiptURL(record);
       record.hasCloudImage = true;
@@ -77,32 +77,32 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   }
 
   /// CREATE
-  Future addRecord(Record record) async {
+  Future<void> addRecord(Record record) async {
     _records.add(record);
     notifyListeners();
 
     Future<String> uid = _db.addRecord(record);
     record.uid = await uid;
-    await processImage(record);
+    await _processImage(record);
 
     _db.updateRecord(record);
   }
 
-  Future addAccount(Account account) async {
+  Future<void> addAccount(Account account) async {
     _accounts.add(account);
     notifyListeners();
     Future<String> uid = _db.addAccount(account);
     account.uid = await uid;
   }
 
-  Future addRecurring(Recurring recurring) async {
+  Future<void> addRecurring(Recurring recurring) async {
     _recurrings.add(recurring);
     notifyListeners();
     Future<String> uid = _db.addRecurring(recurring);
     recurring.uid = await uid;
   }
 
-  Future addCategory(Category category) async {
+  Future<void> addCategory(Category category) async {
     _categories.add(category);
     notifyListeners();
     Future<String> uid = _db.addCategory(category);
@@ -135,7 +135,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
 
   /// UPDATE
   Future<void> updateRecord(Record record) async {
-    await processImage(record);
+    await _processImage(record);
     _db.updateRecord(record);
   }
 

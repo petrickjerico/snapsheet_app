@@ -64,7 +64,7 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
     );
   }
 
-  int getAccountIndexFromUid(String accountUid) {
+  int _getAccountIndexFromUid(String accountUid) {
     for (int i = 0; i < accounts.length; i++) {
       if (accounts[i].uid == accountUid) return i;
     }
@@ -73,7 +73,7 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
   Future<String> _processCSV() async {
     List<Record> filtered = [];
     for (Record record in records) {
-      if (!isExport[getAccountIndexFromUid(record.accountUid)]) continue;
+      if (!isExport[_getAccountIndexFromUid(record.accountUid)]) continue;
       if (record.dateTime.isAfter(end)) continue;
       if (record.dateTime.isBefore(start)) continue;
       filtered.add(record);

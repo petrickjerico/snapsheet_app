@@ -26,8 +26,6 @@ class HomepageViewModel extends ChangeNotifier implements HomepageBaseModel {
   bool amountTrendCustom = true;
   bool accountTileHasChanged = false;
 
-  // List<Account> get copyOfAccounts => List.from(accounts);
-
   void syncBarToPage(int index) {
     currentBar = index;
     if (index == 2) {

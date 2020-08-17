@@ -1,6 +1,5 @@
-import 'dart:io';
-
 abstract class ExportBaseModel {
-  Future<void> exportCSV();
+  void changeDate(bool isStart, DateTime dateTime);
   void toggleExport(int index);
+  Future<void> exportCSV();
 }

@@ -36,13 +36,13 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
     assets = resultList;
   }
 
-  Future initialize() async {
-    await assetsToImages();
-    await imagesToRecords();
+  Future<void> initialize() async {
+    await _assetsToImages();
+    await _imagesToRecords();
     scanner.clearResources();
   }
 
-  Future assetsToImages() async {
+  Future<void> _assetsToImages() async {
     images.clear();
     final directory = await getApplicationDocumentsDirectory();
     String path;
@@ -56,7 +56,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
     }
   }
 
-  Future imagesToRecords() async {
+  Future<void> _imagesToRecords() async {
     records.clear();
     for (File image in images) {
       Map<String, dynamic> map = await scanner.getDataFromImage(image);

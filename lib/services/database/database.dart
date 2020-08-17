@@ -3,7 +3,7 @@ import 'package:snapsheetapp/business_logic/models/recurring.dart';
 
 abstract class DatabaseService {
   // Initialize DatabaseService with UserDocument and CollectionReferences
-  Future initialize();
+  Future<void> initialize();
 
   // CREATE
   Future<String> addRecord(Record record);

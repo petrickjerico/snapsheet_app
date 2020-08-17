@@ -20,16 +20,17 @@ class ParserImpl implements Parser {
 
   String matchedName;
 
+  /// Return the title of the shop in the receipt.
   String findTitle(List<String> input) {
-    // Remove Strings that are non alphabetical
+    /// Remove Strings that are non alphabetical
     RegExp alphabetical = RegExp(r"^.*[a-zA-Z].*$");
     List<String> filtered =
         input.where((e) => alphabetical.hasMatch(e)).toList();
 
-    // Prepare the list of shop lowercased name
+    /// Prepare the list of shop lowercased name
     List<String> shopNames = shops.keys.toList();
 
-    // Find the best match
+    /// Find the single word best match
     for (String word in filtered) {
       BestMatch match = StringSimilarity.findBestMatch(word, shopNames);
       Rating best = match.bestMatch;
@@ -39,6 +40,7 @@ class ParserImpl implements Parser {
       }
     }
 
+    /// Find the 2 words best match
     for (int i = 0; i < filtered.length - 1; i++) {
       String twoWords = filtered[i] + " " + filtered[i + 1];
       BestMatch match = StringSimilarity.findBestMatch(twoWords, shopNames);
@@ -49,6 +51,7 @@ class ParserImpl implements Parser {
       }
     }
 
+    /// Find the 3 words best match
     for (int i = 0; i < filtered.length - 2; i++) {
       String threeWords =
           filtered[i] + " " + filtered[i + 1] + " " + filtered[i + 2];
@@ -63,10 +66,12 @@ class ParserImpl implements Parser {
     return "";
   }
 
+  /// Return the categoryId of the shop that is captured from the receipt.
   int findCategoryId() {
     return matchedName != null ? shops[matchedName].categoryId : 0;
   }
 
+  /// Return the DateTime of the receipt.
   DateTime findDate(String input) {
     for (Function parser in dateFormats) {
       DateTime parsed = parser(input);
@@ -77,6 +82,7 @@ class ParserImpl implements Parser {
     return DateTime.now();
   }
 
+  /// Return the cost of the receipt.
   double findCost(String input) {
     RegExp alertWords = RegExp(r"(discount|change|coupon)");
     RegExp money = RegExp(r"\d+\.\d{2}");
@@ -97,6 +103,7 @@ class ParserImpl implements Parser {
     return alertWords.hasMatch(input) ? reversed[1] : reversed[0];
   }
 
+  /// List of various common date formats found in receipts
   List<Function> dateFormats = [ddmmyy, ddmmyyyy, ddmonyy, ddmonyyyy, yyyymmdd];
 
   static DateTime ddmmyy(String input) {

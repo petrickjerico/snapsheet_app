@@ -2,28 +2,28 @@ import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/models/recurring.dart';
 
 abstract class DatabaseService {
-  // Initialize DatabaseService with UserDocument and CollectionReferences
+  /// Initialize the account with demo data when a user sign up.
   Future<void> initialize();
 
-  // CREATE
+  /// CREATE
   Future<String> addRecord(Record record);
   Future<String> addAccount(Account account);
   Future<String> addRecurring(Recurring recurring);
   Future<String> addCategory(Category category);
 
-  // READ
+  /// READ
   Future<List<Record>> getRecords();
   Future<List<Account>> getAccounts();
   Future<List<Recurring>> getRecurrings();
   Future<List<Category>> getCategories();
 
-  // UPDATE
+  /// UPDATE
   Future<void> updateRecord(Record record);
   Future<void> updateAccount(Account account);
   Future<void> updateRecurring(Recurring recurring);
   Future<void> updateCategory(Category category);
 
-  // DELETE
+  /// DELETE
   Future<void> deleteRecord(Record record);
   Future<void> deleteAccount(Account account);
   Future<void> deleteRecurring(Recurring recurring);

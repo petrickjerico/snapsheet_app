@@ -113,9 +113,7 @@ class Recurring {
     if (timeFrameId == UNTILDATE && nextRecurrence.isAfter(untilDate))
       return null;
     if (frequencyId == DAILY) {
-      print(nextRecurrence.toString());
       nextRecurrence = nextRecurrence.add(Duration(days: interval));
-      print(nextRecurrence.toString());
     } else if (frequencyId == WEEKLY) {
       nextRecurrence = nextRecurrence.add(Duration(days: interval * 7));
     } else if (frequencyId == MONTHLY) {

@@ -22,7 +22,6 @@ class _SplashScreenState extends State<SplashScreen>
   _checkIfUserIsLoggedIn() async {
     AuthService _auth = AuthServiceImpl();
     var user = await _auth.currentUser();
-    print("CHECKIFUSERLOGGEDIN ${user.toString()}");
 
     try {
       Navigator.pushReplacementNamed(context, Wrapper.id);

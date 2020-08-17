@@ -38,7 +38,6 @@ class DatabaseServiceImpl implements DatabaseService {
       await addRecord(record);
     }
     for (Recurring recurring in demoRecurrings) {
-      print(recurring);
       recurring.accountUid = accountMap[0];
       recurring.categoryUid = categoryMap[recurring.categoryId];
       await addRecurring(recurring);
@@ -143,7 +142,6 @@ class DatabaseServiceImpl implements DatabaseService {
 
   @override
   Future<void> updateRecurring(Recurring recurring) async {
-    print(recurring);
     recurringCollection.document(recurring.uid).updateData(recurring.toJson());
   }
 

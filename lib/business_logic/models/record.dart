@@ -5,16 +5,17 @@ class Record {
   double value;
   DateTime dateTime;
   String categoryUid;
-  // CategoryId only used for initialization of default categories
-  int categoryId;
   String accountUid;
-  // AccountId only used for initialization of demo accounts
-  int accountId;
   bool isIncome;
   String receiptURL;
   String uid;
   String imagePath;
   bool hasCloudImage;
+
+  /// CategoryId only used for initialization of demo categories.
+  /// AccountId only used for initialization of demo accounts.
+  int categoryId;
+  int accountId;
 
   factory Record.newBlankRecord() {
     return Record(
@@ -36,7 +37,7 @@ class Record {
     this.imagePath,
   });
 
-  Record.unnamed(
+  Record.demo(
       this.title, this.value, this.dateTime, this.categoryId, this.accountId,
       [this.isIncome = false, this.receiptURL, this.hasCloudImage = false]);
 

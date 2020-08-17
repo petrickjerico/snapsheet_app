@@ -11,16 +11,6 @@ class Category {
   bool isDefault;
   String uid;
 
-  Category.unnamed(int index, String title, Icon icon, bool isDefault,
-      [Color color, bool isIncome]) {
-    this.index = index;
-    this.title = title;
-    this.icon = icon;
-    this.isDefault = isDefault;
-    this.color = color;
-    this.isIncome = isIncome ?? false;
-  }
-
   Category({
     this.title,
     this.icon,
@@ -80,10 +70,5 @@ class Category {
       'isDefault': isDefault,
       'uid': uid
     };
-  }
-
-  @override
-  String toString() {
-    return "Category($title, ${icon.icon.toString()}, [${color.toString()}, $isIncome])";
   }
 }

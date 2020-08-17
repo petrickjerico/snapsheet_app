@@ -7,7 +7,9 @@ class Account {
   int index;
   String uid;
 
-  Account.unnamed(String accTitle, Color accColor, int accOrder) {
+  Account({this.title, this.color, this.index, this.uid});
+
+  Account.demo(String accTitle, Color accColor, int accOrder) {
     this.title = accTitle;
     this.color = accColor;
     this.index = accOrder;
@@ -22,8 +24,6 @@ class Account {
       uid: uid ?? this.uid,
     );
   }
-
-  Account({this.title, this.color, this.index, this.uid});
 
   factory Account.of(Account account) {
     return Account(

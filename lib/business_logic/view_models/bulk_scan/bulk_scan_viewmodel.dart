@@ -36,7 +36,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
     assets = resultList;
   }
 
-  Future<void> initialize() async {
+  Future<void> processImages() async {
     await _assetsToImages();
     await _imagesToRecords();
     scanner.clearResources();
@@ -74,7 +74,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
     }
   }
 
-  void addAll() {
+  void addConfirmedReceipts() {
     for (int i = 0; i < records.length; i++) {
       if (isConfirmed[i]) continue;
       userData.addRecord(records[i]);

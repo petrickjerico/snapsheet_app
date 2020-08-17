@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:snapsheetapp/business_logic/models/category.dart';
 
+/// Below are the 10 default categories.
 const FOODDRINKS = 0;
 const TRANSPORTATION = 1;
 const SHOPPING = 2;
@@ -116,6 +117,7 @@ Category others = Category(
   isDefault: true,
 );
 
+/// Demo categories have 2 extra custom categories: Pets and YouTube Channel.
 List<Category> demoCategories = [
   foodDrinks,
   transportation,

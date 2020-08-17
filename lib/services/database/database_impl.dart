@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:snapsheetapp/business_logic/default_data/accounts.dart';
-import 'package:snapsheetapp/business_logic/default_data/categories.dart';
-import 'package:snapsheetapp/business_logic/default_data/records.dart';
-import 'package:snapsheetapp/business_logic/default_data/recurring.dart';
+import 'package:snapsheetapp/business_logic/default_data/default_data.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/services/database/database.dart';
 export 'database.dart';

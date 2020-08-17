@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_basemodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
+import 'package:snapsheetapp/business_logic/view_models/user_data/user_data_impl.dart';
 
 class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
   UserData userData;

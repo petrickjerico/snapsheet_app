@@ -1,6 +1,4 @@
-import 'package:snapsheetapp/business_logic/default_data/categories.dart';
 import 'package:snapsheetapp/business_logic/default_data/shops.dart';
-import 'package:snapsheetapp/business_logic/models/models.dart';
 import 'package:snapsheetapp/services/parser/parser.dart';
 import 'package:string_similarity/string_similarity.dart';
 

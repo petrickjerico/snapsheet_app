@@ -2,23 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/models/models.dart';
-import 'package:snapsheetapp/business_logic/view_models/bulk_scan/bulk_scan_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/category/category_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/expense/expense_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/recurring/recurring_viewmodel.dart';
-import 'package:snapsheetapp/business_logic/view_models/user_data_impl.dart';
 import 'package:snapsheetapp/services/auth/auth_impl.dart';
-import 'package:snapsheetapp/ui/components/scanner/receipt_preview.dart';
-import 'package:snapsheetapp/ui/screens/accounts/select_account.dart';
-import 'package:snapsheetapp/ui/screens/categories/category_popup.dart';
-import 'package:snapsheetapp/ui/screens/categories/category_screen.dart';
-import 'package:snapsheetapp/ui/screens/categories/select_category.dart';
-import 'package:snapsheetapp/ui/screens/recurring/add_recurring_screen.dart';
-import 'package:snapsheetapp/ui/screens/recurring/recurring_screen.dart';
-import 'package:snapsheetapp/ui/screens/screens.dart';
-import 'package:snapsheetapp/ui/screens/splash_screen.dart';
-
-import 'business_logic/view_models/homepage/homepage_viewmodel.dart';
+import 'package:snapsheetapp/ui/views/screens.dart';
+import 'business_logic/view_models/view_models.dart';
 import 'ui/config/theme.dart';
 
 void main() {
@@ -45,8 +31,7 @@ class Snapsheet extends StatelessWidget {
         ChangeNotifierProvider<RecurringViewModel>(
             create: (context) => RecurringViewModel()),
         ChangeNotifierProvider<CategoryViewModel>(
-          create: (context) => CategoryViewModel(),
-        ),
+            create: (context) => CategoryViewModel()),
         ChangeNotifierProvider<UserData>(create: (context) => UserData())
       ],
       child: MaterialApp(

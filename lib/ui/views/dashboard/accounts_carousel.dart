@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/config/colors.dart';
 import 'package:snapsheetapp/ui/views/accounts/add_account_button.dart';
-import 'package:snapsheetapp/ui/views/accounts/select_all_button.dart';
-import 'account_tile.dart';
+import 'package:snapsheetapp/ui/views/dashboard/account_tile.dart';
+import 'package:snapsheetapp/ui/views/dashboard/select_all_button.dart';
 
 class AccountsCarousel extends StatefulWidget {
   @override

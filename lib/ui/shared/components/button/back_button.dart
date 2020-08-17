@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-class BackButton extends StatelessWidget {
+class CustomBackButton extends StatelessWidget {
+  final onPressed;
+
+  CustomBackButton({this.onPressed});
+
   @override
   Widget build(BuildContext context) {
     return FlatButton(
@@ -8,9 +12,10 @@ class BackButton extends StatelessWidget {
         Icons.arrow_back_ios,
         color: Colors.white,
       ),
-      onPressed: () {
-        Navigator.pop(context);
-      },
+      onPressed: onPressed ??
+          () {
+            Navigator.pop(context);
+          },
     );
   }
 }

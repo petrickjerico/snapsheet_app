@@ -10,6 +10,7 @@ import 'package:snapsheetapp/business_logic/view_models/view_models.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/shared/shared.dart';
 import 'package:snapsheetapp/ui/views/dashboard/stats_card.dart';
+import 'package:snapsheetapp/ui/views/history/history_tile.dart';
 import 'package:snapsheetapp/ui/views/screens.dart';
 import 'indicator.dart';
 

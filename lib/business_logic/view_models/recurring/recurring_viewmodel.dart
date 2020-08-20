@@ -12,6 +12,7 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
   Recurring originalRecurring;
   bool isEditing = false;
 
+  /// Initialize the model with UserData.
   void init(UserData userData) {
     this.userData = userData;
     this.recurrings = userData.recurrings;
@@ -20,6 +21,8 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
     userData.addDueExpenses();
   }
 
+  /// Helper function to get account from userData since Recurring only
+  /// contains the account uid.
   Account getAccountFromUid(String accountUid) {
     for (Account account in accounts) {
       if (account.uid == accountUid) {
@@ -29,11 +32,29 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
     return accounts.first;
   }
 
+  /// Disard all the edits that have been made.
   void undo() {
     tempRecurring = originalRecurring;
     notifyListeners();
   }
 
+  /// Initialize a new recurring record.
+  void newRecurring() {
+    tempRecurring = Recurring.newBlank();
+    tempRecurring.categoryUid = categories.first.uid;
+    tempRecurring.accountUid = accounts.first.uid;
+    notifyListeners();
+  }
+
+  /// Initialization for editing the selected recurring record.
+  void editTempRecurring(int recurringIndex) {
+    tempRecurring = userData.recurrings[recurringIndex];
+    originalRecurring = Recurring.of(tempRecurring);
+    isEditing = true;
+    notifyListeners();
+  }
+
+  /// Add the new recurring record / Update the selected recurring record.
   void addRecurring() {
     if (!isEditing) {
       userData.addRecurring(tempRecurring);
@@ -44,20 +65,7 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
     notifyListeners();
   }
 
-  void newRecurring() {
-    tempRecurring = Recurring.newBlank();
-    tempRecurring.categoryUid = categories.first.uid;
-    tempRecurring.accountUid = accounts.first.uid;
-    notifyListeners();
-  }
-
-  void editTempRecurring(int recurringIndex) {
-    tempRecurring = userData.recurrings[recurringIndex];
-    originalRecurring = Recurring.of(tempRecurring);
-    isEditing = true;
-    notifyListeners();
-  }
-
+  /// Update the new/selected record's attribute with the new value.
   void changeTitle(String newTitle) {
     tempRecurring.title = newTitle;
   }
@@ -107,6 +115,7 @@ class RecurringViewModel extends ChangeNotifier implements RecurringBaseModel {
     notifyListeners();
   }
 
+  /// Deletion.
   void deleteRecurring() {
     if (isEditing) {
       userData.deleteRecurring(tempRecurring);

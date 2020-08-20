@@ -27,6 +27,7 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
     end = DateTime.now();
   }
 
+  /// Change the starting or ending date range.
   void changeDate(bool isStart, DateTime dateTime) {
     if (isStart) {
       _changeStartDate(dateTime);
@@ -45,11 +46,14 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
     notifyListeners();
   }
 
+  /// Toggle whether the account at accountIndex should be exported or not.
   void toggleExport(accountIndex) {
     isExport[accountIndex] = !isExport[accountIndex];
     notifyListeners();
   }
 
+  /// Convert all the records within the date range into CSV file.
+  /// Export the CSV file using third party app.
   Future<void> exportCSV() async {
     Future<String> data = _processCSV();
     await Permission.storage.request();
@@ -64,12 +68,15 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
     );
   }
 
+  /// Helper function to get the index of account, since record only
+  /// contains the Uid of the account.
   int _getAccountIndexFromUid(String accountUid) {
     for (int i = 0; i < accounts.length; i++) {
       if (accounts[i].uid == accountUid) return i;
     }
   }
 
+  /// Convert list of records into CSV format.
   Future<String> _processCSV() async {
     List<Record> filtered = [];
     for (Record record in records) {
@@ -94,12 +101,14 @@ class ExportViewModel extends ChangeNotifier implements ExportBaseModel {
     return ListToCsvConverter().convert(rows);
   }
 
+  /// Create the target csv file in the application local storage.
   Future<File> _targetFile() async {
     String dir = (await getApplicationDocumentsDirectory()).path;
     String path = "$dir/snapsheet-${DateTime.now()}.csv";
     return File(path);
   }
 
+  /// Write the string data to the file.
   Future<File> _writeData(String data) async {
     return target.writeAsString(data);
   }

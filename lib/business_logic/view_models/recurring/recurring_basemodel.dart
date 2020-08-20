@@ -4,6 +4,9 @@ import 'package:snapsheetapp/business_logic/view_models/user_data/user_data_impl
 abstract class RecurringBaseModel {
   /// Initialize the model with UserData.
   void init(UserData userData);
+
+  /// Helper function to get account from userData since Recurring only
+  /// contains the account uid.
   Account getAccountFromUid(String accountUid);
 
   /// Disard all the edits that have been made.

@@ -28,6 +28,8 @@ abstract class UserDataBaseModel {
   Future<void> updateAccount(Account account);
   Future<void> updateRecurring(Recurring recurring);
   Future<void> updateCategory(Category category);
+
+  /// Clear all demo data and initialize the user with empty state.
   Future<void> demoDone();
 
   /// DELETE

@@ -16,6 +16,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   List<Account> accounts;
   List<Category> categories;
 
+  /// Initialize the model with UserData.
   void init(UserData userData) {
     this.userData = userData;
     accounts = userData.accounts;
@@ -33,6 +34,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
   ImagePicker _picker = ImagePicker();
   Scanner scanner = ScannerImpl();
 
+  /// Capture data from image captured / selected.
   Future<void> imageToTempRecord() async {
     if (imageFile != null) {
       Map<String, dynamic> map = await scanner.getDataFromImage(imageFile);
@@ -45,14 +47,9 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     }
   }
 
+  /// Index in the list of accounts.
   int getAccountIndexFromTempRecord() {
     return accounts.firstWhere((acc) => acc.uid == tempRecord.accountUid).index;
-  }
-
-  int getCategoryIndexFromTempRecord() {
-    return categories
-        .firstWhere((cat) => cat.uid == tempRecord.categoryUid)
-        .index;
   }
 
   void toggleScanned() {
@@ -68,6 +65,24 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     this.expression = expression;
   }
 
+  /// Initialize a new record.
+  void newRecord() {
+    tempRecord = Record.newBlankRecord();
+    tempRecord.accountUid = accounts.first.uid;
+    tempRecord.categoryUid = categories.first.uid;
+    isEditing = false;
+    notifyListeners();
+  }
+
+  /// Initialization for editing the selected record.
+  void changeTempRecord(int recordIndex) {
+    tempRecord = userData.records[recordIndex];
+    editRecord = Record.of(tempRecord);
+    isEditing = true;
+    notifyListeners();
+  }
+
+  /// Add the new record / Update the selected record.
   void addRecord() {
     if (!isEditing) {
       userData.addRecord(tempRecord);
@@ -78,6 +93,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     notifyListeners();
   }
 
+  /// Show Camera or Gallery option to get the receipt image.
   Future<void> showChoiceDialog(BuildContext context) {
     return showDialog(
         context: context,
@@ -129,21 +145,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     Navigator.of(context).pop();
   }
 
-  void newRecord() {
-    tempRecord = Record.newBlankRecord();
-    tempRecord.accountUid = accounts.first.uid;
-    tempRecord.categoryUid = categories.first.uid;
-    isEditing = false;
-    notifyListeners();
-  }
-
-  void changeTempRecord(int recordIndex) {
-    tempRecord = userData.records[recordIndex];
-    editRecord = Record.of(tempRecord);
-    isEditing = true;
-    notifyListeners();
-  }
-
+  /// Discard all the edits that have been made
   void undoEditRecord() {
     tempRecord.value = editRecord.value;
     tempRecord.categoryId = editRecord.categoryId;
@@ -154,6 +156,7 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     notifyListeners();
   }
 
+  /// Update the new/selected record's attribute with the new value.
   void changeTitle(String newTitle) {
     tempRecord.title = newTitle;
     notifyListeners();
@@ -185,12 +188,14 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     notifyListeners();
   }
 
+  /// Deletion of image.
   void deleteImage() {
     tempRecord.imagePath = null;
     tempRecord.receiptURL = null;
     notifyListeners();
   }
 
+  /// Deletion of record.
   void deleteRecord() {
     userData.deleteRecord(tempRecord);
     if (isEditing) {
@@ -199,10 +204,12 @@ class ExpenseViewModel extends ChangeNotifier implements ExpenseBaseModel {
     notifyListeners();
   }
 
+  /// To check whether the selected record has an image.
   bool hasImage() {
     return tempRecord.imagePath != null || tempRecord.receiptURL != null;
   }
 
+  /// Export the image through third party app.
   Future<void> exportImage() async {
     if (tempRecord.receiptURL != null) {
       var response = await get(tempRecord.receiptURL);

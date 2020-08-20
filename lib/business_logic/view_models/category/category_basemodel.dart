@@ -27,5 +27,6 @@ abstract class CategoryBaseModel {
   void changeIcon(Icon newIcon);
   void changeTitle(String newTitle);
 
+  /// Delete selected custom category.
   void deleteCategory(Category category);
 }

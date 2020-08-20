@@ -21,6 +21,9 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   List<Category> _categories =
       SortedList<Category>((c1, c2) => c1.index.compareTo(c2.index));
 
+  /// Initialize the model with UserData.
+  /// Load Callback is needed to signal to the frontend that
+  /// it is done fetching data from database.
   Future<void> init(User user, Function loadCallback) async {
     this.user = user;
 
@@ -46,6 +49,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     loadCallback();
   }
 
+  /// Ensure that any due recurring records will be added.
   void addDueExpenses() {
     for (Recurring recurring in recurrings) {
       while (recurring.nextRecurrence.isBefore(DateTime.now())) {
@@ -56,6 +60,8 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     }
   }
 
+  /// Ensure the cloud storage for receipt images are updated and in sync.
+  /// It calls the service to upload and delete image from cloud.
   Future<void> _processImage(Record record) async {
     if (record.imagePath != null) {
       record.receiptURL = await _cloud.addReceiptURL(record);
@@ -108,6 +114,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
   List<Recurring> get recurrings => _recurrings;
   List<Category> get categories => _categories;
 
+  /// Helper function to get a particular account given a uid.
   Account getThisAccount(String accountUid) {
     for (Account account in accounts) {
       if (account.uid == accountUid) {
@@ -117,6 +124,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     return accounts.first;
   }
 
+  /// Helper function to get a particular category given a uid.
   Category getThisCategory(String categoryUid) {
     for (Category category in categories) {
       if (category.uid == categoryUid) {
@@ -144,6 +152,7 @@ class UserData extends ChangeNotifier implements UserDataBaseModel {
     _db.updateCategory(category);
   }
 
+  /// Clear all demo data and initialize the user with empty state.
   Future<void> demoDone() async {
     credentials['isDemo'] = false;
     records.forEach((record) => _db.deleteRecord(record));

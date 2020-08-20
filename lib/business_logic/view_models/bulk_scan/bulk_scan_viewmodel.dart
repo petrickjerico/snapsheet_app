@@ -20,12 +20,14 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   Scanner scanner;
   String selectedAccountUid;
 
+  /// Initialize the model with UserData.
   void init(UserData userData) {
     this.userData = userData;
     accounts = userData.accounts;
     scanner = ScannerImpl();
   }
 
+  /// Loads the image receipts that the user has chosen.
   Future<void> loadAssets() async {
     List<Asset> resultList;
     try {
@@ -36,12 +38,14 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
     assets = resultList;
   }
 
+  /// Process the loaded image receipts into Records.
   Future<void> processImages() async {
     await _assetsToImages();
     await _imagesToRecords();
     scanner.clearResources();
   }
 
+  /// Convert assets selected by user to images for processing
   Future<void> _assetsToImages() async {
     images.clear();
     final directory = await getApplicationDocumentsDirectory();
@@ -56,6 +60,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
     }
   }
 
+  /// Convert images selected by user to records
   Future<void> _imagesToRecords() async {
     records.clear();
     for (File image in images) {
@@ -74,6 +79,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
     }
   }
 
+  /// Add all confirmed receipts.
   void addConfirmedReceipts() {
     for (int i = 0; i < records.length; i++) {
       if (isConfirmed[i]) continue;
@@ -81,6 +87,8 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
     }
   }
 
+  /// Update a particular receipt's attribute with the new value.
+  /// The first argument recordId refers to a particular receipt.
   void changeValue(int recordId, double newValue) {
     records[recordId].value = newValue;
     notifyListeners();

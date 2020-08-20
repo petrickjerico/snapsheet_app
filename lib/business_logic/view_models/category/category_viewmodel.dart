@@ -12,26 +12,31 @@ class CategoryViewModel extends ChangeNotifier implements CategoryBaseModel {
   bool isEditing = false;
   bool showDefault = true;
 
+  /// Initialize the model with UserData.
   void init(UserData userData) {
     this.userData = userData;
     categories = userData.categories;
   }
 
+  /// To toggle between Custom Categories and All Categories view.
   void toggleView() {
     showDefault = !showDefault;
     notifyListeners();
   }
 
+  /// Initialization for editing the selected custom category.
   void editCategory(Category category) {
     isEditing = true;
     originalCategory = Category.of(category);
     tempCategory = Category.of(category);
   }
 
+  /// Initialize the new category.
   void newCategory() {
     tempCategory = Category.newBlankCategory();
   }
 
+  /// Add the newly made category.
   void addCategory() {
     if (isEditing) {
       updateCategory();
@@ -42,12 +47,14 @@ class CategoryViewModel extends ChangeNotifier implements CategoryBaseModel {
     notifyListeners();
   }
 
+  /// Confirm the changes on the edited custom category.
   void updateCategory() {
     userData.updateCategory(tempCategory);
     categories.removeWhere((cat) => cat.uid == tempCategory.uid);
     categories.add(tempCategory);
   }
 
+  /// Update the new/selected category's attribute with the new value.
   void changeColor(Color newColor) {
     tempCategory.color = newColor;
   }
@@ -64,6 +71,9 @@ class CategoryViewModel extends ChangeNotifier implements CategoryBaseModel {
     tempCategory.title = newTitle;
   }
 
+  /// Delete selected custom category.
+  /// Records and recurring records that are of the deleted category will
+  /// now be of the OTHERS category.
   void deleteCategory(Category category) {
     userData.deleteCategory(category);
     List<Record> newRecords = List.from(userData.records);

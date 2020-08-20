@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:snapsheetapp/business_logic/view_models/homepage/homepage_viewmodel.dart';
 import 'package:snapsheetapp/ui/config/config.dart';
 import 'package:snapsheetapp/ui/shared/shared.dart';
-import 'file:///C:/Users/jtedd/AndroidStudioProjects/snapsheet_app/lib/ui/views/dashboard/accounts_carousel.dart';
+import 'accounts_carousel.dart';
 import 'package:snapsheetapp/ui/views/dashboard/statistics.dart';
 import 'package:snapsheetapp/ui/views/screens.dart';
 

@@ -87,7 +87,7 @@ class AccountOrderTile extends StatelessWidget {
                   child: DeleteDialog(
                       title: 'Delete Account',
                       message:
-                          'This will delete all records in this account.\nAre you sure you want to delete ${title}?',
+                          'This will delete all records in this account.\nAre you sure you want to delete $title?',
                       onDelete: () {
                         model.deleteAccount();
                         Navigator.of(this.context).pop();

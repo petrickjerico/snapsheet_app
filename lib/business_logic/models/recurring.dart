@@ -160,7 +160,7 @@ class Recurring {
     } else if (timeFrameId == UNTILDATE) {
       timeFrame = 'Until ${DateFormat.yMMMd().format(untilDate)}';
     } else {
-      timeFrame = 'For ${xTimes} time(s)';
+      timeFrame = 'For $xTimes time(s)';
     }
 
     String next = "Next: ${DateFormat.yMMMd().format(nextRecurrence)}";

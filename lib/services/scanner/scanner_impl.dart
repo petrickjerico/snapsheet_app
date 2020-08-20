@@ -49,7 +49,7 @@ class ScannerImpl implements Scanner {
     double value = parser.findCost(txt.join(" "));
     DateTime date = parser.findDate(txt.join(" "));
 
-    print('${value} ${date.toString()} ${title}');
+    print('$value ${date.toString()} $title');
 
     map['title'] = title;
     map['categoryId'] = categoryId;

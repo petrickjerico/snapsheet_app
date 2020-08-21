@@ -27,7 +27,8 @@ Scan an image of a receipt and it will automatically capture:
 <img src="/gifs/scanner.gif?raw=true" alt="scanner" width="200"/>
 
 ## Export
-Export expenses in CSV format.
+Export expenses in CSV format. <br>
+<img src="/gifs/export.gif?raw=true" alt="export" width="200"/>
 
 ## Statistics
 Provides a visual summary of expenses of all accounts; an integral appearance in the Dashboard.

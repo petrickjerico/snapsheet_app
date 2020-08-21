@@ -24,7 +24,6 @@ Scan an image of a receipt and it will automatically capture:
 - Date
 - Category of the shop
 
-<br>
 <img src="/gifs/scanner.gif?raw=true" alt="scanner" width="200"/>
 
 ## Export

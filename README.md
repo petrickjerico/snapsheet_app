@@ -2,7 +2,7 @@
 
 # SnapSheet
 
-> Expense tracker with a powerful localised (Singapore) receipt scanner
+Expense tracker with a powerful localised (Singapore) receipt scanner
 
 
 ![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)

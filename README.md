@@ -11,7 +11,8 @@ Expense tracker with a powerful localised (Singapore) receipt scanner
 # Features
 
 ## Calculator
-On the spot calculations when users manually add their expenses
+On the spot calculations when users manually add their expenses <br>
+<img src="https://firebasestorage.googleapis.com/v0/b/snapsheet-e7f7b.appspot.com/o/gif%2Fcalculator.gif?alt=media&token=946a35ba-2b4c-4677-b132-aaa7c280d4f7" alt="calculator" width="200"/>
 
 ## Scanner
 Scan an image of a receipt and it will automatically capture:

@@ -1,55 +1,53 @@
 <img src="https://firebasestorage.googleapis.com/v0/b/snapsheet-e7f7b.appspot.com/o/snapsheet_banner.png?alt=media&token=c97194f4-3ee5-4c21-9992-accf3e30b351" title="SnapSheet" alt="SnapSheet">
 
-# SnapSheet
-
 Expense tracker with a powerful localised (Singapore) receipt scanner
 
 
 ![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)
 
-## Installation
+# Installation
 [Click here to download the APK](https://drive.google.com/uc?export=download&id=1oS2EFwCPJoBstlo0y6H_DptpIg7a9YWz)
 
-## Features
+# Features
 
-### Calculator
+## Calculator
 On the spot calculations when users manually add their expenses
 
-### Scanner
+## Scanner
 Scan an image of a receipt and it will automatically capture:
 - Shop name
 - Total cost
 - Date
 - Category of the shop
 
-### Export
+## Export
 Export expenses in CSV format.
 
-### Statistics
+## Statistics
 Provides a visual summary of expenses of all accounts; an integral appearance in the Dashboard.
 
-### Bulk-Upload Receipts
+## Bulk-Upload Receipts
 Scan multiple receipt images form the gallery and extract the data at once.
 
-### Custom Dashboard
+## Custom Dashboard
 Give users freedom over what features of Statistics are visible in their Dashboard.
 
-### Custom Category
+## Custom Category
 
-### Recurring Record
+## Recurring Record
 Users can create a recurring expense/income.
 
-### Advanced Filter
+## Advanced Filter
 Filtering records based on other complex parameters: category, time, amount.
 
-### Cloud Storage for Receipts
+## Cloud Storage for Receipts
 Free your gallery from receipt images and keep it safe in the cloud.
 
-### Demo Mode
+## Demo Mode
 Users can explore the app with the demo data and exit it.
 
 
-## Team
+# Team
 
 
-## FAQs
+# FAQs

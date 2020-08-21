@@ -1,4 +1,4 @@
-<img src="https://firebasestorage.googleapis.com/v0/b/snapsheet-e7f7b.appspot.com/o/snapsheet_logo.png?alt=media&token=91a86899-70fe-4d40-9e87-6e135e1f0fe3" title="SnapSheet" alt="SnapSheet">
+<img src="https://firebasestorage.googleapis.com/v0/b/snapsheet-e7f7b.appspot.com/o/snapsheet_banner.png?alt=media&token=c97194f4-3ee5-4c21-9992-accf3e30b351" title="SnapSheet" alt="SnapSheet">
 
 # SnapSheet
 

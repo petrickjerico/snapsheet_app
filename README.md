@@ -23,6 +23,8 @@ Scan an image of a receipt and it will automatically capture:
 - Total cost
 - Date
 - Category of the shop
+<br>
+<img src="https://firebasestorage.googleapis.com/v0/b/snapsheet-e7f7b.appspot.com/o/gif%2Fscanner.gif?alt=media&token=21757a08-9be5-4987-a8d1-9281a929b8f9" alt="scanner" width="200"/>
 
 ## Export
 Export expenses in CSV format.

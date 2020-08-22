@@ -32,7 +32,7 @@ Export expenses in CSV format. <br>
 
 ## Statistics
 Provides a visual summary of expenses of all accounts; an integral appearance in the Dashboard. <br>
-<img src="assets/images/statistics-cashflow" alt="statistics-cashflow" width="200" />
+<img src="assets/images/statistics-cashflow.jpg" alt="statistics-cashflow" width="200" />
 <img src="https://firebasestorage.googleapis.com/v0/b/snapsheet-e7f7b.appspot.com/o/gif%2Fstatistics-piechart.gif?alt=media&token=95ed3a4f-5163-4266-ab3f-4f89a7c9ad82" alt="statistics-piechart" width="200" />
 <img src="https://firebasestorage.googleapis.com/v0/b/snapsheet-e7f7b.appspot.com/o/gif%2Fstatistics-amounttrend.gif?alt=media&token=a6410062-a388-49e2-b688-36235a7ead93" alt="statistics-amounttrend" width="200" />
 

@@ -38,9 +38,11 @@ Provides a visual summary of expenses of all accounts; an integral appearance in
 
 ## Bulk-Upload Receipts
 Scan multiple receipt images form the gallery and extract the data at once.
+<img src="/gifs/bulk-scan.gif?raw=true" alt="bulk-scan" width="200"/>
 
 ## Custom Dashboard
 Give users freedom over what features of Statistics are visible in their Dashboard.
+<img src="/gifs/custom-dashboard.gif?raw=true" alt="custom-dashboard" width="200"/>
 
 ## Custom Category
 <img src="/gifs/custom-category.gif?raw=true" alt="custom-category" width="200"/>
@@ -60,6 +62,7 @@ Free your gallery from receipt images and keep it safe in the cloud. <br>
 ## Demo Mode
 Users can explore the app with the demo data and exit it. <br>
 <img src="/gifs/demo.gif?raw=true" alt="demo" width="200"/>
+<img src="/gifs/exit-demo.gif?raw=true" alt="exit-demo" width="200"/>
 
 # Team
 

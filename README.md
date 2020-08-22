@@ -2,10 +2,8 @@
 
 Expense tracker with a powerful localised (Singapore) receipt scanner
 
-
-![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)
-
 # Installation
+Beta version.
 [Click here to download the APK](https://drive.google.com/uc?export=download&id=1oS2EFwCPJoBstlo0y6H_DptpIg7a9YWz)
 
 # Features

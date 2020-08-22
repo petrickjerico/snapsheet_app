@@ -82,7 +82,7 @@ class BulkScanViewModel extends ChangeNotifier implements BulkScanBaseModel {
   /// Add all confirmed receipts.
   void addConfirmedReceipts() {
     for (int i = 0; i < records.length; i++) {
-      if (isConfirmed[i]) continue;
+      if (!isConfirmed[i]) continue;
       userData.addRecord(records[i]);
     }
   }

@@ -29,7 +29,7 @@ Scan an image of a receipt and it will automatically capture:
 
 <img src="/gifs/scanner.gif?raw=true" alt="scanner" width="200"/>
 
-## Bulk-Upload Receipts
+## Bulk-Scan Receipts
 Scan multiple receipt images form the gallery and extract the data at once.
 Users can review and fix the data captured before confirming all the receipts.
 

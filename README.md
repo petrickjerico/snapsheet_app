@@ -4,7 +4,7 @@ Expense tracker with a powerful localised (Singapore) receipt scanner
 
 # Installation
 Beta version.
-[Click here to download the APK](https://drive.google.com/uc?export=download&id=1oS2EFwCPJoBstlo0y6H_DptpIg7a9YWz)
+[Click here to download the APK](https://drive.google.com/uc?export=download&id=1WFTm-UPCi7RhvnlDkQC0C_UtHNXzaGBT)
 
 # Features
 

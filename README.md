@@ -42,7 +42,7 @@ Users can review and fix the data captured before confirming all the receipts. <
 <img src="/gifs/bulk-scan.gif?raw=true" alt="bulk-scan" width="200"/>
 
 ## Custom Dashboard
-Give users freedom over what features of Statistics are visible in their Dashboard.
+Give users freedom over what features of Statistics are visible in their Dashboard. <br>
 <img src="/gifs/custom-dashboard.gif?raw=true" alt="custom-dashboard" width="200"/>
 
 ## Custom Category

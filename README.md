@@ -31,7 +31,10 @@ Scan an image of a receipt and it will automatically capture:
 
 ## Bulk-Upload Receipts
 Scan multiple receipt images form the gallery and extract the data at once.
-Users can review and fix the data captured before confirming all the receipts. <br>
+Users can review and fix the data captured before confirming all the receipts.
+
+The shortcut receipt icon on the record only shows up when the receipt image has
+been uploaded to the cloud. <br>
 <img src="/gifs/bulk-scan.gif?raw=true" alt="bulk-scan" width="200"/>
 
 ## Export

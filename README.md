@@ -64,8 +64,7 @@ Free your gallery from receipt images and keep it safe in the cloud. <br>
 
 ## Demo Mode
 Users can explore the app with the demo data and exit it. <br>
-<img src="/gifs/demo.gif?raw=true" alt="demo" width="200"/>
-<img src="/gifs/exit-demo.gif?raw=true" alt="exit-demo" width="200"/>
+<img src="/gifs/demo.gif?raw=true" alt="exit-demo" width="200"/>
 
 # Team
 

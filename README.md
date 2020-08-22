@@ -43,19 +43,23 @@ Scan multiple receipt images form the gallery and extract the data at once.
 Give users freedom over what features of Statistics are visible in their Dashboard.
 
 ## Custom Category
+<img src="/gifs/custom-category.gif?raw=true" alt="custom-category" width="200"/>
 
 ## Recurring Record
-Users can create a recurring expense/income.
+Users can create a recurring expense/income. <br>
+<img src="/gifs/recurring-record.gif?raw=true" alt="recurring-record" width="200"/>
 
 ## Advanced Filter
-Filtering records based on other complex parameters: category, time, amount.
+Filtering records based on other complex parameters: category, time, amount. <br>
+<img src="/gifs/advanced-filter.gif?raw=true" alt="advanced-filter" width="200"/>
 
 ## Cloud Storage for Receipts
-Free your gallery from receipt images and keep it safe in the cloud.
+Free your gallery from receipt images and keep it safe in the cloud. <br>
+<img src="/gifs/cloud-storage.gif?raw=true" alt="cloud-storage" width="200"/>
 
 ## Demo Mode
-Users can explore the app with the demo data and exit it.
-
+Users can explore the app with the demo data and exit it. <br>
+<img src="/gifs/demo.gif?raw=true" alt="demo" width="200"/>
 
 # Team
 

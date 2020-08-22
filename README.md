@@ -38,6 +38,7 @@ Provides a visual summary of expenses of all accounts; an integral appearance in
 
 ## Bulk-Upload Receipts
 Scan multiple receipt images form the gallery and extract the data at once.
+Users can review and fix the data captured before confirming all the receipts. <br>
 <img src="/gifs/bulk-scan.gif?raw=true" alt="bulk-scan" width="200"/>
 
 ## Custom Dashboard
@@ -45,6 +46,8 @@ Give users freedom over what features of Statistics are visible in their Dashboa
 <img src="/gifs/custom-dashboard.gif?raw=true" alt="custom-dashboard" width="200"/>
 
 ## Custom Category
+There are 10 default categories that are not editable/removable.
+Wide selection of color and icons for users to create their own custom categories. <br>
 <img src="/gifs/custom-category.gif?raw=true" alt="custom-category" width="200"/>
 
 ## Recurring Record

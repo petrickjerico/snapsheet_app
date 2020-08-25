@@ -10,6 +10,11 @@ Beta version.
 
 # Features
 
+1. [Example](#calculator)
+2. [Example2](#example2)
+3. [Third Example](#third-example)
+4. [Fourth Example](#fourth-examplehttpwwwfourthexamplecom)
+
 ## Calculator
 *If the scanner feels a bit too much, the calculator is a comfier alternative!* <br>
 Have calculations on the spot and manually add expenses. <br>

@@ -13,14 +13,14 @@ Beta version.
 1. [Calculator](#calculator)
 2. [Statistics](#statistics)
 3. [Scanner](#scanner)
-4. [Bulk-Scan Receipts](#fourth-examplehttpwwwfourthexamplecom)
-5. [Export](#fourth-examplehttpwwwfourthexamplecom)
-6. [Custom Dashboard](#fourth-examplehttpwwwfourthexamplecom)
-7. [Custom Category](#fourth-examplehttpwwwfourthexamplecom)
-8. [Recurring Record](#fourth-examplehttpwwwfourthexamplecom)
-9. [Advanced Filter](#fourth-examplehttpwwwfourthexamplecom)
-10. [Cloud Storage](#fourth-examplehttpwwwfourthexamplecom)
-11. [Demo Mode](#fourth-examplehttpwwwfourthexamplecom)
+4. [Bulk-Scan Receipts](#bulk-scan-receipts)
+5. [Export](#export)
+6. [Custom Dashboard](#custom-dashboard)
+7. [Custom Category](#custom-category)
+8. [Recurring Record](#recurring-record)
+9. [Advanced Filter](#advanced-filter)
+10. [Cloud Storage](#cloud-storage)
+11. [Demo Mode](#demo-mode)
 
 ## Calculator
 *If the scanner feels a bit too much, the calculator is a comfier alternative!* <br>

@@ -10,10 +10,17 @@ Beta version.
 
 # Features
 
-1. [Example](#calculator)
-2. [Example2](#example2)
-3. [Third Example](#third-example)
-4. [Fourth Example](#fourth-examplehttpwwwfourthexamplecom)
+1. [Calculator](#calculator)
+2. [Statistics](#statistics)
+3. [Scanner](#scanner)
+4. [Bulk-Scan Receipts](#fourth-examplehttpwwwfourthexamplecom)
+5. [Export](#fourth-examplehttpwwwfourthexamplecom)
+6. [Custom Dashboard](#fourth-examplehttpwwwfourthexamplecom)
+7. [Custom Category](#fourth-examplehttpwwwfourthexamplecom)
+8. [Recurring Record](#fourth-examplehttpwwwfourthexamplecom)
+9. [Advanced Filter](#fourth-examplehttpwwwfourthexamplecom)
+10. [Cloud Storage](#fourth-examplehttpwwwfourthexamplecom)
+11. [Demo Mode](#fourth-examplehttpwwwfourthexamplecom)
 
 ## Calculator
 *If the scanner feels a bit too much, the calculator is a comfier alternative!* <br>

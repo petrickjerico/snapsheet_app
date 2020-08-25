@@ -11,9 +11,9 @@ Beta version.
 # Features
 
 1. [Calculator](#calculator)
-2. [Statistics](#statistics)
-3. [Scanner](#scanner)
-4. [Bulk-Scan Receipts](#bulk-scan-receipts)
+2. 🔥[Statistics](#statistics)
+3. 🔥[Scanner](#scanner)
+4. 🔥[Bulk-Scan Receipts](#bulk-scan-receipts)
 5. [Export](#export)
 6. [Custom Dashboard](#custom-dashboard)
 7. [Custom Category](#custom-category)

@@ -1,5 +1,6 @@
 <img src="https://firebasestorage.googleapis.com/v0/b/snapsheet-e7f7b.appspot.com/o/snapsheet_banner.png?alt=media&token=c97194f4-3ee5-4c21-9992-accf3e30b351" title="SnapSheet" alt="SnapSheet">
 
+# About
 Snapsheet prides itself as a **minimalistic expense tracker with a powerful localised (Singapore) receipt scanner.** The app seeks to cut down manual tasks of keying in receipts as well as introducing a new experience of recording personal or committee-related finances.
 
 

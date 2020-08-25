@@ -11,9 +11,9 @@ Beta version.
 # Features
 
 1. [Calculator](#calculator)
-2. 🔥[Statistics](#statistics)
-3. 🔥[Scanner](#scanner)
-4. 🔥[Bulk-Scan Receipts](#bulk-scan-receipts)
+2. 🔥 [Statistics](#statistics)
+3. 🔥 [Scanner](#scanner)
+4. 🔥 [Bulk-Scan Receipts](#bulk-scan-receipts)
 5. [Export](#export)
 6. [Custom Dashboard](#custom-dashboard)
 7. [Custom Category](#custom-category)
@@ -39,7 +39,7 @@ What Statistics is all about:
 - Amount trend: shows the total amount at a given time of the account. <br>  <br>
 <img src="assets/images/statistics-cashflow.jpg" alt="statistics-cashflow" width="200" />
 <img src="https://firebasestorage.googleapis.com/v0/b/snapsheet-e7f7b.appspot.com/o/gif%2Fstatistics-piechart.gif?alt=media&token=95ed3a4f-5163-4266-ab3f-4f89a7c9ad82" alt="statistics-piechart" width="200" />
-<img src="https://firebasestorage.googleapis.com/v0/b/snapsheet-e7f7b.appspot.com/o/gif%2Fstatistics-amounttrend.gif?alt=media&token=a6410062-a388-49e2-b688-36235a7ead93" alt="statistics-amounttrend" width="200" /> <br>
+<img src="https://firebasestorage.googleapis.com/v0/b/snapsheet-e7f7b.appspot.com/o/gif%2Fstatistics-amounttrend.gif?alt=media&token=a6410062-a388-49e2-b688-36235a7ead93" alt="statistics-amounttrend" width="200" />
 
 ## Scanner
 *It's called SNAPsheet for a reason. Ha! <br>*

@@ -96,8 +96,3 @@ Keep all receipt images safe in the cloud (instead of with other personal pictur
 *Mess around with Snapsheet before you use it for real!*  <br>
 Explore the app with some dummy demo data and exit it when you're ready. <br> <br>
 <img src="/gifs/demo.gif?raw=true" alt="exit-demo" width="200"/>
-
-# Team
-
-
-# FAQs
